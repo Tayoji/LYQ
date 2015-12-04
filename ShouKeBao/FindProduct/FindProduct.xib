@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FindProduct">
+            <connections>
+                <outlet property="blackView" destination="AsL-lr-p6K" id="Mnj-8n-RPh"/>
+                <outlet property="hotTable" destination="fAr-n6-XYl" id="BcR-gF-KvK"/>
+                <outlet property="leftTable" destination="nVg-om-3pf" id="TKB-Lk-BG8"/>
+                <outlet property="line" destination="u3t-xL-9vf" id="CX0-Z3-rbJ"/>
+                <outlet property="rightTable" destination="SRV-D6-B2c" id="HWY-Hb-JST"/>
+                <outlet property="rightTable2" destination="CMF-Ud-mYs" id="wWR-7U-NQ9"/>
+                <outlet property="searchBtn" destination="qzC-nf-QSK" id="1Jd-vD-2pi"/>
+                <outlet property="stationName" destination="XlM-Fw-jDB" id="92R-Fj-227"/>
+                <outlet property="view" destination="iN0-l3-epB" id="elD-oM-oBd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="u3t-xL-9vf">
+                    <rect key="frame" x="0.0" y="41" width="320" height="0.5"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.78823529411764703" green="0.78823529411764703" blue="0.78823529411764703" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nVg-om-3pf" userLabel="left">
+                    <rect key="frame" x="0.0" y="42" width="99" height="438"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="0.86274509803921573" green="0.90980392156862744" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Dpq-tv-kcB"/>
+                        <outlet property="delegate" destination="-1" id="ftG-jr-Ic2"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" id="bOo-bV-ddp">
+                    <rect key="frame" x="99" y="41" width="0.5" height="444"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.74550189393939392" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="SRV-D6-B2c" userLabel="right1">
+                    <rect key="frame" x="320" y="42" width="220" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="D1c-0f-Zn6"/>
+                        <outlet property="delegate" destination="-1" id="H9z-6Q-SDD"/>
+                    </connections>
+                </tableView>
+                <tableView clipsSubviews="YES" tag="3" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="79" sectionHeaderHeight="22" sectionFooterHeight="22" id="CMF-Ud-mYs" userLabel="right2">
+                    <rect key="frame" x="320" y="42" width="220" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="nRz-uG-ryM"/>
+                        <outlet property="delegate" destination="-1" id="bVX-Qe-aak"/>
+                    </connections>
+                </tableView>
+                <tableView clipsSubviews="YES" tag="4" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fAr-n6-XYl" userLabel="热卖table">
+                    <rect key="frame" x="100" y="42" width="220" height="444"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="contentInset" minX="0.0" minY="10" maxX="0.0" maxY="-10"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="0fH-IV-FFa"/>
+                        <outlet property="delegate" destination="-1" id="d4x-pO-kJr"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mDz-DG-WGK">
+                    <rect key="frame" x="10" y="5" width="75" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="fenzhan">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="stationSelect:" destination="-1" eventType="touchUpInside" id="9pP-jL-Dkm"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qzC-nf-QSK" userLabel="查找产品">
+                    <rect key="frame" x="90" y="5" width="220" height="30"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="  查找产品" image="fdjBtn">
+                        <color key="titleColor" white="0.49268922018348627" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="search:" destination="-1" eventType="touchUpInside" id="TdZ-lM-VZc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XlM-Fw-jDB">
+                    <rect key="frame" x="35" y="5" width="50" height="30"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <state key="normal" title="  上海">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="stationSelect:" destination="-1" eventType="touchUpInside" id="05H-pg-MxP"/>
+                    </connections>
+                </button>
+                <view alpha="0.0" contentMode="scaleToFill" id="AsL-lr-p6K" userLabel="blackView">
+                    <rect key="frame" x="0.0" y="42" width="99" height="444"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.24692234848484848" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.94859164700363618" alpha="1" colorSpace="calibratedWhite"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-335" y="8"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="fdjBtn" width="13" height="13"/>
+        <image name="fenzhan" width="100" height="45"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
