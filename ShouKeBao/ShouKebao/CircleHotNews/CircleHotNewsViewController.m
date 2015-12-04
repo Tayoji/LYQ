@@ -194,7 +194,7 @@
 
 - (UIWebView *)webView{
     if (!_webView) {
-        self.webView = [[UIWebView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
         self.webView.delegate = self;
         [self.webView scalesPageToFit];
         [self.webView.scrollView setShowsVerticalScrollIndicator:NO];
