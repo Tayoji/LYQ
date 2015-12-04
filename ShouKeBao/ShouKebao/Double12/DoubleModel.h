@@ -17,6 +17,7 @@
 @property (nonatomic, copy)NSString *BannerUrl;//Banner图片
 @property (nonatomic, copy)NSString *LinkUrl;//链接地址
 
+
 -(instancetype)initWithDict:(NSDictionary *)dic;
 + (instancetype)modalWithDict:(NSDictionary *)dictionary;
 @end

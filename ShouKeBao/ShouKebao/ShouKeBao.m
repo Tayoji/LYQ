@@ -1229,6 +1229,8 @@
                     [self.dataSource addObject:base];
                 }
                   NSLog(@"orderJson is  %@",json[@"NoticeCenterList"]);
+            
+            
             for(NSDictionary *dic in json[@"NoticeCenterList"]){
                 NSLog(@"..... %@", dic);
                 MessageModel2 *message = [MessageModel2 modalWithDict:dic];
