@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "74FAD6C5578B7F7E0493BCA88DE17B50E6D40556",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131" : 0,
+    "74FAD6C5578B7F7E0493BCA88DE17B50E6D40556" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D7625953-A4FE-49D9-950A-2D3EF1276C6B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131" : "PipiKou",
+    "74FAD6C5578B7F7E0493BCA88DE17B50E6D40556" : "LYQ"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ShouKeBao",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ShouKeBao.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/qq670082622\/PipiKou.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lvyouquanpipikou\/LYQ.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "74FAD6C5578B7F7E0493BCA88DE17B50E6D40556"
+    }
+  ]
+}
