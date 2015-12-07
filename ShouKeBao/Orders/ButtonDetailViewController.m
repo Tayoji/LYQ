@@ -210,10 +210,29 @@
     if (result.count) {
         //获取筛选出来的字符串
         NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
-        NSMutableString * params = [NSMutableString stringWithString:resultStr];
-        [params stringByReplacingOccurrencesOfString:@"OpenCustomIM(" withString:@""];
-        [params stringByReplacingOccurrencesOfString:@")" withString:@""];
-        ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:params conversationType:eConversationTypeChat];
+        NSString * params = [NSString string];
+        params = [resultStr stringByReplacingOccurrencesOfString:@"OpenCustomIM(" withString:@""];
+        NSArray *strArray = [params componentsSeparatedByString:@")"];
+        params = strArray[0];
+        
+        /*
+         NSASCIIStringEncoding 将url  用ASCII解码
+         stringByReplacingPercentEscapesUsingEncoding 解码
+         stringByAddingPercentEscapesUsingEncoding  编码
+         */
+        NSString * str = [params stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        NSLog(@"%@--%@",params, str);
+        NSDictionary * dic = [NSString parseJSONStringToNSDictionary:str];
+        NSLog(@"%@", dic);
+        /*
+         {
+         "MsgType": "ProductDetail",
+         "ReceiveId": "接收人Id",
+         "ObjectId": "线路Id"
+         }
+         */
+        NSLog(@"%@", dic[@"ReceiveId"]);
+        ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:dic[@"ReceiveId"] conversationType:eConversationTypeChat];
         [self.navigationController pushViewController:chatVC animated:YES];
     }
     

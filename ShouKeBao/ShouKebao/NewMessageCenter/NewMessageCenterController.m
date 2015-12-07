@@ -192,7 +192,7 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag == 2011) {
+    if (tableView.tag == 2011&indexPath.section==1) {
         return YES;
     }
     return NO;
@@ -248,17 +248,37 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag == 2011) {
+    if (tableView.tag == 2011&indexPath.section == 1) {
+        EMConversation *conversation = [self.chatListArray objectAtIndex:indexPath.row];
         UITableViewRowAction *toTop = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            NSLog(@"删除%ld,%ld",indexPath.section,indexPath.row);
+//            NSLog(@"删除%ld,%ld",indexPath.section,indexPath.row);
+            [[EaseMob sharedInstance].chatManager removeConversationByChatter:conversation.chatter deleteMessages:NO append2Chat:NO];
+            [self.chatListArray removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
             [tableView setEditing:NO animated:YES];
         }];
         toTop.backgroundColor =[UIColor redColor];
-        UITableViewRowAction *toTop1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"标记未读" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-            NSLog(@"标记未读%ld,%ld",indexPath.section,indexPath.row);
+        NSString * markStr = @"";
+        if (conversation.unreadMessagesCount) {
+            markStr = @"标记已读";
+        }else{
+            markStr = @"标记未读";
+        }
+        UITableViewRowAction *toTop1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:markStr handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+//            NSLog(@"标记未读%ld,%ld",indexPath.section,indexPath.row);
+            if (conversation.unreadMessagesCount) {
+                [conversation  markAllMessagesAsRead:YES];
+            }else{
+                [conversation markMessageWithId:[conversation latestMessage].messageId asRead:NO];
+            }
+            [self.tableView reloadData];
             [tableView setEditing:NO animated:YES];
         }];
-        toTop1.backgroundColor =[UIColor lightGrayColor];
+        if (conversation.unreadMessagesCount) {
+            toTop1.backgroundColor =[UIColor lightGrayColor];
+        }else{
+            toTop1.backgroundColor =[UIColor orangeColor];
+        }
         return @[toTop,toTop1];
     }
     return nil;

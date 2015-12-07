@@ -98,7 +98,8 @@
     
    
     
-//    NSRange shareRange = [rightUrl rangeOfString:@"objectc:LYQSKBAPP_OpenShareProduct"];
+    NSRange shareRange = [rightUrl rangeOfString:@"objectc:LYQSKBAPP_OpenShareProduct"];
+
     [_indicator startAnimation];
 
     if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
@@ -115,10 +116,10 @@
     }else{
         [_indicator startAnimation];
     }
-//    if (shareRange.location != NSNotFound) {
-//        [self shareAction:nil];
-//        [_indicator stopAnimationWithLoadText:@"" withType:YES];
-//    }
+    if (shareRange.location != NSNotFound) {
+        [self shareAction:nil];
+        [_indicator stopAnimationWithLoadText:@"" withType:YES];
+    }
     return YES;
     
 }
