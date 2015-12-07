@@ -209,11 +209,18 @@
     
 }
 - (IBAction)pushMessageVC:(id)sender {
+    
+//+ (void)event:(NSString *)eventId label:(NSString *)label
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
+    
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
     [self.navigationController pushViewController:messgeCenter animated:YES];
 }
 
 - (void)tapGestionToMessVC{
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
     UITapGestureRecognizer *messageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMessageVC:)];
     [self.messagePrompt addGestureRecognizer:messageTap];
 }
@@ -532,6 +539,41 @@
         self.pageIndex = 1;
         [self loadDataSource];
         [self closePopTableView];
+        
+            switch (indexPath.row) {
+                case 0:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerNoLimitClick" attributes:dict];
+                    
+                }
+                    break;
+                case 1:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerNewBindingAppClick" attributes:dict];
+                    
+                }
+                    break;
+                case 2:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerBindingAppClick" attributes:dict];
+                    
+                }
+                    break;
+                case 3:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerOtherClick" attributes:dict];
+                    
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+    
     }
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
 

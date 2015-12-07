@@ -141,18 +141,6 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     
     NSLog(@"；；；；；；%@",webView.request.URL.absoluteString);
-    NSString *rightUrl = webView.request.URL.absoluteString;
-    if ([rightUrl containsString:@"/mc/kaifaceshi/theme/"]) {
-        self.title = @"主题详情";
-    }else if ([rightUrl containsString:@"/mc/kaifaceshi/Product/"]){
-        self.title = @"产品详情";
-    }else if ([rightUrl containsString:@"/mc/kaifaceshi/zt/"]){
-        self.title = @"专辑详情";
-    }else if([rightUrl containsString:@"/mc/kaifaceshi/WonderfulActivity/"]){
-        self.title = @"圈热点";
-    }
-    
-    
     //判断是否显示关闭按钮
     if (self.m == 0) {
     }else if(self.m == 1){
@@ -195,7 +183,7 @@
 
 - (UIWebView *)webView{
     if (!_webView) {
-        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
+        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, View_Width, View_Height - 64)];
         self.webView.delegate = self;
         [self.webView scalesPageToFit];
         [self.webView.scrollView setShowsVerticalScrollIndicator:NO];

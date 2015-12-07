@@ -12,6 +12,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "StrToDic.h"
 #import "ProductModal.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/667.0f
 @interface EstablelishedViewController ()
@@ -43,8 +45,10 @@
     NSLog(@"self.isExclusiveCustomer = %@", self.isExclusiveCustomer);
     if ([self.isExclusiveCustomer isEqualToString:@"1"]) {
            [self shareView];
+        
     }else{
           [self noOpenAxclusiveApp];
+   
     }
 }
 
