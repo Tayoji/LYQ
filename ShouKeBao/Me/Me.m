@@ -177,6 +177,7 @@
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"MeNum" attributes:dict];
+    
     if (self.tableView) {
         [self.tableView reloadData];
         if ([[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstFindMoneyTree"]&&[[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstFindInvoiceManage"]) {
@@ -638,11 +639,14 @@
             
             }else if(indexPath.row == 3){
 
-                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"Me_exclusiveAppClick" attributes:dict];
+                
+//                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
                 
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
-                if ([level intValue] > 2000 && [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
+                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
                     
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     
@@ -657,6 +661,7 @@
                 }else{
                     EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
 //                    establelishedVC.clientManagerTel = self.clientMagagerTel;
+                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
                     establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
                     establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
                     establelishedVC.naVC = self.navigationController;
@@ -698,6 +703,10 @@
                 }
                 case 1:{
                     NSLog(@"---%ld",indexPath.row);
+                    
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Me_FeedbackClick" attributes:dict];
+           
                     FeedBcakViewController *feedBackVC = [sb instantiateViewControllerWithIdentifier:@"FeedBack"];
                     [self.navigationController pushViewController:feedBackVC animated:YES];
 
@@ -705,6 +714,10 @@
                     break;
                 }
                 case 2:{
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Me_aboutLYQ" attributes:dict];
+ 
+      
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
                     WelcomeView *welceome = [[WelcomeView alloc] initWithFrame:window.bounds];
                     welceome.alpha = 0;
@@ -717,6 +730,11 @@
                     break;
                 }
                 case 3:{
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Me_checkAndUpdateClick" attributes:dict];
+
+                    
+                    
                     [self checkNewVerSion];
                     /*
                      UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"需要发布之后, 才能到appstore评分" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -812,6 +830,7 @@
         
         [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
         self.IsOpenConsultantApp = json[@"IsOpenConsultantApp"];
+        NSLog(@"///// %@", self.IsOpenConsultantApp);
 //        self.clientMagagerTel = json[@""];
 
     } failure:^(NSError *error) {

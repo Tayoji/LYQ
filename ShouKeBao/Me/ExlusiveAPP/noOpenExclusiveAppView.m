@@ -7,7 +7,8 @@
 //
 
 #import "noOpenExclusiveAppView.h"
-
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define SYSTEM_VERSION   [[UIDevice currentDevice].systemVersion floatValue]
@@ -76,6 +77,11 @@ static id _shareView;
 
 
 + (void)callPhone{
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Me_contactManagerImmediatelyClick" attributes:dict];
+    
+    
     NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel://%@",_Tel];
     NSLog(@"电话号码是%@",str);
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];

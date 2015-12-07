@@ -1259,9 +1259,23 @@
                 baseDouble.model = doubleModel;
                 baseDouble.idStr = doubleModel.LinkUrl;
 //                [self.dataSource addObject:baseDouble];
-                [self.dataSource insertObject:baseDouble atIndex:1];
+//                [self.dataSource insertObject:baseDouble atIndex:1];
+            //确定今日推荐排到位置
+            int recomIndex = 0;
+            for (int i = 0 ; i<self.dataSource.count; i++) {
+                HomeBase *base = self.dataSource[i];
+                if ([base.model isKindOfClass:[Recommend class]]) {
+                    recomIndex = i;
+                }
             }
-
+                NSLog(@"..... %d", recomIndex);
+            if (recomIndex>0) {
+                 [self.dataSource insertObject:baseDouble atIndex:1];
+            }else{
+                 [self.dataSource insertObject:baseDouble atIndex:0];
+            }
+        }
+            
                 // 清理数据 看有没有隐藏的 有就不要显示
                 [self cleanDataSource];
          
@@ -1672,6 +1686,10 @@
 {
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
     [self.navigationController pushViewController:messgeCenter animated:YES];
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"ShouKeBao_messageClick" attributes:dict];
+    
 //    [UIApplication sharedApplication].applicationIconBadgeNumber = 8;
     /*
      原有内容
