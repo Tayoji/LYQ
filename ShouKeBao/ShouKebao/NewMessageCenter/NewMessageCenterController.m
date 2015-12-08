@@ -21,6 +21,10 @@
 #import "UIImageView+WebCache.h"
 #import "LocationSeting.h"
 #import "CustomHeaderAndNickName.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
+
+
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
@@ -56,9 +60,11 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginEvent:@"ShouKeBao_NewMessageCenterController"];
     [super viewWillAppear:animated];
     [self refreshDataSource];
 }
+
 - (void)loadMessageDataSource{
     NSMutableDictionary * params = nil;
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
@@ -202,9 +208,16 @@
     if (tableView.tag == 2011) {
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
+                
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"ShouKeBao_ZhiKeDynamicClick" attributes:dict];
+
                 TerraceMessageController *Terr = [[TerraceMessageController alloc] init];
                 [self.navigationController pushViewController:Terr animated:YES];
             }else{
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
+                
                 ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
                 [self.navigationController pushViewController:zhiVisit animated:YES];
             }
@@ -222,7 +235,10 @@
                 chatController.title = [[RobotManager sharedInstance] getRobotNickWithUsername:chatter];
             }
             [self.navigationController pushViewController:chatController animated:YES];
-
+            
+            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+            [MobClick event:@"ShouKeBao_IMChatIconClick" attributes:dict];
+            
             NSLog(@"我要往IM跳了,别拦我");
         }
     }else if(tableView.tag == 2012){
@@ -401,6 +417,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [MobClick endEvent:@"ShouKeBao_NewMessageCenterController"];
 //    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {

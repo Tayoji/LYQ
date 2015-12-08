@@ -1040,7 +1040,6 @@ __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithE
         ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:4];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"3dTouchPushYaoQianShu" object:nil];
     }
-
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

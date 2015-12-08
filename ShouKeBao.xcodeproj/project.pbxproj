@@ -618,6 +618,8 @@
 		845514FB1AC032C000D588A7 /* WriteFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845514FA1AC032C000D588A7 /* WriteFileManager.m */; };
 		B325F7DE1BE24A6A00124271 /* MeTextFieldSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */; };
 		B3585A591BFC29960005448F /* noOpenExclusiveAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */; };
+		B36B6BA61C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */; };
+		B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */; };
 		B36E572B1B74C0D000471AAC /* ConditionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E57191B74C0D000471AAC /* ConditionModel.m */; };
 		B36E572C1B74C0D000471AAC /* ConditionSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E571B1B74C0D000471AAC /* ConditionSelectViewController.m */; };
 		B36E572D1B74C0D000471AAC /* ConditionSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36E571C1B74C0D000471AAC /* ConditionSelectViewController.xib */; };
@@ -1817,6 +1819,9 @@
 		B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeTextFieldSearchViewController.m; path = MeView/MeTextFieldSearchViewController.m; sourceTree = "<group>"; };
 		B3585A571BFC29960005448F /* noOpenExclusiveAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noOpenExclusiveAppView.h; sourceTree = "<group>"; };
 		B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noOpenExclusiveAppView.m; sourceTree = "<group>"; };
+		B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExclusiveAppIntroduceViewController.h; sourceTree = "<group>"; };
+		B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExclusiveAppIntroduceViewController.m; sourceTree = "<group>"; };
+		B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewExclusiveAppIntroduceViewController.xib; sourceTree = "<group>"; };
 		B36E57181B74C0D000471AAC /* ConditionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionModel.h; sourceTree = "<group>"; };
 		B36E57191B74C0D000471AAC /* ConditionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionModel.m; sourceTree = "<group>"; };
 		B36E571A1B74C0D000471AAC /* ConditionSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionSelectViewController.h; sourceTree = "<group>"; };
@@ -4448,6 +4453,16 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		B36B6BA21C16E29C002C89E2 /* newExclusiveApp */ = {
+			isa = PBXGroup;
+			children = (
+				B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */,
+				B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */,
+				B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */,
+			);
+			path = newExclusiveApp;
+			sourceTree = "<group>";
+		};
 		B36E57171B74C0D000471AAC /* ProductList */ = {
 			isa = PBXGroup;
 			children = (
@@ -4763,6 +4778,7 @@
 		B3CFF6191BFAEE0E002065AA /* ExlusiveAPP */ = {
 			isa = PBXGroup;
 			children = (
+				B36B6BA21C16E29C002C89E2 /* newExclusiveApp */,
 				B3CFF61A1BFAEE0E002065AA /* ExclusiveViewController.h */,
 				B3CFF61B1BFAEE0E002065AA /* ExclusiveViewController.m */,
 				B3CFF61C1BFAEE0E002065AA /* ExclusiveViewController.xib */,
@@ -5049,6 +5065,7 @@
 				796EFDE01BF5CA4E00799120 /* MWPhotoBrowser.bundle in Resources */,
 				796EFD581BF5C67D00799120 /* chat_sender_audio_playing_full@2x.png in Resources */,
 				796EFD091BF5C67D00799120 /* chatBar_textBg@2x.png in Resources */,
+				B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */,
 				796EFCDE1BF5C67D00799120 /* VoiceSearchFeedback009.png in Resources */,
 				5A52FC5E1ACEBF220076DAE6 /* StationSelect.xib in Resources */,
 				796EFCCF1BF5C67D00799120 /* VoiceSearchFeedback001@2x.png in Resources */,
@@ -5486,6 +5503,7 @@
 				796EFDC01BF5CA4E00799120 /* MWTapDetectingView.m in Sources */,
 				B3CFF6261BFB05D7002065AA /* ExclusiveTableViewCell.m in Sources */,
 				7937DF281BE0FBDF00DC8805 /* InvoiceManageViewController.m in Sources */,
+				B36B6BA61C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m in Sources */,
 				79B559671BFADD7000C04F92 /* MessageCenterModel.m in Sources */,
 				B3B7A67F1BA6A25F0043DF7C /* AddRemindViewController.m in Sources */,
 				796EFC0E1BF5C5DE00799120 /* EMChatTimeCell.m in Sources */,

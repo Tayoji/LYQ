@@ -133,7 +133,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(receiveNotification:) name:@"下班" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPushBackGround:) name:@"pushWithBackGround" object:nil];
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
@@ -172,6 +171,8 @@
 -(void)refreshSKBMessgaeCount:(int)count{
     [self getNotifiList];
 }
+
+#pragma mark - 消息请求
 -(void)getNotifiList{
     NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
     [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
@@ -278,13 +279,6 @@
     self.popTableview.hidden = YES;
 }
 
-#pragma mark - 消息提示
-- (void)dealPushBackGround:(NSNotification *)noti{
-    NSMutableArray *message = noti.object;
-    if([message[0] isEqualToString:@"messageId"]){//新公告
-    self.messagePrompt.text = [NSString stringWithFormat:@"您有%d条未读信息", self.messageCount++];
-    }
-}
 
 
 
@@ -334,6 +328,7 @@
     self.pageIndex = 1;
     self.searchBar.placeholder = searchDefaultPlaceholder;
     [self loadDataSource];
+   
 }
 //  上啦加载
 - (void)foodPull
@@ -573,9 +568,9 @@
                 default:
                     break;
             }
-    
+
     }
-    [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:0.8f];
 
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -747,7 +742,7 @@
 }
 - (void)deselect{
     [self.table deselectRowAtIndexPath:[self.table indexPathForSelectedRow] animated:YES];
-    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
+//    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
 }
 
 

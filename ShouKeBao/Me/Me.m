@@ -45,6 +45,8 @@
 #import "ExclusiveViewController.h"
 #import "EstablelishedViewController.h"
 #import "MeShareDetailModel.h"
+#import "NewExclusiveAppIntroduceViewController.h"
+
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
 #define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
@@ -659,14 +661,19 @@
                     
 #pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
-                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
-//                    establelishedVC.clientManagerTel = self.clientMagagerTel;
-                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
-                    establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
-                    establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
-                    establelishedVC.naVC = self.navigationController;
+//                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
+////                    establelishedVC.clientManagerTel = self.clientMagagerTel;
+//                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
+//                    establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
+//                    establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
+//                    establelishedVC.naVC = self.navigationController;
+//                    
+//                    [self.navigationController pushViewController:establelishedVC animated:YES];
+                    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+                    newExclusiveVC.naVC = self.navigationController;
+                    [self.navigationController pushViewController:newExclusiveVC animated:YES];
                     
-                    [self.navigationController pushViewController:establelishedVC animated:YES];
+                    
                 }
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
                 
