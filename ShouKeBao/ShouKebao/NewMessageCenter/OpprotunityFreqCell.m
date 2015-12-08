@@ -34,7 +34,7 @@
 }
 -(void)setModel:(CustomDynamicModel *)model{
     _model = model;
-    [self.HeadImage sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl] placeholderImage:[UIImage imageNamed:@"customtouxiang"]];
+    [self.HeadImage sd_setImageWithURL:[NSURL URLWithString:model.ProductdetailModel.PicUrl] placeholderImage:[UIImage imageNamed:@"customtouxiang"]];
     self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
     self.TimerLabel.text = model.CreateTimeText;
     self.TitleLabel.text = model.DynamicContent;

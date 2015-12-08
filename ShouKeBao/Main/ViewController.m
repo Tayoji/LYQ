@@ -300,8 +300,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
     //发送本地推送
     UILocalNotification *notification = [[UILocalNotification alloc] init];
     notification.fireDate = [NSDate date]; //触发通知的时间
-    options.displayStyle = ePushNotificationDisplayStyle_messageSummary;
-    if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
+    options.displayStyle = ePushNotificationDisplayStyle_simpleBanner;
+    if (options.displayStyle == ePushNotificationDisplayStyle_simpleBanner) {
         id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
         NSString *messageStr = nil;
         switch (messageBody.messageBodyType) {
@@ -381,8 +381,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
     
     //发送通知
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    //    UIApplication *application = [UIApplication sharedApplication];
-    //    application.applicationIconBadgeNumber += 1;
+        UIApplication *application = [UIApplication sharedApplication];
+        application.applicationIconBadgeNumber += 1;
 }
 
 
