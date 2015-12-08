@@ -47,11 +47,16 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+     [MobClick beginEvent:@"Me_ExclusiveViewController"];
      self.navigationController.navigationBarHidden = NO;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"xiaotu"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"Me_ExclusiveViewController"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

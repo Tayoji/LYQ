@@ -81,6 +81,7 @@
 #import "Double12TableViewCell.h"
 #import "DoubleModel.h"
 #import "ZhiVisitorDynamicController.h"
+
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
 
@@ -791,11 +792,11 @@
             self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
             int valueCount = [self.barButton.badgeValue intValue];
             self.barButton.badgeValue = [NSString stringWithFormat:@"%d",valueCount+1];
-            
+//           管客户界面消息通知
+            self.customerMessage.messagePrompt.text = [NSString stringWithFormat:@"您有%d条未读信息", valueCount+1];
           }
+    }
 }
-    
-   }
 
 
 #pragma -mark 声音

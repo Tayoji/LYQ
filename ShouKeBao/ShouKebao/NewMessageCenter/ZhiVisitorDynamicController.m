@@ -153,6 +153,7 @@
         ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
         NSLog(@"%@", productUrl);
         detail.produceUrl = productUrl;
+        detail.fromType = FromZhiVisitorDynamic;
         detail.shareInfo = model.ProductdetailModel.ShareInfo;
         [self.navigationController pushViewController:detail animated:YES];
     }

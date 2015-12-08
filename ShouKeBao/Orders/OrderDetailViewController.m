@@ -264,6 +264,11 @@
 }
 //js调用原生，调用IM入口；
 - (void)LYQSKBAPP_OpenCustomIM:(NSString *)urlStr{
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"OrderDetail_IMChatIconClick" attributes:dict];
+    
+    
     NSString * pattern = @"OpenCustomIM(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
