@@ -133,7 +133,7 @@
         _Slider.upperValue = finalValue;
         NSInteger parmar = _Slider.frame.size.width-30;
         tallPlabel.frame = CGRectMake(ab*parmar+15, 240, 50, 30);
-        //增加筛选条件
+    //增加筛选条件
         [self.conditionDic setObject:[NSString stringWithFormat:@"%0.f",_Slider.lowerValue]  forKey:@"MinPrice"];
         [self.conditionDic setObject:[NSString stringWithFormat:@"%0.f",finalValue] forKey:@"MaxPrice"];
         NSLog(@"%@",self.conditionDic);
@@ -145,7 +145,7 @@
         NSInteger parma = _Slider.frame.size.width-15;
         CGFloat an = (pc.x-15)/_Slider.frame.size.width;
         lowPlabel.frame = CGRectMake(an*parma+30, 240, 50, 30);
-        //增加筛选条件
+    //增加筛选条件
         [self.conditionDic setObject:[NSString stringWithFormat:@"%0.f",finalValue]  forKey:@"MinPrice"];
         [self.conditionDic setObject:[NSString stringWithFormat:@"%ld",(NSInteger)_Slider.upperValue] forKey:@"MaxPrice"];
         NSLog(@"%@",self.conditionDic);
