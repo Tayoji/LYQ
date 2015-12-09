@@ -178,6 +178,9 @@ static NSString *kConversationChatter = @"ConversationChatter";
     NSLog(@"%ld", (long)unreadCount);
     UIApplication *application = [UIApplication sharedApplication];
     [application setApplicationIconBadgeNumber:unreadCount];
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:@"reciveNewMessage" object:nil];
+
 }
 
 #pragma mark - private
