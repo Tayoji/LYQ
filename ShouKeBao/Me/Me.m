@@ -46,6 +46,7 @@
 #import "EstablelishedViewController.h"
 #import "MeShareDetailModel.h"
 #import "NewExclusiveAppIntroduceViewController.h"
+#import "NewOpenExclusiveViewController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -687,7 +688,7 @@
                 
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
-                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
+                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]/*&&[self.IsOpenConsultantApp isEqualToString:@"1"]*/){
                     
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     
@@ -700,19 +701,25 @@
                     
 #pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
-//                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
-////                    establelishedVC.clientManagerTel = self.clientMagagerTel;
-//                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
-//                    establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
-//                    establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
-//                    establelishedVC.naVC = self.navigationController;
-//                    
-//                    [self.navigationController pushViewController:establelishedVC animated:YES];
-                    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
-                    newExclusiveVC.naVC = self.navigationController;
-                    [self.navigationController pushViewController:newExclusiveVC animated:YES];
+                    //                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
+                    ////                    establelishedVC.clientManagerTel = self.clientMagagerTel;
+                    //                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
+                    //                    establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
+                    //                    establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
+                    //                    establelishedVC.naVC = self.navigationController;
+                    //
+                    //                    [self.navigationController pushViewController:establelishedVC animated:YES];
                     
-                    
+//                    if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
+                        NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+                        newOpenVC.naVC = self.navigationController;
+                        [self.navigationController pushViewController:newOpenVC animated:YES];
+//                    }else{
+//                        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+//                        newExclusiveVC.naVC = self.navigationController;
+//                        [self.navigationController pushViewController:newExclusiveVC animated:YES];
+//                        
+//                    }
                 }
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
                 

@@ -1,0 +1,84 @@
+//
+//  NewOpenExclusiveViewController.m
+//  ShouKeBao
+//
+//  Created by 张正梅 on 15/12/9.
+//  Copyright (c) 2015年 shouKeBao. All rights reserved.
+//
+
+#import "NewOpenExclusiveViewController.h"
+#import "ExclusiveShareView.h"
+#import "noOpenExclusiveAppView.h"
+#import <ShareSDK/ShareSDK.h>
+#import "StrToDic.h"
+#import "ProductModal.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
+@interface NewOpenExclusiveViewController ()
+- (IBAction)returnButton:(id)sender;
+- (IBAction)introduceButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *shareBackground;
+
+@end
+
+@implementation NewOpenExclusiveViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+       [self shareView];
+  
+}
+
+
+
+
+- (void)shareView{
+    
+    NSLog(@" _____________分享 %@", self.ConsultanShareInfo);
+    NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:self.ConsultanShareInfo];
+    //    ProductModal *model = _dataArr[0];
+    //    NSDictionary *temp = [StrToDic dicCleanSpaceWithDict:model.ShareInfo];
+    
+    //构造分享内容
+    id<ISSContent>publishContent = [ShareSDK content:tmp[@"Desc"]
+                                      defaultContent:tmp[@"Desc"]
+                                               image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
+                                               title:tmp[@"Title"]
+                                                 url:tmp[@"Url"]                                             description:tmp[@"Desc"]
+                                           mediaType:SSPublishContentMediaTypeNews];
+    
+    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.ConsultanShareInfo[@"Url"]] image:nil];
+    
+    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.ConsultanShareInfo[@"Url"]]];
+    
+    [ExclusiveShareView shareWithContent:publishContent backgroundShareView:self.shareBackground naVC:self.naVC andUrl:tmp[@"Url"]];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (IBAction)returnButton:(id)sender {
+    [self.naVC popViewControllerAnimated:YES];
+}
+
+- (IBAction)introduceButton:(id)sender {
+}
+@end

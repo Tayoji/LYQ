@@ -19,7 +19,7 @@
 #import "MoreLvYouGuWenInfoViewController.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
-
+#import "NewOpenExclusiveViewController.h"
 @interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
 //头部
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImageViewSet;
@@ -352,7 +352,7 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_openedExclusiveAppIntroduction" attributes:dict];
     
-    EstablelishedViewController *estableshedVC = [[EstablelishedViewController alloc]init];
+    NewOpenExclusiveViewController *estableshedVC = [[NewOpenExclusiveViewController alloc]init];
     estableshedVC.title = @"专属APP";
     estableshedVC.isExclusiveCustomer = self.IsBinding;
     NSLog(@"。。。。 %@", self.ConsultanShareInfo);
