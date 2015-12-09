@@ -620,6 +620,8 @@
 		B3585A591BFC29960005448F /* noOpenExclusiveAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */; };
 		B36B6BA61C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */; };
 		B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */; };
+		B36B6BAB1C17D7B8002C89E2 /* NewOpenExclusiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA91C17D7B8002C89E2 /* NewOpenExclusiveViewController.m */; };
+		B36B6BAC1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36B6BAA1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib */; };
 		B36E572B1B74C0D000471AAC /* ConditionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E57191B74C0D000471AAC /* ConditionModel.m */; };
 		B36E572C1B74C0D000471AAC /* ConditionSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36E571B1B74C0D000471AAC /* ConditionSelectViewController.m */; };
 		B36E572D1B74C0D000471AAC /* ConditionSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36E571C1B74C0D000471AAC /* ConditionSelectViewController.xib */; };
@@ -1822,6 +1824,9 @@
 		B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExclusiveAppIntroduceViewController.h; sourceTree = "<group>"; };
 		B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExclusiveAppIntroduceViewController.m; sourceTree = "<group>"; };
 		B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewExclusiveAppIntroduceViewController.xib; sourceTree = "<group>"; };
+		B36B6BA81C17D7B8002C89E2 /* NewOpenExclusiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOpenExclusiveViewController.h; sourceTree = "<group>"; };
+		B36B6BA91C17D7B8002C89E2 /* NewOpenExclusiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOpenExclusiveViewController.m; sourceTree = "<group>"; };
+		B36B6BAA1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewOpenExclusiveViewController.xib; sourceTree = "<group>"; };
 		B36E57181B74C0D000471AAC /* ConditionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionModel.h; sourceTree = "<group>"; };
 		B36E57191B74C0D000471AAC /* ConditionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionModel.m; sourceTree = "<group>"; };
 		B36E571A1B74C0D000471AAC /* ConditionSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionSelectViewController.h; sourceTree = "<group>"; };
@@ -4459,6 +4464,9 @@
 				B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */,
 				B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */,
 				B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */,
+				B36B6BA81C17D7B8002C89E2 /* NewOpenExclusiveViewController.h */,
+				B36B6BA91C17D7B8002C89E2 /* NewOpenExclusiveViewController.m */,
+				B36B6BAA1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib */,
 			);
 			path = newExclusiveApp;
 			sourceTree = "<group>";
@@ -5137,6 +5145,7 @@
 				636C8B721AC2E1420097CAE9 /* ShareSDKLocalizable.strings in Resources */,
 				796EFD3B1BF5C67D00799120 /* chatBar_more_location@2x.png in Resources */,
 				796EFCF91BF5C67D00799120 /* call_out_h@2x.png in Resources */,
+				B36B6BAC1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib in Resources */,
 				796EFCC41BF5C67D00799120 /* chatListCellHead.png in Resources */,
 				796EFCFB1BF5C67D00799120 /* call_silence@2x.png in Resources */,
 				796EFD551BF5C67D00799120 /* chat_sender_audio_playing_003.png in Resources */,
@@ -5499,6 +5508,7 @@
 				5A076EA71ACD8B270077611C /* StoreViewController.m in Sources */,
 				63B8C7061ACE9C3F00328C8C /* messageDetailViewController.m in Sources */,
 				B3C01E301BAC10FC005E4BB5 /* Trader.m in Sources */,
+				B36B6BAB1C17D7B8002C89E2 /* NewOpenExclusiveViewController.m in Sources */,
 				5A076EA31ACD8B270077611C /* ShouKeBao.m in Sources */,
 				796EFDC01BF5CA4E00799120 /* MWTapDetectingView.m in Sources */,
 				B3CFF6261BFB05D7002065AA /* ExclusiveTableViewCell.m in Sources */,

@@ -22,7 +22,7 @@
 #define KWidth_Scale    [UIScreen mainScreen].bounds.size.width/375.0f
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
 #define KHeight    [UIScreen mainScreen].bounds.size.height/667.0f
-
+#define gap 10
 @implementation ExclusiveShareView
 
 static id _publishContent;
@@ -48,31 +48,37 @@ static id _naVC;
     _naVC = naVC;
 
     //  自定义分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 260/*(300-10-15-10)*KHeight */ /*kScreenHeight/2.0f-60+20*KHeight_Scale*/)];
+    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300/*(300-10-15-10)*KHeight */ /*kScreenHeight/2.0f-60+20*KHeight_Scale*/)];
     shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
     [backgroundShareView addSubview:shareView];
     _shareView = shareView;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, -10, shareView.frame.size.width-180, 25*KHeight)];
-    titleLabel.backgroundColor = [UIColor colorWithRed:251/255.0f green:78/255.0f blue:10/255.0f alpha:1];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, -10, shareView.frame.size.width-80, 30*KHeight)];
+    titleLabel.backgroundColor = [UIColor colorWithRed:249/255.0f green:79/255.0f blue:9/255.0f alpha:1];
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = @"怎么享受这些好处？";
+    titleLabel.text = @"恭喜您！您已开通专属APP功能";
     titleLabel.layer.masksToBounds = YES;
-    titleLabel.layer.cornerRadius = 2;
+    titleLabel.layer.cornerRadius = 3;
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont systemFontOfSize:15*KWidth_Scale];
+    titleLabel.font = [UIFont systemFontOfSize:17*KWidth_Scale];
     [shareView addSubview:titleLabel];
     
     
     
-    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(titleLabel.frame), shareView.frame.size.width-40, 50*KHeight)];
-    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App，立即行动，转发安装链接";
+    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(titleLabel.frame)+gap, shareView.frame.size.width-40, 50*KHeight)];
+//    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App，立即行动，转发安装链接";
+    contentLabel.text = @"专属APP能帮您随时掌握客户动态，马上行动点击下方图标，转发您的安装链接。";
     contentLabel.numberOfLines = 0;
-    contentLabel.textColor = [UIColor grayColor];
+//    contentLabel.textColor = [UIColor grayColor];
     contentLabel.textAlignment = NSTextAlignmentLeft;
-    contentLabel.font = [UIFont systemFontOfSize:12];
+    contentLabel.font = [UIFont systemFontOfSize:14];
     [shareView addSubview:contentLabel];
+    
+    UIView *lineV = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(contentLabel.frame)+gap, shareView.frame.size.width-20, 0.5)];
+    lineV.backgroundColor = [UIColor colorWithRed:176/255.0f green:177/255.0f blue:179/255.0f alpha:1];
+    [shareView addSubview:lineV];
+    
     
     NSArray *btnImages = @[@"iconfont-qq", @"iconfont-pengyouquan", @"iconfont-weixin",  @"iconfont-duanxin", @"iconfont-fuzhi", @"iconfont-kongjian"];
     NSArray *btnTitles = @[@"QQ", @"朋友圈",  @"微信好友", @"短信", @"复制链接", @"QQ空间"];
@@ -85,14 +91,14 @@ static id _naVC;
                 top = 30*KHeight;
             }
         }else{
-            if (KHeight > 1 || KHeight == 1) {
+//            if (KHeight > 1 || KHeight == 1) {
                 top = 120*KHeight;
-            }else{
-                 top = 150*KHeight;
-            }
+//            }else{
+//                 top = 150*KHeight;
+//            }
         }
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(30*KWidth_Scale+(i%3)*100*KWidth_Scale, CGRectGetMidY(contentLabel.frame)+top, 100*KWidth_Scale, 100*KWidth_Scale)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(30*KWidth_Scale+(i%3)*100*KWidth_Scale, CGRectGetMidY(lineV.frame)+top, 100*KWidth_Scale, 100*KWidth_Scale)];
         [button setImage:[UIImage imageNamed:btnImages[i]] forState:UIControlStateNormal];
         [button setTitle:btnTitles[i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -108,13 +114,19 @@ static id _naVC;
         if (KHeight > 1) {
              [button setTitleEdgeInsets:UIEdgeInsetsMake(53*KWidth_Scale, -42*KWidth_Scale, 10*KWidth_Scale, 0)];
         }else{
-             [button setTitleEdgeInsets:UIEdgeInsetsMake(68*KWidth_Scale, -47*KWidth_Scale, 10*KWidth_Scale, 0)];
+             [button setTitleEdgeInsets:UIEdgeInsetsMake(60*KWidth_Scale, -47*KWidth_Scale, 10*KWidth_Scale, 0)];
         }
-//        [button setTitleEdgeInsets:UIEdgeInsetsMake(<#CGFloat top#>, <#CGFloat left#>, <#CGFloat bottom#>, <#CGFloat right#>)]
         button.tag = 331+i;
         [button addTarget:self action:@selector(shareBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [shareView addSubview:button];
     }
+    
+    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-40, shareView.frame.size.width, 40)];
+    downImage.image = [UIImage imageNamed:@"downImage"];
+    [shareView addSubview:downImage];
+
+    
+    
 }
 
 +(void)shareBtnClick:(UIButton *)btn{
