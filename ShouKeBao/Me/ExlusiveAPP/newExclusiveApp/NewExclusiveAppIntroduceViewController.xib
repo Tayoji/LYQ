@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewExclusiveAppIntroduceViewController">
             <connections>
+                <outlet property="ScrollView" destination="fDR-nb-W3s" id="Aqm-PZ-WkU"/>
+                <outlet property="noOpenExclusive" destination="4f7-Wc-Pvr" id="HWd-MV-Bc4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +22,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noOpenExclusive" id="4f7-Wc-Pvr">
-                            <rect key="frame" x="-40" y="-176" width="400" height="832"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OfP-6e-SoC">
@@ -32,11 +34,28 @@
                             <state key="normal" title="返回" image="fanhuian">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="returnBtn:" destination="-1" eventType="touchUpInside" id="3EA-Yq-7aE"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Vxl-f5-ocz">
-                            <rect key="frame" x="170" y="49" width="60" height="30"/>
+                            <rect key="frame" x="260" y="15" width="60" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                             <state key="normal" image="wenhao">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="introduceBtn:" destination="-1" eventType="touchUpInside" id="969-hO-4nI"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7sI-Q2-azG">
+                            <rect key="frame" x="50" y="390" width="220" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <inset key="titleEdgeInsets" minX="-120" minY="0.0" maxX="20" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="30" minY="0.0" maxX="10" maxY="0.0"/>
+                            <state key="normal" title="立即联系客户经理" image="click-2">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -49,6 +68,7 @@
         </view>
     </objects>
     <resources>
+        <image name="click-2" width="139" height="35"/>
         <image name="fanhuian" width="25" height="26"/>
         <image name="noOpenExclusive" width="320" height="617"/>
         <image name="wenhao" width="17" height="17"/>
