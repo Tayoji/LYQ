@@ -1318,12 +1318,20 @@
         self.guideImageView.image = [UIImage imageNamed:@"dredged"];
 
     }
+    //立即查看按钮
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/6, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3, self.guideImageView.frame.size.width/8)];
     [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
     [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(Seeprivilege) forControlEvents:UIControlEventTouchUpInside];
+    button.tag = 1210;
+    [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_guideImageView addSubview:button];
+    //叉号按钮
+    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-40, 10, 30, 30)];
+    cleanBtn.tag = 1209;
+    [cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+    [cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
+    [_guideImageView addSubview:cleanBtn];
     [guideDefault setObject:@"1" forKey:@"SKBGuide"];
      [guideDefault synchronize];
     
@@ -1331,32 +1339,40 @@
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
 }
--(void)Seeprivilege{
+-(void)Seeprivilege:(UIButton *)btn{
     NSLog(@"点击立即查看特权");
-    
-}
--(void)click
-{
-    self.guideIndex++;
-    
-    NSString *str = [NSString stringWithFormat:@"NewGuideSKB%d",self.guideIndex+1];
-    self.guideImageView.image = [UIImage imageNamed:str];
-    
-    CATransition *an1 = [CATransition animation];
-    an1.type = @"rippleEffect";
-    an1.subtype = kCATransitionFromRight;//用kcatransition的类别确定cube翻转方向
-    an1.duration = 0.2;
-    [self.guideImageView.layer addAnimation:an1 forKey:nil];
-    if (self.guideIndex == 2) {
+    if (btn.tag == 1209) {
         [self.guideView removeFromSuperview];
+        [self.guideImageView removeFromSuperview];
+
+    }else if (btn.tag == 1210){
+        NSLog(@"立即跳转");
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"jumpTo"];
     }
-    NSLog(@"被店家－－－－－－－－－－－－－indexi is %d－－",_guideIndex);
+    
 }
--(void)click1
-{
-    [self.guideView removeFromSuperview];
-    [self.guideImageView removeFromSuperview];
-}
+//-(void)click
+//{
+//    self.guideIndex++;
+//    
+//    NSString *str = [NSString stringWithFormat:@"NewGuideSKB%d",self.guideIndex+1];
+//    self.guideImageView.image = [UIImage imageNamed:str];
+//    
+//    CATransition *an1 = [CATransition animation];
+//    an1.type = @"rippleEffect";
+//    an1.subtype = kCATransitionFromRight;//用kcatransition的类别确定cube翻转方向
+//    an1.duration = 0.2;
+//    [self.guideImageView.layer addAnimation:an1 forKey:nil];
+//    if (self.guideIndex == 2) {
+//        [self.guideView removeFromSuperview];
+//    }
+//    NSLog(@"被店家－－－－－－－－－－－－－indexi is %d－－",_guideIndex);
+//}
+//-(void)click1
+//{
+//    [self.guideView removeFromSuperview];
+//    [self.guideImageView removeFromSuperview];
+//}
 // 显示提醒
 - (void)showRemind:(NSTimer *)timer
 {
