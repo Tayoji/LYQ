@@ -34,7 +34,7 @@
 #import "SearchView.h"
 #import "CustomerSection.h"
 #import "ChatViewController.h"
-
+#import "EaseMob.h"
 #define pageSize 10
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
 @interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh>
@@ -133,6 +133,7 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(receiveNotification:) name:@"下班" object:nil];
+    [center addObserver:self selector:@selector(getNotifiList) name:@"reciveNewMessage" object:nil];
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
@@ -174,6 +175,7 @@
 
 #pragma mark - 消息请求
 -(void)getNotifiList{
+    /*
     NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
     [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
         NSLog(@"公告消息列表%@",json);
@@ -192,6 +194,15 @@
     } failure:^(NSError *error) {
         NSLog(@"公告消息列表失败%@",error);
     }];
+     */
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    self.messageCount = unreadCount;
+    [self messagePromptAction];
+
 }
 -(void)messagePromptAction{
     if (self.messageCount == 0) {
@@ -200,22 +211,19 @@
     }else{
     self.conditionLine.hidden = NO;
     self.tableSuper.frame = CGRectMake(0, 90, self.view.frame.size.width, self.view.frame.size.height-90);
-        
-    self.messagePrompt.text = [NSString stringWithFormat:@"您有%d条未读信息", self.messageCount];
-   self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
+    self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
+    self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
     if (self.messageCount >0) {
         [self.bellButton setImage:[UIImage imageNamed:@"redBell"] forState:UIControlStateNormal];
     }
   }
-    
 }
 - (IBAction)pushMessageVC:(id)sender {
-    
-//+ (void)event:(NSString *)eventId label:(NSString *)label
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
     
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
+    messgeCenter.messageCenterType = FromCustom;
     [self.navigationController pushViewController:messgeCenter animated:YES];
 }
 

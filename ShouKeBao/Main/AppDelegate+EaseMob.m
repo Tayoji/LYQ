@@ -56,7 +56,7 @@
             [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
             NSLog(@"登陆成功 %@", APPUserId);
             EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
-            options.displayStyle = ePushNotificationDisplayStyle_messageSummary;
+            options.displayStyle = ePushNotificationDisplayStyle_simpleBanner;
             options.noDisturbStatus = ePushNotificationNoDisturbStatusClose;
         }
     } onQueue:nil];
