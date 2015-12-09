@@ -272,6 +272,9 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self.locationManager stopUpdatingLocation];
+    if (self.SmallGuidance != nil) {
+        [self.SmallGuidance removeFromSuperview];
+    }
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -389,9 +392,9 @@
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
     NSString *SKBGuide = [guiDefault objectForKey:@"SKBGuide"];
-//    if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
+    if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
         [self Guide];
-//    }
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToRecommendList) name:@"notifiToPushToRecommed" object:nil];
 
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
@@ -1308,7 +1311,7 @@
     _guideView.alpha = 0.4;
     self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
     self.guideImageView.userInteractionEnabled = YES;
-#warning 这里上线前需要优化“根据等级判断显示引导图是一张还是多张”
+
     if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
 //        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
@@ -1343,6 +1346,7 @@
     if (btn.tag == 1209) {//点击XX 按钮
         [self.guideView removeFromSuperview];
         [self.guideImageView removeFromSuperview];
+        
         self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
             self.SmallGuidance.image = [UIImage imageNamed:@"KeepNotApp"];
@@ -1351,7 +1355,12 @@
         }
         
         [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
-
+//        CGFloat guideWieth = self.guideView
+        [UIView animateWithDuration:2 animations:^{
+            
+        } completion:^(BOOL finished) {
+            NSLog(@"动画执行完毕");
+        }];
         NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
         [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
         
@@ -1370,7 +1379,10 @@
 }
 -(void)reloop{
     NSLog(@"已经过了3秒了");
-    [self.SmallGuidance removeFromSuperview];
+    if (self.SmallGuidance != nil) {
+        [self.SmallGuidance removeFromSuperview];
+    }
+    
 }
 //-(void)click
 //{

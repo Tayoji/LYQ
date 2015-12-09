@@ -103,9 +103,9 @@
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
     
     NSString *SKBMeGuide = [def objectForKey:@"NewMeGuide"];
-//    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
+    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
         [self Guide];
-//    }
+    }
     
     //获取版本信息
     NSDictionary * dic = @{};
@@ -126,27 +126,32 @@
     [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
     _guideImageView.userInteractionEnabled = YES;
    
-    
+    UIButton *GetCashBtn = [[UIButton alloc] init];
     if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){//没有开通旅游顾问
 //       [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
         if (foureSize) {
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
             self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash4"];//NewMeGuide
+            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
+
         }else{
             self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash"];//NewMeGuide
             if (fiveSize) {
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
+
             }else if(sixSize){
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
             }else{
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
             }
-        }
+            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
 
-    }else{
+        }
+        }else{
         if (foureSize) {
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
             self.guideImageView.image = [UIImage imageNamed:@"NowGetCash4"];//NewMeGuide
+              GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
         }else{
             self.guideImageView.image = [UIImage imageNamed:@"NowGetCash"];//NewMeGuide
             if (fiveSize) {
@@ -155,11 +160,13 @@
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
         }else{
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-            }
         }
+            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+
+        }
+        GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
     }
     
-     UIButton *GetCashBtn = [[UIButton alloc] initWithFrame:CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40)];
     
     [GetCashBtn addTarget:self action:@selector(GetcashClick:) forControlEvents:UIControlEventTouchUpInside];
     if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
@@ -183,8 +190,12 @@
 -(void)GetcashClick:(UIButton *)btn{
     if (btn.tag == 010) {
         NSLog(@"跳进没有开通的");
+        NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
+        [self.navigationController pushViewController:exc animated:YES];
     }else if(btn.tag == 011){
         NSLog(@"跳进已经开通的");
+        NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
+        [self.navigationController pushViewController:excOpen animated:YES];
     }
     
 }

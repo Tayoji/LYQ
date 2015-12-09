@@ -20,6 +20,13 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "NewOpenExclusiveViewController.h"
+
+#define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
+#define kScreenSize [UIScreen mainScreen].bounds.size
 @interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
 //头部
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImageViewSet;
@@ -85,17 +92,32 @@
 -(void)Guide
 {
     self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    _guideView.backgroundColor = [UIColor clearColor];
-    self.guideImageView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _guideView.backgroundColor = [UIColor blackColor];
+    _guideView.alpha = 0.5;
+    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/12, kScreenSize.width-60, kScreenSize.height/3+kScreenSize.height/3)];
+    self.guideImageView.userInteractionEnabled = YES;
     [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
-    self.guideImageView.image = [UIImage imageNamed:@"NewMegwGuide"];//NewMeGuide
+    self.guideImageView.image = [UIImage imageNamed:@"OneKeyShare"];//OneKeyShare
+    
+    UIButton *shareBtn = [[UIButton alloc] init];
+    if (foureSize) {
+        shareBtn.frame = CGRectMake((_guideImageView.frame.size.width-_guideImageView.frame.size.width/3)/2, _guideImageView.frame.size.height-55, _guideImageView.frame.size.width/3, 40);
+    }else{
+        shareBtn.frame = CGRectMake((_guideImageView.frame.size.width-_guideImageView.frame.size.width/3)/2, _guideImageView.frame.size.height-70, _guideImageView.frame.size.width/3, 40);
+    }
+    [shareBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+    [shareBtn setTitle:@"一键分享" forState:UIControlStateNormal];
+    shareBtn.tag = 1011;
+    [shareBtn addTarget:self action:@selector(shareAction:) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_guideImageView addSubview:shareBtn];
     
     NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
     [guideDefault setObject:@"1" forKey:@"NewMegwGuide"];
     [guideDefault synchronize];
     
-    [self.guideView addSubview:_guideImageView];
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+    [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
 }
 -(void)click
 {
@@ -105,6 +127,7 @@
     an1.duration = 0.2;
     [self.guideImageView.layer addAnimation:an1 forKey:nil];
     [self.guideView removeFromSuperview];
+    [self.guideImageView removeFromSuperview];
     
 }
 - (void)clickCustomerLableToComeInCustomer:(UITapGestureRecognizer *)tap{
@@ -213,7 +236,10 @@
 
 
 -(void)shareAction:(UIButton *)button{
- 
+    if (button.tag == 1011) {
+        [self.guideImageView removeFromSuperview];
+        [self.guideView removeFromSuperview];
+    }
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_exclusiveAppShareBtnClick" attributes:dict];
     
