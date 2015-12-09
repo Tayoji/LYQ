@@ -1330,7 +1330,7 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_guideImageView addSubview:button];
     //叉号按钮
-    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-40, 10, 30, 30)];
+    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
     cleanBtn.tag = 1209;
     [cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
     [cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
@@ -1344,8 +1344,8 @@
 }
 -(void)Seeprivilege:(UIButton *)btn{
     if (btn.tag == 1209) {//点击XX 按钮
-        [self.guideView removeFromSuperview];
-        [self.guideImageView removeFromSuperview];
+//        [self.guideView removeFromSuperview];
+//        [self.guideImageView removeFromSuperview];
         
         self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
         if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
@@ -1355,11 +1355,15 @@
         }
         
         [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
-//        CGFloat guideWieth = self.guideView
-        [UIView animateWithDuration:2 animations:^{
-            
+       
+        [UIView animateWithDuration:1 animations:^{
+            self.guideView.frame = CGRectMake(kScreenSize.width, kScreenSize.height, 0, 0);
+            self.guideImageView.frame =CGRectMake(kScreenSize.width, kScreenSize.height, 0, 0);
         } completion:^(BOOL finished) {
             NSLog(@"动画执行完毕");
+            [self.guideView removeFromSuperview];
+            [self.guideImageView removeFromSuperview];
+
         }];
         NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
         [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];

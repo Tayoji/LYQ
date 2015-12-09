@@ -188,13 +188,17 @@
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
 }
 -(void)GetcashClick:(UIButton *)btn{
+    [self.guideView removeFromSuperview];
+    [self.guideImageView removeFromSuperview];
     if (btn.tag == 010) {
         NSLog(@"跳进没有开通的");
         NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
+        exc.naVC = self.navigationController;
         [self.navigationController pushViewController:exc animated:YES];
     }else if(btn.tag == 011){
         NSLog(@"跳进已经开通的");
         NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
+        excOpen.naVC = self.navigationController;
         [self.navigationController pushViewController:excOpen animated:YES];
     }
     
@@ -256,11 +260,14 @@
         if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
             //跳往未开通界面
             NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
+            newExc.naVC = self.navigationController;
             [self.navigationController pushViewController:newExc animated:YES];
 
         }else{
             //跳往已开通界面
-            
+            NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
+            newExc.naVC = self.navigationController;
+            [self.navigationController pushViewController:newExc animated:YES];
         }
     }
 }
