@@ -152,13 +152,6 @@
     [super viewWillAppear:animated];
     self.subView.hidden = YES;
     [self.table reloadData];
-    //    NSUserDefaults *customer = [NSUserDefaults standardUserDefaults];
-    //    NSString *appIsBack = [customer objectForKey:@"appIsBack"];
-    //    NSLog(@"appIsBack---- %@", appIsBack);
-    //    if ([appIsBack isEqualToString:@"no"]) {
-    //        [self initPull];
-    //    }
-    //    [customer synchronize];
     [MobClick beginLogPageView:@"OldCustomers"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(historySearch:) name:@"CustomerHistorySearch" object:nil];
 }

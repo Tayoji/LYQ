@@ -7,10 +7,14 @@
 //
 
 #import "SKViewController.h"
+typedef enum : NSUInteger{
+    FromSKB,
+    FromCustom
+} MessageCenterType;
 
 @interface NewMessageCenterController : SKViewController
 @property (weak, nonatomic) IBOutlet UISearchBar *SearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic, assign)MessageCenterType messageCenterType;
 
 @end

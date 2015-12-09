@@ -175,13 +175,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
     for (EMConversation *conversation in conversations) {
         unreadCount += conversation.unreadMessagesCount;
     }
-    //    if (_chatListVC) {
-    //        if (unreadCount > 0) {
-    //            _chatListVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",(int)unreadCount];
-    //        }else{
-    //            _chatListVC.tabBarItem.badgeValue = nil;
-    //        }
-    //    }
     NSLog(@"%ld", (long)unreadCount);
     UIApplication *application = [UIApplication sharedApplication];
     [application setApplicationIconBadgeNumber:unreadCount];
@@ -268,6 +261,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
     NSString *locationTimeString=[dateformatter stringFromDate:sendDate];
     _customers.timePrompt.text = locationTimeString;
     [LocationSeting defaultLocationSeting].customMessageDateStr = locationTimeString;
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:@"reciveNewMessage" object:nil];
 }
 
 
@@ -395,105 +390,9 @@ static NSString *kConversationChatter = @"ConversationChatter";
     ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:userInfo[@"ConversationChatter"] conversationType:eConversationTypeChat];
     [chatVC hideImagePicker];
     [self.shoukebaoVC.navigationController pushViewController:chatVC animated:YES];
-    /*
-     if (userInfo)
-     {
-     if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
-     ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
-     [chatController hideImagePicker];
-     }
-     
-     NSArray *viewControllers = self.navigationController.viewControllers;
-     [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-     if (obj != self)
-     {
-     if (![obj isKindOfClass:[ChatViewController class]])
-     {
-     [self.navigationController popViewControllerAnimated:NO];
-     }
-     else
-     {
-     NSString *conversationChatter = userInfo[kConversationChatter];
-     ChatViewController *chatViewController = (ChatViewController *)obj;
-     if (![chatViewController.chatter isEqualToString:conversationChatter])
-     {
-     [self.navigationController popViewControllerAnimated:NO];
-     EMMessageType messageType = [userInfo[kMessageType] intValue];
-     chatViewController = [[ChatViewController alloc] initWithChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
-     switch (messageType) {
-     case eMessageTypeGroupChat:
-     {
-     NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-     for (EMGroup *group in groupArray) {
-     if ([group.groupId isEqualToString:conversationChatter]) {
-     chatViewController.title = group.groupSubject;
-     break;
-     }
-     }
-     }
-     break;
-     default:
-     chatViewController.title = conversationChatter;
-     break;
-     }
-     [self.navigationController pushViewController:chatViewController animated:NO];
-     }
-     *stop= YES;
-     }
-     }
-     else
-     {
-     ChatViewController *chatViewController = (ChatViewController *)obj;
-     NSString *conversationChatter = userInfo[kConversationChatter];
-     EMMessageType messageType = [userInfo[kMessageType] intValue];
-     chatViewController = [[ChatViewController alloc] initWithChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
-     switch (messageType) {
-     case eMessageTypeGroupChat:
-     {
-     NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
-     for (EMGroup *group in groupArray) {
-     if ([group.groupId isEqualToString:conversationChatter]) {
-     chatViewController.title = group.groupSubject;
-     break;
-     }
-     }
-     }
-     break;
-     default:
-     chatViewController.title = conversationChatter;
-     break;
-     }
-     [self.navigationController pushViewController:chatViewController animated:NO];
-     }
-     }];
-     }
-     */
-    //    else if (_chatListVC)
-    //    {
-    //        [self.navigationController popToViewController:self animated:NO];
-    //        [self setSelectedViewController:_chatListVC];
-    //    }
 }
 
 #pragma mark - public
-
-- (void)jumpToChatList
-{
-    //    [[[UIAlertView alloc]initWithTitle:@"test" message:@"test" delegate:nil cancelButtonTitle:@"aaa" otherButtonTitles:nil, nil]show];
-    //    self.selectedViewController = ((HomePage *)self.viewControllers[0]);
-    //    ChatViewController * VC = [[ChatViewController alloc]initWithChatter:@"admin" conversationType:eConversationTypeChat];
-    //    [VC hideImagePicker];
-    //    [self.homePageNav pushViewController:VC animated:YES];
-    //    if ([self.navigationController.topViewController isKindOfClass:[ChatViewController class]]) {
-    //        ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
-    //        [chatController hideImagePicker];
-    //    }
-    //    else if(_chatListVC)
-    //    {
-    //        [self.navigationController popToViewController:self animated:NO];
-    //        [self setSelectedViewController:_chatListVC];
-    //    }
-}
 
 - (EMConversationType)conversationTypeFromMessageType:(EMMessageType)type
 {

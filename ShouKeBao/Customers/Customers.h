@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *messagePrompt;
 @property (weak, nonatomic) IBOutlet UILabel *timePrompt;
 @property (nonatomic,strong) NSMutableArray *isReadArr;
-@property (nonatomic, assign)int messageCount;
+@property (nonatomic, assign)NSInteger messageCount;
 
 @property (nonatomic, assign)NSInteger customerType;
 @property (nonatomic, assign)BOOL isMe;
