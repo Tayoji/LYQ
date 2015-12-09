@@ -47,8 +47,15 @@ static id _naVC;
     _Url = url;
     _naVC = naVC;
 
+    NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
+    UIView *shareView;
     //  自定义分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300/*(300-10-15-10)*KHeight */ /*kScreenHeight/2.0f-60+20*KHeight_Scale*/)];
+    if ([UIScreen mainScreen].bounds.size.height == 480 || [UIScreen mainScreen].bounds.size.height == 568) {
+        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300)];
+    }else{
+        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300*KHeight)];
+    }
+    
     shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
     [backgroundShareView addSubview:shareView];
@@ -91,14 +98,14 @@ static id _naVC;
                 top = 30*KHeight;
             }
         }else{
-//            if (KHeight > 1 || KHeight == 1) {
-                top = 120*KHeight;
-//            }else{
-//                 top = 150*KHeight;
-//            }
+            if (KHeight > 1 || KHeight == 1) {
+                top = 105*KHeight;
+            }else{
+                 top = 140*KHeight;
+            }
         }
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(30*KWidth_Scale+(i%3)*100*KWidth_Scale, CGRectGetMidY(lineV.frame)+top, 100*KWidth_Scale, 100*KWidth_Scale)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(30*KWidth_Scale+(i%3)*100*KWidth_Scale, CGRectGetMidY(lineV.frame)+top, 80*KWidth_Scale, 80*KWidth_Scale)];
         [button setImage:[UIImage imageNamed:btnImages[i]] forState:UIControlStateNormal];
         [button setTitle:btnTitles[i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -106,9 +113,9 @@ static id _naVC;
         [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
         [button setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
         if (i == 1) {
-            [button setImageEdgeInsets:UIEdgeInsetsMake(0, 23*KWidth_Scale, 15*KWidth_Scale, 10*KWidth_Scale)];
+            [button setImageEdgeInsets:UIEdgeInsetsMake(0, 20*KWidth_Scale, 15*KWidth_Scale, 8*KWidth_Scale)];
         }else{
-            [button setImageEdgeInsets:UIEdgeInsetsMake(0, 23*KWidth_Scale, 15*KWidth_Scale, 10*KWidth_Scale)];
+            [button setImageEdgeInsets:UIEdgeInsetsMake(0, 20*KWidth_Scale, 15*KWidth_Scale, 8*KWidth_Scale)];
         }
         
         if (KHeight > 1) {
@@ -121,6 +128,7 @@ static id _naVC;
         [shareView addSubview:button];
     }
     
+  
     UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-40, shareView.frame.size.width, 40)];
     downImage.image = [UIImage imageNamed:@"downImage"];
     [shareView addSubview:downImage];

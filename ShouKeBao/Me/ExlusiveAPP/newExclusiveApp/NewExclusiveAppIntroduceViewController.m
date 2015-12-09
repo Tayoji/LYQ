@@ -8,7 +8,8 @@
 
 #import "NewExclusiveAppIntroduceViewController.h"
 #import "noOpenExclusiveAppView.h"
-#import "NewOpenExclusiveViewController.h"
+#import "WhatIsExclusiveViewController.h"
+
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/667.0f
 #define View_width self.view.frame.size.width
 #define View_height self.view.frame.size.height
@@ -59,12 +60,13 @@
 */
 
 - (IBAction)returnBtn:(id)sender {
-    [self.naVC popViewControllerAnimated:YES];
+    [self.naVC popToRootViewControllerAnimated:YES];
+    
 }
 
 - (IBAction)introduceBtn:(id)sender {
-    NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
-    [self.naVC pushViewController:newOpenVC animated:YES];
+    WhatIsExclusiveViewController *WhatIsExclusiveVC = [[WhatIsExclusiveViewController alloc]init];
+    [self.naVC pushViewController:WhatIsExclusiveVC animated:YES];
 }
 
 @end
