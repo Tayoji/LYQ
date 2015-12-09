@@ -60,14 +60,6 @@
             options.noDisturbStatus = ePushNotificationNoDisturbStatusClose;
         }
     } onQueue:nil];
-//    [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:@"c4355fdb93704425bad478418788f99b" password:@"c4355fdb" completion:^(NSDictionary *loginInfo, EMError *error) {
-//        if (!error && loginInfo) {
-//            [[EaseMob sharedInstance].chatManager loadDataFromDatabase];
-//            NSLog(@"登陆成功 %@", APPUserId);
-//        }
-//    } onQueue:nil];
-
-    
     // 登录成功后，自动去取好友列表
     // SDK获取结束后，会回调
     // - (void)didFetchedBuddyList:(NSArray *)buddyList error:(EMError *)error方法。
