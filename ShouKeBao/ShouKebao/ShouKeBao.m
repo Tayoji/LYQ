@@ -81,10 +81,10 @@
 #import "Double12TableViewCell.h"
 #import "DoubleModel.h"
 #import "ZhiVisitorDynamicController.h"
-
+//#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
-
+#define kScreenSize [UIScreen mainScreen].bounds.size
 @interface ShouKeBao ()<UITableViewDataSource,UITableViewDelegate,notifiSKBToReferesh,remindDetailDelegate, CLLocationManagerDelegate /*定位代理*/>
 //定位使用
 @property (nonatomic, retain)CLLocationManager *locationManager;
@@ -389,9 +389,9 @@
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
     NSString *SKBGuide = [guiDefault objectForKey:@"SKBGuide"];
-    if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
+//    if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
         [self Guide];
-    }
+//    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToRecommendList) name:@"notifiToPushToRecommed" object:nil];
 
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
@@ -792,11 +792,11 @@
             self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
             int valueCount = [self.barButton.badgeValue intValue];
             self.barButton.badgeValue = [NSString stringWithFormat:@"%d",valueCount+1];
-//           管客户界面消息通知
-            self.customerMessage.messagePrompt.text = [NSString stringWithFormat:@"您有%d条未读信息", valueCount+1];
+            
           }
-    }
 }
+    
+   }
 
 
 #pragma -mark 声音
@@ -1260,23 +1260,9 @@
                 baseDouble.model = doubleModel;
                 baseDouble.idStr = doubleModel.LinkUrl;
 //                [self.dataSource addObject:baseDouble];
-//                [self.dataSource insertObject:baseDouble atIndex:1];
-            //确定今日推荐排到位置
-            int recomIndex = 0;
-            for (int i = 0 ; i<self.dataSource.count; i++) {
-                HomeBase *base = self.dataSource[i];
-                if ([base.model isKindOfClass:[Recommend class]]) {
-                    recomIndex = i;
-                }
+                [self.dataSource insertObject:baseDouble atIndex:1];
             }
-                NSLog(@"..... %d", recomIndex);
-            if (recomIndex>0) {
-                 [self.dataSource insertObject:baseDouble atIndex:1];
-            }else{
-                 [self.dataSource insertObject:baseDouble atIndex:0];
-            }
-        }
-            
+
                 // 清理数据 看有没有隐藏的 有就不要显示
                 [self cleanDataSource];
          
@@ -1318,24 +1304,37 @@
 {
     NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
     self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    _guideView.backgroundColor = [UIColor clearColor];
-    self.guideImageView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _guideView.backgroundColor = [UIColor blackColor];
+    _guideView.alpha = 0.4;
+    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+    self.guideImageView.userInteractionEnabled = YES;
 #warning 这里上线前需要优化“根据等级判断显示引导图是一张还是多张”
     if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+//        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
+
     }else{
-        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+//        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+        self.guideImageView.image = [UIImage imageNamed:@"dredged"];
+
     }
-    self.guideImageView.image = [UIImage imageNamed:@"NewGuideSKB1"];
-
-
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/6, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3, self.guideImageView.frame.size.width/8)];
+    [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
+    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(Seeprivilege) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_guideImageView addSubview:button];
     [guideDefault setObject:@"1" forKey:@"SKBGuide"];
      [guideDefault synchronize];
     
-    [self.guideView addSubview:_guideImageView];
+//    [self.guideView addSubview:_guideView];
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+    [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
 }
-
+-(void)Seeprivilege{
+    NSLog(@"点击立即查看特权");
+    
+}
 -(void)click
 {
     self.guideIndex++;
@@ -1355,7 +1354,8 @@
 }
 -(void)click1
 {
-        [self.guideView removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    [self.guideImageView removeFromSuperview];
 }
 // 显示提醒
 - (void)showRemind:(NSTimer *)timer
@@ -1687,10 +1687,6 @@
 {
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
     [self.navigationController pushViewController:messgeCenter animated:YES];
-    
-    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-    [MobClick event:@"ShouKeBao_messageClick" attributes:dict];
-    
 //    [UIApplication sharedApplication].applicationIconBadgeNumber = 8;
     /*
      原有内容
