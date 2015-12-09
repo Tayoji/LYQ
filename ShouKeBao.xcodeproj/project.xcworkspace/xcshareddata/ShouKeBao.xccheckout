@@ -7,16 +7,20 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D7625953-A4FE-49D9-950A-2D3EF1276C6B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>ShouKeBao</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131</key>
+		<string>https://github.com/qq670082622/PipiKou.git</string>
 		<key>74FAD6C5578B7F7E0493BCA88DE17B50E6D40556</key>
 		<string>https://github.com/lvyouquanpipikou/LYQ.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ShouKeBao.xcodeproj/project.xcworkspace</string>
+	<string>ShouKeBao.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131</key>
+		<string>../../../PipiKou</string>
 		<key>74FAD6C5578B7F7E0493BCA88DE17B50E6D40556</key>
 		<string>../..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>74FAD6C5578B7F7E0493BCA88DE17B50E6D40556</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LYQ</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>16CD5C32986B7DB5A2DAC71F8C8FA77F832C2131</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PipiKou</string>
 		</dict>
 	</array>
 </dict>
