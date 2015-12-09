@@ -28,7 +28,6 @@
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
-@property (nonatomic,strong) NSArray *TimedataArr;
 @property (nonatomic,strong) UIView *searchView;
 @property (nonatomic,strong) NSMutableArray *NamedataArr;//存放网络数据
 
@@ -48,8 +47,6 @@
     [super viewDidLoad];
     
     self.title = @"消息中心";
-    _TimedataArr = @[@"09:25",@"11:11",@"13:50",@"18:12",@"23:13"];//测试数据
-    
     NSLog(@"chatlist%@", self.chatListArray);
     _tableView.tableFooterView = [[UIView alloc] init];
     
@@ -66,6 +63,11 @@
 }
 
 - (void)loadMessageDataSource{
+    
+    //如果是来自管客户的界面，只显示IM聊天
+    if (self.messageCenterType == FromCustom) {
+        return;
+    }
     NSMutableDictionary * params = nil;
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
         if ([json[@"IsSuccess"]integerValue]) {
@@ -130,14 +132,14 @@
         }
         return self.chatListArray.count;
     }
-//    return self.searchDataArr.count;
     return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (tableView.tag == 2011) {
-        if (section == 0) {
+        if (section == 0 || self.messageCenterType == FromCustom) {
             return 0;
         }
+
         return 20;
     }
     return 0;
