@@ -80,6 +80,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Double12TableViewCell.h"
 #import "DoubleModel.h"
+#import "ViewController.h"
 #import "ZhiVisitorDynamicController.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
@@ -152,8 +153,7 @@
 @property (nonatomic, strong)HotLaButton *hotLableButton;
 @property (nonatomic, strong)NSMutableArray *circleArr;
 @property (nonatomic, copy)NSString *CircleUrl;
-
-
+@property (nonatomic,strong)UIImageView *SmallGuidance;
 
 @property (nonatomic,strong) AVAudioPlayer *player;
 
@@ -1340,16 +1340,37 @@
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
 }
 -(void)Seeprivilege:(UIButton *)btn{
-    NSLog(@"点击立即查看特权");
-    if (btn.tag == 1209) {
+    if (btn.tag == 1209) {//点击XX 按钮
         [self.guideView removeFromSuperview];
         [self.guideImageView removeFromSuperview];
+        self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+            self.SmallGuidance.image = [UIImage imageNamed:@"KeepNotApp"];
+        }else{
+            self.SmallGuidance.image = [UIImage imageNamed:@"KeepApp"];
+        }
+        
+        [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
 
+        NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
+        [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
+        
     }else if (btn.tag == 1210){
         NSLog(@"立即跳转");
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"jumpTo"];
+        //引导成功，我的界面不用引导
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"NewMeGuide"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"jumpToZSApp"];
+        [self.guideView removeFromSuperview];
+        [self.guideImageView removeFromSuperview];
+        ((ViewController *)(self.view.window.rootViewController)).selectedViewController = [((ViewController*)self.view.window.rootViewController).viewControllers objectAtIndex:4];
     }
     
+}
+-(void)reloop{
+    NSLog(@"已经过了3秒了");
+    [self.SmallGuidance removeFromSuperview];
 }
 //-(void)click
 //{

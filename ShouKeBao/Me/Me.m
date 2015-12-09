@@ -102,9 +102,9 @@
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
     
     NSString *SKBMeGuide = [def objectForKey:@"NewMeGuide"];
-    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
+//    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
         [self Guide];
-    }
+//    }
     
     //获取版本信息
     NSDictionary * dic = @{};
@@ -123,12 +123,16 @@
     _guideView.alpha = 0.5;
     self.guideImageView = [[UIImageView alloc] init];
     [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+    _guideImageView.userInteractionEnabled = YES;
+   
+    
     if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){//没有开通旅游顾问
+//       [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
         if (foureSize) {
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-            self.guideImageView.image = [UIImage imageNamed:@"NewMeGuide4no"];//NewMeGuide
+            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash4"];//NewMeGuide
         }else{
-            self.guideImageView.image = [UIImage imageNamed:@"NewMeGuide5no"];//NewMeGuide
+            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash"];//NewMeGuide
             if (fiveSize) {
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
             }else if(sixSize){
@@ -139,27 +143,49 @@
         }
 
     }else{
-    if (foureSize) {
-        self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-        self.guideImageView.image = [UIImage imageNamed:@"NewMeGuide4"];//NewMeGuide
-    }else{
-        self.guideImageView.image = [UIImage imageNamed:@"NewMeGuide5"];//NewMeGuide
-        if (fiveSize) {
-           self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
-        }else if(sixSize){
+        if (foureSize) {
+            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash4"];//NewMeGuide
+        }else{
+            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash"];//NewMeGuide
+            if (fiveSize) {
+        self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
+            }else if(sixSize){
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
         }else{
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+            }
         }
     }
+    
+     UIButton *GetCashBtn = [[UIButton alloc] initWithFrame:CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40)];
+    
+    [GetCashBtn addTarget:self action:@selector(GetcashClick:) forControlEvents:UIControlEventTouchUpInside];
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+        GetCashBtn.tag = 010;
+        [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
+    }else{
+        GetCashBtn.tag = 011;
+        [GetCashBtn setTitle:@"点击查看领取" forState:UIControlStateNormal];
     }
-
+    
+    [GetCashBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [GetCashBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+    [self.guideImageView addSubview:GetCashBtn];
     NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
     [guideDefault setObject:@"1" forKey:@"NewMeGuide"];
     [guideDefault synchronize];
     
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
     [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+}
+-(void)GetcashClick:(UIButton *)btn{
+    if (btn.tag == 010) {
+        NSLog(@"跳进没有开通的");
+    }else if(btn.tag == 011){
+        NSLog(@"跳进已经开通的");
+    }
+    
 }
 -(void)click
 {
@@ -211,6 +237,19 @@
         [MobClick event:@"MeMoenyTreeClick" attributes:dict];
         [def removeObjectForKey:@"ThreeDTouch"];
         [self.navigationController pushViewController:moneyTreeVC animated:YES];
+    }
+    //新手引导
+    if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
+        [def setObject:@"" forKey:@"jumpToZSApp"];
+        if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+            //跳往未开通界面
+            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
+            [self.navigationController pushViewController:newExc animated:YES];
+
+        }else{
+            //跳往已开通界面
+            
+        }
     }
 }
 -(void)thirdTouchPushYaoQianShu:(NSNotification *)notiP{
