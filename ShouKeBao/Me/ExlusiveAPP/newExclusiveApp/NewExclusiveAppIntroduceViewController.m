@@ -16,6 +16,8 @@
 - (IBAction)introduceBtn:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *noOpenExclusive;
 
+@property (weak, nonatomic) IBOutlet UIButton *managerBtn;
+- (IBAction)contactManager:(id)sender;
 
 @end
 
@@ -38,7 +40,12 @@
     self.noOpenExclusive = noOpenExclusive;
     [self.ScrollView addSubview:self.noOpenExclusive];
     
-    
+    UIButton *managerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    managerBtn.frame = CGRectMake(50, 390, 220, 30);
+    [managerBtn setImage:[UIImage imageNamed:@"click-2"] forState:UIControlStateNormal];
+    [managerBtn setTitle:@"立即联系客户经理" forState:UIControlStateNormal];
+    self.managerBtn = managerBtn;
+    [self.noOpenExclusive addSubview:self.managerBtn];
     
     
     
@@ -67,5 +74,7 @@
 }
 
 - (IBAction)introduceBtn:(id)sender {
+}
+- (IBAction)contactManager:(id)sender {
 }
 @end
