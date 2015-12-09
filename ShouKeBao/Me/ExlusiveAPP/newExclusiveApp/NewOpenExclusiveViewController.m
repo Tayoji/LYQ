@@ -14,10 +14,13 @@
 #import "ProductModal.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "ExclusiveViewController.h"
+#define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
 @interface NewOpenExclusiveViewController ()
 - (IBAction)returnButton:(id)sender;
 - (IBAction)introduceButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *shareBackground;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollVew;
 
 @end
 
@@ -31,8 +34,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
+    if ([UIScreen mainScreen].bounds.size.height==667) {
+        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+200);
+       
+    }else{
+    self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+120*KHeight_Scale);
+    }
        [self shareView];
-  
+    
+    
 }
 
 
@@ -76,7 +87,10 @@
 */
 
 - (IBAction)returnButton:(id)sender {
-    [self.naVC popViewControllerAnimated:YES];
+    ExclusiveViewController *exclusiveVC = [[ExclusiveViewController alloc]init];
+    [self.naVC pushViewController:exclusiveVC animated:YES];
+    
+
 }
 
 - (IBAction)introduceButton:(id)sender {
