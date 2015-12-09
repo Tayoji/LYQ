@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SKViewController.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "Customers.h"
 
 @interface ShouKeBao : SKViewController
 @property(nonatomic,weak) UILabel *warningLab;
+@property (nonatomic, strong)Customers *customerMessage;
 @end

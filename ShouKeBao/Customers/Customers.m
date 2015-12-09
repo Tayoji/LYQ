@@ -133,7 +133,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(receiveNotification:) name:@"下班" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPushBackGround:) name:@"pushWithBackGround" object:nil];
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
@@ -172,6 +171,8 @@
 -(void)refreshSKBMessgaeCount:(int)count{
     [self getNotifiList];
 }
+
+#pragma mark - 消息请求
 -(void)getNotifiList{
     NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
     [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
@@ -209,11 +210,18 @@
     
 }
 - (IBAction)pushMessageVC:(id)sender {
+    
+//+ (void)event:(NSString *)eventId label:(NSString *)label
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
+    
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
     [self.navigationController pushViewController:messgeCenter animated:YES];
 }
 
 - (void)tapGestionToMessVC{
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
     UITapGestureRecognizer *messageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMessageVC:)];
     [self.messagePrompt addGestureRecognizer:messageTap];
 }
@@ -271,13 +279,6 @@
     self.popTableview.hidden = YES;
 }
 
-#pragma mark - 消息提示
-- (void)dealPushBackGround:(NSNotification *)noti{
-    NSMutableArray *message = noti.object;
-    if([message[0] isEqualToString:@"messageId"]){//新公告
-    self.messagePrompt.text = [NSString stringWithFormat:@"您有%d条未读信息", self.messageCount++];
-    }
-}
 
 
 
@@ -327,6 +328,7 @@
     self.pageIndex = 1;
     self.searchBar.placeholder = searchDefaultPlaceholder;
     [self loadDataSource];
+   
 }
 //  上啦加载
 - (void)foodPull
@@ -532,8 +534,43 @@
         self.pageIndex = 1;
         [self loadDataSource];
         [self closePopTableView];
+        
+            switch (indexPath.row) {
+                case 0:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerNoLimitClick" attributes:dict];
+                    
+                }
+                    break;
+                case 1:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerNewBindingAppClick" attributes:dict];
+                    
+                }
+                    break;
+                case 2:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerBindingAppClick" attributes:dict];
+                    
+                }
+                    break;
+                case 3:
+                {
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"Customer_newCustomerOtherClick" attributes:dict];
+                    
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+
     }
-    [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
+    [self performSelector:@selector(deselect) withObject:nil afterDelay:0.8f];
 
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -705,7 +742,7 @@
 }
 - (void)deselect{
     [self.table deselectRowAtIndexPath:[self.table indexPathForSelectedRow] animated:YES];
-    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
+//    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
 }
 
 

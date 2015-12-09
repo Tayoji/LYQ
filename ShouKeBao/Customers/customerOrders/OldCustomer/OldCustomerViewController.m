@@ -159,13 +159,13 @@
     //        [self initPull];
     //    }
     //    [customer synchronize];
-    [MobClick beginLogPageView:@"Customers"];
+    [MobClick beginLogPageView:@"OldCustomers"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(historySearch:) name:@"CustomerHistorySearch" object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"Customers"];
+    [MobClick endLogPageView:@"OldCustomers"];
 }
 
 -(void)initPull

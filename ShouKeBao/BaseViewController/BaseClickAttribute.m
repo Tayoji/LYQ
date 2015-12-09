@@ -25,7 +25,6 @@
 }
 
 + (BaseClickAttribute *)attributeWithDic:(NSDictionary *)dic{
-    NSLog(@"自定义事件00000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
     BaseClickAttribute * diccc = [[BaseClickAttribute alloc]init];
     if (dic) {
         [diccc addEntriesFromDictionary:dic];

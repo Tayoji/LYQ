@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"客户动态";
+    self.title = @"直客动态";
     self.view.backgroundColor = [UIColor colorWithRed:(247.0/255.0) green:(247.0/255.0) blue:(247.0/255.0) alpha:1];
     [self.view addSubview:self.tableView];
     [self initPull];
@@ -153,6 +153,7 @@
         ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
         NSLog(@"%@", productUrl);
         detail.produceUrl = productUrl;
+        detail.fromType = FromZhiVisitorDynamic;
         detail.shareInfo = model.ProductdetailModel.ShareInfo;
         [self.navigationController pushViewController:detail animated:YES];
     }

@@ -17,6 +17,8 @@
 #import "textStyle.h"
 #import "Customers.h"
 #import "MoreLvYouGuWenInfoViewController.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 
 @interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
 //头部
@@ -45,11 +47,16 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+     [MobClick beginEvent:@"Me_ExclusiveViewController"];
      self.navigationController.navigationBarHidden = NO;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"xiaotu"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"Me_ExclusiveViewController"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -206,7 +213,12 @@
 
 
 -(void)shareAction:(UIButton *)button{
-
+ 
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Me_exclusiveAppShareBtnClick" attributes:dict];
+    
+    
+    
     NSLog(@"____nnn  self.shareInfo = %@", self.ConsultanShareInfo);
     id<ISSContent> publishContent = [ShareSDK content:self.ConsultanShareInfo[@"Desc"]
                                        defaultContent:self.ConsultanShareInfo[@"Desc"]
@@ -234,6 +246,11 @@
                         
                                 if (state == SSResponseStateSuccess)
                                 {
+                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                                    [MobClick event:@"Me_exclusiveAppShareScccessCount" attributes:dict];
+                                    
+                                    
+                                    
                                     
                                     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
                                     [postDic setObject:@"0" forKey:@"ShareType"];
@@ -331,6 +348,10 @@
 */
 
 - (IBAction)touchExclusiveAppButton:(id)sender {
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Me_openedExclusiveAppIntroduction" attributes:dict];
+    
     EstablelishedViewController *estableshedVC = [[EstablelishedViewController alloc]init];
     estableshedVC.title = @"专属APP";
     estableshedVC.isExclusiveCustomer = self.IsBinding;

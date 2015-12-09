@@ -55,12 +55,12 @@
     self.coverView.hidden = YES;
 
     
-    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch) {
+    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"FromFindProductAll" attributes:dict];
         
     }
-    self.eventArray = @[@"FromQRcode", @"FromRecommend", @"FromStore", @"FromProductSearch",@"FromFindProduct", @"FromHotProduct", @"FromScanHistory"];
+    self.eventArray = @[@"FromQRcode", @"FromRecommend", @"FromStore", @"FromProductSearch",@"FromFindProduct", @"FromHotProduct", @"FromScanHistory", @"FromZhiVisitorDynamic"];
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ProductDetailAll" attributes:dict];
@@ -544,6 +544,7 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ClickShareAll" attributes:dict];
     [MobClick event:@"ProductDetailShareClickAll" attributes:dict];
+    [MobClick event:@"FromZhiVisitorDynamic_ShareClickAll" attributes:dict];
     if (self.fromType == FromQRcode) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"ppkLYQAPP_ShareSuccess()"];
     }
@@ -603,13 +604,14 @@
                                     [MobClick event:@"ShareSuccessAll" attributes:dict];
                                     [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
                                     [MobClick event:@"ProductDetailShareSuccessClickAll" attributes:dict];
-                                    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch) {
+                                    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
                                         [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
                                     }
                                     if (self.fromType == FromRecommend) {
                                         [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
 
                                     }
+                                   
                                     
                                         [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:self.fromType]] attributes:dict];
 

@@ -12,6 +12,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "StrToDic.h"
 #import "ProductModal.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/667.0f
 @interface EstablelishedViewController ()
@@ -31,7 +33,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MobClick beginEvent:@"Me_EstablelishedViewController"];
      self.navigationController.navigationBarHidden = YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"Me_EstablelishedViewController"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,8 +50,10 @@
     NSLog(@"self.isExclusiveCustomer = %@", self.isExclusiveCustomer);
     if ([self.isExclusiveCustomer isEqualToString:@"1"]) {
            [self shareView];
+        
     }else{
           [self noOpenAxclusiveApp];
+   
     }
 }
 

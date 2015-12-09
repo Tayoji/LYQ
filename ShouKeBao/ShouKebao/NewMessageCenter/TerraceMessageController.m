@@ -13,13 +13,22 @@
 #import "TerraceMessageModel.h"
 #import "TerracedetailViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface TerraceMessageController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong)NSMutableArray *noticeArray;
 @end
 
 @implementation TerraceMessageController
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginEvent:@"ShouKeBao_TerraceMessageController"];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endEvent:@"ShouKeBao_TerraceMessageController"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -81,6 +90,9 @@
     return trcell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"ShouKeBao_serviceNotice1" attributes:dict];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TerraceMessageModel * model = self.noticeArray[indexPath.row/2];
     TerracedetailViewController * detailVC = [[TerracedetailViewController alloc]init];

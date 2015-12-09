@@ -264,6 +264,11 @@
 }
 //js调用原生，调用IM入口；
 - (void)LYQSKBAPP_OpenCustomIM:(NSString *)urlStr{
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"OrderDetail_IMChatIconClick" attributes:dict];
+    
+    
     NSString * pattern = @"OpenCustomIM(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
@@ -274,18 +279,25 @@
         NSString * params = [NSString string];
         params = [resultStr stringByReplacingOccurrencesOfString:@"OpenCustomIM(" withString:@""];
         NSArray *strArray = [params componentsSeparatedByString:@")"];
-        //       params = [params stringByReplacingOccurrencesOfString:@")" withString:@""];
         params = strArray[0];
-        NSLog(@"%@--%@---%@",urlStr,resultStr, params);
-        NSDictionary * dic = [NSString parseJSONStringToNSDictionary:params];
-
+        
+        /*
+         NSASCIIStringEncoding 将url  用ASCII解码
+         stringByReplacingPercentEscapesUsingEncoding 解码
+         stringByAddingPercentEscapesUsingEncoding  编码
+         */
+        NSString * str = [params stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+        NSLog(@"%@--%@",params, str);
+        NSDictionary * dic = [NSString parseJSONStringToNSDictionary:str];
+        NSLog(@"%@", dic);
         /*
          {
-         "MsgType": "OrderDetail",
+         "MsgType": "ProductDetail",
          "ReceiveId": "接收人Id",
-         "ObjectId": "订单Id"
+         "ObjectId": "线路Id"
          }
          */
+        NSLog(@"%@", dic[@"ReceiveId"]);
         ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:dic[@"ReceiveId"] conversationType:eConversationTypeChat];
         [self.navigationController pushViewController:chatVC animated:YES];
     }

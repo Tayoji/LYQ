@@ -42,7 +42,6 @@ static id _invitationInfo;
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"CustomCallClick" attributes:dict];
     
-    
     if (self.model.Mobile.length>6) {
         
         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel://%@",self.model.Mobile];
@@ -60,13 +59,16 @@ static id _invitationInfo;
 }
 
 - (IBAction)informationIM:(id)sender {
-    
+
     if ([self.model.IsOpenIM integerValue] == 0) {
-        //            [self achieveInvitationInfoData:self.model.ID];
         
+        //            [self achieveInvitationInfoData:self.model.ID];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"TA还不是你的绑定APP客户,马上邀请TA绑定你的专属APP吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"邀请", nil];
         [alert show];
     }else{
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Customer_newCustomerIMChatIconClick" attributes:dict];
+        
         NSLog(@"%@", self.model.AppSkbUserId);
         if (_delegate && [_delegate respondsToSelector:@selector(transformPerformation:)]) {
             [_delegate transformPerformation:self.model];
@@ -79,6 +81,8 @@ static id _invitationInfo;
     NSLog(@".....self.InvitationInfo = %@", _invitationInfo);
     
     if (buttonIndex == 1) {
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
         //        点击邀请走的方法
         //  方式1:不能指定短信内容
         //        NSString *telStr = [NSString stringWithFormat:@"sms://%@", self.telStr];
@@ -141,7 +145,6 @@ static id _invitationInfo;
 -(void)setModel:(CustomModel *)model{
     _model = model;
     
-    _model = model;
     //获取消息数， 展示是否有消息未读
     NSUInteger unreaderMessageCount = [[EaseMob sharedInstance].chatManager unreadMessagesCountForConversation:self.model.AppSkbUserId];
     if (unreaderMessageCount) {
@@ -151,8 +154,6 @@ static id _invitationInfo;
     }
     NSLog(@"&&&&&&--%lud", (unsigned long)unreaderMessageCount);
 
-    
-    
     self.userIcon.image =  [UIImage imageNamed:@"quanquange"];
     self.userName.text = model.Name;
     

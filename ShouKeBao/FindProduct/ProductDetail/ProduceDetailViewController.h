@@ -20,7 +20,8 @@ typedef enum{
     FromProductSearch,
     FromFindProduct,
     FromHotProduct,
-    FromScanHistory
+    FromScanHistory,
+    FromZhiVisitorDynamic
 }JumpinFrom;
 @protocol notiQRCToStartRuning<NSObject>
 -(void)notiQRCToStartRuning;
