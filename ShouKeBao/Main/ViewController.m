@@ -351,8 +351,13 @@ static NSString *kConversationChatter = @"ConversationChatter";
             {
                 title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, chatroomName];
             }
+            
         }
-        
+        if ([[LocationSeting defaultLocationSeting]getCustomInfoWithID:message.from]) {
+            title =  [[LocationSeting defaultLocationSeting]getCustomInfoWithID:message.from][@"nickName"];
+        }else{
+            title = @"未命名";
+        }
         notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
     }
     else{
