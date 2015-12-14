@@ -27,7 +27,8 @@
 
 - (void)setModel:(MeShareDetailModel *)model{
     _model = model;
-    
+    if (_model) {
+        
     self.builtCount.text = [NSString stringWithFormat:@"%@人",  model.Installed];
     self.productCount.text = [NSString stringWithFormat:@"%@人",model.ProductBrowse];
     self.livingCount.text = [NSString stringWithFormat:@"%@人",model.ActiveUser];
@@ -37,7 +38,7 @@
     self.H_productCount.text = [NSString stringWithFormat:@"%@人",model.ProductBrowseTotal];
     self.H_livingCount.text = [NSString stringWithFormat:@"%@人", model.ActiveUserTotal];
     self.H_placeCount.text = [NSString stringWithFormat:@"%@单",model.OrderQuantityTotal];
-    
+    }
   
 }
 

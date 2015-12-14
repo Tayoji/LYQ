@@ -23,11 +23,11 @@
 @implementation TerraceMessageController
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [MobClick beginEvent:@"ShouKeBao_TerraceMessageController"];
+    [MobClick beginLogPageView:@"ShouKeBao_TerraceMessageController"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [MobClick endEvent:@"ShouKeBao_TerraceMessageController"];
+    [MobClick endLogPageView:@"ShouKeBao_TerraceMessageController"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -33,7 +33,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [MobClick beginEvent:@"Me_EstablelishedViewController"];
+    [MobClick beginLogPageView:@"Me_EstablelishedViewController"];
      self.navigationController.navigationBarHidden = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated{

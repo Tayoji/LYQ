@@ -293,7 +293,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.subView.hidden = YES;
-    
+    self.navigationController.navigationBarHidden = NO;
     NSLog(@"... customerType  %ld",self.customerType);
     [self.table reloadData];
     //    NSUserDefaults *customer = [NSUserDefaults standardUserDefaults];

@@ -50,8 +50,10 @@ static id _naVC;
     NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
     UIView *shareView;
     //  自定义分享view
-    if ([UIScreen mainScreen].bounds.size.height == 480 || [UIScreen mainScreen].bounds.size.height == 568) {
-        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300)];
+    if ([UIScreen mainScreen].bounds.size.height == 568) {
+        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 320)];
+    }else if ([UIScreen mainScreen].bounds.size.height == 480){
+        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 280)];
     }else{
         shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300*KHeight)];
     }
@@ -61,7 +63,7 @@ static id _naVC;
     [backgroundShareView addSubview:shareView];
     _shareView = shareView;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, -10, shareView.frame.size.width-80, 30*KHeight)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, -15, shareView.frame.size.width-80, 40*KHeight)];
     titleLabel.backgroundColor = [UIColor colorWithRed:249/255.0f green:79/255.0f blue:9/255.0f alpha:1];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = @"恭喜您！您已开通专属APP功能";
@@ -129,7 +131,7 @@ static id _naVC;
     }
     
   
-    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-40, shareView.frame.size.width, 40)];
+    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-30, shareView.frame.size.width, 40)];
     downImage.image = [UIImage imageNamed:@"downImage"];
     [shareView addSubview:downImage];
 

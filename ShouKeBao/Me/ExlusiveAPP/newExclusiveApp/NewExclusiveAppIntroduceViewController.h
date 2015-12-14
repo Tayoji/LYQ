@@ -10,4 +10,5 @@
 
 @interface NewExclusiveAppIntroduceViewController : SKViewController
 @property (nonatomic, strong)UINavigationController *naVC;
+@property (nonatomic, copy)NSString *clientManagerTel;
 @end

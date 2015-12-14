@@ -46,9 +46,10 @@
      [WMAnimations WMNewWebWithScrollView:self.webView.scrollView];
     CGFloat x = ([UIScreen mainScreen].bounds.size.width/2) - 60;
     CGFloat y = ([UIScreen mainScreen].bounds.size.height/2) - 130;
+    
     self.indicator = [[YYAnimationIndicator alloc]initWithFrame:CGRectMake(x, y, 130, 130)];
     [_indicator setLoadText:@"拼命加载中..."];
-    
+    [self.view addSubview:_indicator];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,10 +60,10 @@
     [self setshareBarItem];
     [self deadWork];
     
+    
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(isCallTel) userInfo:nil repeats:YES];
     self.timer = timer;
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    
     
     [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[[NSURL alloc]initWithString:self.CircleUrl]]];
     [self webView];

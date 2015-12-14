@@ -35,4 +35,5 @@
 
 @property (nonatomic, assign)NSInteger customerType;
 @property (nonatomic, assign)BOOL isMe;
+@property (nonatomic, strong)UINavigationController *naV;
 @end

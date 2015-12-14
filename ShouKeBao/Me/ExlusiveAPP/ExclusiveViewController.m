@@ -44,9 +44,16 @@
 //专属App
 - (IBAction)touchExclusiveAppButton:(id)sender;
 //分享
+
+- (IBAction)returnButton:(id)sender;
+- (IBAction)shareButton:(id)sender;
+
 @property (nonatomic, copy)NSString *IsBinding;
 @property (nonatomic,strong) UIView *guideView;
 @property (nonatomic,strong) UIImageView *guideImageView;
+@property (weak, nonatomic) IBOutlet UIButton *returnBtn;
+@property (weak, nonatomic) IBOutlet UIButton *shareBtn;
+@property (weak, nonatomic) IBOutlet UILabel *titleL;
 
 @end
 
@@ -54,12 +61,14 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-     [MobClick beginEvent:@"Me_ExclusiveViewController"];
-     self.navigationController.navigationBarHidden = NO;
+     [MobClick beginLogPageView:@"Me_ExclusiveViewController"];
+     self.navigationController.navigationBarHidden = YES;
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"xiaotu"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-
+   // [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"xiaotu"] forBarMetrics:UIBarMetricsDefault];
+   // self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+     [self.view addSubview:self.returnBtn];
+     [self.view addSubview:self.titleL];
+     [self.view addSubview:self.shareBtn];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -71,7 +80,8 @@
     
     [self loadExclusiveAppData];
     
-    [self setRightShareBarItem];
+//    [self setRightShareBarItem];
+
     [self setHeaderImageView];
     
     self.tableView.delegate = self;
@@ -132,6 +142,8 @@
 }
 - (void)clickCustomerLableToComeInCustomer:(UITapGestureRecognizer *)tap{
     Customers *customerVC = [[Customers alloc]init];
+//    customerVC.naV = self.naV;
+//    customerVC.naV.navigationBarHidden = NO;
     customerVC.customerType = 2;
     customerVC.isMe = 1;
     [self.navigationController pushViewController:customerVC animated:YES];
@@ -168,13 +180,13 @@
             NSLog(@"dataArrray = %@", self.dataArray);
             [self.tableView reloadData];
         } failure:^(NSError *error) {
-            NSLog(@"-------管客户第一个接口请求失败 error is %@------",error);
+            NSLog(@"接口请求失败 error is %@------",error);
         }];
 }
 
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
 //    _customerCount = customerCount;
-    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(100, 50, self.view.frame.size.width-200, 50)];
+    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(50, 120, self.view.frame.size.width-100, 80)];
     ll.textAlignment = NSTextAlignmentCenter;
     ll.textColor = [UIColor whiteColor];
     ll.font = [UIFont boldSystemFontOfSize:25];
@@ -388,6 +400,7 @@
     
 }
 -(void)back{
+//    [self.navigationController popToRootViewControllerAnimated:YES];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 - (IBAction)clickAdvisorToComeInLvYouGuWen:(id)sender {
@@ -395,5 +408,12 @@
     MoreLvYouGuWenInfoViewController * morelvyouguwen = [[MoreLvYouGuWenInfoViewController alloc]init];
     morelvyouguwen.webTitle = @"旅游顾问";
     [self.navigationController pushViewController:morelvyouguwen animated:YES];
+}
+- (IBAction)returnButton:(id)sender {
+    [self back];
+}
+
+- (IBAction)shareButton:(id)sender {
+    [self shareAction:sender];
 }
 @end

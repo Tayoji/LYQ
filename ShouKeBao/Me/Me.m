@@ -192,12 +192,21 @@
     [self.guideImageView removeFromSuperview];
     if (btn.tag == 010) {
         NSLog(@"跳进没有开通的");
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Me_applyForOpening" attributes:dict];
+        
         NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
+        exc.clientManagerTel = self.clientMagagerTel;
         exc.naVC = self.navigationController;
         [self.navigationController pushViewController:exc animated:YES];
     }else if(btn.tag == 011){
         NSLog(@"跳进已经开通的");
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Me_getCashCouponClick" attributes:dict];
+        
         NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
+        excOpen.firstComeInFromGetcashClickBtn = @"zzm";
+        excOpen.ConsultanShareInfo = self.ConsultanShareInfo;
         excOpen.naVC = self.navigationController;
         [self.navigationController pushViewController:excOpen animated:YES];
     }
@@ -706,19 +715,18 @@
                 
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
-//                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
-//                    
-//                    ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
-//                    
-//                    exclusiveAPPVC.title = @"专属APP";
-//                    exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
-//                    
-//                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
-//                    
-//                    [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
-//                    
+                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
+                    
+                    ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
+                    exclusiveAPPVC.title = @"专属APP";
+                    exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
+                    
+                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
+                    
+                    [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
+                    
 //#pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
-//                }else{
+                }else{
                     //                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
                     ////                    establelishedVC.clientManagerTel = self.clientMagagerTel;
                     //                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
@@ -727,18 +735,20 @@
                     //                    establelishedVC.naVC = self.navigationController;
                     //
                     //                    [self.navigationController pushViewController:establelishedVC animated:YES];
-                    
-//                    if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
+                    NSLog(@"111 ConsultanShareInfo =  %@", _ConsultanShareInfo);
+                    if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+                newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
-//                    }else{
-//                        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
-//                        newExclusiveVC.naVC = self.navigationController;
-//                        [self.navigationController pushViewController:newExclusiveVC animated:YES];
-//                        
-//                    }
-//                }
+                    }else{
+                        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+                        newExclusiveVC.naVC = self.navigationController;
+                        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
+                        [self.navigationController pushViewController:newExclusiveVC animated:YES];
+                        
+                    }
+                }
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
                 
             }else if(indexPath.row == 4){
