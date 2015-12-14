@@ -70,20 +70,20 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passwordMes" translatesAutoresizingMaskIntoConstraints="NO" id="scL-7L-Zge">
-                                                    <rect key="frame" x="17" y="15" width="16" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MeRemind" translatesAutoresizingMaskIntoConstraints="NO" id="scL-7L-Zge">
+                                                    <rect key="frame" x="15" y="18" width="20" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="Lba-od-wPC"/>
-                                                        <constraint firstAttribute="width" constant="16" id="lY6-AP-SiB"/>
+                                                        <constraint firstAttribute="height" constant="20" id="Lba-od-wPC"/>
+                                                        <constraint firstAttribute="width" constant="20" id="lY6-AP-SiB"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="aqI-3Z-oIB" secondAttribute="bottom" constant="8" id="1vg-6j-1R6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="aqI-3Z-oIB" secondAttribute="trailing" constant="51" id="2s2-J8-vkU"/>
-                                                <constraint firstItem="scL-7L-Zge" firstAttribute="leading" secondItem="tVk-63-6cx" secondAttribute="leadingMargin" constant="9" id="4ll-z1-7gM"/>
-                                                <constraint firstItem="aqI-3Z-oIB" firstAttribute="leading" secondItem="scL-7L-Zge" secondAttribute="trailing" constant="27" id="X4l-zn-8yN"/>
-                                                <constraint firstItem="scL-7L-Zge" firstAttribute="top" secondItem="tVk-63-6cx" secondAttribute="topMargin" constant="7" id="rsx-pL-4XQ"/>
+                                                <constraint firstItem="scL-7L-Zge" firstAttribute="leading" secondItem="tVk-63-6cx" secondAttribute="leadingMargin" constant="7" id="4ll-z1-7gM"/>
+                                                <constraint firstItem="aqI-3Z-oIB" firstAttribute="leading" secondItem="scL-7L-Zge" secondAttribute="trailing" constant="25" id="X4l-zn-8yN"/>
+                                                <constraint firstItem="scL-7L-Zge" firstAttribute="top" secondItem="tVk-63-6cx" secondAttribute="topMargin" constant="10" id="rsx-pL-4XQ"/>
                                                 <constraint firstItem="aqI-3Z-oIB" firstAttribute="top" secondItem="tVk-63-6cx" secondAttribute="topMargin" constant="9" id="vA8-zc-4h6"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -99,7 +99,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newMess" translatesAutoresizingMaskIntoConstraints="NO" id="bBr-OV-qgW">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anquanqiangdu" translatesAutoresizingMaskIntoConstraints="NO" id="bBr-OV-qgW">
                                                     <rect key="frame" x="15" y="18" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="1Q4-W2-u2y"/>
@@ -432,8 +432,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="MeRemind" width="21" height="21"/>
+        <image name="anquanqiangdu" width="16" height="16"/>
         <image name="huoquyanzhengma" width="88" height="37"/>
-        <image name="newMess" width="50" height="50"/>
-        <image name="passwordMes" width="32" height="54"/>
     </resources>
 </document>
