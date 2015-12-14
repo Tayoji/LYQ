@@ -52,6 +52,7 @@
     commandto.bodyLabel.text = body;
     commandto.DiLabel.text = Di;
     commandto.SongLabel.text = song;
+    commandto.shareInfo = shareInfo;
     commandto.retailsalesLabel.text = retailsalesLabel;
     commandto.PriceLabel.text = CommandSamePrice;
     [[[UIApplication sharedApplication].delegate window] addSubview:commandto];
