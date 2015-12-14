@@ -91,8 +91,8 @@
                     <rect key="frame" x="0.0" y="100" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <subviews>
-                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hot" id="NXf-NC-i79">
-                            <rect key="frame" x="10" y="0.0" width="60" height="50"/>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hhot" id="NXf-NC-i79">
+                            <rect key="frame" x="10" y="15" width="60" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         </imageView>
                         <view contentMode="scaleToFill" id="Fgq-ok-qyM" userLabel="line">
@@ -128,9 +128,9 @@
         </view>
     </objects>
     <resources>
+        <image name="Hhot" width="55" height="20"/>
         <image name="SKB" width="225" height="102"/>
         <image name="banjiubing" width="50" height="50"/>
-        <image name="hot" width="56" height="56"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

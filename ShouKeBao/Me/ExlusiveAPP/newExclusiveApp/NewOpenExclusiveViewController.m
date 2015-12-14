@@ -15,6 +15,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "ExclusiveViewController.h"
+#import "WhatIsExclusiveViewController.h"
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
 @interface NewOpenExclusiveViewController ()
 - (IBAction)returnButton:(id)sender;
@@ -28,25 +29,32 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"NewOpenExclusiveViewController"];
     self.navigationController.navigationBarHidden = YES;
     
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"NewOpenExclusiveViewController"];
+    if ([self.firstComeInFromGetcashClickBtn isEqualToString:@"zzm"]) {
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Me_getCashSuccess" attributes:dict];
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
+    
     if ([UIScreen mainScreen].bounds.size.height==667) {
         self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+200);
-       
+    }else if ([UIScreen mainScreen].bounds.size.height == 480){
+        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+90);
     }else{
-    self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+120*KHeight_Scale);
+        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+140*KHeight_Scale);
     }
-       [self shareView];
-    
-    
+    [self shareView];
+
 }
-
-
 
 
 - (void)shareView{
@@ -88,11 +96,18 @@
 
 - (IBAction)returnButton:(id)sender {
     ExclusiveViewController *exclusiveVC = [[ExclusiveViewController alloc]init];
-    [self.naVC pushViewController:exclusiveVC animated:YES];
+    exclusiveVC.naV = self.naVC;
+    exclusiveVC.ConsultanShareInfo = self.ConsultanShareInfo;
+    NSLog(@"....%@", exclusiveVC.ConsultanShareInfo);
+    [self.naVC pushViewController:exclusiveVC animated:NO];
     
 
 }
 
 - (IBAction)introduceButton:(id)sender {
+    WhatIsExclusiveViewController *whatISExclisiveVC = [[WhatIsExclusiveViewController alloc]init];
+    whatISExclisiveVC.naV = self.naVC;
+    [self.naVC pushViewController:whatISExclisiveVC animated:YES];
+    
 }
 @end

@@ -13,5 +13,5 @@
 
 @property (nonatomic, copy)NSString *isExclusiveCustomer;
 @property (nonatomic, strong)NSMutableDictionary *ConsultanShareInfo;
-@property (nonatomic, copy)NSString *clientManagerTel;
+@property (nonatomic, copy)NSString *firstComeInFromGetcashClickBtn;
 @end

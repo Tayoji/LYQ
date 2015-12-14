@@ -1265,7 +1265,20 @@
                 baseDouble.model = doubleModel;
                 baseDouble.idStr = doubleModel.LinkUrl;
 //                [self.dataSource addObject:baseDouble];
-                [self.dataSource insertObject:baseDouble atIndex:1];
+        //确定今日推荐排到位置
+                int recomIndex = 0;
+                for (int i = 0 ; i<self.dataSource.count; i++) {
+                    HomeBase *base = self.dataSource[i];
+                    if ([base.model isKindOfClass:[Recommend class]]) {
+                        recomIndex = i;
+                    }
+                }
+                NSLog(@"..... %d", recomIndex);
+                if (recomIndex>0) {
+                    [self.dataSource insertObject:baseDouble atIndex:1];
+                }else{
+                    [self.dataSource insertObject:baseDouble atIndex:0];
+                }
             }
 
                 // 清理数据 看有没有隐藏的 有就不要显示
@@ -1313,24 +1326,28 @@
     _guideView.alpha = 0.4;
     self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
     self.guideImageView.userInteractionEnabled = YES;
-
+    
+   //立即查看按钮（立即申请开通）
+     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/6, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3, self.guideImageView.frame.size.width/8)];
+    
     if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
 //        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
-
+         [button setTitle:@"立即申请开通" forState:UIControlStateNormal];
     }else{
 //        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
         self.guideImageView.image = [UIImage imageNamed:@"dredged"];
-
+        [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
     }
-    //立即查看按钮
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/6, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3, self.guideImageView.frame.size.width/8)];
+    
     [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
-    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
+//    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
     button.tag = 1210;
     [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_guideImageView addSubview:button];
+    
+    
     //叉号按钮
     UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
     cleanBtn.tag = 1209;
@@ -1371,6 +1388,14 @@
         [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
         
     }else if (btn.tag == 1210){
+        
+          BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+            [MobClick event:@"ShouKeBao_applyForOpening" attributes:dict];
+        }else{
+            [MobClick event:@"ShouKeBao_getCashCouponClick" attributes:dict];
+        }
+      
         NSLog(@"立即跳转");
         //引导成功，我的界面不用引导
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"NewMeGuide"];

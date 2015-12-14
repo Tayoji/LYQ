@@ -17,6 +17,8 @@
 #import "NSString+FKTools.h"
 #import "ProductModal.h"
 #import "ProduceDetailViewController.h"
+#import "BaseClickAttribute.h"
+#import "MobClick.h"
 #define pageSize @"10"
 //
 #define kScreenSize [UIScreen mainScreen].bounds.size
@@ -28,7 +30,14 @@
 @end
 
 @implementation ZhiVisitorDynamicController
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+     [MobClick beginLogPageView:@"ZhiVisitorDynamicController"];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ZhiVisitorDynamicController"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -149,6 +158,9 @@
         
     }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
     }else{
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
+        
         NSString * productUrl = model.ProductdetailModel.LinkUrl;
         ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
         NSLog(@"%@", productUrl);

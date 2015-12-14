@@ -55,9 +55,8 @@
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    [MobClick beginEvent:@"ShouKeBao_NewMessageCenterController"];
+- (void)viewWillAppear:(BOOL)animated{
+    [MobClick beginLogPageView:@"ShouKeBao_NewMessageCenterController"];
     [super viewWillAppear:animated];
     [self refreshDataSource];
 }
@@ -419,7 +418,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [MobClick endEvent:@"ShouKeBao_NewMessageCenterController"];
+    [MobClick endLogPageView:@"ShouKeBao_NewMessageCenterController"];
 //    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {

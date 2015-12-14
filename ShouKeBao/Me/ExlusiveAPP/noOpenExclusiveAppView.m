@@ -26,8 +26,9 @@ static id _shareView;
 +(void)backgroundShareView:(id)backgroundShareView andUrl:(NSString *)url{
     _Tel = url;
     
+    NSLog(@"%f", kScreenHeight);
     //  自定义弹出的分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, /*(300-10-15-10)*KHeight*/ /*kScreenHeight/2.0f-60+20*KHeight_Scale*/220)];
+    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 200)];
     shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
     [backgroundShareView addSubview:shareView];
@@ -67,10 +68,10 @@ static id _shareView;
     UIButton *contactB = [UIButton buttonWithType:UIButtonTypeCustom];
     contactB.frame = CGRectMake(40, CGRectGetMaxY(contentLabel.frame), shareView.frame.size.width-80, 50*KHeight);
     [shareView addSubview:contactB];
-    contactB.backgroundColor = [UIColor colorWithRed:251/255.0f green:78/255.0f blue:10/255.0f alpha:1];
+    contactB.backgroundColor = [UIColor colorWithRed:249/255.0f green:79/255.0f blue:9/255.0f alpha:1];
     [contactB setTitle:@"立即联系客户经理" forState:UIControlStateNormal];
     contactB.layer.masksToBounds = YES;
-    contactB.layer.cornerRadius = 2;
+    contactB.layer.cornerRadius = 3;
     [contactB setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [contactB addTarget:self action:@selector(callPhone) forControlEvents:UIControlEventTouchUpInside];
     
