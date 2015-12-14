@@ -206,7 +206,6 @@ void UncaughtExceptionHandler(NSException *exception) {
 //    }
 
     
-//    [UIViewController validatePanPackWithMLTransitionGestureRecognizerType:MLTransitionGestureRecognizerTypePan];
 //    float  sysVersion = [[[UIDevice currentDevice]systemVersion]floatValue];//根据系统版本判断是否创建3D Touch
 //    if (sysVersion >=9.0) {
 //        [self creatItem];
