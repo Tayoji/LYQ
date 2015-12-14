@@ -634,7 +634,9 @@
             }];
             [self.navigationController pushViewController:NVWVC animated:YES];
         }else{
-//             NSString *string = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8", @"797395756"];
+//             NSString *string = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id%@?mt=8", @"1052046553"];
+            //             NSString *string = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/us/app/id1052046553?mt=8", @"1052046553"];
+
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.checkVersionLinkUrl]];
         }
     }else{
