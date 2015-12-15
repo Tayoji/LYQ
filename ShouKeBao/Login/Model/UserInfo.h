@@ -62,8 +62,6 @@
 
 + (instancetype)userInfoWithDict:(NSDictionary *)dict;
 
-- (instancetype)initWithDict:(NSDictionary *)dict;
-
 + (BOOL)isOnlineUserWithBusinessID:(NSString *)bussinessID;
 
 

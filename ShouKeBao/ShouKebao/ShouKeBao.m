@@ -1731,7 +1731,7 @@
 {
     UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     [customButton addTarget:self action:@selector(ringAction) forControlEvents:UIControlEventTouchUpInside];
-    [customButton setImage:[UIImage imageNamed:@"lingdang1"] forState:UIControlStateNormal];
+    [customButton setImage:[UIImage imageNamed:@"news"] forState:UIControlStateNormal];
     
     self.barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     

@@ -48,9 +48,9 @@
     if ([UIScreen mainScreen].bounds.size.height==667) {
         self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+200);
     }else if ([UIScreen mainScreen].bounds.size.height == 480){
-        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+90);
+        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+100);
     }else{
-        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+140*KHeight_Scale);
+        self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+155*KHeight_Scale);
     }
     [self shareView];
 

@@ -25,7 +25,7 @@
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
 #define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
 #define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
-
+#define fiveHight self.view.frame.size.height/480
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
 //头部
@@ -184,16 +184,16 @@
         }];
 }
 
+
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
-//    _customerCount = customerCount;
-    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(50, 120, self.view.frame.size.width-100, 80)];
+    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(50, 120, self.view.frame.size.width-100, 80*fiveHight)];
     ll.textAlignment = NSTextAlignmentCenter;
     ll.textColor = [UIColor whiteColor];
     ll.font = [UIFont boldSystemFontOfSize:25];
     [self.HeadImageViewSet addSubview:ll];
      _customerCount = ll;
      NSString *str = [NSString stringWithFormat:@"%@人", string];
-    [textStyle textStyleLabel:_customerCount text:str FontNumber:50.0f AndRange:NSMakeRange(0, str.length-1) AndColor:[UIColor whiteColor]];
+    [textStyle textStyleLabel:_customerCount text:str FontNumber:50.0f*fiveHight AndRange:NSMakeRange(0, str.length-1) AndColor:[UIColor whiteColor]];
 }
 
 - (void)setHeaderWith:(NSString *)rank{

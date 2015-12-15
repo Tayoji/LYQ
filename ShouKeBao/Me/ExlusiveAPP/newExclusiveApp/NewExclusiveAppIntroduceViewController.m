@@ -26,35 +26,41 @@
 @property (weak, nonatomic) IBOutlet UIImageView *noOpenExclusive;
 @property (weak, nonatomic) IBOutlet UIView *backgroundShareView;
 
+@property (weak, nonatomic) IBOutlet UIView *view1;
+@property (weak, nonatomic) IBOutlet UIView *view2;
 
 @end
 
 @implementation NewExclusiveAppIntroduceViewController
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"NewExclusiveAppIntroduceViewController"];
-    self.navigationController.navigationBarHidden = YES;
 
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"NewExclusiveAppIntroduceViewController"];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (fourSize) {
-     self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+200*KHeight_Scale);
+     self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+170*KHeight_Scale);
     }else if (fiveSize){
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+250*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+220*KHeight_Scale);
     }else if (sixSize){
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+290*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+260*KHeight_Scale);
     }else{
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+320*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+285*KHeight_Scale);
     }
     [self noOpenAxclusiveApp];
     
 }
+
+- (void)setView1:(UIView *)view1{
+    _view1 = view1;
+    view1.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
+    view1.layer.borderWidth = 1;
+}
+
+- (void)setView2:(UIView *)view2{
+    _view2 = view2;
+    view2.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
+    view2.layer.borderWidth = 1;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -84,4 +90,14 @@
     [self.naVC pushViewController:WhatIsExclusiveVC animated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"NewExclusiveAppIntroduceViewController"];
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"NewExclusiveAppIntroduceViewController"];
+}
 @end

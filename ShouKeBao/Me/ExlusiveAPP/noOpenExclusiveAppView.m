@@ -9,6 +9,7 @@
 #import "noOpenExclusiveAppView.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "UserInfo.h"
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define SYSTEM_VERSION   [[UIDevice currentDevice].systemVersion floatValue]
@@ -28,7 +29,7 @@ static id _shareView;
     
     NSLog(@"%f", kScreenHeight);
     //  自定义弹出的分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 200)];
+    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
     shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
     [backgroundShareView addSubview:shareView];
@@ -51,7 +52,7 @@ static id _shareView;
     contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额，赶紧抢！";
     contentLabel.numberOfLines = 0;
     contentLabel.textColor = [UIColor grayColor];
-    contentLabel.textAlignment = NSTextAlignmentLeft;
+    contentLabel.textAlignment = NSTextAlignmentCenter;
     contentLabel.font = [UIFont systemFontOfSize:12];
     [shareView addSubview:contentLabel];
     
@@ -76,7 +77,7 @@ static id _shareView;
     [contactB addTarget:self action:@selector(callPhone) forControlEvents:UIControlEventTouchUpInside];
     
     
-        UILabel *rContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contactB.frame)+10, shareView.frame.size.width-40, 50*KHeight)];
+        UILabel *rContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contactB.frame), shareView.frame.size.width-40, 20)];
         rContentLabel.text = @"(开通即领取1000现金劵)";
         rContentLabel.numberOfLines = 0;
         rContentLabel.textColor = [UIColor orangeColor];
@@ -84,9 +85,33 @@ static id _shareView;
         rContentLabel.font = [UIFont systemFontOfSize:12];
         [shareView addSubview:rContentLabel];
     
-    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-40, shareView.frame.size.width, 40)];
-    downImage.image = [UIImage imageNamed:@"downImage"];
-    [shareView addSubview:downImage];
+//    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-40, shareView.frame.size.width, 40)];
+//    downImage.image = [UIImage imageNamed:@"downImage"];
+//    [shareView addSubview:downImage];
+    
+    UILabel *lable1 = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-15, 40, 40)];
+    lable1.text = @"让您在";
+    lable1.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable1];
+    
+    UIImageView *image1 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lable1.frame), CGRectGetMaxY(shareView.frame)-15+10, 15, 15)];
+    image1.image = [UIImage imageNamed:@"gou"];
+    [shareView addSubview:image1];
+    
+    UILabel *lable2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(image1.frame), CGRectGetMaxY(shareView.frame)-15, 55, 40)];
+    lable2.text = @"任何时间";
+    lable2.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable2];
+    
+    UIImageView *image2 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lable2.frame), CGRectGetMaxY(shareView.frame)-15+10, 15, 15)];
+    image2.image = [UIImage imageNamed:@"gou"];
+    [shareView addSubview:image2];
+    
+    UILabel *lable3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(image2.frame), CGRectGetMaxY(shareView.frame)-15, shareView.frame.size.width-CGRectGetMaxX(image2.frame), 40)];
+    lable3.text = @"任何地点 为客人提供专属服务";
+    lable3.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable3];
+    
     
     
 }
@@ -97,10 +122,11 @@ static id _shareView;
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_contactManagerImmediatelyClick" attributes:dict];
     
+    NSString *mobile = [UserInfo shareUser].sosMobile;
+    NSString *phone = [NSString stringWithFormat:@"tel://%@",mobile];
+    NSLog(@"----------------手机号码%@------------------",phone);
     
-    NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel://%@",_Tel];
-    NSLog(@"电话号码是%@",str);
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phone]];
 
 }
 
