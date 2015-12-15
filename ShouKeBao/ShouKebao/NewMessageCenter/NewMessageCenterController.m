@@ -187,6 +187,7 @@
             }
             cell.unreadCount = [self unreadMessageCountByConversation:conversation];
             cell.detailMsg = [self subTitleMessageByConversation:conversation];
+//            cell.detailMsg = [NSString stringWithFormat:@"专属顾问给您发来%ld条语音消息", cell.unreadCount];
             cell.time = [self lastMessageTimeByConversation:conversation];
         }
         return cell;
@@ -354,7 +355,7 @@
 }
 -(NSArray *)NameArr{
     if (!_NameArr) {
-        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"直客动态", nil];
+        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"客人动态", nil];
     }
     return _NameArr;
 }
@@ -444,7 +445,7 @@
         id<IEMMessageBody> messageBody = lastMessage.messageBodies.lastObject;
         switch (messageBody.messageBodyType) {
             case eMessageBodyType_Image:{
-                ret = NSLocalizedString(@"message.image1", @"[image]");
+                ret = NSLocalizedString(@"[图片]", @"[image]");
             } break;
             case eMessageBodyType_Text:{
                 // 表情映射。
@@ -457,7 +458,7 @@
                 }
             } break;
             case eMessageBodyType_Voice:{
-                ret = NSLocalizedString(@"message.voice1", @"[voice]");
+                ret = NSLocalizedString(@"[音频]", @"[voice]");
             } break;
             case eMessageBodyType_Location: {
                 ret = NSLocalizedString(@"message.location1", @"[location]");

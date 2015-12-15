@@ -77,7 +77,7 @@ static id _naVC;
     
     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(titleLabel.frame)+gap, shareView.frame.size.width-40, 50*KHeight)];
 //    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App，立即行动，转发安装链接";
-    contentLabel.text = @"专属APP能帮您随时掌握客户动态，马上行动点击下方图标，转发您的安装链接。";
+    contentLabel.text = @"专属APP能帮您随时掌握客人动态，马上行动点击下方图标，转发您的安装链接。";
     contentLabel.numberOfLines = 0;
 //    contentLabel.textColor = [UIColor grayColor];
     contentLabel.textAlignment = NSTextAlignmentLeft;
@@ -131,11 +131,32 @@ static id _naVC;
     }
     
   
-    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-30, shareView.frame.size.width, 40)];
-    downImage.image = [UIImage imageNamed:@"downImage"];
-    [shareView addSubview:downImage];
-
+//    UIImageView *downImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-30, shareView.frame.size.width, 40)];
+//    downImage.image = [UIImage imageNamed:@"downImage"];
+//    [shareView addSubview:downImage];
     
+    UILabel *lable1 = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(shareView.frame)-15, 40, 40)];
+    lable1.text = @"让您在";
+    lable1.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable1];
+    
+    UIImageView *image1 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lable1.frame), CGRectGetMaxY(shareView.frame)-15+10, 15, 15)];
+    image1.image = [UIImage imageNamed:@"gou"];
+    [shareView addSubview:image1];
+    
+    UILabel *lable2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(image1.frame), CGRectGetMaxY(shareView.frame)-15, 55, 40)];
+    lable2.text = @"任何时间";
+    lable2.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable2];
+    
+    UIImageView *image2 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lable2.frame), CGRectGetMaxY(shareView.frame)-15+10, 15, 15)];
+    image2.image = [UIImage imageNamed:@"gou"];
+    [shareView addSubview:image2];
+    
+    UILabel *lable3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(image2.frame), CGRectGetMaxY(shareView.frame)-15, shareView.frame.size.width-CGRectGetMaxX(image2.frame), 40)];
+    lable3.text = @"任何地点 为客人提供专属服务";
+    lable3.font = [UIFont systemFontOfSize:13.0f];
+    [shareView addSubview:lable3];
     
 }
 

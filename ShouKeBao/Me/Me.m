@@ -727,21 +727,13 @@
                     
 //#pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
-                    //                    EstablelishedViewController *establelishedVC = [[EstablelishedViewController alloc]init];
-                    ////                    establelishedVC.clientManagerTel = self.clientMagagerTel;
-                    //                    NSLog(@"isFirstOpenExclusiveVC = %@", self.IsOpenConsultantApp);
-                    //                    establelishedVC.isExclusiveCustomer = self.IsOpenConsultantApp;
-                    //                    establelishedVC.ConsultanShareInfo = self.ConsultanShareInfo;
-                    //                    establelishedVC.naVC = self.navigationController;
-                    //
-                    //                    [self.navigationController pushViewController:establelishedVC animated:YES];
-                    NSLog(@"111 ConsultanShareInfo =  %@", _ConsultanShareInfo);
+                    NSLog(@"111 ConsultanShareInfo =  %@ %@", _ConsultanShareInfo, self.IsOpenConsultantApp);
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
                 newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
-                    }else{
+                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]){
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
                         newExclusiveVC.clientManagerTel = self.clientMagagerTel;
