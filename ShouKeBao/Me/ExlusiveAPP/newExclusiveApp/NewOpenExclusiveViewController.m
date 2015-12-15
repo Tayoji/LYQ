@@ -14,6 +14,7 @@
 #import "ProductModal.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "IWHttpTool.h"
 #import "ExclusiveViewController.h"
 #import "WhatIsExclusiveViewController.h"
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
@@ -31,7 +32,17 @@
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"NewOpenExclusiveViewController"];
     self.navigationController.navigationBarHidden = YES;
-    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"OpenAppGuide"] isEqualToString:@"1"]) {
+        
+    }else{
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"OpenAppGuide"];
+        [IWHttpTool WMpostWithURL:@"/Customer/OpenGiveCashRollAppLyq" params:nil success:^(id json) {
+            if ([json[@"IsSuccess"] isEqualToString:@"1"]) {
+                NSLog(@"请求成功");
+            }
+            
+        } failure:nil];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];

@@ -190,6 +190,8 @@
 -(void)GetcashClick:(UIButton *)btn{
     [self.guideView removeFromSuperview];
     [self.guideImageView removeFromSuperview];
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+
     if (btn.tag == 010) {
         NSLog(@"跳进没有开通的");
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -207,6 +209,7 @@
         NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
         excOpen.firstComeInFromGetcashClickBtn = @"zzm";
         excOpen.ConsultanShareInfo = self.ConsultanShareInfo;
+        
         excOpen.naVC = self.navigationController;
         [self.navigationController pushViewController:excOpen animated:YES];
     }
@@ -266,6 +269,8 @@
     //新手引导
     if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
         [def setObject:@"" forKey:@"jumpToZSApp"];
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+
         if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
             //跳往未开通界面
             NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
