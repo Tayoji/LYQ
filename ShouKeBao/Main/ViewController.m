@@ -310,7 +310,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
                 break;
             case eMessageBodyType_Image:
             {
-                messageStr = NSLocalizedString(@"message.image", @"Image");
+                messageStr = NSLocalizedString(@"[图片]", @"Image");
             }
                 break;
             case eMessageBodyType_Location:
@@ -320,7 +320,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
                 break;
             case eMessageBodyType_Voice:
             {
-                messageStr = NSLocalizedString(@"message.voice", @"Voice");
+                messageStr = NSLocalizedString(@"[语音消息]", @"Voice");
             }
                 break;
             case eMessageBodyType_Video:{
