@@ -20,7 +20,6 @@ static id _invitationInfo;
 
 @interface CustomCell ()
 @property (nonatomic, strong)UIView * redDot;
-
 @end
 
 
@@ -59,8 +58,11 @@ static id _invitationInfo;
 }
 
 - (IBAction)informationIM:(id)sender {
-
+ 
     if ([self.model.IsOpenIM integerValue] == 0) {
+//        点击的时候进行标记保存布尔值
+        NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
+     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:isGray_redID];
         
         //            [self achieveInvitationInfoData:self.model.ID];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"TA还不是你的绑定APP客户,马上邀请TA绑定你的专属APP吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"邀请", nil];
@@ -77,18 +79,10 @@ static id _invitationInfo;
     
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    NSLog(@".....self.InvitationInfo = %@", _invitationInfo);
-    
+
     if (buttonIndex == 1) {
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
-        //        点击邀请走的方法
-        //  方式1:不能指定短信内容
-        //        NSString *telStr = [NSString stringWithFormat:@"sms://%@", self.telStr];
-        //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:telStr]];
-        
-        //  方式2:指定短信内容
         if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
             MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
             
@@ -101,6 +95,7 @@ static id _invitationInfo;
             [alert show];
         }
     }
+     [_delegate tableViewReloadData];
 }
 
 //短信代理方法
@@ -176,14 +171,14 @@ static id _invitationInfo;
     
     
     if ([self.model.IsOpenIM integerValue] == 0) {
+        NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
+        if (![[NSUserDefaults standardUserDefaults]boolForKey:isGray_redID]) {
+            self.redDot.hidden = NO;
+        }else{
+            self.redDot.hidden = YES;
+        }
         [self.information setImage:[UIImage imageNamed:@"grayxiaoxi"] forState:UIControlStateNormal];
     }
-    
-    
-    //    if ([self.model.IsOpenIM integerValue] == 1 /*&& 提示有对话消息时*/) {
-    //        [self.information setImage:[UIImage imageNamed:@"redMessage"] forState:UIControlStateNormal];
-    //    }
-  
 }
 -(UIView *)redDot{
     if (!_redDot) {

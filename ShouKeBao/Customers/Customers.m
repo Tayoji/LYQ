@@ -156,7 +156,9 @@
     chatController.title = model.Name;
     [self.navigationController pushViewController:chatController animated:YES];
 }
-
+- (void)tableViewReloadData{
+    [self loadDataSource];
+}
 - (void)receiveNotification:(NSNotification *)noti{
     [self initPull];
 }
