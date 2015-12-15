@@ -13,6 +13,7 @@
 @protocol transformPerformation <NSObject>
 
 - (void)transformPerformation:(CustomModel *)model;
+- (void)tableViewReloadData;
 @end
 
 @interface CustomCell : UITableViewCell<UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>
