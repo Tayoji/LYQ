@@ -81,6 +81,7 @@
 #import "Double12TableViewCell.h"
 #import "DoubleModel.h"
 #import "ViewController.h"
+#import "APNSHelper.h"
 #import "ZhiVisitorDynamicController.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
@@ -333,7 +334,9 @@
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
 //    
 //    CGPoint rootViewLocation = [touch locationInView:[UIApplication sharedApplication]];
-    [self performSelector:@selector(checkNewVerSion) withObject:nil afterDelay:1.5];
+    if (![APNSHelper defaultAPNSHelper].isHideCheckNewVertion) {
+        [self performSelector:@selector(checkNewVerSion) withObject:nil afterDelay:1.5];
+    }
     [self initPull];
     [self performSelector:@selector(checkProductOrder2) withObject:nil afterDelay:1.5];
 

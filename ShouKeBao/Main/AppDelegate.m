@@ -35,6 +35,7 @@
 #import "AppDelegate+EaseMob.h" 
 #import "CommendToNo.h"
 #import "LocationSeting.h"
+#import "APNSHelper.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 //#import "UncaughtExceptionHandler.h"
 ////aaaaa
@@ -91,7 +92,7 @@
 //                                @"LoginPassword":password};
 //        [LoginTool syncLoginWithParam:param success:^(id json) {
 //            
-//            
+//            [APNSHelper defaultAPNSHelper].isHideCheckNewVertion = YES;
 //            if ([json[@"IsSuccess"] integerValue] == 1) {
 //                
 //                if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
@@ -101,7 +102,6 @@
 //                    [self setTabbarRoot];
 //                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:2];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.scan"]){
-////                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:4];
 //                    self.window.rootViewController = nil;
 //                    [self setTabbarRoot];
 //                    [def setObject:@"UITouchText.scan" forKey:@"ThreeDTouch"];
@@ -124,7 +124,6 @@
 //                        [self setTabbarRoot];
 //                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:2];
 //                    }else if([shortcutItem.type isEqualToString:@"UITouchText.scan"]){
-////                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:4];
 //                        self.window.rootViewController = nil;
 //                        [self setTabbarRoot];
 //                        
@@ -210,7 +209,7 @@ void UncaughtExceptionHandler(NSException *exception) {
 //    if (sysVersion >=9.0) {
 //        [self creatItem];
 //    }
-//
+
     // 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
 
