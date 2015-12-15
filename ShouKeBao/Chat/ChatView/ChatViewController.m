@@ -1057,7 +1057,7 @@
 
 -(void)didReceiveMessage:(EMMessage *)message
 {
-//    if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
+    if ([_conversation.chatter isEqualToString:message.conversationChatter]) {
         [self addMessage:message];
         if ([self shouldAckMessage:message read:NO])
         {
@@ -1067,7 +1067,7 @@
         {
             [self markMessagesAsRead:@[message]];
         }
-//    }
+    }
 }
 
 -(void)didReceiveCmdMessage:(EMMessage *)message
