@@ -69,7 +69,7 @@ static id _shareView;
     UIButton *contactB = [UIButton buttonWithType:UIButtonTypeCustom];
     contactB.frame = CGRectMake(40, CGRectGetMaxY(contentLabel.frame), shareView.frame.size.width-80, 50*KHeight);
     [shareView addSubview:contactB];
-    contactB.backgroundColor = [UIColor colorWithRed:249/255.0f green:79/255.0f blue:9/255.0f alpha:1];
+    contactB.backgroundColor = [UIColor colorWithRed:252/255.0f green:102/255.0f blue:33/255.0f alpha:1];
     [contactB setTitle:@"立即联系客户经理" forState:UIControlStateNormal];
     contactB.layer.masksToBounds = YES;
     contactB.layer.cornerRadius = 3;

@@ -64,13 +64,19 @@ static id _naVC;
     _shareView = shareView;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, -15, shareView.frame.size.width-80, 40*KHeight)];
-    titleLabel.backgroundColor = [UIColor colorWithRed:249/255.0f green:79/255.0f blue:9/255.0f alpha:1];
+    titleLabel.layer.cornerRadius = 4;
+    titleLabel.layer.masksToBounds = YES;
+//    titleLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+//    titleLabel.layer.shadowOffset = CGSizeMake(1, 1);
+//    titleLabel.layer.shadowOpacity = 1.0f;
+//    titleLabel.layer.shadowRadius = 2;
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = @"恭喜您！您已开通专属APP功能";
-    titleLabel.layer.masksToBounds = YES;
-    titleLabel.layer.cornerRadius = 3;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont systemFontOfSize:17*KWidth_Scale];
+    //    UIColor *bgcolour = [UIColor colorWithCGColor:@"ff6600"];
+    //    titleLabel.backgroundColor = [UIColor colorWithCGColor:(__bridge CGColorRef)(bgcolour)];
+    titleLabel.backgroundColor = [UIColor colorWithRed:252/255.0f green:102/255.0f blue:33/255.0f alpha:1];
     [shareView addSubview:titleLabel];
     
     
