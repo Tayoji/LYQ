@@ -241,9 +241,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
     
     //如果本地没有
-    if (![[LocationSeting defaultLocationSeting] getCustomInfoWithID:self.chatter]) {
+//    if (![[LocationSeting defaultLocationSeting] getCustomInfoWithID:self.chatter]) {
         [self getCustomIconAndNickNameWithChatter:self.chatter];
-    }
+//    }
     if (_conversationType == eConversationTypeChatRoom)
     {
         [self joinChatroom:_chatter];
