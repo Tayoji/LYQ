@@ -1337,7 +1337,7 @@
     self.guideImageView.userInteractionEnabled = YES;
     
    //立即查看按钮（立即申请开通）
-     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/6, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3, self.guideImageView.frame.size.width/8)];
+     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, /*self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3*/self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
     
     if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
 //        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
@@ -1348,7 +1348,7 @@
         self.guideImageView.image = [UIImage imageNamed:@"dredged"];
         [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
     }
-    
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
 //    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
     button.tag = 1210;

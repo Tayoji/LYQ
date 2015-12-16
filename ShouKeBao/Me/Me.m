@@ -133,6 +133,7 @@
     _guideImageView.userInteractionEnabled = YES;
    
     UIButton *GetCashBtn = [[UIButton alloc] init];
+
     if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){//没有开通旅游顾问
 //       [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
         if (foureSize) {
@@ -149,11 +150,15 @@
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
             }else{
                 self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
             }
-            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+            if (!GetCashBtn.frame.size.width) {
+                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+            }
+            
 
         }
-        }else{
+    }else{
         if (foureSize) {
             self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
             self.guideImageView.image = [UIImage imageNamed:@"NowGetCash4"];//NewMeGuide
@@ -161,16 +166,20 @@
         }else{
             self.guideImageView.image = [UIImage imageNamed:@"NowGetCash"];//NewMeGuide
             if (fiveSize) {
-        self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
+                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
             }else if(sixSize){
-            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
-        }else{
-            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-        }
-            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
+            }else{
+                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
+            }
+            if (!GetCashBtn.frame.size.width) {
+                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+            }
+            
 
         }
-        GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+//        GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
     }
     
     
