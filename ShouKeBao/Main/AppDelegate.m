@@ -60,8 +60,8 @@
 
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    NSString *isLogout = [def objectForKey:@"isLogoutYet"];
-    NSLog(@"%@",isLogout);
+//    NSString *isLogout = [def objectForKey:@"isLogoutYet"];
+//    NSLog(@"%@",isLogout);
     
     NSString *phone = [def objectForKey:UserInfoKeyPoneNum];
     NSString *password = [def objectForKey:UserInfoKeyPassword];
@@ -106,6 +106,7 @@
 //                    [self setTabbarRoot];
 //                    [def setObject:@"UITouchText.scan" forKey:@"ThreeDTouch"];
 //                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:0];
+//             
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.TodaySignIn"]){
 //                    self.window.rootViewController = nil;
 //                    [self setTabbarRoot];
@@ -129,7 +130,7 @@
 //                        
 //                        [def setObject:@"UITouchText.scan" forKey:@"ThreeDTouch"];
 //                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:0];
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"3dTouchPushScan" object:nil];
+////                        [[NSNotificationCenter defaultCenter] postNotificationName:@"3dTouchPushScan" object:nil];
 //                    }else if([shortcutItem.type isEqualToString:@"UITouchText.TodaySignIn"]){
 //                        self.window.rootViewController = nil;
 //                        [self setTabbarRoot];

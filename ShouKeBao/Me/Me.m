@@ -103,8 +103,14 @@
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
     
     NSString *SKBMeGuide = [def objectForKey:@"NewMeGuide"];
+
+    NSString *NeedGuide = [def objectForKey:@"ThreeDTouch"];
+
     if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
-        [self Guide];
+       if (![NeedGuide isEqualToString:@"UITouchText.TodaySignIn"]) {
+            [self Guide];
+        }
+        
     }
     
     //获取版本信息
@@ -281,6 +287,7 @@
             //跳往已开通界面
             NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
             newExc.naVC = self.navigationController;
+            newExc.ConsultanShareInfo = self.ConsultanShareInfo;
             [self.navigationController pushViewController:newExc animated:YES];
         }
     }
