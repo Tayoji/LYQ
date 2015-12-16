@@ -15,8 +15,8 @@ static int const BBMinSize = 8;
 // Default offset for the badge
 
 // Change things here if your picto doesn't fit this settings
-static int const BBoriginX = 15;
-static int const BBoriginY = -9;
+static int const BBoriginX = 22;
+static int const BBoriginY = -12;
 
 
 @interface BBBadgeBarButtonItem()

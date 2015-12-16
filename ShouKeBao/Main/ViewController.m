@@ -168,19 +168,14 @@ static NSString *kConversationChatter = @"ConversationChatter";
    [self addChildViewController:nav];
 }
 // 统计未读消息数
--(void)setupUnreadMessageCount
+-(NSInteger)setupUnreadMessageCount
 {
     NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
     NSInteger unreadCount = 0;
     for (EMConversation *conversation in conversations) {
         unreadCount += conversation.unreadMessagesCount;
     }
-    NSLog(@"%ld", (long)unreadCount);
-    UIApplication *application = [UIApplication sharedApplication];
-    [application setApplicationIconBadgeNumber:unreadCount];
-    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:@"reciveNewMessage" object:nil];
-
+    return unreadCount;
 }
 
 #pragma mark - private
@@ -242,7 +237,11 @@ static NSString *kConversationChatter = @"ConversationChatter";
         [_customers.table reloadData];
         [self customerInformationCenterTimePrompt];
     }
-    
+    if (_shoukebaoVC) {
+        int badgeV = [_shoukebaoVC.barButton.badgeValue intValue];
+        int unreadMessage = badgeV + 1;
+        _shoukebaoVC.barButton.badgeValue = [NSString stringWithFormat:@"%d", unreadMessage];
+    }
     BOOL needShowNotification = (message.messageType != eMessageTypeChat) ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
         //#if !TARGET_IPHONE_SIMULATOR

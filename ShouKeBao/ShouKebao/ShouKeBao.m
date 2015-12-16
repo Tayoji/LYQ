@@ -83,6 +83,7 @@
 #import "ViewController.h"
 #import "APNSHelper.h"
 #import "ZhiVisitorDynamicController.h"
+#import "EaseMob.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
@@ -93,7 +94,6 @@
 @property (nonatomic, retain)CLLocation *loc;
 
 @property (nonatomic, strong)RecommendCell *cell;
-@property (nonatomic, strong)BBBadgeBarButtonItem *barButton;
 @property (nonatomic, assign) NSInteger num;
 
 @property (nonatomic, assign)BOOL yesorno;
@@ -1008,7 +1008,11 @@
                 count += 1;
             }
         }
-        self.barButton.badgeValue = [NSString stringWithFormat:@"%d",count];        
+        count += [self getUnreadMessageCount];
+        self.barButton.badgeValue = [NSString stringWithFormat:@"%d",count];
+        UIApplication *application = [UIApplication sharedApplication];
+        application.applicationIconBadgeNumber = count;
+
     } failure:^(NSError *error) {
         NSLog(@"首页公告消息列表失败%@",error);
     }];
@@ -1739,6 +1743,7 @@
     self.barButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     
    self.barButton.shouldHideBadgeAtZero = YES;
+    
     //增大点选面积；
     self.navigationItem.leftBarButtonItem = self.barButton;
     UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(-15, -15, 50, 50)];
@@ -2197,6 +2202,16 @@
     [self.tableView reloadData];
 }
 
+// 统计未读消息数
+-(NSInteger)getUnreadMessageCount
+{
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    return unreadCount;
+}
 
 #pragma mark - 登录成功时，将未登录时保存的记录传给后台来同步扫描记录
 -(void)postwithNotLoginRecord

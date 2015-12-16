@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/ChatViewController.m"
-            timestampString = "470734066.498806"
+            timestampString = "471941999.772448"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "-getCustomIconAndNickNameWithChatter:"
             landmarkType = "5">
          </BreakpointContent>

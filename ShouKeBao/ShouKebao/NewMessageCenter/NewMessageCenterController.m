@@ -181,13 +181,10 @@
                 [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[[LocationSeting defaultLocationSeting]getCustomInfoWithID:conversation.chatter][@"headerUrl"]] placeholderImage:[UIImage imageNamed:@"huanxinheader"]];
                 cell.name = [[LocationSeting defaultLocationSeting]getCustomInfoWithID:conversation.chatter][@"nickName"];
             }else{
-                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"huanxinheader"]];
-
-                cell.name = @"未命名";
+                [self getCustomIconAndNickNameWithChatter:conversation.chatter inCell:cell];
             }
             cell.unreadCount = [self unreadMessageCountByConversation:conversation];
             cell.detailMsg = [self subTitleMessageByConversation:conversation];
-//            cell.detailMsg = [NSString stringWithFormat:@"专属顾问给您发来%ld条语音消息", cell.unreadCount];
             cell.time = [self lastMessageTimeByConversation:conversation];
         }
         return cell;
@@ -198,6 +195,27 @@
     return cell;
     
 }
+- (void)getCustomIconAndNickNameWithChatter:(NSString *)chatter
+                                     inCell:(ChatListCell *)cell{
+    NSDictionary *params = @{@"AppSkbUserId":chatter};
+    [IWHttpTool postWithURL:@"Customer/GetAppDistributionSkbUserInfo" params:params success:^(id json) {
+        if ([json[@"IsSuccess"]integerValue] == 1) {
+            NSLog(@"%@", json);
+            CustomHeaderAndNickName * model = [[CustomHeaderAndNickName alloc]init];
+            model.headerUrl = json[@"HeadUrl"];
+            model.nickName = json[@"NickName"];
+            NSDictionary * dict = @{@"headerUrl":json[@"HeadUrl"], @"nickName":json[@"NickName"]};
+            NSLog(@"%@###", dict);
+            [[LocationSeting defaultLocationSeting] setCustomInfo:dict toID:chatter];
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.headerUrl] placeholderImage:[UIImage imageNamed:@"huanxinheader"]];
+            cell.name = model.nickName;
+        }
+    } failure:^(NSError * error) {
+        
+    }];
+    
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 2011&indexPath.section==1) {

@@ -10,8 +10,10 @@
 #import "SKViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Customers.h"
-
+@class BBBadgeBarButtonItem;
 @interface ShouKeBao : SKViewController
 @property(nonatomic,weak) UILabel *warningLab;
 @property (nonatomic, strong)Customers *customerMessage;
+@property (nonatomic, strong)BBBadgeBarButtonItem *barButton;
+
 @end
