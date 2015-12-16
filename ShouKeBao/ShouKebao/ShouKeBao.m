@@ -280,6 +280,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     self.isPush = 1;
+//    [[[UIAlertView alloc] initWithTitle:@"界面已经显示的弹框" message:@"已经显示" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     NSString *isTop = [guiDefault objectForKey:@"ThreeDTouch"];
     if ([isTop isEqualToString:@"UITouchText.scan"]) {
@@ -462,14 +463,15 @@
 }
 -(void)thirdTouchPushScan:(NSNotification *)notiP{
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [[[UIAlertView alloc] initWithTitle:@"哈哈" message:@"hah" delegate:self cancelButtonTitle:@"hah" otherButtonTitles: nil]show];
+//    [[[UIAlertView alloc] initWithTitle:@"哈哈" message:sttt delegate:self cancelButtonTitle:@"hah" otherButtonTitles: nil]show];
     [def removeObjectForKey:@"ThreeDTouch"];
     if (self.isPush == 1) {
         self.isPush = 0;
+//            [[[UIAlertView alloc] initWithTitle:@"哈哈" message:nil delegate:self cancelButtonTitle:@"hah" otherButtonTitles: nil]show];
         ScanningViewController *scan = [[ScanningViewController alloc] init];
         scan.isLogin = YES;
+    
         [self.navigationController pushViewController:scan animated:YES];
-
     }
 }
 
