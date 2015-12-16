@@ -146,7 +146,7 @@
 }
 -(void)ClickBtn:(UIButton *)button{
     if (button.tag == 110) {
-        NSLog(@"哈哈");
+//        NSLog(@"哈哈");
     }else
     
     {
