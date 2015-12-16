@@ -224,7 +224,7 @@
         NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
         excOpen.firstComeInFromGetcashClickBtn = @"zzm";
         excOpen.ConsultanShareInfo = self.ConsultanShareInfo;
-        
+        NSLog(@"///// %@", excOpen.ConsultanShareInfo);
         excOpen.naVC = self.navigationController;
         [self.navigationController pushViewController:excOpen animated:YES];
     }
@@ -297,6 +297,7 @@
             NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
             newExc.naVC = self.navigationController;
             newExc.ConsultanShareInfo = self.ConsultanShareInfo;
+            NSLog(@".... %@", newExc.ConsultanShareInfo);
             [self.navigationController pushViewController:newExc animated:YES];
         }
     }

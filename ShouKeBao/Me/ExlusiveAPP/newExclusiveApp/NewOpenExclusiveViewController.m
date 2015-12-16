@@ -87,6 +87,8 @@
     
     [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.ConsultanShareInfo[@"Url"]]];
     
+    NSLog(@"....//// url = %@", tmp[@"Url"]);
+    
     [ExclusiveShareView shareWithContent:publishContent backgroundShareView:self.shareBackground naVC:self.naVC andUrl:tmp[@"Url"]];
 }
 
