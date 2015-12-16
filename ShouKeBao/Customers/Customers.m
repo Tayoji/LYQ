@@ -151,7 +151,6 @@
 #warning 消息点击事件
 #pragma mark -代理方法
 - (void)transformPerformation:(CustomModel *)model{
-//    NSLog(@"%@", model.AppSkbUserId);
     ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:model.AppSkbUserId conversationType:eConversationTypeChat];
     chatController.title = model.Name;
     [self.navigationController pushViewController:chatController animated:YES];
