@@ -232,22 +232,17 @@ static id _naVC;
                 [MBProgressHUD showSuccess:@"复制成功"];
             }else{
                 [MBProgressHUD showSuccess:@"分享成功"];
+                
+                ExclusiveViewController *exclusiveVC = [[ExclusiveViewController alloc]init];
+                [_naVC pushViewController:exclusiveVC animated:YES];
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
                 [MBProgressHUD hideHUD];
             });
-            
-            
-            ExclusiveViewController *exclusiveVC = [[ExclusiveViewController alloc]init];
-            [_naVC pushViewController:exclusiveVC animated:YES];
-            
-            
-        }
-        else if (state == SSResponseStateFail)
-        {
+         
+        }else if (state == SSResponseStateFail){
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error errorDescription] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
-           
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
         }
     }];

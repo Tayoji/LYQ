@@ -55,6 +55,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
 
+@property(nonatomic,weak) UILabel *warningLab;
 @end
 
 @implementation ExclusiveViewController
@@ -171,9 +172,10 @@
 - (void)loadExclusiveAppData{
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [IWHttpTool WMpostWithURL:@"/Customer/GetAppStatisticalInformationData" params:dic success:^(id json) {
+            
+            [self setCustomerCount:self.customerCount str:json[@"Installed"]];
             NSLog(@"------专属App的json is %@-------",json);
             self.IsBinding = json[@"IsBinding"];
-            [self setCustomerCount:self.customerCount str:json[@"Installed"]];
             [self setHeaderWith:json[@"AdvisorRank"]];
                 MeShareDetailModel *model = [MeShareDetailModel shareDetailWithDict:json];
                 [self.dataArray addObject:model];
@@ -185,8 +187,9 @@
 }
 
 
+
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
-    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(50, 120, self.view.frame.size.width-100, 80*fiveHight)];
+    UILabel *ll = [[UILabel alloc]initWithFrame:CGRectMake(50, 120*fiveHight, self.view.frame.size.width-100, 50*fiveHight)];
     ll.textAlignment = NSTextAlignmentCenter;
     ll.textColor = [UIColor whiteColor];
     ll.font = [UIFont boldSystemFontOfSize:25];
@@ -281,7 +284,7 @@
                        authOptions:nil
                       shareOptions:nil
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                        
+                         [self.warningLab removeFromSuperview];
                                 if (state == SSResponseStateSuccess)
                                 {
                                     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -353,7 +356,7 @@
             lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
         }];
     }];
-    //    self.warningLab = lab;
+        self.warningLab = lab;
     
 }
 

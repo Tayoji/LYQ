@@ -330,6 +330,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self prepAudio];
+    
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
@@ -1173,19 +1174,22 @@
             [self.circleArr addObject:model];
         }
          NSLog(@"轮播  %@", self.circleArr);
-        [self estimateCircleArrData];
+        [self estimateCircleArrData:json[@"IsVisible"]];
         
       }failure:^(NSError *error) {
         NSLog(@"轮播接口请求失败 error is %@------",error);
     }];
 }
 
-- (void)estimateCircleArrData{
-    
-    if (self.circleArr.count == 0) {
+- (void)estimateCircleArrData:(NSString *)IsVisible{
+//     NSLog(@"轮播  %@", IsVisible);
+    if (/*self.circleArr.count == 0*/ [IsVisible isEqualToString:@"0"]) {
         self.CarouselView.hidden = YES;
         self.tableView.frame = CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 164);
     }else{
+        UIView *viewLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.CarouselSC.frame), self.view.frame.size.width, 1)];
+        viewLine.backgroundColor = [UIColor colorWithRed:184/225.0f green:184/225.0f blue:184/225.0f alpha:1];
+        [self.CarouselView addSubview:viewLine];
         [self circleLayout];
         self.CarouselView.hidden = NO;
         self.tableView.frame = CGRectMake(0, 150, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 214);
