@@ -9,7 +9,7 @@
 #import "BBBadgeBarButtonItem.h"
 
 // Set a padding for the badge
-static int const BBBadgeMargin = 4;
+static int const BBBadgeMargin = 6;
 // Avoid badge to small
 static int const BBMinSize = 8;
 // Default offset for the badge
@@ -47,7 +47,7 @@ static int const BBoriginY = -12;
     // Default design initialization
     self.badgeBGColor   = [UIColor redColor];
     self.badgeTextColor = [UIColor whiteColor];
-    self.badgeFont      = [UIFont fontWithName:@"Helvetica" size:12];
+    self.badgeFont      = [UIFont fontWithName:@"Helvetica" size:11];
     self.shouldHideBadgeAtZero = YES;
     self.shouldAnimateBadge = YES;
     self.badgeValue = @"0";

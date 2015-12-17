@@ -996,29 +996,46 @@
 
 - (void)getNotifiList
 {
-    NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
-    [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
-        NSLog(@"首页公告消息列表%@",json);
-        NSMutableArray *arr = json[@"ActivitiesNoticeList"];
-        
-        self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
-       
-        int count = 0;
-        [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
-        for (int i = 0; i<arr.count; i++) {
-            NSDictionary *dic = arr[i];
-            if (![_isReadArr containsObject:dic[@"ID"]]) {
-                count += 1;
-            }
-        }
-        count += [self getUnreadMessageCount];
-        self.barButton.badgeValue = [NSString stringWithFormat:@"%d",count];
-        UIApplication *application = [UIApplication sharedApplication];
-        application.applicationIconBadgeNumber = count;
+    NSMutableDictionary * params = nil;
+    [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
+        if ([json[@"IsSuccess"]integerValue]) {
+            NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
+            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];
+            self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
+            
+            NSInteger count = noticeCount + DynamicCount;
+            [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
+            count += [self getUnreadMessageCount];
+            self.barButton.badgeValue = [NSString stringWithFormat:@"%ld",count];
+            UIApplication *application = [UIApplication sharedApplication];
+            application.applicationIconBadgeNumber = count;
 
-    } failure:^(NSError *error) {
-        NSLog(@"首页公告消息列表失败%@",error);
+        }
+    } failure:^(NSError *eror) {
     }];
+//
+//    [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
+//        NSLog(@"首页公告消息列表%@",json);
+//        NSMutableArray *arr = json[@"ActivitiesNoticeList"];
+//        
+//        self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
+//       
+//        int count = 0;
+//        [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
+//        for (int i = 0; i<arr.count; i++) {
+//            NSDictionary *dic = arr[i];
+//            if (![_isReadArr containsObject:dic[@"ID"]]) {
+//                count += 1;
+//            }
+//        }
+//        count += [self getUnreadMessageCount];
+//        self.barButton.badgeValue = [NSString stringWithFormat:@"%d",count];
+//        UIApplication *application = [UIApplication sharedApplication];
+//        application.applicationIconBadgeNumber = count;
+//
+//    } failure:^(NSError *error) {
+//        NSLog(@"首页公告消息列表失败%@",error);
+//    }];
 }
 
 
