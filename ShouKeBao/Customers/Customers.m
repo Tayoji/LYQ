@@ -92,6 +92,7 @@
 @property (weak, nonatomic) IBOutlet UIView *tableSuper;
 
 
+
 @end
 
 @implementation Customers
@@ -323,12 +324,13 @@
     self.table.headerRefreshingText = @"正在刷新中";
     self.table.footerPullToRefreshText = @"上拉刷新";
     self.table.footerRefreshingText = @"正在刷新";
-    self.isDownLoad = NO;
+//    self.isDownLoad = NO;
+  
 }
 //下拉刷新
 -(void)headPull
 {
-    self.isDownLoad = NO;
+//    self.isDownLoad = NO;
     if (!self.isMe) {
      self.customerType = 0;
     }
@@ -342,7 +344,8 @@
 //  上啦加载
 - (void)foodPull
 {
-    self.isDownLoad = YES;
+//    self.isDownLoad = YES;//1
+    
     [self.noProductWarnLab removeFromSuperview];
     self.isRefresh = NO;
     self.pageIndex++;
@@ -436,8 +439,8 @@
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
     [dic setObject:@7 forKey:@"SortType"];
     [dic setObject:self.searchK forKey:@"SearchKey"];
-    [dic setObject:[NSString stringWithFormat:@"%ld", self.customerType]forKey:@"CustomerType"];
-    NSLog(@"self.customerType = %ld", self.customerType);
+    [dic setObject:[NSString stringWithFormat:@"%d", self.customerType]forKey:@"CustomerType"];
+    NSLog(@"self.customerType = %d", self.customerType);
 
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
         NSLog(@"------管客户json is %@-------",json);
@@ -472,26 +475,40 @@
               
                     [self.hadBindingCustomArr addObject:model];
                 }else if ([groupType isEqualToString:@"3"]){
-                  
+        
                     [self.otherCustomArr addObject:model];
                 }
             }
         }
           NSLog(@"dadta = %@ %@ %@",self.newsBindingCustomArr, self.hadBindingCustomArr, self.otherCustomArr);
         
-        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
+//     self.isDownLoad = 1  yes    self.isDownLoad = no = 0
+        
+//        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
+//            [self.dataArr addObject:self.newsBindingCustomArr];
+//        }
+//    
+//        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
+//            [self.dataArr addObject:self.hadBindingCustomArr];
+//        }
+//        if (self.otherCustomArr.count && !self.isDownLoad) {
+//            [self.dataArr addObject:self.otherCustomArr];
+//        }
+ 
+        
+        [self.dataArr removeAllObjects];
+        if (self.newsBindingCustomArr.count) {
             [self.dataArr addObject:self.newsBindingCustomArr];
         }
-    
-        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
+        if (self.hadBindingCustomArr.count) {
             [self.dataArr addObject:self.hadBindingCustomArr];
         }
-        if (self.otherCustomArr.count && !self.isDownLoad) {
+        if (self.otherCustomArr.count) {
             [self.dataArr addObject:self.otherCustomArr];
         }
-        
+  
         NSLog(@"dadta = %@", self.dataArr);
-        
+
         if (self.dataArr.count==0) {
             self.imageViewWhenIsNull.hidden = NO;
             self.CustomerCounts.hidden = YES;
@@ -539,7 +556,7 @@
 //刷新数据
         self.customerType = indexPath.row;
         self.isRefresh = YES;
-        self.isDownLoad = NO;
+//        self.isDownLoad = NO;
         self.pageIndex = 1;
         [self loadDataSource];
         [self closePopTableView];
