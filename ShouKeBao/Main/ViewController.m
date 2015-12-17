@@ -46,7 +46,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.tabBar.translucent = NO;
     [self setupUnreadMessageCount];
