@@ -93,21 +93,33 @@
 //        [LoginTool syncLoginWithParam:param success:^(id json) {
 //            
 //            [APNSHelper defaultAPNSHelper].isHideCheckNewVertion = YES;
+//            
+//            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//
 //            if ([json[@"IsSuccess"] integerValue] == 1) {
 //                
+//                [MobClick event:@"3DTouch_findProduct" attributes:dict];
 //                if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
+//                    
 //                    [self setTabbarRoot];
 //                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:1];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.Order"]){
+//                    
+////                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                    [MobClick event:@"3DTouch_order" attributes:dict];
 //                    [self setTabbarRoot];
 //                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:2];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.scan"]){
+//                    
+//                    [MobClick event:@"3DTouch_shouKeBao_scan" attributes:dict];
 //                    self.window.rootViewController = nil;
 //                    [self setTabbarRoot];
 //                    [def setObject:@"UITouchText.scan" forKey:@"ThreeDTouch"];
 //                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:0];
 //             
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.TodaySignIn"]){
+//                    
+//                    [MobClick event:@"3DTouch_Me_TodaySignIn" attributes:dict];
 //                    self.window.rootViewController = nil;
 //                    [self setTabbarRoot];
 //                    
@@ -119,12 +131,18 @@
 //            }else{
 //                if ([self.window.rootViewController isKindOfClass:[ViewController class]]) {
 //                    if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
+//                        
+//                        [MobClick event:@"3DTouch_findProduct" attributes:dict];
 //                       [self setTabbarRoot];
 //                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:1];
 //                    }else if([shortcutItem.type isEqualToString:@"UITouchText.Order"]){
+//                        
+//                        [MobClick event:@"3DTouch_order" attributes:dict];
 //                        [self setTabbarRoot];
 //                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:2];
 //                    }else if([shortcutItem.type isEqualToString:@"UITouchText.scan"]){
+//                        
+//                        [MobClick event:@"3DTouch_shouKeBao_scan" attributes:dict];
 //                        self.window.rootViewController = nil;
 //                        [self setTabbarRoot];
 //                        
@@ -132,6 +150,8 @@
 //                        ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:0];
 ////                        [[NSNotificationCenter defaultCenter] postNotificationName:@"3dTouchPushScan" object:nil];
 //                    }else if([shortcutItem.type isEqualToString:@"UITouchText.TodaySignIn"]){
+//                        
+//                        [MobClick event:@"3DTouch_Me_TodaySignIn" attributes:dict];
 //                        self.window.rootViewController = nil;
 //                        [self setTabbarRoot];
 //                        
