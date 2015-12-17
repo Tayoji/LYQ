@@ -47,7 +47,7 @@ static id _shareView;
     
     
     
-    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(30*KHeight, /*CGRectGetMaxY(titleLabel.frame)*/15, shareView.frame.size.width-40, 50*KHeight)];
+    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(40*KWidth_Scale, /*CGRectGetMaxY(titleLabel.frame)*/15, shareView.frame.size.width-80*KWidth_Scale, 50*KHeight)];
 //    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App";
     contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额，赶紧抢！";
     contentLabel.numberOfLines = 0;
@@ -67,7 +67,8 @@ static id _shareView;
     
     
     UIButton *contactB = [UIButton buttonWithType:UIButtonTypeCustom];
-    contactB.frame = CGRectMake(40, CGRectGetMaxY(contentLabel.frame), shareView.frame.size.width-80, 50*KHeight);
+    
+    contactB.frame = CGRectMake(shareView.frame.size.width/5, CGRectGetMaxY(contentLabel.frame), shareView.frame.size.width*3/5, 50*KHeight);
     [shareView addSubview:contactB];
     contactB.backgroundColor = [UIColor colorWithRed:252/255.0f green:102/255.0f blue:33/255.0f alpha:1];
     [contactB setTitle:@"立即联系客户经理" forState:UIControlStateNormal];
