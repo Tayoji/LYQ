@@ -136,8 +136,8 @@
     new.contentMode = UIViewContentModeScaleAspectFill;
     
     CGFloat newBtnCenterX = new.center.x;
-    UILabel *labNew = [[UILabel alloc] initWithFrame:CGRectMake(newBtnCenterX-20, CGRectGetMaxY(new.frame), 40, 20)];
-    labNew.text = @"新用户";
+    UILabel *labNew = [[UILabel alloc] initWithFrame:CGRectMake(newBtnCenterX-30, CGRectGetMaxY(new.frame), 60, 20)];
+    labNew.text = @"新用户注册";
     labNew.font = [UIFont systemFontOfSize:11];
     labNew.textColor = [UIColor grayColor];
     labNew.textAlignment = NSTextAlignmentCenter;

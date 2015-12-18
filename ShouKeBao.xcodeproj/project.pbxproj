@@ -767,7 +767,7 @@
 		5202795A1BF443510049C0B9 /* OpportunitykeywordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpportunitykeywordCell.m; sourceTree = "<group>"; };
 		5202795B1BF443510049C0B9 /* OpportunitykeywordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpportunitykeywordCell.xib; sourceTree = "<group>"; };
 		5202795E1BF446090049C0B9 /* OpprotunityFreqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpprotunityFreqCell.h; sourceTree = "<group>"; };
-		5202795F1BF446090049C0B9 /* OpprotunityFreqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpprotunityFreqCell.m; sourceTree = "<group>"; };
+		5202795F1BF446090049C0B9 /* OpprotunityFreqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpprotunityFreqCell.m; sourceTree = "<group>"; wrapsLines = 1; };
 		520279601BF446090049C0B9 /* OpprotunityFreqCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpprotunityFreqCell.xib; sourceTree = "<group>"; };
 		520279631BF4730A0049C0B9 /* NewMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageModel.h; sourceTree = "<group>"; };
 		520279641BF4730A0049C0B9 /* NewMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageModel.m; sourceTree = "<group>"; };

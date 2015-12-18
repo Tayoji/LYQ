@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 shouKeBao. All rights reserved.
 //
 
+#import <CoreText/CoreText.h>
 #import "NSString+FKTools.h"
 #import "CommandTo.h"
 #import "LeaveShare.h"
@@ -93,4 +94,52 @@
     }
     return NO;
 }
+
+- (NSMutableAttributedString *)attributedStringMatchSearchKeyWords{
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:[self stringByReplacingOccurrencesOfString:@"@" withString:@"@"]];
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"@.+@";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:self options:0 range:NSMakeRange(0,self.length)];
+    
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSRange oldRange = ((NSTextCheckingResult *)result[0]).range;
+        NSRange newRange = NSMakeRange(oldRange.location, oldRange.length - 2);
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:newRange];
+    }
+    return str;
+}
+
+- (NSMutableAttributedString *)attributedStringMatchIMUser{
+    //创建正则表达式；pattern规则；
+    NSMutableAttributedString * str;
+    NSString * pattern;
+    if ([self myContainsString:@"￥"]) {
+        str = [[NSMutableAttributedString alloc]initWithString:[self stringByReplacingOccurrencesOfString:@"￥" withString:@""]];
+        pattern = @"￥.+￥";
+    }else{
+        str = [[NSMutableAttributedString alloc]initWithString:[self stringByReplacingOccurrencesOfString:@"¥" withString:@""]];
+        pattern = @"¥.+¥";
+    }
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:self options:0 range:NSMakeRange(0,self.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0x50/255.0 green:0x7d/255.0 blue:0xfa/255.0 alpha:1.0] range:NSMakeRange(((NSTextCheckingResult *)result[0]).range.location, ((NSTextCheckingResult *)result[0]).range.length-2)];
+//        [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(((NSTextCheckingResult *)result[0]).range.location, ((NSTextCheckingResult *)result[0]).range.length-2)];
+
+    }
+    return str;
+}
+- (NSArray *)TextCheckingResultArrayWithPattern:(NSString *)pattern{
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:self options:0 range:NSMakeRange(0,self.length)];
+    return result;
+}
+
+
 @end

@@ -18,13 +18,6 @@
                         <rect key="frame" x="8" y="15" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您收到了【旅游顾问】APP新客户!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hjQ-DI-G81">
-                        <rect key="frame" x="46" y="5" width="266" height="28"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aa" id="16t-Au-5U1">
                         <rect key="frame" x="46" y="43" width="41" height="41"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -36,11 +29,6 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="AZp-ia-0f8">
-                        <rect key="frame" x="46" y="36" width="274" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7654321" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="py5-Kz-Sgi">
                         <rect key="frame" x="153" y="64" width="102" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -69,17 +57,30 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="lXa-jC-lEZ">
+                        <rect key="frame" x="46" y="7" width="266" height="28"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="AZp-ia-0f8">
+                        <rect key="frame" x="46" y="36" width="274" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="TimeLabel" destination="VyR-lT-ufw" id="aki-yO-sQj"/>
                 <outlet property="TitleImage" destination="0oK-MW-FbN" id="FVK-sZ-lfC"/>
+                <outlet property="TitleView" destination="lXa-jC-lEZ" id="pCR-3J-OE7"/>
                 <outlet property="custNameLabel" destination="5xg-nV-r7T" id="ds5-wi-3fB"/>
                 <outlet property="custNumLabel" destination="py5-Kz-Sgi" id="WWd-5x-onH"/>
                 <outlet property="headImage" destination="16t-Au-5U1" id="pXX-mW-KUW"/>
-                <outlet property="titleLabel" destination="hjQ-DI-G81" id="UkQ-c8-VhM"/>
             </connections>
-            <point key="canvasLocation" x="232" y="213.5"/>
+            <point key="canvasLocation" x="218" y="213.5"/>
         </tableViewCell>
     </objects>
     <resources>

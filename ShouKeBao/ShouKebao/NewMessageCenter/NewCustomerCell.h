@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 @class CustomDynamicModel;
 @interface NewCustomerCell : UITableViewCell
+@property (nonatomic, strong)UINavigationController * NAV;
+
 @property (strong, nonatomic) IBOutlet UIImageView *TitleImage;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *TitleView;
 @property (weak, nonatomic) IBOutlet UIImageView *headImage;
 @property (weak, nonatomic) IBOutlet UILabel *custNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *custNumLabel;

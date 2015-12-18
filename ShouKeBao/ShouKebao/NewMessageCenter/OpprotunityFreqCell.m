@@ -10,8 +10,13 @@
 #import "CustomDynamicModel.h"
 #import "UIImageView+WebCache.h"
 #import "ProductModal.h"
-
+#import "NSString+FKTools.h"
+#import "ChatViewController.h"
 @interface OpprotunityFreqCell ()
+{
+    NSArray *_IMUserMatches;
+}
+
 @property (strong, nonatomic) IBOutlet UIImageView *diImage;
 @property (strong, nonatomic) IBOutlet UILabel *diY;
 @property (strong, nonatomic) IBOutlet UIImageView *liImage;
@@ -24,20 +29,38 @@
 @implementation OpprotunityFreqCell
 
 - (void)awakeFromNib {
-    // Initialization code
+
+}
+-(void)layoutSubviews{
+    self.TitleView.textContainerInset = UIEdgeInsetsZero;
+    self.TitleView.font = [UIFont systemFontOfSize:14];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
+    [self.TitleView addGestureRecognizer:tap];
+    self.TitleView.editable = NO;
+    self.TitleView.allowsEditingTextAttributes = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 -(void)setModel:(CustomDynamicModel *)model{
+
     _model = model;
     [self.HeadImage sd_setImageWithURL:[NSURL URLWithString:model.ProductdetailModel.PicUrl] placeholderImage:[UIImage imageNamed:@"customtouxiang"]];
     self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
     self.TimerLabel.text = model.CreateTimeText;
-    self.TitleLabel.text = model.DynamicContent;
+    
+    
+    _IMUserMatches = [model.DynamicContent TextCheckingResultArrayWithPattern:@"￥.+￥"];
+    if (!_IMUserMatches.count) {
+        _IMUserMatches = [model.DynamicContent TextCheckingResultArrayWithPattern:@"¥.+¥"];
+    }
+    NSMutableAttributedString * str = [model.DynamicContent attributedStringMatchSearchKeyWords];
+    str = [str.string attributedStringMatchIMUser];
+    self.TitleView.attributedText = str;
+
+    
     self.topTitleLab.text = model.DynamicTitle;
     self.DiLabel.text = model.ProductdetailModel.PersonCashCoupon;
     self.SongLabel.text = model.ProductdetailModel.PersonBackPrice;
@@ -46,7 +69,7 @@
     self.SameJobLabel.text = model.ProductdetailModel.PersonPeerPrice;
     self.NumberLabel.text = model.ProductdetailModel.Code;
     self.BodyLabel.text = model.ProductdetailModel.Name;
-    
+    NSLog(@"%@--%@--%@", model.ProductdetailModel.PersonCashCoupon, model.ProductdetailModel.PersonBackPrice, model.ProductdetailModel.PersonProfit);
     if (![model.ProductdetailModel.IsComfirmStockNow intValue]) {
         self.sandian.hidden = YES;
     }
@@ -63,30 +86,71 @@
         self.liY.hidden = YES;
     }
 }
-//@property (nonatomic, copy) NSString *AdvertText;//广告文本
-//
-//@property (nonatomic, copy) NSString *ID;//产品ID(用于收藏)
-//@property (nonatomic, copy) NSString *PicUrl;//
-//@property (nonatomic, copy) NSString *Name;//产品介绍
-//@property (nonatomic, copy) NSString *Code;//产品编号
-//@property (nonatomic, copy) NSString *PersonPrice;//门市价
-//@property (nonatomic, copy) NSString *PersonPeerPrice;//同行价
-//@property (nonatomic, copy) NSString *PersonProfit;//利润
-//@property (nonatomic, copy) NSString *PersonBackPrice;//加返
-//@property (nonatomic, copy) NSString *PersonCashCoupon;//券
-//@property (nonatomic, copy) NSString *StartCityName;//出发城市名称
-//@property (copy , nonatomic) NSString *IsComfirmStockNow;//是否闪电发班
-//@property (strong , nonatomic) NSNumber *StartCity;//出发城市编号
-//@property (copy,nonatomic) NSString *LastScheduleDate;//最近班期
-//@property (copy,nonatomic) NSString *SupplierName;//供应商
-//@property (copy , nonatomic) NSString *IsFavorites;//是否收藏
-//@property (copy,nonatomic) NSString *ContactName;//联系人名称
-//@property (copy,nonatomic) NSString *ContactMobile;//联系人电话
-//@property (copy,nonatomic) NSString *LinkUrl;//产品详情页
-//
-//@property (nonatomic,copy) NSString *IsOffLine;// 是否离线
-//@property (nonatomic,copy) NSString *HistoryViewTime;// 历史流浪时间
-//@property (nonatomic,strong) NSMutableDictionary *ShareInfo;
-//@property (nonatomic , copy)NSString * PushDate;
+//开始点击；
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    [self removeViewInTextView];
+    
+    CGPoint point= [touch locationInView:self.TitleView];
+    [self isPointInRect:point];
+    return YES;
+}
+//结束点击
+-(void)bubbleViewPressed:(id)sender{
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer *)sender;
+    CGPoint point = [tap locationInView:self.TitleView];
+    if ([self isPointInRect:point]) {
+        [self openIM];
+        [self removeViewInTextView];
+    }
+    
+}
+
+//长按出现
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    CGPoint point = [gestureRecognizer locationInView:self.TitleView];
+    if ([self isPointInRect:point]) {
+        [self openIM];
+        [self removeViewInTextView];
+    }
+    return YES;
+}
+//判断是否是选中范围
+
+- (BOOL)isPointInRect:(CGPoint)point{
+    if (!_IMUserMatches.count) {
+        return NO;
+    }
+    NSRange oldRange = ((NSTextCheckingResult *)_IMUserMatches[0]).range;
+    NSRange newRange = NSMakeRange(oldRange.location, oldRange.length - 2);
+    self.TitleView.selectedRange = newRange;
+    //找出匹配的字符串在textView中的位置，再判断point是否在textView中选中矩形范围内；
+    NSArray * rects = [self.TitleView selectionRectsForRange: self.TitleView.selectedTextRange];
+    for (UITextSelectionRect *rect in rects) {
+        if (CGRectContainsPoint(rect.rect, point)) {
+            UIView * colorView = [[UIView alloc]initWithFrame:rect.rect];
+            colorView.backgroundColor  = [UIColor colorWithRed:191/255.0 green:223/255.0 blue:253/255.0 alpha:0.5];
+            colorView.tag = 1024;
+            [self.TitleView addSubview:colorView];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+//去除阴影
+- (void)removeViewInTextView{
+    [self.TitleView resignFirstResponder];
+    for (UIView * view in self.TitleView.subviews) {
+        if (view.tag == 1024) {
+            [view removeFromSuperview];
+        }
+    }
+}
+//跳转IM界面
+-(void)openIM{
+    NSLog(@"%@", self.model.AppSkbUserId);
+    ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
+    [self.NAV pushViewController:charV animated:YES];
+}
 
 @end

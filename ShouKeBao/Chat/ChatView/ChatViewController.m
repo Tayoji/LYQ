@@ -249,7 +249,6 @@
         [self joinChatroom:_chatter];
     }
 }
-
 //根据chater获取头像和昵称；
 - (void)getCustomIconAndNickNameWithChatter:(NSString *)chatter{
     NSDictionary *params = @{@"AppSkbUserId":chatter};

@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"服务通知";
+    self.title = @"平台消息";
     [self loadDataSource];
     [_tableView registerNib:[UINib nibWithNibName:@"TerraceMessCell" bundle:nil] forCellReuseIdentifier:@"TerraceMessCell"];
     [_tableView registerNib:[UINib nibWithNibName:@"TimerCell" bundle:nil] forCellReuseIdentifier:@"TimerCell"];
