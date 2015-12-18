@@ -20,6 +20,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "NewOpenExclusiveViewController.h"
+#import "WhatIsExclusiveViewController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -27,6 +28,7 @@
 #define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
 #define fiveHight self.view.frame.size.height/480
 #define kScreenSize [UIScreen mainScreen].bounds.size
+#define gap 5
 @interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
 //头部
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImageViewSet;
@@ -54,8 +56,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *returnBtn;
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
-
-@property(nonatomic,weak) UILabel *warningLab;
+@property (weak, nonatomic) IBOutlet UIImageView *QRCodeImage;
+@property (weak, nonatomic) IBOutlet UIImageView *pointImage;
+@property (nonatomic, strong)UIView *redDot;
+@property (nonatomic,weak) UILabel *warningLab;
+@property (nonatomic, copy)NSString *QRCodeAddress;
 @end
 
 @implementation ExclusiveViewController
@@ -70,6 +75,7 @@
      [self.view addSubview:self.returnBtn];
      [self.view addSubview:self.titleL];
      [self.view addSubview:self.shareBtn];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -80,11 +86,15 @@
     // Do any additional setup after loading the view from its nib.
     
     [self loadExclusiveAppData];
-    
+    [self redDot];
+    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"redDot_QRCode"]){
+         [self.QRCodeImage addSubview:_redDot];
+    }
+   
 //    [self setRightShareBarItem];
 
     [self setHeaderImageView];
-    
+    [self setQRCodeImage];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -168,13 +178,16 @@
     return self.tableView.frame.size.height;
 }
 
-
+#pragma mark - 数据请求
 - (void)loadExclusiveAppData{
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [IWHttpTool WMpostWithURL:@"/Customer/GetAppStatisticalInformationData" params:dic success:^(id json) {
             
-            [self setCustomerCount:self.customerCount str:json[@"Installed"]];
+            [self setCustomerCount:self.customerCount str:json[@"InstalledTotal"]];
             NSLog(@"------专属App的json is %@-------",json);
+            
+            self.QRCodeAddress = json[@"QRCodeAddress"];
+            
             self.IsBinding = json[@"IsBinding"];
             [self setHeaderWith:json[@"AdvisorRank"]];
                 MeShareDetailModel *model = [MeShareDetailModel shareDetailWithDict:json];
@@ -197,6 +210,38 @@
      _customerCount = ll;
      NSString *str = [NSString stringWithFormat:@"%@人", string];
     [textStyle textStyleLabel:_customerCount text:str FontNumber:50.0f*fiveHight AndRange:NSMakeRange(0, str.length-1) AndColor:[UIColor whiteColor]];
+}
+
+- (void)setQRCodeImage{
+   // UIImageView *QRCodeImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.adviserBtn.frame)+gap, CGRectGetMaxY(self.adviserBtn.frame), 20, 20)];
+
+   // QRCodeImage.userInteractionEnabled = YES;
+ //   QRCodeImage.image = [UIImage imageNamed:@"fanhuian"];
+  //  [self.HeadImageViewSet addSubview:QRCodeImage];
+ //   self.QRCodeImage = QRCodeImage;
+    
+   // UIImageView *pointImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(QRCodeImage.frame)+gap, CGRectGetMaxY(self.adviserBtn.frame), 15, 20)];
+ //   pointImage.userInteractionEnabled = YES;
+  //  pointImage.image = [UIImage imageNamed:@"fanhuian"];
+   // [self.HeadImageViewSet addSubview:pointImage];
+ //   self.pointImage = pointImage;
+    
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
+    [self.QRCodeImage addGestureRecognizer:tap1];
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
+    [self.pointImage addGestureRecognizer:tap2];
+    
+
+    
+}
+
+- (void)pushQRCodeVC{
+    
+     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"redDot_QRCode"];
+    WhatIsExclusiveViewController *WRCodeVC = [[WhatIsExclusiveViewController alloc]init];
+    WRCodeVC.url = self.QRCodeAddress;
+    WRCodeVC.naV = self.navigationController;
+    [self.navigationController pushViewController:WRCodeVC animated:YES];
 }
 
 - (void)setHeaderWith:(NSString *)rank{
@@ -246,9 +291,19 @@
     [self.HeadImageViewSet addSubview:self.penpleL];
     [self.HeadImageViewSet addSubview:self.customerCount];
     [self.HeadImageViewSet addSubview:self.adviserBtn];
+    [self.HeadImageViewSet addSubview:self.QRCodeImage];
+    [self.HeadImageViewSet addSubview:self.pointImage];
     
 }
-
+-(UIView *)redDot{
+    if (!_redDot) {
+        _redDot = [[UIView alloc]initWithFrame:CGRectMake(22, -2, 6, 6)];
+        _redDot.backgroundColor = [UIColor redColor];
+        _redDot.layer.cornerRadius = 3.0;
+        _redDot.layer.masksToBounds = YES;
+    }
+    return _redDot;
+}
 
 -(void)shareAction:(UIButton *)button{
     if (button.tag == 1011) {

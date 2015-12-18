@@ -36,6 +36,8 @@
 #import "ChatViewController.h"
 #import "EaseMob.h"
 #define pageSize 10
+#import "NSString+FKTools.h"
+
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
 @interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh>
 
@@ -91,7 +93,8 @@
 @property (nonatomic, copy)NSString *InvitationInfo;
 @property (weak, nonatomic) IBOutlet UIView *tableSuper;
 
-
+@property (nonatomic, strong)UIButton *titleBtn;
+@property (nonatomic, strong)UIImageView *pointDownImage;
 
 @end
 
@@ -107,8 +110,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.searchBar];
-  
-    [self getNotifiList];
     [self customerCenterBarItem];
     self.popTableview.delegate = self;
     self.popTableview.dataSource = self;
@@ -148,6 +149,13 @@
     [self CustomerCounts];
 }
 
+//-(UIImageView *)pointDownImage{
+//    if (!_pointDownImage) {
+//        _pointDownImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.navigationItem.titleView.frame), 20, 10, 10)];
+//        _pointDownImage.image = [UIImage imageNamed:@"whidexiala"];
+//    }
+//    return _pointDownImage;
+//}
 
 #warning 消息点击事件
 #pragma mark -代理方法
@@ -250,16 +258,21 @@
 #pragma mark - 标题及方法
 -(void)customerCenterBarItem{
     UIButton *button = [[UIButton alloc]init];
-    button.frame = CGRectMake(0, 0, 50, 100);
+    button.frame = CGRectMake(0, 0, 180, 50);
     [button setTitle:@"管客户" forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"whidexiala"] forState:UIControlStateNormal];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 15)];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(20, 60, 20, -10)];
     [button.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     [button addTarget:self action:@selector(popCustomersAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = button;
-    
+    self.titleBtn = button;
+    NSLog(@"%f", CGRectGetMaxX(button.titleLabel.frame));
+    _pointDownImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(button.titleLabel.frame)+35, 20, 10, 10)];
+    _pointDownImage.image = [UIImage imageNamed:@"whidexiala"];
+    [button addSubview:_pointDownImage];
 }
+
+
+
+
 - (void)popCustomersAction:(UIButton *)button{
     if (self.popFlag == NO) {
         self.popTableview.hidden = NO;
@@ -296,8 +309,14 @@
     [super viewWillAppear:animated];
     self.subView.hidden = YES;
     self.navigationController.navigationBarHidden = NO;
+    if (self.isMe == 1) {
+//        _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
+//        [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
+        [self setNav];
+    }
     NSLog(@"... customerType  %ld",self.customerType);
     [self.table reloadData];
+    [self getNotifiList];
     //    NSUserDefaults *customer = [NSUserDefaults standardUserDefaults];
     //    NSString *appIsBack = [customer objectForKey:@"appIsBack"];
     //    NSLog(@"appIsBack---- %@", appIsBack);
@@ -311,6 +330,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    
     [MobClick endLogPageView:@"Customers"];
 }
 
@@ -328,11 +348,13 @@
   
 }
 //下拉刷新
--(void)headPull
-{
+-(void)headPull{
+    
 //    self.isDownLoad = NO;
     if (!self.isMe) {
      self.customerType = 0;
+    _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
+    [self.titleBtn setTitle:@"管客户" forState:UIControlStateNormal];
     }
     self.searchK = @"";
     self.isRefresh = YES;
@@ -555,6 +577,26 @@
     }else if (self.popTableview == tableView){
 //刷新数据
         self.customerType = indexPath.row;
+        
+        if (self.customerType == 0) {
+            
+             _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
+            [self.titleBtn setTitle:@"管客户" forState:UIControlStateNormal];
+            
+        }else if (self.customerType == 1) {
+            _pointDownImage.frame = CGRectMake(163, 20, 10, 10);
+            [self.titleBtn setTitle:@"新绑定APP客户" forState:UIControlStateNormal];
+          
+        }else if (self.customerType == 2){
+            _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
+            [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
+            
+        }else if (self.customerType == 3){
+            _pointDownImage.frame = CGRectMake(135, 20, 10, 10);
+            [self.titleBtn setTitle:@"其他客户" forState:UIControlStateNormal];
+         
+        }
+        
         self.isRefresh = YES;
 //        self.isDownLoad = NO;
         self.pageIndex = 1;
@@ -768,7 +810,7 @@
 }
 - (void)deselect{
     [self.table deselectRowAtIndexPath:[self.table indexPathForSelectedRow] animated:YES];
-//    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
+    [self.popTableview deselectRowAtIndexPath:[self.popTableview indexPathForSelectedRow] animated:YES];
 }
 
 
@@ -790,6 +832,7 @@
 
 #pragma mark - UISearchBar的delegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    self.subView.hidden = YES;
     [searchBar setShowsCancelButton:YES animated:YES];
     return YES;
 }
@@ -1006,6 +1049,27 @@
     }
     return _searchDisplay;
 }
+
+
+- (void)setNav{
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0,0,45,15)];
+    [leftBtn setImage:[UIImage imageNamed:@"fanhuian"] forState:UIControlStateNormal];
+    leftBtn.imageEdgeInsets = UIEdgeInsetsMake(-1, -15, -1, 32);
+    [leftBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [leftBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    leftBtn.titleEdgeInsets = UIEdgeInsetsMake(0,-28, 0, 0);
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+-(void)back{
+    self.popTableview.hidden = YES;
+    [self.shadeView removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+   }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
