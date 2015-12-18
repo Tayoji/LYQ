@@ -1367,7 +1367,7 @@
     }else{
 //        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
         self.guideImageView.image = [UIImage imageNamed:@"dredged"];
-        [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
+        [button setTitle:@"立即查看领取" forState:UIControlStateNormal];
     }
     button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];

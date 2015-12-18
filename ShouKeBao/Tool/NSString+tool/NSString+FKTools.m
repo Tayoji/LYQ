@@ -51,8 +51,23 @@
     commandto.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height/4,[UIScreen mainScreen].bounds.size.width-20, [UIScreen mainScreen].bounds.size.height/2);
     commandto.NewPageUrl = NewPageUrl;
     commandto.bodyLabel.text = body;
-    commandto.DiLabel.text = Di;
-    commandto.SongLabel.text = song;
+    //判断DI是否显示
+    if (Di == nil) {
+        commandto.DiImageView.alpha = 0;
+        commandto.DiRMBImage.alpha = 0;
+        commandto.DiLabel.alpha = 0;
+    }else{
+        commandto.DiLabel.text = Di;
+    }
+    //判断Song是否显示
+    if (song == nil) {
+        commandto.SongImageView.alpha = 0;
+        commandto.SongRMBImage.alpha = 0;
+        commandto.SongLabel.alpha = 0;
+    }else{
+        commandto.SongLabel.text = song;
+    }
+    
     commandto.shareInfo = shareInfo;
     commandto.retailsalesLabel.text = retailsalesLabel;
     commandto.PriceLabel.text = CommandSamePrice;
