@@ -240,6 +240,7 @@
      [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"redDot_QRCode"];
     WhatIsExclusiveViewController *WRCodeVC = [[WhatIsExclusiveViewController alloc]init];
     WRCodeVC.url = self.QRCodeAddress;
+    WRCodeVC.formType = @"QRCodeAddress";
     WRCodeVC.naV = self.navigationController;
     [self.navigationController pushViewController:WRCodeVC animated:YES];
 }
