@@ -86,6 +86,7 @@
 
 - (IBAction)introduceBtn:(id)sender {
     WhatIsExclusiveViewController *WhatIsExclusiveVC = [[WhatIsExclusiveViewController alloc]init];
+    WhatIsExclusiveVC.url =  @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
     WhatIsExclusiveVC.naV = self.naVC;
     [self.naVC pushViewController:WhatIsExclusiveVC animated:YES];
 }

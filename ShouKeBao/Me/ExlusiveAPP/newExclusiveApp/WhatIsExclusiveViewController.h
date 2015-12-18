@@ -10,4 +10,5 @@
 
 @interface WhatIsExclusiveViewController : SKViewController
 @property (nonatomic, strong)UINavigationController *naV;
+@property (nonatomic, copy)NSString *url;
 @end

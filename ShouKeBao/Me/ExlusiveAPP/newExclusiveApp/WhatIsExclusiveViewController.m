@@ -36,9 +36,10 @@
     self.indicator = [[YYAnimationIndicator alloc]initWithFrame:CGRectMake(x, y, 130, 130)];
    
     [_indicator setLoadText:@"拼命加载中..."];
-   
-    NSString *url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
-    [_webView loadRequest:[[NSURLRequest alloc] initWithURL:[[NSURL alloc]initWithString:url]]];
+//    if (self.url.length==0) {
+//        self.url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
+//    }
+    [_webView loadRequest:[[NSURLRequest alloc] initWithURL:[[NSURL alloc]initWithString:self.url]]];
     [self.view addSubview:_indicator];
    
     
