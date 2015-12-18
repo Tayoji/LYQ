@@ -111,18 +111,20 @@
 }
 
 - (NSMutableAttributedString *)attributedStringMatchSearchKeyWords{
-    NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:[self stringByReplacingOccurrencesOfString:@"@" withString:@"@"]];
+    NSMutableAttributedString * str ;
     //创建正则表达式；pattern规则；
     NSString * pattern = @"@.+@";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
     NSArray * result = [regex matchesInString:self options:0 range:NSMakeRange(0,self.length)];
-    
     if (result.count) {
         //获取筛选出来的字符串
+        str = [[NSMutableAttributedString alloc]initWithString:[self stringByReplacingOccurrencesOfString:@"@" withString:@""]];
         NSRange oldRange = ((NSTextCheckingResult *)result[0]).range;
         NSRange newRange = NSMakeRange(oldRange.location, oldRange.length - 2);
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:newRange];
+    }else{
+        str = [[NSMutableAttributedString alloc]initWithString:self];
     }
     return str;
 }
