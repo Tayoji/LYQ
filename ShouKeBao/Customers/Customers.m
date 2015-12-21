@@ -39,7 +39,7 @@
 #import "NSString+FKTools.h"
 
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
-@interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh>
+@interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic,strong) NSMutableArray *dataArr;
 - (IBAction)addNewUser:(id)sender;
@@ -96,6 +96,11 @@
 @property (nonatomic, strong)UIButton *titleBtn;
 @property (nonatomic, strong)UIImageView *pointDownImage;
 
+@property (weak, nonatomic) IBOutlet UIView *Tip_InviteView;
+- (IBAction)inviteCancleBtn:(id)sender;
+- (IBAction)inviteCustomerBtn:(id)sender;
+@property (nonatomic, copy)NSString *telStr;
+
 @end
 
 @implementation Customers
@@ -139,6 +144,21 @@
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
+
+
+- (void)tipInviteViewShow:(NSString *)telStr{
+    self.Tip_InviteView.hidden = NO;
+    self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    _shadeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    [self.view.window addSubview:self.shadeView];
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.Tip_InviteView];
+    self.telStr = telStr;
+}
+
+
+
+
+
 
 - (void)setTable{
     self.table.delegate = self;
@@ -1075,4 +1095,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark = 自定义邀请弹出框
+- (IBAction)inviteCancleBtn:(id)sender {
+    [self.shadeView removeFromSuperview];
+    self.Tip_InviteView.hidden = YES;
+}
+
+- (IBAction)inviteCustomerBtn:(id)sender {
+     NSLog(@".... %@", self.telStr);
+    
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
+    
+    if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+        MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+       
+        MFMessageVC.body = _InvitationInfo;
+        MFMessageVC.recipients = @[self.telStr];
+        MFMessageVC.messageComposeDelegate = self;
+        [_naV presentViewController:MFMessageVC animated:YES completion:nil];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    
+}
 @end
