@@ -41,14 +41,13 @@ static id _invitationInfo;
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"CustomCallClick" attributes:dict];
     
-    if (self.model.Mobile.length>6) {
+    if (self.telStr.length>6) {
         
-        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel://%@",self.model.Mobile];
-        NSLog(@"电话号码是%@",str);
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel://%@",self.telStr];
+        NSLog(@"电话号码是:  %@",str);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         
-    }
-    else if (self.model.Mobile.length<=6){
+    }else if (self.telStr.length<=6){
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"失败" message:@"该客户电话号码错误" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
         
@@ -65,8 +64,13 @@ static id _invitationInfo;
      [[NSUserDefaults standardUserDefaults]setBool:YES forKey:isGray_redID];
         
         //            [self achieveInvitationInfoData:self.model.ID];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"TA还不是你的绑定APP客户,马上邀请TA绑定你的专属APP吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"邀请", nil];
-        [alert show];
+       // UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"TA还未绑定您的专属APP,赶快邀请TA来绑定吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"邀请", nil];
+       // [alert show];
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(tipInviteViewShow:)]) {
+             [_delegate tipInviteViewShow:self.model.Mobile];
+             [_delegate tableViewReloadData];
+        }
     }else{
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"Customer_newCustomerIMChatIconClick" attributes:dict];
@@ -78,39 +82,49 @@ static id _invitationInfo;
     }
     
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
-    if (buttonIndex == 1) {
-        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
-        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
-            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
-            
-            MFMessageVC.body = _invitationInfo;
-            MFMessageVC.recipients = @[self.telStr];
-            MFMessageVC.messageComposeDelegate = self;
-            [_naNC presentViewController:MFMessageVC animated:YES completion:nil];
-        }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
-        }
-    }
-     [_delegate tableViewReloadData];
-}
+//-(void)willPresentAlertView:(UIAlertView *)alertView{
+//    for(UIView *tempView in alertView.subviews){
+//        if([tempView isKindOfClass:[UIView class]]){
+//            UILabel *tempButton=(UILabel *)tempView;
+//            tempButton.textColor = [UIColor redColor];
+//        }
+//    }
+//}
 
-//短信代理方法
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
-    // 关闭短信界面
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    if (result == MessageComposeResultCancelled) {
-        NSLog(@"取消发送");
-    } else if (result == MessageComposeResultSent) {
-        NSLog(@"已经发出");
-    } else {
-        NSLog(@"发送失败");
-    }
-    
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//
+//    if (buttonIndex == 1) {
+//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//        [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
+//        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+//            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+//            
+//            MFMessageVC.body = _invitationInfo;
+//            MFMessageVC.recipients = @[self.telStr];
+//            MFMessageVC.messageComposeDelegate = self;
+//            [_naNC presentViewController:MFMessageVC animated:YES completion:nil];
+//        }else{
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
+//        }
+//    }
+//     [_delegate tableViewReloadData];
+//}
+//
+////短信代理方法
+//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+//    // 关闭短信界面
+//    [controller dismissViewControllerAnimated:YES completion:nil];
+//    if (result == MessageComposeResultCancelled) {
+//        NSLog(@"取消发送");
+//    } else if (result == MessageComposeResultSent) {
+//        NSLog(@"已经发出");
+//    } else {
+//        NSLog(@"发送失败");
+//    }
+//    
+//}
 
 - (void)achieveInvitationInfoData:(NSString *)CustomerID {
     
@@ -127,8 +141,8 @@ static id _invitationInfo;
 
 +(instancetype)cellWithTableView:(UITableView *)tableView InvitationInfo:(NSString *)invitationInfo navigationC:(UINavigationController *)naNC{
     
-    _invitationInfo = invitationInfo;
-    _naNC = naNC;
+//    _invitationInfo = invitationInfo;
+//    _naNC = naNC;
     static NSString *cellID = @"customCell";
     CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
@@ -172,6 +186,7 @@ static id _invitationInfo;
     
     if ([self.model.IsOpenIM integerValue] == 0) {
         NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
+        
         if (![[NSUserDefaults standardUserDefaults]boolForKey:isGray_redID]) {
             self.redDot.hidden = NO;
         }else{
@@ -182,7 +197,9 @@ static id _invitationInfo;
 }
 -(UIView *)redDot{
     if (!_redDot) {
-        _redDot = [[UIView alloc]initWithFrame:CGRectMake(22, 3, 8, 8)];
+//        _redDot = [[UIView alloc]initWithFrame:CGRectMake(28, 20, 8, 8)];
+        NSLog(@"...%f", self.information.frame.size.width);
+         _redDot = [[UIView alloc]initWithFrame:CGRectMake(self.information.frame.size.width*2/3, 20, 8, 8)];
         _redDot.backgroundColor = [UIColor redColor];
         _redDot.layer.cornerRadius = 4.0;
         _redDot.layer.masksToBounds = YES;

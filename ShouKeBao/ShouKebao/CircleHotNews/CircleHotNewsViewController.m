@@ -27,7 +27,7 @@
 @property (nonatomic, strong)NSTimer *timer;
 @property (nonatomic, copy)NSString *telStr;
 @property (nonatomic, strong)NSMutableArray *shareArr;
-//@property ()
+@property (nonatomic, strong)UILabel *warningLab;
 @end
 
 @implementation CircleHotNewsViewController
@@ -96,13 +96,9 @@
     NSRange range = [rightUrl rangeOfString:_urlSuffix];//带？
     NSRange range2 = [rightUrl rangeOfString:_urlSuffix2];//不带?
     NSRange range3 = [rightUrl rangeOfString:@"?"];
-    
-   
-    
+
     NSRange shareRange = [rightUrl rangeOfString:@"objectc:LYQSKBAPP_OpenShareProduct"];
-
     [_indicator startAnimation];
-
     if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[rightUrl stringByAppendingString:_urlSuffix]]]];
         
@@ -152,6 +148,7 @@
             self.navigationItem.leftBarButtonItem = leftItem;
         }
     }
+    NSLog(@"... %@", webView.request.URL.absoluteString);
     [_indicator stopAnimationWithLoadText:@"加载成功" withType:YES];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:webView.request.URL.absoluteString forKey:@"PageUrl"];
@@ -239,7 +236,8 @@
                        authOptions:nil
                       shareOptions:nil
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                [self.warningLab removeFromSuperview];
+                                
+                                [self.warningLab removeFromSuperview];
                                 if (state == SSResponseStateSuccess)
                                 {
                                
@@ -308,7 +306,7 @@
             lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
         }];
     }];
-//    self.warningLab = lab;
+    self.warningLab = lab;
     
 }
 

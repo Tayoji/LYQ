@@ -28,7 +28,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:214/225.0f green:214/225.0f blue:214/225.0f alpha:1];
-   
+    
+    if ([self.formType isEqualToString:@"QRCodeAddress"]) {
+        self.introduceExclusiveAppTitle.text = @"我的店铺二维码";
+    }
+
      [self setWebView];
     [WMAnimations WMNewWebWithScrollView:self.webView.scrollView];
     CGFloat x = ([UIScreen mainScreen].bounds.size.width/2) - 60;
@@ -36,9 +40,10 @@
     self.indicator = [[YYAnimationIndicator alloc]initWithFrame:CGRectMake(x, y, 130, 130)];
    
     [_indicator setLoadText:@"拼命加载中..."];
-   
-    NSString *url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
-    [_webView loadRequest:[[NSURLRequest alloc] initWithURL:[[NSURL alloc]initWithString:url]]];
+//    if (self.url.length==0) {
+//        self.url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
+//    }
+    [_webView loadRequest:[[NSURLRequest alloc] initWithURL:[[NSURL alloc]initWithString:self.url]]];
     [self.view addSubview:_indicator];
    
     

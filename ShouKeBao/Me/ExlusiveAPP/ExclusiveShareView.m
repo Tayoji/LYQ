@@ -215,6 +215,8 @@ static id _naVC;
     
     [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
+        NSLog(@"..... %@", publishContent);
+        
         if (state == SSResponseStateSuccess){
             
             if (type ==ShareTypeWeixiSession) {

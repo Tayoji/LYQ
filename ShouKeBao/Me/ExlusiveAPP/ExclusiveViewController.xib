@@ -8,12 +8,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExclusiveViewController">
             <connections>
                 <outlet property="HeadImageViewSet" destination="5Mv-ul-1ne" id="LzA-hb-U02"/>
+                <outlet property="QRCodeImage" destination="Fym-q2-e2w" id="obz-qq-gvf"/>
                 <outlet property="adviserBtn" destination="D8z-n7-q96" id="xo2-yB-aSH"/>
                 <outlet property="builtLable" destination="U4W-52-wFJ" id="QrC-zy-pfv"/>
                 <outlet property="customerCount" destination="zCQ-l7-8Yh" id="EkH-QS-jMm"/>
+                <outlet property="pointImage" destination="nvx-YF-su6" id="QbX-r7-NNe"/>
                 <outlet property="returnBtn" destination="oty-bI-ipG" id="8fJ-ye-cfM"/>
                 <outlet property="shareBtn" destination="eun-nx-G58" id="nwH-SY-R10"/>
                 <outlet property="tableView" destination="HQf-GQ-blr" id="ckS-n9-kzX"/>
+                <outlet property="tapView" destination="pP3-kk-2oJ" id="yKz-aV-ZwX"/>
                 <outlet property="titleL" destination="4Ey-SN-x54" id="y67-mK-J2J"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -73,8 +76,8 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="D8z-n7-q96">
-                    <rect key="frame" x="120" y="180" width="80" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="90" y="175" width="80" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <inset key="titleEdgeInsets" minX="-75" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="银牌顾问" image="yinpai">
@@ -90,17 +93,30 @@
                         <action selector="clickAdvisorToComeInLvYouGuWen:" destination="-1" eventType="touchUpInside" id="Zfd-lk-6Hv"/>
                     </connections>
                 </button>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" id="Fym-q2-e2w">
+                    <rect key="frame" x="175" y="178" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="point" id="nvx-YF-su6">
+                    <rect key="frame" x="200" y="181" width="10" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="pP3-kk-2oJ">
+                    <rect key="frame" x="175" y="175" width="50" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HQf-GQ-blr">
                     <rect key="frame" x="0.0" y="224" width="320" height="204"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view contentMode="scaleToFill" id="lFP-rD-dDl">
-                    <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                    <rect key="frame" x="0.0" y="429.99999831541595" width="320" height="50.000001684584021"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pUg-cQ-Prs">
-                            <rect key="frame" x="80" y="14" width="160" height="22"/>
+                            <rect key="frame" x="80" y="14" width="160" height="22.000001029468002"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -123,9 +139,11 @@
     </objects>
     <resources>
         <image name="APPfenxiang" width="64" height="64"/>
+        <image name="QRCode" width="18" height="18"/>
         <image name="daTu-1" width="156" height="372"/>
         <image name="fanhuian" width="25" height="26"/>
         <image name="iconfont-gouwushuoming" width="16" height="16"/>
+        <image name="point" width="7" height="14"/>
         <image name="yinpai" width="82" height="16"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

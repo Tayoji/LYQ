@@ -25,13 +25,6 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="【旅游顾问】客户541236搜索了关键词:香港" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0v3-VZ-0ag">
-                        <rect key="frame" x="46" y="28" width="266" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="KnJ-5N-HRl">
                         <rect key="frame" x="46" y="50" width="274" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -76,6 +69,14 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" id="aot-2n-kHX">
+                        <rect key="frame" x="46" y="28" width="266" height="17"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -84,10 +85,10 @@
                 <outlet property="HeadImage" destination="nIk-WD-aej" id="alv-sw-fzP"/>
                 <outlet property="TimerLabel" destination="ayz-X0-Qws" id="vT7-dd-Hw7"/>
                 <outlet property="TitleImage" destination="MSC-5I-UwY" id="9Bg-fu-p5t"/>
-                <outlet property="TitleLabel" destination="0v3-VZ-0ag" id="rSM-wD-nyj"/>
+                <outlet property="TitleView" destination="aot-2n-kHX" id="NAH-DE-45Q"/>
                 <outlet property="topTitleLab" destination="NnX-ol-2pc" id="ZNa-n1-5A1"/>
             </connections>
-            <point key="canvasLocation" x="234" y="260"/>
+            <point key="canvasLocation" x="230" y="223"/>
         </tableViewCell>
     </objects>
     <resources>

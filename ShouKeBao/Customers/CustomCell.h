@@ -14,6 +14,7 @@
 
 - (void)transformPerformation:(CustomModel *)model;
 - (void)tableViewReloadData;
+- (void)tipInviteViewShow:(NSString *)telStr;
 @end
 
 @interface CustomCell : UITableViewCell<UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>

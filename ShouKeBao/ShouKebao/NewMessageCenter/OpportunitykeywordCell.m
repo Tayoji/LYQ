@@ -4,16 +4,29 @@
 //
 //  Created by 韩世民 on 15/11/12.
 //  Copyright © 2015年 shouKeBao. All rights reserved.
-//
+//弃用的正则表达式匹配点击事件
 
 #import "OpportunitykeywordCell.h"
 #import "CustomDynamicModel.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+FKTools.h"
+#import "ChatViewController.h"
 @implementation OpportunitykeywordCell
+{
+    NSArray *_IMUserMatches;
+}
 
 - (void)awakeFromNib {
+
     // Initialization code
+}
+-(void)layoutSubviews{
+    self.TitleView.textContainerInset = UIEdgeInsetsZero;
+    self.TitleView.font = [UIFont systemFontOfSize:14];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
+    [self.TitleView addGestureRecognizer:tap];
+    self.TitleView.editable = NO;
+    self.TitleView.allowsEditingTextAttributes = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -25,22 +38,88 @@
     _model = model;
     [self.HeadImage sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl] placeholderImage:[UIImage imageNamed:@"customtouxiang"]];
     self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
+    
     self.TimerLabel.text = model.CreateTimeText;
-    NSMutableAttributedString * str = [[NSMutableAttributedString alloc]initWithString:[model.DynamicContent stringByReplacingOccurrencesOfString:@"@" withString:@""]];
-        //创建正则表达式；pattern规则；
-        NSString * pattern = @"@.+@";
-        NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
-        //测试字符串；
-        NSArray * result = [regex matchesInString:model.DynamicContent options:0 range:NSMakeRange(0,model.DynamicContent.length)];
-    if (result.count) {
-        //获取筛选出来的字符串
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(((NSTextCheckingResult *)result[0]).range.location, ((NSTextCheckingResult *)result[0]).range.length-2)];
+    
+    
+    _IMUserMatches = [model.DynamicContent TextCheckingResultArrayWithPattern:@"￥.+￥"];
+    if (!_IMUserMatches.count) {
+        _IMUserMatches = [model.DynamicContent TextCheckingResultArrayWithPattern:@"¥.+¥"];
     }
-    self.TitleLabel.attributedText = str;
+    NSMutableAttributedString * str = [model.DynamicContent attributedStringMatchSearchKeyWords];
+    str = [str.string attributedStringMatchIMUser];
+    self.TitleView.attributedText = str;
+    
+    
     self.topTitleLab.text = model.DynamicTitle;
     self.CustNameLabel.text = model.NickName;
     self.ContactNumLabel.text = model.CustomerMobile;
+}
+//开始点击；
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    [self removeViewInTextView];
+    
+    CGPoint point= [touch locationInView:self.TitleView];
+    [self isPointInRect:point];
+    return YES;
+}
+//结束点击
+-(void)bubbleViewPressed:(id)sender{
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer *)sender;
+    CGPoint point = [tap locationInView:self.TitleView];
+    if ([self isPointInRect:point]) {
+        [self openIM];
+        [self removeViewInTextView];
+    }
+    
+}
 
+//长按出现
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    CGPoint point = [gestureRecognizer locationInView:self.TitleView];
+    if ([self isPointInRect:point]) {
+        [self openIM];
+        [self removeViewInTextView];
+    }
+    return YES;
+}
+//判断是否是选中范围
+
+- (BOOL)isPointInRect:(CGPoint)point{
+    if (!_IMUserMatches.count) {
+        return NO;
+    }
+    NSRange oldRange = ((NSTextCheckingResult *)_IMUserMatches[0]).range;
+    NSRange newRange = NSMakeRange(oldRange.location, oldRange.length - 2);
+    self.TitleView.selectedRange = newRange;
+    //找出匹配的字符串在textView中的位置，再判断point是否在textView中选中矩形范围内；
+    NSArray * rects = [self.TitleView selectionRectsForRange: self.TitleView.selectedTextRange];
+    for (UITextSelectionRect *rect in rects) {
+        if (CGRectContainsPoint(rect.rect, point)) {
+            UIView * colorView = [[UIView alloc]initWithFrame:rect.rect];
+            colorView.backgroundColor  = [UIColor colorWithRed:191/255.0 green:223/255.0 blue:253/255.0 alpha:0.5];
+            colorView.tag = 1024;
+            [self.TitleView addSubview:colorView];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+//去除阴影
+- (void)removeViewInTextView{
+    [self.TitleView resignFirstResponder];
+    for (UIView * view in self.TitleView.subviews) {
+        if (view.tag == 1024) {
+            [view removeFromSuperview];
+        }
+    }
+}
+//跳转IM界面
+-(void)openIM{
+    NSLog(@"%@", self.model.AppSkbUserId);
+    ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
+    [self.NAV pushViewController:charV animated:YES];
 }
 
 @end

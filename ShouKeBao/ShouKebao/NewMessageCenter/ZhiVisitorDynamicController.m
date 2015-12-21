@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"直客动态";
+    self.title = @"客人动态";
     self.view.backgroundColor = [UIColor colorWithRed:(247.0/255.0) green:(247.0/255.0) blue:(247.0/255.0) alpha:1];
     [self.view addSubview:self.tableView];
     [self initPull];
@@ -86,6 +86,7 @@
     self.tableView.headerRefreshingText = @"正在刷新中";
     self.tableView.footerPullToRefreshText = @"上拉刷新";
     self.tableView.footerRefreshingText = @"正在刷新";
+    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self loadDataSourceFrom:1];
 }
 -(void)headRefish{
@@ -122,18 +123,24 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
-    NSString * cellIdentifer = [self cellIdentifierWithDynamicType:model.DynamicType];
-    if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2){
-        NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
+    if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+        static NSString * str = @"NewCustomerCell";
+        NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
+        cell.model = model;
+        cell.NAV = self.navigationController;
+        return cell;
+    }else /*if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+        static NSString * str = @"OpportunitykeywordCell";
+
+        OpportunitykeywordCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
+        cell.NAV = self.navigationController;
         cell.model = model;
         return cell;
-    }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
-        OpportunitykeywordCell * cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
+    }else*/{
+        static NSString * str = @"OpprotunityFreqCell";
+        OpprotunityFreqCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
         cell.model = model;
-        return cell;
-    }else{
-        OpprotunityFreqCell * cell =[tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
-        cell.model = model;
+        cell.NAV = self.navigationController;
         return cell;
     }
 }
@@ -144,7 +151,7 @@
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         [_tableView registerNib:[UINib nibWithNibName:@"NewCustomerCell" bundle:nil] forCellReuseIdentifier:@"NewCustomerCell"];
-        [_tableView registerNib:[UINib nibWithNibName:@"OpportunitykeywordCell" bundle:nil] forCellReuseIdentifier:@"OpportunitykeywordCell"];
+//        [_tableView registerNib:[UINib nibWithNibName:@"OpportunitykeywordCell" bundle:nil] forCellReuseIdentifier:@"OpportunitykeywordCell"];
         [_tableView registerNib:[UINib nibWithNibName:@"OpprotunityFreqCell" bundle:nil] forCellReuseIdentifier:@"OpprotunityFreqCell"];
         _tableView.tableFooterView = [[UIView alloc] init];
     }
@@ -152,7 +159,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
-    NSLog(@"%@", model.DynamicType);
+    NSLog(@"%@----%@", model.DynamicType, model.DynamicContent);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2){
         
@@ -171,28 +178,20 @@
     }
 
 }
+
 //动态类型
-//1直客绑定;2直客登录;-A
-//3直客搜索产品;-B
-//4直客浏览线路达二次;5直客浏览产品;6直客收藏产品;7直客分享产品;8点击在线预订未下单.-C
+//1直客绑定;2直客登录;3直客搜索产品;9直客验证留下电话号码-A
+//
+//4直客浏览线路达二次;5直客浏览产品;6直客收藏产品;7直客分享产品;8点击在线预订未下单;10直客浏览产品留下手机号-C
 - (float)heightWithDynamicType:(CustomDynamicModel *)model{
-    if ([model.DynamicType intValue] == 2){
-        return 60+[model.DynamicContent heigthWithsysFont:15 withWidth:kScreenSize.width - 50];
-    }else if([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 3){
-        return 85+[model.DynamicContent heigthWithsysFont:15 withWidth:kScreenSize.width - 50];
+    if ([model.DynamicType intValue] == 1 || [model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+        return 65+[model.DynamicTitle heigthWithsysFont:11 withWidth:kScreenSize.width - 52];
+    }else/* if([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 3){
+        return 95+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
     }else if([model.DynamicType intValue] == 9){
-        return 100+[model.DynamicContent heigthWithsysFont:15 withWidth:kScreenSize.width - 50];
-    }else{
-        return 200.;
-    }
-}
-- (NSString *)cellIdentifierWithDynamicType:(NSString *)DynamicType{
-    if ([DynamicType intValue] == 1||[DynamicType intValue] == 2){
-        return @"NewCustomerCell";
-    }else if([DynamicType intValue] == 3||[DynamicType intValue] == 9){
-        return @"OpportunitykeywordCell";
-    }else{
-        return @"OpprotunityFreqCell";
+        return 100+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
+    }else*/{
+        return 152+[model.DynamicTitle heigthWithsysFont:11 withWidth:kScreenSize.width - 52];
     }
 }
 

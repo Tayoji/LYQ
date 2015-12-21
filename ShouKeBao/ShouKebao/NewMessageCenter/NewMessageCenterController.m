@@ -189,7 +189,6 @@
         }
         return cell;
     }
-    NSLog(@"-----%ld",tableView.tag);
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 50)];
     cell.textLabel.text = @"这是一个测试";
     return cell;
@@ -320,49 +319,49 @@
     return nil;
 }
 #pragma mark - UISearchBarDelegate
--(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    [_SearchBar setShowsCancelButton:NO];
-    self.navigationController.navigationBarHidden=YES;
-
-    searchBar.frame = CGRectMake(0, 20, kScreenSize.width-50, 44);
-    
-    for(id cc in [searchBar.subviews[0] subviews])
-    {
-        if([cc isKindOfClass:[UIButton class]])
-        {
-            UIButton *btn = (UIButton *)cc;
-            [btn setTitleColor:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forState:UIControlStateNormal];
-        }
-    }
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    [self.searchView addSubview:self.SearTableView];
-    [self.view addSubview:self.cancalBtn];
-    [self.view.superview addSubview:self.searchView];
-
-    return YES;
-}
-
--(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    for (UIView *searchbuttons in [[searchBar.subviews objectAtIndex:0] subviews])
-    {
-        if ([searchbuttons isKindOfClass:[UIButton class]])
-        {
-            UIButton *cancelButton = (UIButton *)searchbuttons;
-            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"取消"];
-            NSMutableDictionary *muta = [NSMutableDictionary dictionary];
-            [muta setObject:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forKey:NSForegroundColorAttributeName];
-            [muta setObject:[UIFont systemFontOfSize:13] forKey:NSFontAttributeName];
-            [attr addAttributes:muta range:NSMakeRange(0, 2)];
-            [cancelButton setAttributedTitle:attr forState:UIControlStateNormal];
-        }
-    }
-}
+//-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+//    [_SearchBar setShowsCancelButton:NO];
+//    self.navigationController.navigationBarHidden=YES;
+//
+//    searchBar.frame = CGRectMake(0, 20, kScreenSize.width-50, 44);
+//    
+//    for(id cc in [searchBar.subviews[0] subviews])
+//    {
+//        if([cc isKindOfClass:[UIButton class]])
+//        {
+//            UIButton *btn = (UIButton *)cc;
+//            [btn setTitleColor:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forState:UIControlStateNormal];
+//        }
+//    }
+//    
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+//    [self.searchView addSubview:self.SearTableView];
+//    [self.view addSubview:self.cancalBtn];
+//    [self.view.superview addSubview:self.searchView];
+//
+//    return YES;
+//}
+//
+//-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+//    for (UIView *searchbuttons in [[searchBar.subviews objectAtIndex:0] subviews])
+//    {
+//        if ([searchbuttons isKindOfClass:[UIButton class]])
+//        {
+//            UIButton *cancelButton = (UIButton *)searchbuttons;
+//            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"取消"];
+//            NSMutableDictionary *muta = [NSMutableDictionary dictionary];
+//            [muta setObject:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forKey:NSForegroundColorAttributeName];
+//            [muta setObject:[UIFont systemFontOfSize:13] forKey:NSFontAttributeName];
+//            [attr addAttributes:muta range:NSMakeRange(0, 2)];
+//            [cancelButton setAttributedTitle:attr forState:UIControlStateNormal];
+//        }
+//    }
+//}
 //实时下载 走下面方法
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    NSLog(@"正在下载，更新数据");
-    
-}
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+//    NSLog(@"正在下载，更新数据");
+//    
+//}
 
 -(UIView *)searchView{
     if (!_searchView) {

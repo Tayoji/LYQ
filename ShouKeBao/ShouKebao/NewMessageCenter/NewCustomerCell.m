@@ -9,28 +9,65 @@
 #import "NewCustomerCell.h"
 #import "CustomDynamicModel.h"
 #import "UIImageView+WebCache.h"
-@implementation NewCustomerCell
+#import "NSString+FKTools.h"
+#import "ChatViewController.h"
 
-- (void)awakeFromNib {
-    // Initialization code
+@interface NewCustomerCell ()<UIWebViewDelegate>
+{
+    NSArray *_IMUserMatches;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+@property (strong, nonatomic) IBOutlet UIWebView *WebStr;
 
-    // Configure the view for the selected state
+@end
+
+@implementation NewCustomerCell
+- (void)awakeFromNib {
+
+    // Initialization code
+}
+-(void)layoutSubviews{
+
+    self.WebStr.scrollView.scrollEnabled = NO;
+    self.WebStr.scrollView.showsHorizontalScrollIndicator= NO;
+    self.WebStr.scrollView.showsVerticalScrollIndicator= NO;
+    self.WebStr.delegate = self;
+
 }
 -(void)setModel:(CustomDynamicModel *)model{
     _model = model;
+    
     [self.headImage sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl] placeholderImage:[UIImage imageNamed:@"customtouxiang"]];
     if ([model.DynamicType intValue]==1) {
         self.TitleImage.image = [UIImage imageNamed:@"dongtaixin"];
     }else if([model.DynamicType intValue]==2){
         self.TitleImage.image = [UIImage imageNamed:@"dongtaizhanghu"];
+    }else {
+        self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
     }
     self.TimeLabel.text = model.CreateTimeText;
-    self.titleLabel.text = model.DynamicContent;
+    
+    //设置webView样式
+    NSString *webviewText = @"<style>body{margin:0;background-color:transparent;font:14px/18px Custom-Font-Name}a:link { color: #ff0000;text-decoration:none; } a:visited { color: #ff0000;text-decoration:none; } a:hover { color: #ff0000;text-decoration:none; } a:active { color: #ff0000; text-decoration:none;}</style>";
+    NSString *htmlString = [webviewText stringByAppendingFormat:@"%@", self.model.DynamicTitle];
+    [self.WebStr loadHTMLString:htmlString baseURL:nil]; //在 WebView 中显示本地的字符串
+    
     self.custNameLabel.text = model.NickName;
     self.custNumLabel.text = model.CustomerMobile;
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString * urlStr = request.URL.absoluteString;
+    if ([urlStr myContainsString:@"Appevent_OpenIM"]) {
+        [self openIM];
+        return NO;
+    }
+    return YES;
+}
+//跳转IM界面
+-(void)openIM{
+    NSLog(@"%@", self.model.AppSkbUserId);
+    ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
+    [self.NAV pushViewController:charV animated:YES];
 }
 @end

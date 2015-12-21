@@ -9,7 +9,7 @@
  * is strictly forbidden unless prior written permission is obtained
  * from EaseMob Technologies.
  */
-
+//NSHTMLTextDocumentType
 #import <CoreText/CoreText.h>
 #import "EMChatTextBubbleView.h"
 #import "RobotManager.h"
@@ -61,7 +61,6 @@ NSString *const kRouterEventProductListEventName = @"kRouterEventProductListEven
     
     frame.origin.y = BUBBLE_VIEW_PADDING;
     [self.textLabel setFrame:frame];
-    
     
     //产品推送 对产品进行布局  将视图放在textLable上
     if ([self.model.content myContainsString:@"$$"]) {

@@ -55,7 +55,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    if ([self.ConsultanShareInfo count] == 0) {
+         [self loadIsOpenAppDataTwince];
+    }else{
+         [self shareView];
+    }
+   
     if ([UIScreen mainScreen].bounds.size.height==667) {
         self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+200);
     }else if ([UIScreen mainScreen].bounds.size.height == 480){
@@ -63,7 +68,8 @@
     }else{
         self.scrollVew.contentSize = CGSizeMake(0, self.view.frame.size.height+155*KHeight_Scale);
     }
-    [self shareView];
+   
+   
 
 }
 
@@ -86,11 +92,25 @@
     [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.ConsultanShareInfo[@"Url"]] image:nil];
     
     [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.ConsultanShareInfo[@"Url"]]];
-    
-    NSLog(@"....//// url = %@", tmp[@"Url"]);
-    
-    [ExclusiveShareView shareWithContent:publishContent backgroundShareView:self.shareBackground naVC:self.naVC andUrl:tmp[@"Url"]];
+        [ExclusiveShareView shareWithContent:publishContent backgroundShareView:self.shareBackground naVC:self.naVC andUrl:tmp[@"Url"]];
 }
+
+#pragma mark - 加载数据
+- (void)loadIsOpenAppDataTwince{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
+        NSLog(@"------是否专属的json is %@-------",json);
+
+        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+        [self shareView];
+        
+//        NSLog(@"///// %@", self.ConsultanShareInfo);
+    } failure:^(NSError *error) {
+        NSLog(@"接口请求失败 error is %@------",error);
+    }];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -119,6 +139,7 @@
 
 - (IBAction)introduceButton:(id)sender {
     WhatIsExclusiveViewController *whatISExclisiveVC = [[WhatIsExclusiveViewController alloc]init];
+    whatISExclisiveVC.url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
     whatISExclisiveVC.naV = self.naVC;
     [self.naVC pushViewController:whatISExclisiveVC animated:YES];
     

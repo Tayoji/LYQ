@@ -31,4 +31,17 @@
 
 + (BOOL)stringIsEmpty:(id)str;
 
+
+//匹配关键字
+- (NSMutableAttributedString *)attributedStringMatchSearchKeyWords;
+//匹配IM聊天用户
+- (NSMutableAttributedString *)attributedStringMatchIMUser;
+//获取CFIdex
++ (CFIndex)characterIndexAtPoint:(CGPoint)point
+                    andtextLabel:(UILabel *)textLable
+                andSuperViewRect:(CGRect)SuperRect;
+
+//获取匹配的数组
+- (NSArray *)TextCheckingResultArrayWithPattern:(NSString *)pattern;
+
 @end

@@ -10,9 +10,12 @@
 @class CustomDynamicModel;
 
 @interface OpportunitykeywordCell : UITableViewCell
+
+@property (nonatomic, strong)UINavigationController * NAV;
+
 @property (strong, nonatomic) IBOutlet UILabel *topTitleLab;
 @property (strong, nonatomic) IBOutlet UIImageView *TitleImage;
-@property (weak, nonatomic) IBOutlet UILabel *TitleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *TitleView;
 @property (weak, nonatomic) IBOutlet UILabel *CustNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImage;
 @property (weak, nonatomic) IBOutlet UILabel *ContactNumLabel;
