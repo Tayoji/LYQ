@@ -1013,29 +1013,6 @@
         }
     } failure:^(NSError *eror) {
     }];
-//
-//    [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
-//        NSLog(@"首页公告消息列表%@",json);
-//        NSMutableArray *arr = json[@"ActivitiesNoticeList"];
-//        
-//        self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
-//       
-//        int count = 0;
-//        [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
-//        for (int i = 0; i<arr.count; i++) {
-//            NSDictionary *dic = arr[i];
-//            if (![_isReadArr containsObject:dic[@"ID"]]) {
-//                count += 1;
-//            }
-//        }
-//        count += [self getUnreadMessageCount];
-//        self.barButton.badgeValue = [NSString stringWithFormat:@"%d",count];
-//        UIApplication *application = [UIApplication sharedApplication];
-//        application.applicationIconBadgeNumber = count;
-//
-//    } failure:^(NSError *error) {
-//        NSLog(@"首页公告消息列表失败%@",error);
-//    }];
 }
 
 
@@ -1044,15 +1021,6 @@
     [super viewWillAppear:animated];
     self.isEmpty = NO;
 
-//    [self.circleArr removeAllObjects];
-    
-    
-//    视图将要出现时定位
-//    [self locationMethod];
-  
-//    if (/* 如果没有推送数据就隐藏 */) {
-//        self.CarouselView.hidden = YES;
-//    }
     
 
     //我界面更改头像和名字之后  首页的同步
@@ -1060,12 +1028,6 @@
     NSString *head = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLoginAvatar];
     [self.userIcon sd_setImageWithURL:[NSURL URLWithString:head] placeholderImage:[UIImage imageNamed:@"bigIcon"]];
 
-//    if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userhead"]) {
-//    self.userIcon.image = [UIImage imageWithData:[[NSUserDefaults standardUserDefaults]objectForKey:@"userhead"]];
-//    }else{
-//    NSString *head = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLoginAvatar];
-//    [self.userIcon sd_setImageWithURL:[NSURL URLWithString:head] placeholderImage:[UIImage imageNamed:@"bigIcon"]];
-//    }
     [MobClick beginLogPageView:@"ShouKeBao"];
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -1081,7 +1043,6 @@
 //    向接口传入经度纬度
     [self getStationName:latitude Longgitude:longitude];
     
-//    [self getStationName];
     
     [self loadContentDataSource];
     [self setCoverOnTitileViewWithFrame:self.titleViewFrame];

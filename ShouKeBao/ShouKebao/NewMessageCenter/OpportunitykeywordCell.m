@@ -4,7 +4,7 @@
 //
 //  Created by 韩世民 on 15/11/12.
 //  Copyright © 2015年 shouKeBao. All rights reserved.
-//
+//弃用的正则表达式匹配点击事件
 
 #import "OpportunitykeywordCell.h"
 #import "CustomDynamicModel.h"

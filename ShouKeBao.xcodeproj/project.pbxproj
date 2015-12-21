@@ -43,8 +43,6 @@
 		52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B858481BC76D4C00B15483 /* CommandTo.xib */; };
 		52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BEDF981BEB413E003A04CA /* NewNewsController.m */; };
 		52BEDF9B1BEB413E003A04CA /* NewNewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEDF991BEB413E003A04CA /* NewNewsController.xib */; };
-		52CDE7EE1BF3307B0021C9C6 /* zhiVisitorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CDE7EC1BF3307B0021C9C6 /* zhiVisitorCell.m */; };
-		52CDE7EF1BF3307B0021C9C6 /* zhiVisitorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CDE7ED1BF3307B0021C9C6 /* zhiVisitorCell.xib */; };
 		52CF60BE1BDDCAF600DD97B8 /* SubscribeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */; };
 		52CF60BF1BDDCAF600DD97B8 /* SubscribeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */; };
 		52CF60C31BDDD9CF00DD97B8 /* MySubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60C21BDDD9CF00DD97B8 /* MySubscribeController.m */; };
@@ -895,9 +893,6 @@
 		52BEDF971BEB413E003A04CA /* NewNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNewsController.h; sourceTree = "<group>"; };
 		52BEDF981BEB413E003A04CA /* NewNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewNewsController.m; sourceTree = "<group>"; };
 		52BEDF991BEB413E003A04CA /* NewNewsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewNewsController.xib; sourceTree = "<group>"; };
-		52CDE7EB1BF3307B0021C9C6 /* zhiVisitorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhiVisitorCell.h; sourceTree = "<group>"; };
-		52CDE7EC1BF3307B0021C9C6 /* zhiVisitorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zhiVisitorCell.m; sourceTree = "<group>"; };
-		52CDE7ED1BF3307B0021C9C6 /* zhiVisitorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = zhiVisitorCell.xib; sourceTree = "<group>"; };
 		52CF60BB1BDDCAF600DD97B8 /* SubscribeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeCell.h; sourceTree = "<group>"; };
 		52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeCell.m; sourceTree = "<group>"; };
 		52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscribeCell.xib; sourceTree = "<group>"; };
@@ -4389,9 +4384,6 @@
 				520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */,
 				79619B781BFB5FD60026BAFE /* CustomDynamicModel.h */,
 				79619B791BFB5FD60026BAFE /* CustomDynamicModel.m */,
-				52CDE7EB1BF3307B0021C9C6 /* zhiVisitorCell.h */,
-				52CDE7EC1BF3307B0021C9C6 /* zhiVisitorCell.m */,
-				52CDE7ED1BF3307B0021C9C6 /* zhiVisitorCell.xib */,
 				520279541BF43E2B0049C0B9 /* NewCustomerCell.h */,
 				520279551BF43E2B0049C0B9 /* NewCustomerCell.m */,
 				520279561BF43E2B0049C0B9 /* NewCustomerCell.xib */,
@@ -5068,7 +5060,6 @@
 				B3B7A6781BA6A25F0043DF7C /* CustomerOrdersUIViewController.xib in Resources */,
 				796EFD371BF5C67D00799120 /* chatBar_more_camera@2x.png in Resources */,
 				7939172A1C17CD3D0020372E /* chat_receiver_audio_playing_001@2x.png in Resources */,
-				52CDE7EF1BF3307B0021C9C6 /* zhiVisitorCell.xib in Resources */,
 				796EFD201BF5C67D00799120 /* chatBar_moreSelected.png in Resources */,
 				63F1A1841B140D4E00DE9867 /* YesterdayViewController.xib in Resources */,
 				796EFCE51BF5C67D00799120 /* VoiceSearchFeedback012@2x.png in Resources */,
@@ -5482,7 +5473,6 @@
 				5A52FC8F1ACEBF220076DAE6 /* LinkButton.m in Sources */,
 				796EFDC81BF5CA4E00799120 /* EMSDWebImageManager.m in Sources */,
 				B3C01E2A1BAC10FC005E4BB5 /* InspectionViewController.m in Sources */,
-				52CDE7EE1BF3307B0021C9C6 /* zhiVisitorCell.m in Sources */,
 				522E80671BD1049500DB48DA /* OrderPromptView.m in Sources */,
 				5A52FC561ACEBF220076DAE6 /* HeaderView.m in Sources */,
 				B3D7B77D1BD76DF10080E243 /* QRPhotoCollectionViewCell.m in Sources */,

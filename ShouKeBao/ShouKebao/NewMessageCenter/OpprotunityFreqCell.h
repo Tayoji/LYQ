@@ -14,7 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *topTitleLab;
 @property (strong, nonatomic) IBOutlet UIImageView *TitleImage;
 @property (strong, nonatomic) IBOutlet UIImageView *sandian;
-@property (weak, nonatomic) IBOutlet UITextView *TitleView;
+//@property (weak, nonatomic) IBOutlet UITextView *TitleView;
 @property (weak, nonatomic) IBOutlet UILabel *BodyLabel;//产品介绍
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImage;//产品头像
 @property (weak, nonatomic) IBOutlet UILabel *MenShiLabel;//门市价

@@ -189,7 +189,6 @@
         }
         return cell;
     }
-    NSLog(@"-----%ld",tableView.tag);
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 50)];
     cell.textLabel.text = @"这是一个测试";
     return cell;

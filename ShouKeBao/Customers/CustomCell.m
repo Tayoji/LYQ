@@ -182,7 +182,7 @@ static id _invitationInfo;
 }
 -(UIView *)redDot{
     if (!_redDot) {
-        _redDot = [[UIView alloc]initWithFrame:CGRectMake(28, 17, 8, 8)];
+        _redDot = [[UIView alloc]initWithFrame:CGRectMake(27, 18, 8, 8)];
         _redDot.backgroundColor = [UIColor redColor];
         _redDot.layer.cornerRadius = 4.0;
         _redDot.layer.masksToBounds = YES;

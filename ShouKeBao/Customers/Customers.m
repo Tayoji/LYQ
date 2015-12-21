@@ -185,35 +185,42 @@
 
 #pragma mark - 消息请求
 -(void)getNotifiList{
-    /*
-    NSMutableDictionary *dic = [NSMutableDictionary  dictionary];
-    [HomeHttpTool getActivitiesNoticeListWithParam:dic success:^(id json) {
-        NSLog(@"公告消息列表%@",json);
-        NSMutableArray *arr = json[@"ActivitiesNoticeList"];
-        int count = 0;
-        [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
-        for (int i = 0; i<arr.count; i++) {
-            NSDictionary *dic = arr[i];
-            if (![_isReadArr containsObject:dic[@"ID"]]) {
-                count += 1;
-            }
+    NSMutableDictionary * params = nil;
+    [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
+        if ([json[@"IsSuccess"]integerValue]) {
+            NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
+            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];            
+            NSInteger count = noticeCount + DynamicCount;
+            [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
+            count += [self getUnreadMessageCount];
+            self.messageCount = count;
+            UIApplication *application = [UIApplication sharedApplication];
+            application.applicationIconBadgeNumber = count;
+            [self.table reloadData];
         }
-        self.messageCount = count;
-        [self messagePromptAction];
-        
-    } failure:^(NSError *error) {
-        NSLog(@"公告消息列表失败%@",error);
+    } failure:^(NSError *eror) {
+        [self.table reloadData];
     }];
-     */
+//    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+//    NSInteger unreadCount = 0;
+//    for (EMConversation *conversation in conversations) {
+//        unreadCount += conversation.unreadMessagesCount;
+//    }
+//    self.messageCount = unreadCount;
+    [self messagePromptAction];
+
+}
+// 统计未读消息数
+-(NSInteger)getUnreadMessageCount
+{
     NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
     NSInteger unreadCount = 0;
     for (EMConversation *conversation in conversations) {
         unreadCount += conversation.unreadMessagesCount;
     }
-    self.messageCount = unreadCount;
-    [self messagePromptAction];
-
+    return unreadCount;
 }
+
 -(void)messagePromptAction{
     if (self.messageCount == 0) {
         self.conditionLine.hidden = YES;
@@ -224,7 +231,13 @@
     self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
     self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
     if (self.messageCount >0) {
-        [self.bellButton setImage:[UIImage imageNamed:@"redBell"] forState:UIControlStateNormal];
+        [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
+        UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
+        redDot.backgroundColor = [UIColor redColor];
+        redDot.layer.cornerRadius = 4.0;
+        redDot.layer.masksToBounds = YES;
+        [self.bellButton addSubview:redDot];
+
     }
   }
 }
@@ -233,7 +246,7 @@
     [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
     
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
-    messgeCenter.messageCenterType = FromCustom;
+//    messgeCenter.messageCenterType = FromCustom;
     [self.navigationController pushViewController:messgeCenter animated:YES];
 }
 
@@ -315,7 +328,7 @@
         [self setNav];
     }
     NSLog(@"... customerType  %ld",self.customerType);
-    [self.table reloadData];
+    
     [self getNotifiList];
     //    NSUserDefaults *customer = [NSUserDefaults standardUserDefaults];
     //    NSString *appIsBack = [customer objectForKey:@"appIsBack"];

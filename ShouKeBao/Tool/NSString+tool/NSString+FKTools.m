@@ -113,7 +113,7 @@
 - (NSMutableAttributedString *)attributedStringMatchSearchKeyWords{
     NSMutableAttributedString * str ;
     //创建正则表达式；pattern规则；
-    NSString * pattern = @"@.+@";
+    NSString * pattern = @"@.+@$";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
     NSArray * result = [regex matchesInString:self options:0 range:NSMakeRange(0,self.length)];
