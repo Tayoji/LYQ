@@ -39,7 +39,7 @@
 #import "NSString+FKTools.h"
 
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
-@interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh, MFMessageComposeViewControllerDelegate>
+@interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh>
 
 @property (nonatomic,strong) NSMutableArray *dataArr;
 - (IBAction)addNewUser:(id)sender;
@@ -96,11 +96,6 @@
 @property (nonatomic, strong)UIButton *titleBtn;
 @property (nonatomic, strong)UIImageView *pointDownImage;
 
-@property (weak, nonatomic) IBOutlet UIView *Tip_InviteView;
-- (IBAction)inviteCancleBtn:(id)sender;
-- (IBAction)inviteCustomerBtn:(id)sender;
-@property (nonatomic, copy)NSString *telStr;
-
 @end
 
 @implementation Customers
@@ -108,7 +103,7 @@
 
 -(void)dealloc
 {
-//    只要注册一个观察者,一定要在类的dealloc方法中, 移除掉自己的观察者身份
+    //    只要注册一个观察者,一定要在类的dealloc方法中, 移除掉自己的观察者身份
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self];
 }
@@ -122,19 +117,19 @@
     [self searchDisplay];
     
     self.chooseAppArr = [NSMutableArray arrayWithObjects:@"不限", @"新绑定APP客户", @"绑定APP客户", @"其他客户", nil];
-
-//    self.A_Z_arr = [NSMutableArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G",@"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", nil];
+    
+    //    self.A_Z_arr = [NSMutableArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G",@"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", nil];
     
     self.pageIndex = 1;
     [self.dataArr removeAllObjects];
     self.navigationItem.leftBarButtonItem = nil;
     [self.addNew setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
     [self.importUser setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
-   
+    
     [self.timeBtn setSelected:YES];
     [self customerRightBarItem];
     [self setTable];
-//    [self CustomerCounts];
+    //    [self CustomerCounts];
     [self initPull];
     
     
@@ -144,21 +139,6 @@
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
-
-
-- (void)tipInviteViewShow:(NSString *)telStr{
-    self.Tip_InviteView.hidden = NO;
-    self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    _shadeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-    [self.view.window addSubview:self.shadeView];
-    [[[UIApplication sharedApplication].delegate window] addSubview:self.Tip_InviteView];
-    self.telStr = telStr;
-}
-
-
-
-
-
 
 - (void)setTable{
     self.table.delegate = self;
@@ -191,12 +171,12 @@
     [self initPull];
 }
 -(void)toRefereshCustomers{
-//    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
+    //    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
     
     [self.table headerBeginRefreshing];
 }
 -(void)referesh{
-//    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
+    //    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
     [self.table headerBeginRefreshing];
 }
 -(void)refreshSKBMessgaeCount:(int)count{
@@ -209,26 +189,26 @@
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
         if ([json[@"IsSuccess"]integerValue]) {
             NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
-            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];            
+            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];
             NSInteger count = noticeCount + DynamicCount;
             [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
             count += [self getUnreadMessageCount];
             self.messageCount = count;
             UIApplication *application = [UIApplication sharedApplication];
             application.applicationIconBadgeNumber = count;
+            [self messagePromptAction];
             [self.table reloadData];
         }
     } failure:^(NSError *eror) {
         [self.table reloadData];
     }];
-//    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
-//    NSInteger unreadCount = 0;
-//    for (EMConversation *conversation in conversations) {
-//        unreadCount += conversation.unreadMessagesCount;
-//    }
-//    self.messageCount = unreadCount;
-    [self messagePromptAction];
-
+    //    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    //    NSInteger unreadCount = 0;
+    //    for (EMConversation *conversation in conversations) {
+    //        unreadCount += conversation.unreadMessagesCount;
+    //    }
+    //    self.messageCount = unreadCount;
+    
 }
 // 统计未读消息数
 -(NSInteger)getUnreadMessageCount
@@ -246,27 +226,27 @@
         self.conditionLine.hidden = YES;
         self.tableSuper.frame = CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45);
     }else{
-    self.conditionLine.hidden = NO;
-    self.tableSuper.frame = CGRectMake(0, 90, self.view.frame.size.width, self.view.frame.size.height-90);
-    self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
-    self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
-    if (self.messageCount >0) {
-        [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
-        UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
-        redDot.backgroundColor = [UIColor redColor];
-        redDot.layer.cornerRadius = 4.0;
-        redDot.layer.masksToBounds = YES;
-        [self.bellButton addSubview:redDot];
-
+        self.conditionLine.hidden = NO;
+        self.tableSuper.frame = CGRectMake(0, 90, self.view.frame.size.width, self.view.frame.size.height-90);
+        self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
+        self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
+        if (self.messageCount >0) {
+            [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
+            UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
+            redDot.backgroundColor = [UIColor redColor];
+            redDot.layer.cornerRadius = 4.0;
+            redDot.layer.masksToBounds = YES;
+            [self.bellButton addSubview:redDot];
+            
+        }
     }
-  }
 }
 - (IBAction)pushMessageVC:(id)sender {
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerDynamicNotReadmessagesClick" attributes:dict];
     
     NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
-//    messgeCenter.messageCenterType = FromCustom;
+    //    messgeCenter.messageCenterType = FromCustom;
     [self.navigationController pushViewController:messgeCenter animated:YES];
 }
 
@@ -314,12 +294,12 @@
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePopTableView)];
         [self.shadeView addGestureRecognizer:tap];
-
+        
     }else{
         self.popTableview.hidden = YES;
         [self.shadeView removeFromSuperview];
     }
-     self.popFlag = !self.popFlag;
+    self.popFlag = !self.popFlag;
     
 }
 
@@ -343,8 +323,8 @@
     self.subView.hidden = YES;
     self.navigationController.navigationBarHidden = NO;
     if (self.isMe == 1) {
-//        _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
-//        [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
+        //        _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
+        //        [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
         [self setNav];
     }
     NSLog(@"... customerType  %ld",self.customerType);
@@ -377,29 +357,29 @@
     self.table.headerRefreshingText = @"正在刷新中";
     self.table.footerPullToRefreshText = @"上拉刷新";
     self.table.footerRefreshingText = @"正在刷新";
-//    self.isDownLoad = NO;
-  
+    //    self.isDownLoad = NO;
+    
 }
 //下拉刷新
 -(void)headPull{
     
-//    self.isDownLoad = NO;
+    //    self.isDownLoad = NO;
     if (!self.isMe) {
-     self.customerType = 0;
-    _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
-    [self.titleBtn setTitle:@"管客户" forState:UIControlStateNormal];
+        self.customerType = 0;
+        _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
+        [self.titleBtn setTitle:@"管客户" forState:UIControlStateNormal];
     }
     self.searchK = @"";
     self.isRefresh = YES;
     self.pageIndex = 1;
     self.searchBar.placeholder = searchDefaultPlaceholder;
     [self loadDataSource];
-   
+    
 }
 //  上啦加载
 - (void)foodPull
 {
-//    self.isDownLoad = YES;//1
+    //    self.isDownLoad = YES;//1
     
     [self.noProductWarnLab removeFromSuperview];
     self.isRefresh = NO;
@@ -433,7 +413,7 @@
         [UIView animateWithDuration:0.8 animations:^{
             self.subView.alpha = 0;
             self.subView.alpha = 1;
-           self.subView.hidden = NO;
+            self.subView.hidden = NO;
         }];
     }else if (self.subView.hidden == NO){
         [self subViewHidden];
@@ -496,10 +476,10 @@
     [dic setObject:self.searchK forKey:@"SearchKey"];
     [dic setObject:[NSString stringWithFormat:@"%d", self.customerType]forKey:@"CustomerType"];
     NSLog(@"self.customerType = %d", self.customerType);
-
+    
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
         NSLog(@"------管客户json is %@-------",json);
-
+        
         self.InvitationInfo = json[@"InvitationInfo"];
         if (self.isRefresh) {
             [self.dataArr removeAllObjects];
@@ -511,45 +491,45 @@
         }
         NSMutableArray *arrs = [NSMutableArray array];
         self.totalNumber = json[@"TotalCount"];
-    
+        
         arrs = json[@"CustomerList"];
-       
+        
         if (arrs.count == 0){
         }else{
             [self.Array addObjectsFromArray:arrs];
-           
+            
             for (NSDictionary *dic in json[@"CustomerList"]) {
                 
                 NSString *groupType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"GroupbyType"]];
-                 CustomModel *model = [CustomModel modalWithDict:dic];
+                CustomModel *model = [CustomModel modalWithDict:dic];
                 
                 if ([groupType isEqualToString:@"1"]) {
-                  
+                    
                     [self.newsBindingCustomArr addObject:model];
                 }else if([groupType isEqualToString:@"2"]){
-              
+                    
                     [self.hadBindingCustomArr addObject:model];
                 }else if ([groupType isEqualToString:@"3"]){
-        
+                    
                     [self.otherCustomArr addObject:model];
                 }
             }
         }
-          NSLog(@"dadta = %@ %@ %@",self.newsBindingCustomArr, self.hadBindingCustomArr, self.otherCustomArr);
+        NSLog(@"dadta = %@ %@ %@",self.newsBindingCustomArr, self.hadBindingCustomArr, self.otherCustomArr);
         
-//     self.isDownLoad = 1  yes    self.isDownLoad = no = 0
+        //     self.isDownLoad = 1  yes    self.isDownLoad = no = 0
         
-//        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.newsBindingCustomArr];
-//        }
-//    
-//        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.hadBindingCustomArr];
-//        }
-//        if (self.otherCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.otherCustomArr];
-//        }
- 
+        //        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
+        //            [self.dataArr addObject:self.newsBindingCustomArr];
+        //        }
+        //
+        //        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
+        //            [self.dataArr addObject:self.hadBindingCustomArr];
+        //        }
+        //        if (self.otherCustomArr.count && !self.isDownLoad) {
+        //            [self.dataArr addObject:self.otherCustomArr];
+        //        }
+        
         
         [self.dataArr removeAllObjects];
         if (self.newsBindingCustomArr.count) {
@@ -561,9 +541,9 @@
         if (self.otherCustomArr.count) {
             [self.dataArr addObject:self.otherCustomArr];
         }
-  
+        
         NSLog(@"dadta = %@", self.dataArr);
-
+        
         if (self.dataArr.count==0) {
             self.imageViewWhenIsNull.hidden = NO;
             self.CustomerCounts.hidden = YES;
@@ -574,15 +554,15 @@
             self.peopleN = self.Array.count;
             self.CustomerCounts.text = [NSString stringWithFormat:@"%ld位联系人", self.peopleN];
         }
-   
+        
         [self.table reloadData];
         [self.table headerEndRefreshing];
         [self.table footerEndRefreshing];
-
+        
     } failure:^(NSError *error) {
         NSLog(@"-------管客户第一个接口请求失败 error is %@------",error);
     }];
-  
+    
 }
 
 #pragma mark - 加载完事时显示的内容
@@ -598,7 +578,7 @@
 #pragma mark - tableView－delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-//        CustomModel *model = _dataArr[indexPath.row];
+        //        CustomModel *model = _dataArr[indexPath.row];
         CustomModel *model = self.dataArr[indexPath.section][indexPath.row];
         CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
         VC.customVC = self;
@@ -606,20 +586,20 @@
         VC.customerID = model.ID;
         VC.appUserID = @"";
         
-     [self.navigationController pushViewController:VC animated:YES];
+        [self.navigationController pushViewController:VC animated:YES];
     }else if (self.popTableview == tableView){
-//刷新数据
+        //刷新数据
         self.customerType = indexPath.row;
         
         if (self.customerType == 0) {
             
-             _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
+            _pointDownImage.frame = CGRectMake(125, 20, 10, 10);
             [self.titleBtn setTitle:@"管客户" forState:UIControlStateNormal];
             
         }else if (self.customerType == 1) {
             _pointDownImage.frame = CGRectMake(163, 20, 10, 10);
             [self.titleBtn setTitle:@"新绑定APP客户" forState:UIControlStateNormal];
-          
+            
         }else if (self.customerType == 2){
             _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
             [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
@@ -627,52 +607,52 @@
         }else if (self.customerType == 3){
             _pointDownImage.frame = CGRectMake(135, 20, 10, 10);
             [self.titleBtn setTitle:@"其他客户" forState:UIControlStateNormal];
-         
+            
         }
         
         self.isRefresh = YES;
-//        self.isDownLoad = NO;
+        //        self.isDownLoad = NO;
         self.pageIndex = 1;
         [self loadDataSource];
         [self closePopTableView];
         
-            switch (indexPath.row) {
-                case 0:
-                {
-                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                    [MobClick event:@"Customer_newCustomerNoLimitClick" attributes:dict];
-                    
-                }
-                    break;
-                case 1:
-                {
-                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                    [MobClick event:@"Customer_newCustomerNewBindingAppClick" attributes:dict];
-                    
-                }
-                    break;
-                case 2:
-                {
-                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                    [MobClick event:@"Customer_newCustomerBindingAppClick" attributes:dict];
-                    
-                }
-                    break;
-                case 3:
-                {
-                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                    [MobClick event:@"Customer_newCustomerOtherClick" attributes:dict];
-                    
-                }
-                    break;
-                    
-                default:
-                    break;
+        switch (indexPath.row) {
+            case 0:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"Customer_newCustomerNoLimitClick" attributes:dict];
+                
             }
-
+                break;
+            case 1:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"Customer_newCustomerNewBindingAppClick" attributes:dict];
+                
+            }
+                break;
+            case 2:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"Customer_newCustomerBindingAppClick" attributes:dict];
+                
+            }
+                break;
+            case 3:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"Customer_newCustomerOtherClick" attributes:dict];
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
     }
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.8f];
-
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (self.popTableview == tableView) {
@@ -683,7 +663,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.table == tableView) {
-//        return self.dataArr.count;
+        //        return self.dataArr.count;
         return [self.dataArr[section]count];
     }else{
         return self.chooseAppArr.count;
@@ -692,7 +672,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-//        CustomCell *cell = [CustomCell cellWithTableView:tableView navigationC:self.navigationController];
+        //        CustomCell *cell = [CustomCell cellWithTableView:tableView navigationC:self.navigationController];
         CustomCell *cell = [CustomCell cellWithTableView:tableView InvitationInfo:self.InvitationInfo navigationC:self.navigationController];
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.delegate = self;
@@ -705,7 +685,7 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         }
-         cell.textLabel.text = [self.chooseAppArr objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self.chooseAppArr objectAtIndex:indexPath.row];
         return cell;
     }
 }
@@ -713,7 +693,7 @@
 //设置区头
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (self.table == tableView) {
-       return 40.0f;
+        return 40.0f;
     }else{
         return 0.01f;
     }
@@ -769,13 +749,13 @@
 //    if (self.table == tableView) {
 //        UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.table.frame.size.width, 40)];
 //        view.backgroundColor = self.table.backgroundColor;
-//        
+//
 //        UILabel *lableT = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, self.table.frame.size.width-10, 40)];
 //        lableT.font = [UIFont systemFontOfSize:15.0f];
 //        lableT.text = [self.chooseAppArr objectAtIndex:section];
 //        [view addSubview:lableT];
 //        return view;
-//        
+//
 //    }else{
 //        UIView *view = [[UIView alloc]init];
 //        return view;
@@ -800,13 +780,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-         if (self.table == tableView) {
+    if (self.table == tableView) {
         if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+            
             CustomModel *model = _dataArr[indexPath.section][indexPath.row];
             [self deleteTableViewCellwithId:model.ID];
             // 删除这行
-//            [self.dataArr removeObjectAtIndex:indexPath.row];
+            //            [self.dataArr removeObjectAtIndex:indexPath.row];
             [self.dataArr[indexPath.section] removeObjectAtIndex:indexPath.row];
             
             [self.table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
@@ -816,7 +796,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-      return @"删除";
+        return @"删除";
     }
     return nil;
 }
@@ -836,7 +816,7 @@
         self.peopleN = self.peopleN - 1;
         self.CustomerCounts.text = [NSString stringWithFormat:@"%d位联系人", self.peopleN];
         [self.table reloadData];
-   
+        
     } failure:^(NSError *error) {
         NSLog(@"删除客户请求失败%@",error);
     }];
@@ -874,26 +854,26 @@
 {
     for (UIView *searchbuttons in [[searchBar.subviews objectAtIndex:0] subviews])
     {if ([searchbuttons isKindOfClass:[UIButton class]])
-        {
-            UIButton *cancelButton = (UIButton *)searchbuttons;
-            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"取消"];
-            NSMutableDictionary *muta = [NSMutableDictionary dictionary];
-            [muta setObject:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forKey:NSForegroundColorAttributeName];
-            [muta setObject:[UIFont systemFontOfSize:13] forKey:NSFontAttributeName];
-            [attr addAttributes:muta range:NSMakeRange(0, 2)];
-            [cancelButton setAttributedTitle:attr forState:UIControlStateNormal];
-            
-            break;
-        }else{
-            UITextField *textField = (UITextField *)searchbuttons;
-            // 边界线
-            CGFloat sepX = CGRectGetMaxX(textField.frame);
-            UIView *sep2 = [[UIView alloc] initWithFrame:CGRectMake(sepX, 25, 0.5, 34)];
-            sep2.backgroundColor = [UIColor lightGrayColor];
-            sep2.alpha = 0.3;
-            [self.view.window addSubview:sep2];
-            self.sep2 = sep2;
-        }
+    {
+        UIButton *cancelButton = (UIButton *)searchbuttons;
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"取消"];
+        NSMutableDictionary *muta = [NSMutableDictionary dictionary];
+        [muta setObject:[UIColor colorWithRed:68/255.0 green:122/255.0 blue:208/255.0 alpha:1] forKey:NSForegroundColorAttributeName];
+        [muta setObject:[UIFont systemFontOfSize:13] forKey:NSFontAttributeName];
+        [attr addAttributes:muta range:NSMakeRange(0, 2)];
+        [cancelButton setAttributedTitle:attr forState:UIControlStateNormal];
+        
+        break;
+    }else{
+        UITextField *textField = (UITextField *)searchbuttons;
+        // 边界线
+        CGFloat sepX = CGRectGetMaxX(textField.frame);
+        UIView *sep2 = [[UIView alloc] initWithFrame:CGRectMake(sepX, 25, 0.5, 34)];
+        sep2.backgroundColor = [UIColor lightGrayColor];
+        sep2.alpha = 0.3;
+        [self.view.window addSubview:sep2];
+        self.sep2 = sep2;
+    }
     }
 }
 
@@ -961,7 +941,7 @@
     }else{
         self.searchBar.placeholder = searchDefaultPlaceholder;
     }
-
+    
 }
 - (void)historySearch:(NSNotification *)noty{
     self.searchK = noty.userInfo[@"historyKey"];
@@ -1020,7 +1000,7 @@
         self.table.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width, 50)];
         self.CustomerCounts = [[UILabel alloc]initWithFrame:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width, 50)];
         self.CustomerCounts.textAlignment = NSTextAlignmentCenter;
-//        [self.table.tableFooterView addSubview:self.CustomerCounts];
+        //        [self.table.tableFooterView addSubview:self.CustomerCounts];
         self.table.tableFooterView = self.CustomerCounts;
     }
     return _CustomerCounts;
@@ -1101,36 +1081,11 @@
     [self.shadeView removeFromSuperview];
     [self.navigationController popViewControllerAnimated:YES];
     
-   }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark = 自定义邀请弹出框
-- (IBAction)inviteCancleBtn:(id)sender {
-    [self.shadeView removeFromSuperview];
-    self.Tip_InviteView.hidden = YES;
-}
-
-- (IBAction)inviteCustomerBtn:(id)sender {
-     NSLog(@".... %@", self.telStr);
-    
-    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-    [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
-    
-    if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
-        MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
-       
-        MFMessageVC.body = _InvitationInfo;
-        MFMessageVC.recipients = @[self.telStr];
-        MFMessageVC.messageComposeDelegate = self;
-        [_naV presentViewController:MFMessageVC animated:YES completion:nil];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    
-}
 @end
