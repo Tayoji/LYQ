@@ -102,7 +102,7 @@
 //                if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
 //                    
 //                    [self setTabbarRoot];
-//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:1];
+//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControl lers objectAtIndex:1];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.Order"]){
 //                    
 ////                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -208,7 +208,7 @@ void UncaughtExceptionHandler(NSException *exception) {
 //    UIMutableApplicationShortcutItem *item2 = [[UIMutableApplicationShortcutItem alloc] initWithType:@"UITouchText.Order" localizedTitle:@"理订单" localizedSubtitle:nil icon:icon2 userInfo:nil];
 //     UIMutableApplicationShortcutItem *item3 = [[UIMutableApplicationShortcutItem alloc] initWithType:@"UITouchText.scan" localizedTitle:@"扫一扫" localizedSubtitle:nil icon:icon3 userInfo:nil];
 //    UIMutableApplicationShortcutItem *item4 = [[UIMutableApplicationShortcutItem alloc] initWithType:@"UITouchText.TodaySignIn" localizedTitle:@"每日签到" localizedSubtitle:nil icon:icon4 userInfo:nil];
-//    
+//
 //    NSArray *addArr = @[item4,item3,item2,item1];
 //    NSArray *existArr = [UIApplication sharedApplication].shortcutItems;
 //    [UIApplication sharedApplication].shortcutItems = [existArr arrayByAddingObjectsFromArray:addArr];
