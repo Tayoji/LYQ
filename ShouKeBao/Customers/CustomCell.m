@@ -172,6 +172,7 @@ static id _invitationInfo;
     
     if ([self.model.IsOpenIM integerValue] == 0) {
         NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
+        
         if (![[NSUserDefaults standardUserDefaults]boolForKey:isGray_redID]) {
             self.redDot.hidden = NO;
         }else{
