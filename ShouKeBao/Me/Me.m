@@ -54,6 +54,9 @@
 #define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
 #define kScreenSize [UIScreen mainScreen].bounds.size
 
+
+
+
 @interface Me () <MeHeaderDelegate,MeButtonViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic,strong) MeHeader *meheader;
@@ -621,7 +624,16 @@
                 }
             }else if(indexPath.row == 3){
                 cell.imageView.image = [UIImage imageNamed:@"vip"];
-                UILabel *shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 100, 50)];
+                UILabel *shouKeBaoL;
+               if (kScreenSize.width == 320) {
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/3-10, 0, 100, 50)];
+               }else if (kScreenSize.width == 375) {
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+               }else{
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+               }
+                NSLog(@"...%f", [UIScreen mainScreen].bounds.size.width);
+               
                 shouKeBaoL.text = @"收客宝2.0";
                 shouKeBaoL.textColor = [UIColor grayColor];
                 shouKeBaoL.textAlignment = NSTextAlignmentCenter;
@@ -743,13 +755,13 @@
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
                     
-                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
+//                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
                     
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
                     
 //#pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
-                    NSLog(@"111 ConsultanShareInfo =  %@ %@", _ConsultanShareInfo, self.IsOpenConsultantApp);
+
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
                 newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;

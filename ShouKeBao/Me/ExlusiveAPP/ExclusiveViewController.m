@@ -58,9 +58,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
 @property (weak, nonatomic) IBOutlet UIImageView *QRCodeImage;
 @property (weak, nonatomic) IBOutlet UIImageView *pointImage;
+@property (weak, nonatomic) IBOutlet UIView *tapView;
+
 @property (nonatomic, strong)UIView *redDot;
 @property (nonatomic,weak) UILabel *warningLab;
 @property (nonatomic, copy)NSString *QRCodeAddress;
+
 @end
 
 @implementation ExclusiveViewController
@@ -199,6 +202,13 @@
         }];
 }
 
+- (void)loadIsOpenAppDataThree{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
+        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+    } failure:^(NSError *error) {
+    }];
+}
 
 
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
@@ -213,27 +223,16 @@
 }
 
 - (void)setQRCodeImage{
-   // UIImageView *QRCodeImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.adviserBtn.frame)+gap, CGRectGetMaxY(self.adviserBtn.frame), 20, 20)];
-
-   // QRCodeImage.userInteractionEnabled = YES;
- //   QRCodeImage.image = [UIImage imageNamed:@"fanhuian"];
-  //  [self.HeadImageViewSet addSubview:QRCodeImage];
- //   self.QRCodeImage = QRCodeImage;
+//    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
+//    [self.QRCodeImage addGestureRecognizer:tap1];
+//    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
+//    [self.pointImage addGestureRecognizer:tap2];
     
-   // UIImageView *pointImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(QRCodeImage.frame)+gap, CGRectGetMaxY(self.adviserBtn.frame), 15, 20)];
- //   pointImage.userInteractionEnabled = YES;
-  //  pointImage.image = [UIImage imageNamed:@"fanhuian"];
-   // [self.HeadImageViewSet addSubview:pointImage];
- //   self.pointImage = pointImage;
-    
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
-    [self.QRCodeImage addGestureRecognizer:tap1];
-    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
-    [self.pointImage addGestureRecognizer:tap2];
-    
-
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
+        [self.tapView addGestureRecognizer:tap];
     
 }
+
 
 - (void)pushQRCodeVC{
     
@@ -294,6 +293,7 @@
     [self.HeadImageViewSet addSubview:self.adviserBtn];
     [self.HeadImageViewSet addSubview:self.QRCodeImage];
     [self.HeadImageViewSet addSubview:self.pointImage];
+    [self.HeadImageViewSet addSubview:self.tapView];
     
 }
 -(UIView *)redDot{
@@ -473,6 +473,9 @@
 }
 
 - (IBAction)shareButton:(id)sender {
-    [self shareAction:sender];
+    if ([self.ConsultanShareInfo count] == 0) {
+        [self loadIsOpenAppDataThree];
+    }
+     [self shareAction:sender];
 }
 @end
