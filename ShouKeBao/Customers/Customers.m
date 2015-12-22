@@ -1098,6 +1098,9 @@
 - (IBAction)inviteCustomerBtn:(id)sender {
      NSLog(@".... %@", self.telStr);
     
+    [self.shadeView removeFromSuperview];
+    self.Tip_InviteView.hidden = YES;
+    
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
     
@@ -1107,7 +1110,7 @@
         MFMessageVC.body = _InvitationInfo;
         MFMessageVC.recipients = @[self.telStr];
         MFMessageVC.messageComposeDelegate = self;
-        [_naV presentViewController:MFMessageVC animated:YES completion:nil];
+        [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
@@ -1121,6 +1124,7 @@
         NSLog(@"取消发送");
     } else if (result == MessageComposeResultSent) {
         NSLog(@"已经发出");
+        
     } else {
         NSLog(@"发送失败");
     }
