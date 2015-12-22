@@ -382,11 +382,11 @@ void UncaughtExceptionHandler(NSException *exception) {
 //此为应用程序在后台，点击后会被调用
 //若应用程序在前期，会直接调用
 //若应用程序为关闭状态则调用：didFinishLaunchingWithOptions方法
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-//    [UMessage setAutoAlert:NO];
-//
-//    [UMessage didReceiveRemoteNotification:userInfo];
-//}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [UMessage setAutoAlert:NO];
+
+    [UMessage didReceiveRemoteNotification:userInfo];
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [UMessage setAutoAlert:NO];
