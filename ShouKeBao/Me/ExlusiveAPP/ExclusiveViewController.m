@@ -20,7 +20,8 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "NewOpenExclusiveViewController.h"
-#import "WhatIsExclusiveViewController.h"
+//#import "WhatIsExclusiveViewController.h"
+#import "CircleHotNewsViewController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -190,6 +191,9 @@
             NSLog(@"------专属App的json is %@-------",json);
             
             self.QRCodeAddress = json[@"QRCodeAddress"];
+            if (self.ConsultanShareInfo.count == 0) {
+                [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+            }
             
             self.IsBinding = json[@"IsBinding"];
             [self setHeaderWith:json[@"AdvisorRank"]];
@@ -202,13 +206,13 @@
         }];
 }
 
-- (void)loadIsOpenAppDataThree{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
-        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
-    } failure:^(NSError *error) {
-    }];
-}
+//- (void)loadIsOpenAppDataThree{
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
+//        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+//    } failure:^(NSError *error) {
+//    }];
+//}
 
 
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
@@ -237,10 +241,10 @@
 - (void)pushQRCodeVC{
     
      [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"redDot_QRCode"];
-    WhatIsExclusiveViewController *WRCodeVC = [[WhatIsExclusiveViewController alloc]init];
-    WRCodeVC.url = self.QRCodeAddress;
+    CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
+    WRCodeVC.CircleUrl = self.QRCodeAddress;
     WRCodeVC.formType = @"QRCodeAddress";
-    WRCodeVC.naV = self.navigationController;
+//    WRCodeVC.naV = self.navigationController;
     [self.navigationController pushViewController:WRCodeVC animated:YES];
 }
 
@@ -473,9 +477,9 @@
 }
 
 - (IBAction)shareButton:(id)sender {
-    if ([self.ConsultanShareInfo count] == 0) {
-        [self loadIsOpenAppDataThree];
-    }
+//    if ([self.ConsultanShareInfo count] == 0) {
+//        [self loadIsOpenAppDataThree];
+//    }
      [self shareAction:sender];
 }
 @end

@@ -57,6 +57,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
    
+    if ([self.formType isEqualToString:@"QRCodeAddress"]) {
+        self.title = @"我的店铺二维码";
+    }
     [self setshareBarItem];
     [self deadWork];
     
@@ -318,6 +321,10 @@
     self.navigationItem.rightBarButtonItem = shareBarItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
