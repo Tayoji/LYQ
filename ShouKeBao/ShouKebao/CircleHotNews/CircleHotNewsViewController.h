@@ -11,5 +11,7 @@
 @interface CircleHotNewsViewController : SKViewController
 @property (nonatomic, copy)NSString *CircleUrl;
 @property (nonatomic) NSInteger m;
+@property (nonatomic, copy)NSString *formType;
+@property (nonatomic, strong)UINavigationController *naV;
 
 @end
