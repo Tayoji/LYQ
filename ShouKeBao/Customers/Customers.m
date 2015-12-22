@@ -1098,6 +1098,9 @@
 - (IBAction)inviteCustomerBtn:(id)sender {
      NSLog(@".... %@", self.telStr);
     
+    [self.shadeView removeFromSuperview];
+    self.Tip_InviteView.hidden = YES;
+    
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
     
@@ -1121,6 +1124,7 @@
         NSLog(@"取消发送");
     } else if (result == MessageComposeResultSent) {
         NSLog(@"已经发出");
+        
     } else {
         NSLog(@"发送失败");
     }
