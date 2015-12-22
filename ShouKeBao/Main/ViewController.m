@@ -234,7 +234,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
 {
     NSLog(@"%@", _customers);
     if (_customers) {
-        [_customers.table reloadData];
         [self customerInformationCenterTimePrompt];
     }
     if (_shoukebaoVC) {
