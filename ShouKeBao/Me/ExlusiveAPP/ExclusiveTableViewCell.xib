@@ -258,7 +258,11 @@
                 <outlet property="builtCount" destination="5vy-yf-xtn" id="ENs-Sh-8IK"/>
                 <outlet property="builtLable" destination="Bno-hW-JaV" id="Qs2-7U-oSe"/>
                 <outlet property="historyDataBtn" destination="T07-zJ-mvc" id="zMs-Sr-SwD"/>
+                <outlet property="line1" destination="8Cy-Dp-dQZ" id="1mO-VJ-4Jn"/>
                 <outlet property="line2" destination="Y63-eg-CPx" id="5UC-xd-6OC"/>
+                <outlet property="line3" destination="nhD-IN-Xkm" id="5vI-TQ-piZ"/>
+                <outlet property="line4" destination="ICS-in-AyJ" id="Yf9-H7-niu"/>
+                <outlet property="line5" destination="PwF-eA-HbZ" id="OsE-Uf-hzo"/>
                 <outlet property="livingCount" destination="36P-LO-4Fm" id="OmA-pj-zC5"/>
                 <outlet property="livingL" destination="4zC-GM-Uzk" id="i4k-Sz-I1e"/>
                 <outlet property="placeCount" destination="KLF-ZN-pBs" id="x4U-uI-RcV"/>

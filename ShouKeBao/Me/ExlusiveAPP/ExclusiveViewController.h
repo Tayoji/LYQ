@@ -11,4 +11,5 @@
 @interface ExclusiveViewController : SKViewController
 @property (nonatomic, strong)NSMutableDictionary *ConsultanShareInfo;
 @property (nonatomic, strong)UINavigationController *naV;
+//@property (nonatomic, strong)NSMutableDictionary *ConsultanShareInfoApp;
 @end
