@@ -209,13 +209,14 @@
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
         if ([json[@"IsSuccess"]integerValue]) {
             NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
-            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];            
+            NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];
             NSInteger count = noticeCount + DynamicCount;
             [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
             count += [self getUnreadMessageCount];
             self.messageCount = count;
             UIApplication *application = [UIApplication sharedApplication];
             application.applicationIconBadgeNumber = count;
+            [self messagePromptAction];
             [self.table reloadData];
         }
     } failure:^(NSError *eror) {
@@ -227,7 +228,6 @@
 //        unreadCount += conversation.unreadMessagesCount;
 //    }
 //    self.messageCount = unreadCount;
-    [self messagePromptAction];
 
 }
 // 统计未读消息数

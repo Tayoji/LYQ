@@ -185,13 +185,13 @@
 //4直客浏览线路达二次;5直客浏览产品;6直客收藏产品;7直客分享产品;8点击在线预订未下单;10直客浏览产品留下手机号-C
 - (float)heightWithDynamicType:(CustomDynamicModel *)model{
     if ([model.DynamicType intValue] == 1 || [model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
-        return 65+[model.DynamicTitle heigthWithsysFont:11 withWidth:kScreenSize.width - 52];
+        return 65+[model.DynamicTitle heigthWithsysFont:12 withWidth:kScreenSize.width - 52];
     }else/* if([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 3){
         return 95+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
     }else if([model.DynamicType intValue] == 9){
         return 100+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
     }else*/{
-        return 152+[model.DynamicTitle heigthWithsysFont:11 withWidth:kScreenSize.width - 52];
+        return 150+[model.DynamicTitle heigthWithsysFont:12 withWidth:kScreenSize.width - 52];
     }
 }
 
