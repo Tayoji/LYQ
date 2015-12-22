@@ -1106,7 +1106,6 @@
        
         MFMessageVC.body = _InvitationInfo;
         MFMessageVC.recipients = @[self.telStr];
-        NSLog(@"....%@", self.telStr);
         MFMessageVC.messageComposeDelegate = self;
         [_naV presentViewController:MFMessageVC animated:YES completion:nil];
     }else{
@@ -1114,5 +1113,17 @@
         [alert show];
     }
     
+}
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    // 关闭短信界面
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    if (result == MessageComposeResultCancelled) {
+        NSLog(@"取消发送");
+    } else if (result == MessageComposeResultSent) {
+        NSLog(@"已经发出");
+    } else {
+        NSLog(@"发送失败");
+    }
+
 }
 @end
