@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Me/ExlusiveAPP/newExclusiveApp/NewOpenExclusiveViewController.m"
-            timestampString = "472384080.485838"
+            filePath = "ShouKeBao/Customers/Customers.m"
+            timestampString = "472441716.470376"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "-returnButton:"
+            startingLineNumber = "1109"
+            endingLineNumber = "1109"
+            landmarkName = "-inviteCustomerBtn:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
