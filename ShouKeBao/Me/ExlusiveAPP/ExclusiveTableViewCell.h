@@ -36,9 +36,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *H_livingCount;
 @property (weak, nonatomic) IBOutlet UILabel *H_placeCount;
 
+
 @property (weak, nonatomic) IBOutlet UIView *line2;
-
-
+@property (weak, nonatomic) IBOutlet UIView *line1;
+@property (weak, nonatomic) IBOutlet UIView *line3;
+@property (weak, nonatomic) IBOutlet UIView *line5;
+@property (weak, nonatomic) IBOutlet UIView *line4;
 
 
 

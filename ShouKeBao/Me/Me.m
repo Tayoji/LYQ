@@ -750,16 +750,10 @@
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
                 if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
-                    
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
-                    
-//                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
-                    
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
-                    
-//#pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
 
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
