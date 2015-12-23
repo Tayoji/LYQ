@@ -159,11 +159,6 @@
     self.telStr = telStr;
 }
 
-
-
-
-
-
 - (void)setTable{
     self.table.delegate = self;
     self.table.dataSource = self;
@@ -1097,7 +1092,6 @@
 
 - (IBAction)inviteCustomerBtn:(id)sender {
      NSLog(@".... %@", self.telStr);
-    
     [self.shadeView removeFromSuperview];
     self.Tip_InviteView.hidden = YES;
     
@@ -1106,7 +1100,6 @@
     
     if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
         MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
-       
         MFMessageVC.body = _InvitationInfo;
         MFMessageVC.recipients = @[self.telStr];
         MFMessageVC.messageComposeDelegate = self;
@@ -1118,16 +1111,13 @@
     
 }
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
-    // 关闭短信界面
     [controller dismissViewControllerAnimated:YES completion:nil];
     if (result == MessageComposeResultCancelled) {
         NSLog(@"取消发送");
     } else if (result == MessageComposeResultSent) {
         NSLog(@"已经发出");
-        
     } else {
         NSLog(@"发送失败");
     }
-
 }
 @end
