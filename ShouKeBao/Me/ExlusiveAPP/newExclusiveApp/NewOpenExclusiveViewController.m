@@ -18,7 +18,7 @@
 #import "ExclusiveViewController.h"
 #import "WhatIsExclusiveViewController.h"
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
-@interface NewOpenExclusiveViewController ()
+@interface NewOpenExclusiveViewController ()<UIScrollViewDelegate>
 - (IBAction)returnButton:(id)sender;
 - (IBAction)introduceButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *shareBackground;
@@ -55,6 +55,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.scrollVew.delegate = self;
+
     if ([self.ConsultanShareInfo count] == 0) {
          [self loadIsOpenAppDataTwince];
     }else{
@@ -143,5 +145,14 @@
     whatISExclisiveVC.naV = self.naVC;
     [self.naVC pushViewController:whatISExclisiveVC animated:YES];
     
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset < 0){
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }else{
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }
 }
 @end

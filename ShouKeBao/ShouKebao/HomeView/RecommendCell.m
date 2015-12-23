@@ -117,6 +117,7 @@ NSInteger theNumbe;
     CGFloat superiMGW = screenW-2*gap;
     //    每排3张 每张的宽度，高度
     CGFloat imgW = superiMGW/3;
+    NSLog(@".... %f %f", screenW, imgW);
     return CGSizeMake(imgW, imgW);
 }
 

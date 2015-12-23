@@ -36,7 +36,14 @@
     
     // Do any additional setup after loading the view.
     self.tableView.rowHeight = 160;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    if (self.listType == previewType) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
+    
+    
     self.tableView.tableFooterView = [[UIView alloc] init];
 //    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
 //

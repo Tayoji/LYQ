@@ -48,34 +48,34 @@ static id _naVC;
     _naVC = naVC;
 
     NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
-    UIView *shareView;
+    UIImageView *shareView;
     //  自定义分享view
     if ([UIScreen mainScreen].bounds.size.height == 568) {
-        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 320)];
+        shareView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 320)];
     }else if ([UIScreen mainScreen].bounds.size.height == 480){
-        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 280)];
+        shareView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 280)];
     }else{
-        shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300*KHeight)];
+        shareView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 300*KHeight)];
     }
     
-    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
+//    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
+    shareView.image = [UIImage imageNamed:@"core"];
+    
+//    下面剪切的方式不好使 会影响多出部分的子视图布局
+//    shareView.layer.masksToBounds = YES;
+//    shareView.layer.cornerRadius = 5;
     [backgroundShareView addSubview:shareView];
     _shareView = shareView;
+     shareView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, -15, shareView.frame.size.width-80, 40*KHeight)];
     titleLabel.layer.cornerRadius = 4;
     titleLabel.layer.masksToBounds = YES;
-//    titleLabel.layer.shadowColor = [UIColor blackColor].CGColor;
-//    titleLabel.layer.shadowOffset = CGSizeMake(1, 1);
-//    titleLabel.layer.shadowOpacity = 1.0f;
-//    titleLabel.layer.shadowRadius = 2;
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = @"恭喜您！您已开通专属APP功能";
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont systemFontOfSize:17*KWidth_Scale];
-    //    UIColor *bgcolour = [UIColor colorWithCGColor:@"ff6600"];
-    //    titleLabel.backgroundColor = [UIColor colorWithCGColor:(__bridge CGColorRef)(bgcolour)];
     titleLabel.backgroundColor = [UIColor colorWithRed:252/255.0f green:102/255.0f blue:33/255.0f alpha:1];
     [shareView addSubview:titleLabel];
     
