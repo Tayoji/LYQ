@@ -146,7 +146,11 @@
 }
 
 
+//代理实现邀请弹窗
 - (void)tipInviteViewShow:(NSString *)telStr{
+    self.Tip_InviteView.layer.masksToBounds = YES;
+    self.Tip_InviteView.layer.cornerRadius = 5;
+  
     self.Tip_InviteView.hidden = NO;
     self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _shadeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
@@ -168,14 +172,6 @@
     self.table.backgroundColor = [UIColor colorWithRed:220/255.0 green:229/255.0 blue:238/255.0 alpha:1];
     [self CustomerCounts];
 }
-
-//-(UIImageView *)pointDownImage{
-//    if (!_pointDownImage) {
-//        _pointDownImage = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.navigationItem.titleView.frame), 20, 10, 10)];
-//        _pointDownImage.image = [UIImage imageNamed:@"whidexiala"];
-//    }
-//    return _pointDownImage;
-//}
 
 #warning 消息点击事件
 #pragma mark -代理方法
@@ -343,12 +339,9 @@
     self.subView.hidden = YES;
     self.navigationController.navigationBarHidden = NO;
     if (self.isMe == 1) {
-//        _pointDownImage.frame = CGRectMake(153, 20, 10, 10);
-//        [self.titleBtn setTitle:@"绑定APP客户" forState:UIControlStateNormal];
         [self setNav];
     }
-    NSLog(@"... customerType  %ld",self.customerType);
-    
+//    NSLog(@"... customerType  %ld",self.customerType);
     [self getNotifiList];
     //    NSUserDefaults *customer = [NSUserDefaults standardUserDefaults];
     //    NSString *appIsBack = [customer objectForKey:@"appIsBack"];
@@ -363,7 +356,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
     [MobClick endLogPageView:@"Customers"];
 }
 
@@ -397,16 +389,14 @@
    
 }
 //  上啦加载
-- (void)foodPull
-{
+- (void)foodPull{
 //    self.isDownLoad = YES;//1
-    
     [self.noProductWarnLab removeFromSuperview];
     self.isRefresh = NO;
     self.pageIndex++;
     if (self.pageIndex  > [self getTotalPage]) {
         [self.table footerEndRefreshing];
-        //        [self warning];
+//        [self warning];
     }else{
         [self loadDataSource];
     }
@@ -417,7 +407,6 @@
     if (cos == 0) {
         return [self.totalNumber integerValue] / pageSize;
     }else{
-        NSLog(@"[self.totalNumber integerValue] / pageSize = %ld", [self.totalNumber integerValue] / pageSize + 1);
         return [self.totalNumber integerValue] / pageSize + 1;
     }
 }
@@ -535,10 +524,6 @@
                 }
             }
         }
-          NSLog(@"dadta = %@ %@ %@",self.newsBindingCustomArr, self.hadBindingCustomArr, self.otherCustomArr);
-        
-//     self.isDownLoad = 1  yes    self.isDownLoad = no = 0
-        
 //        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
 //            [self.dataArr addObject:self.newsBindingCustomArr];
 //        }
@@ -549,8 +534,7 @@
 //        if (self.otherCustomArr.count && !self.isDownLoad) {
 //            [self.dataArr addObject:self.otherCustomArr];
 //        }
- 
-        
+
         [self.dataArr removeAllObjects];
         if (self.newsBindingCustomArr.count) {
             [self.dataArr addObject:self.newsBindingCustomArr];
@@ -561,9 +545,6 @@
         if (self.otherCustomArr.count) {
             [self.dataArr addObject:self.otherCustomArr];
         }
-  
-        NSLog(@"dadta = %@", self.dataArr);
-
         if (self.dataArr.count==0) {
             self.imageViewWhenIsNull.hidden = NO;
             self.CustomerCounts.hidden = YES;
@@ -692,8 +673,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-//        CustomCell *cell = [CustomCell cellWithTableView:tableView navigationC:self.navigationController];
-        CustomCell *cell = [CustomCell cellWithTableView:tableView InvitationInfo:self.InvitationInfo navigationC:self.navigationController];
+        CustomCell *cell = [CustomCell cellWithTableView:tableView];
+//        CustomCell *cell = [CustomCell cellWithTableView:tableView InvitationInfo:self.InvitationInfo navigationC:self.navigationController];
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.delegate = self;
         cell.model = _dataArr[indexPath.section][indexPath.row];
@@ -1117,6 +1098,9 @@
 - (IBAction)inviteCustomerBtn:(id)sender {
      NSLog(@".... %@", self.telStr);
     
+    [self.shadeView removeFromSuperview];
+    self.Tip_InviteView.hidden = YES;
+    
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
     
@@ -1126,11 +1110,24 @@
         MFMessageVC.body = _InvitationInfo;
         MFMessageVC.recipients = @[self.telStr];
         MFMessageVC.messageComposeDelegate = self;
-        [_naV presentViewController:MFMessageVC animated:YES completion:nil];
+        [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }
     
+}
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    // 关闭短信界面
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    if (result == MessageComposeResultCancelled) {
+        NSLog(@"取消发送");
+    } else if (result == MessageComposeResultSent) {
+        NSLog(@"已经发出");
+        
+    } else {
+        NSLog(@"发送失败");
+    }
+
 }
 @end

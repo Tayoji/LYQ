@@ -11,6 +11,9 @@
 #import "MobClick.h"
 #import "YYAnimationIndicator.h"
 #import "WMAnimations.h"
+#import <ShareSDK/ShareSDK.h>
+#import "StrToDic.h"
+#import "MBProgressHUD+MJ.h"
 #define View_Width [UIScreen mainScreen].bounds.size.width
 #define View_Height [UIScreen mainScreen].bounds.size.height
 
@@ -19,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *introduceExclusiveAppTitle;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (nonatomic, strong)YYAnimationIndicator *indicator;
+@property (nonatomic, strong)UILabel *warningLab;
 
 @end
 
@@ -29,10 +33,6 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:214/225.0f green:214/225.0f blue:214/225.0f alpha:1];
     
-    if ([self.formType isEqualToString:@"QRCodeAddress"]) {
-        self.introduceExclusiveAppTitle.text = @"我的店铺二维码";
-    }
-
      [self setWebView];
     [WMAnimations WMNewWebWithScrollView:self.webView.scrollView];
     CGFloat x = ([UIScreen mainScreen].bounds.size.width/2) - 60;
@@ -62,7 +62,6 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
      [_indicator stopAnimationWithLoadText:@"" withType:YES];
 }
-
 
 
 -(void)setWebView{

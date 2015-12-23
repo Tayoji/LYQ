@@ -76,7 +76,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="D8z-n7-q96">
-                    <rect key="frame" x="90" y="175" width="80" height="30"/>
+                    <rect key="frame" x="100" y="175" width="80" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <inset key="titleEdgeInsets" minX="-75" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -94,11 +94,11 @@
                     </connections>
                 </button>
                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QRCode" id="Fym-q2-e2w">
-                    <rect key="frame" x="175" y="178" width="20" height="20"/>
+                    <rect key="frame" x="185" y="178" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="point" id="nvx-YF-su6">
-                    <rect key="frame" x="200" y="181" width="10" height="15"/>
+                    <rect key="frame" x="210" y="181" width="10" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="pP3-kk-2oJ">
@@ -112,11 +112,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view contentMode="scaleToFill" id="lFP-rD-dDl">
-                    <rect key="frame" x="0.0" y="429.99999831541595" width="320" height="50.000001684584021"/>
+                    <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pUg-cQ-Prs">
-                            <rect key="frame" x="80" y="14" width="160" height="22.000001029468002"/>
+                            <rect key="frame" x="80" y="14" width="160" height="22"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
