@@ -26,7 +26,7 @@
 
 
 #define kScreenSize [UIScreen mainScreen].bounds.size
-@interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate>
+@interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
 @property (nonatomic,strong) UIView *searchView;
 @property (nonatomic,strong) NSMutableArray *NamedataArr;//存放网络数据
@@ -50,7 +50,7 @@
     NSLog(@"chatlist%@", self.chatListArray);
     _tableView.tableFooterView = [[UIView alloc] init];
     
-    
+    [self registerNotifications];
     
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
@@ -501,4 +501,29 @@
     
     return ret;
 }
+-(void)didReceiveMessage:(EMMessage *)message
+{
+    self.chatListArray = [self loadDataSource];
+    [self.tableView reloadData];
+}
+#pragma mark - private
+
+-(void)registerNotifications
+{
+    [self unregisterNotifications];
+    
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+}
+
+-(void)unregisterNotifications
+{
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+}
+
+
+-(void)back
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 @end
