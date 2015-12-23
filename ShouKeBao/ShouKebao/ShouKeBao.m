@@ -396,10 +396,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FromiMessage:) name:@"FromiMesseage" object:nil];
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
-    NSString *SKBGuide = [guiDefault objectForKey:@"SKBGuide"];
-    if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
-        [self Guide];
+    //判断是否开通App然后进入
+    if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+        //没有开通
+        
+        NSString *SKBGuide = [guiDefault objectForKey:@"SKBExclusiveaAppGuideNO"];
+        if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
+            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideNO"];
+            [self Guide];
+        }
+    }else{
+        [guiDefault removeObjectForKey:@"NewMeGuide"];
+        [guiDefault removeObjectForKey:@"jumpToZSApp"];
+        NSString *SKBGuide = [guiDefault objectForKey:@"SKBExclusiveaAppGuide"];
+        if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
+            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuide"];
+            [self Guide];
+        }
     }
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToRecommendList) name:@"notifiToPushToRecommed" object:nil];
 
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
