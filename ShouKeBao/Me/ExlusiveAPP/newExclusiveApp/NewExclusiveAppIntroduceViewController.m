@@ -19,7 +19,7 @@
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
 #define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
 #define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
-@interface NewExclusiveAppIntroduceViewController ()
+@interface NewExclusiveAppIntroduceViewController ()<UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 - (IBAction)returnBtn:(id)sender;
 - (IBAction)introduceBtn:(id)sender;
@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.ScrollView.delegate = self;
     if (fourSize) {
      self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+170*KHeight_Scale);
     }else if (fiveSize){
@@ -89,6 +90,16 @@
     WhatIsExclusiveVC.url =  @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
     WhatIsExclusiveVC.naV = self.naVC;
     [self.naVC pushViewController:WhatIsExclusiveVC animated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset < 0){
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }else{
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{

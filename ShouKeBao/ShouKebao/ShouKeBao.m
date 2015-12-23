@@ -1161,7 +1161,7 @@
 
 - (void)estimateCircleArrData:(NSString *)IsVisible{
 //     NSLog(@"轮播  %@", IsVisible);
-    if (/*self.circleArr.count == 0*/ [IsVisible isEqualToString:@"0"]) {
+    if (self.circleArr.count == 0 || [IsVisible isEqualToString:@"0"] || IsVisible.length == 0) {
         self.CarouselView.hidden = YES;
         self.tableView.frame = CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 164);
     }else{
@@ -1866,8 +1866,6 @@
         return cell;
         
     }else if([model.model isKindOfClass:[Recommend class]]){//精品推荐
-
-        
 //之所以大费周章的取count 就是因为在返回首页的时候指定self.count=0,再执行这个方法点时候会以为图片为0，从而影响CollectionView的布局；
         Recommend *rmodel = model.model;
         NSUInteger count = rmodel.RecommendIndexProductList.count;
