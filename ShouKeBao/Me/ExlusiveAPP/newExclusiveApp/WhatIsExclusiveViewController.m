@@ -32,6 +32,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:214/225.0f green:214/225.0f blue:214/225.0f alpha:1];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
      [self setWebView];
     [WMAnimations WMNewWebWithScrollView:self.webView.scrollView];

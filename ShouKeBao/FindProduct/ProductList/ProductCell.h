@@ -41,7 +41,7 @@
 @property (nonatomic,weak) UILabel *time;// 浏览时间
 @property (nonatomic,weak) UIView *line;// xixian
 @property (nonatomic,weak) UIView *sep;// 线条
-
+@property (nonatomic,weak) UIView *cellView;//
 @property (strong, nonatomic) ProductModal *modal;
 
 @property (nonatomic,assign) BOOL isHistory;

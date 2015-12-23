@@ -194,6 +194,12 @@
     //    line.backgroundColor = [UIColor colorWithRed:170/255.f green:170/255.f blue:170/255.f alpha:1];
     //    [self.contentView addSubview:line];
     //    self.line = line;
+        UIView *cellView = [[UIView alloc] init];
+        cellView.backgroundColor = [UIColor colorWithRed:235/255.f green:235/255.f blue:244/255.f alpha:1];
+        [self.contentView addSubview:cellView];
+        self.cellView = cellView;
+    
+    
 }
 
 - (void)layoutSubviews
@@ -207,20 +213,18 @@
     /**
      *  历史控件
      */
-    CGFloat timeW = screenW - gap * 2;
-    CGFloat timeX = screenW - timeW - gap;
-    self.time.frame = CGRectMake(timeX, 5, timeW, 20);
+//    CGFloat timeW = screenW - gap * 2;
+//    CGFloat timeX = screenW - timeW - gap;
+//    self.time.frame = CGRectMake(timeX, 5, timeW, 20);
     
-    CGFloat sepY = CGRectGetMaxY(self.time.frame) + 5;
-    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
+//    CGFloat sepY = CGRectGetMaxY(self.time.frame) + 5;
+//    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
     
     CGFloat titleY = 8;
     CGFloat iconWidth;
     
     if (self.isHistory) {
-        titleY = CGRectGetMaxY(self.sep.frame)+gap;
-//        iconWidth = (self.contentView.bounds.size.width-3*gap)/4;
-//    120*0.6 ＝ 72
+//        titleY = CGRectGetMaxY(self.sep.frame)+gap;
         iconWidth = 72;
     }else{
         iconWidth = self.contentView.bounds.size.height*3/5;
@@ -234,7 +238,6 @@
     
     CGFloat titleStart = CGRectGetMaxX(self.icon.frame)+gap/2;
     CGFloat titleW = screenW - gap - titleStart;
-    //    CGFloat titleH = CGRectGetMaxY(self.icon.frame)*2/3;
     self.title.frame = CGRectMake(titleStart, titleY-2, titleW, iconWidth*2/3);//产品名称
     /**
      门市价 同行价 分界线
@@ -258,7 +261,13 @@
     //产品编号
     CGFloat productNumWidth = screenW/3;
     CGFloat productNumHS = CGRectGetMaxY(self.line.frame);
-    CGFloat productNumHeight = height- productNumHS;
+    CGFloat productNumHeight;
+    if (self.isHistory) {
+        productNumHeight = height- productNumHS-40;
+    }else{
+        productNumHeight = height- productNumHS;
+    }
+    
     self.productNum.frame = CGRectMake(gap, productNumHS, productNumWidth, productNumHeight);
     CGFloat gaps;
     CGFloat gapScreen;
@@ -307,7 +316,13 @@
     // 闪电
     CGFloat fW = self.isFlash ? 15 : 0;
     CGFloat fX = screenW-gap-fW;
-    CGFloat fh = (height - productNumHS -h)/2+productNumHS;
+    CGFloat fh;
+    if (self.isHistory) {
+        fh = (height - productNumHS -55)/2+productNumHS;
+    }else{
+        fh = (height - productNumHS -h)/2+productNumHS;
+    }
+    
     self.flash.frame = CGRectMake(fX, fh, fW, h);
     
     //利
@@ -343,7 +358,26 @@
     //    CGFloat undercarriageView = [ss widthWithsysFont:15];
     self.undercarriageView.frame = CGRectMake(titleStart, priceYStart, priceWidth, priceHeight);
     CGFloat reS = CGRectGetMaxY(self.undercarriageView.frame)+(productNumHeight-45)/2;
-    self.RelatedBtn.frame = CGRectMake(screenW/2+gap, reS, screenW/2-2*gap, 35);
+    NSLog(@".. %f", screenW);
+    if (screenW == 375 || screenW == 414) {
+        self.RelatedBtn.frame = CGRectMake(screenW-(screenW/2-5*gap)-5, reS, screenW/2-6*gap, 30);
+    }else{
+        self.RelatedBtn.frame = CGRectMake(screenW/2+gap+5, reS, screenW/2-2*gap-5, 30);
+    }
+    
+    
+    CGFloat sepY = CGRectGetMaxY(self.RelatedBtn.frame) + gap;
+    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
+    CGFloat timeW = screenW - gap * 2;
+    CGFloat timeX = screenW - timeW - gap;
+    self.time.frame = CGRectMake(timeX, CGRectGetMaxY(self.sep.frame), timeW, 20);
+    
+    if (self.isHistory) {
+      self.cellView.frame = CGRectMake(0, CGRectGetMaxY(self.time.frame), screenW, 15);
+    }
+   
+    
+    
 }
 
 - (void)setModal:(ProductModal *)modal

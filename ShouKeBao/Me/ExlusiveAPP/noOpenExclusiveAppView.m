@@ -32,6 +32,8 @@ static id _shareView;
     UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
     shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
+    shareView.layer.masksToBounds = YES;
+    shareView.layer.cornerRadius = 5;
     [backgroundShareView addSubview:shareView];
     _shareView = shareView;
     
