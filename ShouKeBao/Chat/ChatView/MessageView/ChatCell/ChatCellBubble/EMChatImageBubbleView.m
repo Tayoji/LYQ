@@ -56,15 +56,15 @@ NSString *const kRouterEventImageBubbleTapEventName = @"kRouterEventImageBubbleT
     [super layoutSubviews];
     
     CGRect frame = self.bounds;
-    frame.size.width -= BUBBLE_ARROW_WIDTH;
-    frame = CGRectInset(frame, BUBBLE_VIEW_PADDING, BUBBLE_VIEW_PADDING);
+//    frame.size.width -= BUBBLE_ARROW_WIDTH;
+    frame = CGRectInset(frame, 0, 0);
     if (self.model.isSender) {
-        frame.origin.x = BUBBLE_VIEW_PADDING;
+        frame.origin.x = 0;
     }else{
-        frame.origin.x = BUBBLE_VIEW_PADDING + BUBBLE_ARROW_WIDTH;
+        frame.origin.x = 0 + BUBBLE_ARROW_WIDTH;
     }
     
-    frame.origin.y = BUBBLE_VIEW_PADDING;
+    frame.origin.y = 0;
     [self.imageView setFrame:frame];
 }
 
