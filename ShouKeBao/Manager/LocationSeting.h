@@ -13,7 +13,6 @@
 @property (nonatomic, copy)NSString *carouselPageNumber;//首页轮播条次本地化
 
 
-
 +(LocationSeting *)defaultLocationSeting;
 
 

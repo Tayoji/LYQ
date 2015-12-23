@@ -190,7 +190,9 @@
             [def setObject:ConsultantInfoDic[@"SkbMobile"] forKey:UserInfoKeyLYGWPhoneNum];//电话
             NSString *IsLYGWStr = json[@"IsOpenConsultantApp"];
             NSLog(@"%@",IsLYGWStr);
+            
             [def setObject:IsLYGWStr forKey:UserInfoKeyLYGWIsOpenVIP];
+            
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:UserInfoKeyIsShowQuanTouTiao];
 
             [def synchronize];

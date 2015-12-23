@@ -102,7 +102,7 @@
 //                if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
 //                    
 //                    [self setTabbarRoot];
-//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControl lers objectAtIndex:1];
+//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:1];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.Order"]){
 //                    
 ////                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
