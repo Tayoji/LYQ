@@ -343,7 +343,7 @@
     //    CGFloat undercarriageView = [ss widthWithsysFont:15];
     self.undercarriageView.frame = CGRectMake(titleStart, priceYStart, priceWidth, priceHeight);
     CGFloat reS = CGRectGetMaxY(self.undercarriageView.frame)+(productNumHeight-45)/2;
-    self.RelatedBtn.frame = CGRectMake(screenW/2+gap, reS, screenW/2-2*gap, 35);
+    self.RelatedBtn.frame = CGRectMake(screenW/2+gap, reS, screenW/2-30, 35);
 }
 
 - (void)setModal:(ProductModal *)modal
