@@ -28,8 +28,9 @@
 
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
-@property (weak, nonatomic) IBOutlet UIButton *BackButton;
-@property (weak, nonatomic) IBOutlet UIButton *QuestionButton;
+@property (weak, nonatomic) IBOutlet UIImageView *squarenessView;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *questionButton;
 
 @end
 
@@ -64,20 +65,20 @@
     view2.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
     view2.layer.borderWidth = 1;
 }
-- (void)setBackButton:(UIButton *)backButton{
-    _BackButton = backButton;
-    self.BackButton.backgroundColor = [UIColor blackColor];
-    self.BackButton.alpha = 0.3;
-    self.BackButton.layer.masksToBounds = YES;
-    self.BackButton.layer.cornerRadius = 3;
-}
-- (void)setQuestionButton:(UIButton *)questionButton{
-    _QuestionButton = questionButton;
-    self.QuestionButton.backgroundColor = [UIColor blackColor];
-    self.QuestionButton.alpha = 0.3;
-    self.QuestionButton.layer.masksToBounds = YES;
-    self.QuestionButton.layer.cornerRadius = 3;
-}
+//- (void)setBackButton:(UIButton *)backButton{
+//    _BackButton = backButton;
+//    self.BackButton.backgroundColor = [UIColor blackColor];
+//    self.BackButton.alpha = 0.3;
+//    self.BackButton.layer.masksToBounds = YES;
+//    self.BackButton.layer.cornerRadius = 3;
+//}
+//- (void)setQuestionButton:(UIButton *)questionButton{
+//    _QuestionButton = questionButton;
+//    self.QuestionButton.backgroundColor = [UIColor blackColor];
+//    self.QuestionButton.alpha = 0.3;
+//    self.QuestionButton.layer.masksToBounds = YES;
+//    self.QuestionButton.layer.cornerRadius = 3;
+//}
 
 
 
@@ -117,6 +118,19 @@
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     }else{
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }
+    if (offset > 0) {
+        self.squarenessView.hidden = NO;
+        self.squarenessView.alpha = offset*0.01;
+//        [self.squarenessView addSubview:self.backButton];
+//        [self.squarenessView addSubview:self.questionButton];
+        [self.view addSubview:self.backButton];
+        [self.view addSubview:self.questionButton];
+        
+    }else{
+        self.squarenessView.hidden = YES;
+        [self.ScrollView addSubview:self.backButton];
+        [self.ScrollView addSubview:self.questionButton];
     }
 }
 
