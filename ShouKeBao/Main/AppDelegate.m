@@ -196,7 +196,7 @@ void UncaughtExceptionHandler(NSException *exception) {
     [[NSUserDefaults standardUserDefaults] setValue:crashLogInfo forKey:@"crashLogInfo"];
     NSLog(@"$$$$$$$$$$$$$$$$$$$exception type : %@ \n crash reason : %@ \n call stack info : %@", name, reason, arr);
 }
-//
+
 //-(void) creatItem{
 //    
 //    UIApplicationShortcutIcon *icon1 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"TouchPro"];
