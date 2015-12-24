@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewOpenExclusiveViewController">
             <connections>
+                <outlet property="backButton" destination="y7s-f3-yaq" id="EJC-Ub-Plh"/>
+                <outlet property="questionButton" destination="0kW-An-6UY" id="ZxY-61-YLU"/>
                 <outlet property="scrollVew" destination="DJU-bY-Ba1" id="o1Y-fY-3bc"/>
                 <outlet property="shareBackground" destination="6xT-9I-LKf" id="UvH-JL-t9k"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -59,11 +61,12 @@
                     </subviews>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="y7s-f3-yaq">
-                    <rect key="frame" x="0.0" y="20" width="70" height="30"/>
+                    <rect key="frame" x="10" y="20" width="50" height="30"/>
                     <autoresizingMask key="autoresizingMask"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <inset key="titleEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="10" minY="7" maxX="40" maxY="7"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="7" maxX="30" maxY="7"/>
                     <state key="normal" title="返回" image="fanhuian">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -72,8 +75,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0kW-An-6UY">
-                    <rect key="frame" x="260" y="20" width="60" height="30"/>
+                    <rect key="frame" x="260" y="20" width="50" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" image="wenhao">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

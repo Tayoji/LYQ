@@ -23,6 +23,8 @@
 - (IBAction)introduceButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *shareBackground;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVew;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *questionButton;
 
 @end
 
@@ -55,6 +57,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
     self.scrollVew.delegate = self;
 
     if ([self.ConsultanShareInfo count] == 0) {
@@ -75,6 +78,20 @@
 
 }
 
+- (void)setBackButton:(UIButton *)backButton{
+    _backButton = backButton;
+    self.backButton.backgroundColor = [UIColor blackColor];
+    self.backButton.alpha = 0.3;
+    self.backButton.layer.masksToBounds = YES;
+    self.backButton.layer.cornerRadius = 3;
+}
+- (void)setQuestionButton:(UIButton *)questionButton{
+    _questionButton = questionButton;
+    self.questionButton.backgroundColor = [UIColor blackColor];
+    self.questionButton.alpha = 0.3;
+    self.questionButton.layer.masksToBounds = YES;
+    self.questionButton.layer.cornerRadius = 3;
+}
 
 - (void)shareView{
     

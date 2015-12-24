@@ -269,8 +269,10 @@
         CGRect frame = button.frame;
         if (self.listType == previewType) {
             frame.size.height = 160;
+        }else{
+            frame.size.height = 120;
         }
-        frame.size.height = 120;
+        
         frame.size.width = i == 1 ? 140 : 42;
         button.frame = frame;
         if (i == 1) {
