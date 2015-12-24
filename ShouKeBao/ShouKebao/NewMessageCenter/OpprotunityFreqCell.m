@@ -30,7 +30,8 @@
 @implementation OpprotunityFreqCell
 
 - (void)awakeFromNib {
-
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openIM)];
+    [self.TitleImage addGestureRecognizer:tap];
 }
 -(void)layoutSubviews{
     self.WebStr.scrollView.scrollEnabled = NO;

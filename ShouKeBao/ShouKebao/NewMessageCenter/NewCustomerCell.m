@@ -23,7 +23,8 @@
 
 @implementation NewCustomerCell
 - (void)awakeFromNib {
-
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openIM)];
+    [self.TitleImage addGestureRecognizer:tap];
     // Initialization code
 }
 -(void)layoutSubviews{
