@@ -29,12 +29,14 @@ static id _shareView;
     
     NSLog(@"%f", kScreenHeight);
     //  自定义弹出的分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
-    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
+    UIImageView *shareView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
+    shareView.image = [UIImage imageNamed:@"core"];
+//    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
-    shareView.layer.masksToBounds = YES;
-    shareView.layer.cornerRadius = 5;
+//    shareView.layer.masksToBounds = YES;
+//    shareView.layer.cornerRadius = 5;
     [backgroundShareView addSubview:shareView];
+    shareView.userInteractionEnabled = YES;
     _shareView = shareView;
     
    // UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, -10, shareView.frame.size.width-180, 25*KHeight)];

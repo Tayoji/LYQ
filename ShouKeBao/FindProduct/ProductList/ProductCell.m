@@ -182,6 +182,7 @@
     UIButton * RelatedBt = [[UIButton alloc]init];
     self.RelatedBtn = RelatedBt;
     self.RelatedBtn.titleLabel.textColor = [UIColor whiteColor];
+    [self.RelatedBtn.titleLabel setFont:[UIFont systemFontOfSize:17]];
     self.RelatedBtn.backgroundColor = [UIColor colorWithRed:50/255.0 green:132/255.0 blue:250/155.0 alpha:1.0];
     [self.RelatedBtn setTitle:@"查看相关产品" forState:UIControlStateNormal];
     [self.RelatedBtn addTarget:self action:@selector(RelatedProductClick) forControlEvents:UIControlEventTouchUpInside];
@@ -263,7 +264,7 @@
     CGFloat productNumHS = CGRectGetMaxY(self.line.frame);
     CGFloat productNumHeight;
     if (self.isHistory) {
-        productNumHeight = height- productNumHS-40;
+        productNumHeight = height- productNumHS-40+4;
     }else{
         productNumHeight = height- productNumHS;
     }
@@ -359,10 +360,12 @@
     self.undercarriageView.frame = CGRectMake(titleStart, priceYStart, priceWidth, priceHeight);
     CGFloat reS = CGRectGetMaxY(self.undercarriageView.frame)+(productNumHeight-45)/2;
     NSLog(@".. %f", screenW);
-    if (screenW == 375 || screenW == 414) {
-        self.RelatedBtn.frame = CGRectMake(screenW-(screenW/2-5*gap)-5, reS, screenW/2-6*gap, 30);
+    if (screenW == 414) {
+        self.RelatedBtn.frame = CGRectMake(screenW*2/3+gap, reS, screenW/3-2*gap, 30);
+    }else if(screenW == 375){
+        self.RelatedBtn.frame = CGRectMake(screenW*2/3, reS, screenW/3-gap, 30);
     }else{
-        self.RelatedBtn.frame = CGRectMake(screenW/2+gap+5, reS, screenW/2-2*gap-5, 30);
+        self.RelatedBtn.frame = CGRectMake(screenW*2/3-2*gap, reS, screenW/3+gap, 30);
     }
     
     
@@ -370,7 +373,7 @@
     self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
     CGFloat timeW = screenW - gap * 2;
     CGFloat timeX = screenW - timeW - gap;
-    self.time.frame = CGRectMake(timeX, CGRectGetMaxY(self.sep.frame), timeW, 20);
+    self.time.frame = CGRectMake(timeX, CGRectGetMaxY(self.sep.frame), timeW, 25);
     
     if (self.isHistory) {
       self.cellView.frame = CGRectMake(0, CGRectGetMaxY(self.time.frame), screenW, 15);

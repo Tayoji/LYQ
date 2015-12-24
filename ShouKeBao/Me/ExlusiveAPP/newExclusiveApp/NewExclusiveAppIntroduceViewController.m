@@ -28,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
+@property (weak, nonatomic) IBOutlet UIButton *BackButton;
+@property (weak, nonatomic) IBOutlet UIButton *QuestionButton;
 
 @end
 
@@ -36,6 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.ScrollView.delegate = self;
     if (fourSize) {
      self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+170*KHeight_Scale);
@@ -61,6 +64,21 @@
     view2.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
     view2.layer.borderWidth = 1;
 }
+- (void)setBackButton:(UIButton *)backButton{
+    _BackButton = backButton;
+    self.BackButton.backgroundColor = [UIColor blackColor];
+    self.BackButton.alpha = 0.3;
+    self.BackButton.layer.masksToBounds = YES;
+    self.BackButton.layer.cornerRadius = 3;
+}
+- (void)setQuestionButton:(UIButton *)questionButton{
+    _QuestionButton = questionButton;
+    self.QuestionButton.backgroundColor = [UIColor blackColor];
+    self.QuestionButton.alpha = 0.3;
+    self.QuestionButton.layer.masksToBounds = YES;
+    self.QuestionButton.layer.cornerRadius = 3;
+}
+
 
 
 - (void)didReceiveMemoryWarning {
