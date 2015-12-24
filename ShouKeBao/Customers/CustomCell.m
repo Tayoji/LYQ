@@ -93,6 +93,7 @@ static id _invitationInfo;
     
     //获取消息数， 展示是否有消息未读
     NSUInteger unreaderMessageCount = [[EaseMob sharedInstance].chatManager unreadMessagesCountForConversation:self.model.AppSkbUserId];
+    
     if (unreaderMessageCount) {
         self.redDot.hidden = NO;
     }else{

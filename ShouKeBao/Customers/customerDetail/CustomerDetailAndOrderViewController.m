@@ -148,7 +148,8 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
     
     EditCustomerDetailViewController *edit = [sb instantiateViewControllerWithIdentifier:@"EditCustomer"];
-    edit.ID = self.customerID;
+    edit.ID = _detailVC.customerId;
+    NSLog(@"%@", _detailVC.customerId);
     edit.QQStr = self.detailVC.QQ.text;
     edit.wechatStr = self.detailVC.weChat.text;
     edit.noteStr = self.detailVC.note.text;
@@ -168,14 +169,5 @@
     [self.navigationController pushViewController:edit animated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

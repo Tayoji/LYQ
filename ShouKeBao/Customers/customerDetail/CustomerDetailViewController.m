@@ -247,6 +247,7 @@
         NSLog(@"------管客户详情json is %@",json);
         
          NSDictionary *dic = json[@"Customer"];
+        self.customerId = dic[@"ID"];
         CustomModel *customerDetail = [CustomModel modalWithDict:dic];
         [self.dataArr addObject:customerDetail];
         [self setSubViews];
