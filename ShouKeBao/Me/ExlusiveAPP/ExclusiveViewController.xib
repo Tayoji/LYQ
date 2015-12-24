@@ -112,11 +112,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view contentMode="scaleToFill" id="lFP-rD-dDl">
-                    <rect key="frame" x="0.0" y="429.99999940690913" width="320" height="50.000000593090874"/>
+                    <rect key="frame" x="0.0" y="429.99999930541355" width="320" height="50.000000694586454"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pUg-cQ-Prs">
-                            <rect key="frame" x="80" y="14.000000230646455" width="160" height="22"/>
+                            <rect key="frame" x="80" y="14.000000270116958" width="160" height="22"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>

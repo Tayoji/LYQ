@@ -749,19 +749,23 @@
                 
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
-                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
+                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
+                    
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
                 }else{
 
-                    if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
+                    if ([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
+                        
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
                 newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
-                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]){
+                        
+                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]||[[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+                        
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
                         newExclusiveVC.clientManagerTel = self.clientMagagerTel;
@@ -935,7 +939,7 @@
         self.IsOpenConsultantApp = json[@"IsOpenConsultantApp"];
         NSLog(@"///// %@", self.IsOpenConsultantApp);
 //        self.clientMagagerTel = json[@""];
-
+    
     } failure:^(NSError *error) {
         NSLog(@"接口请求失败 error is %@------",error);
     }];

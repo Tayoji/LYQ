@@ -23,6 +23,8 @@
 - (IBAction)introduceButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *shareBackground;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVew;
+@property (weak, nonatomic) IBOutlet UIImageView *squarenessView;
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *questionButton;
 
@@ -78,20 +80,20 @@
 
 }
 
-- (void)setBackButton:(UIButton *)backButton{
-    _backButton = backButton;
-    self.backButton.backgroundColor = [UIColor blackColor];
-    self.backButton.alpha = 0.3;
-    self.backButton.layer.masksToBounds = YES;
-    self.backButton.layer.cornerRadius = 3;
-}
-- (void)setQuestionButton:(UIButton *)questionButton{
-    _questionButton = questionButton;
-    self.questionButton.backgroundColor = [UIColor blackColor];
-    self.questionButton.alpha = 0.3;
-    self.questionButton.layer.masksToBounds = YES;
-    self.questionButton.layer.cornerRadius = 3;
-}
+//- (void)setBackButton:(UIButton *)backButton{
+//    _backButton = backButton;
+//    self.backButton.backgroundColor = [UIColor blackColor];
+//    self.backButton.alpha = 0.3;
+//    self.backButton.layer.masksToBounds = YES;
+//    self.backButton.layer.cornerRadius = 3;
+//}
+//- (void)setQuestionButton:(UIButton *)questionButton{
+//    _questionButton = questionButton;
+//    self.questionButton.backgroundColor = [UIColor blackColor];
+//    self.questionButton.alpha = 0.3;
+//    self.questionButton.layer.masksToBounds = YES;
+//    self.questionButton.layer.cornerRadius = 3;
+//}
 
 - (void)shareView{
     
@@ -171,5 +173,22 @@
     }else{
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }
+
+    if (offset > 0) {
+        
+//        [self.squarenessView addSubview:self.backButton];
+//        [self.squarenessView addSubview:self.questionButton];
+        self.squarenessView.hidden = NO;
+        self.squarenessView.alpha = offset*0.01;
+        [self.view addSubview:self.backButton];
+        [self.view addSubview:self.questionButton];
+       
+    }else{
+        self.squarenessView.hidden = YES;
+        [self.scrollVew addSubview:self.backButton];
+        [self.scrollVew addSubview:self.questionButton];
+    }
+    
+    
 }
 @end
