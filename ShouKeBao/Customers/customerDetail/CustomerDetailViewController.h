@@ -38,28 +38,28 @@
 
 
 @property (nonatomic, strong)UINavigationController * Nav;
-@property (weak, nonatomic) IBOutlet UILabel *weChat;
-@property (weak, nonatomic) IBOutlet UILabel *QQ;
+@property (weak, nonatomic) IBOutlet UITextField *weChat;
+@property (weak, nonatomic) IBOutlet UITextField *QQ;
 @property (weak, nonatomic) IBOutlet UITextView *note;
 
 //协议传值（删除时使用的属性）
 //@property (nonatomic,copy) NSString *ID;
 //@property (nonatomic, copy)NSString * keyWordss;
 
-@property (weak, nonatomic) IBOutlet UILabel *tele;
+@property (weak, nonatomic) IBOutlet UITextField *tele;
 @property (nonatomic,copy) NSString *weChatStr;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
-@property (weak, nonatomic) IBOutlet UILabel *passPortId;
-@property (weak, nonatomic) IBOutlet UILabel *userMessageID;
+@property (weak, nonatomic) IBOutlet UITextField *passPortId;
+@property (weak, nonatomic) IBOutlet UITextField *userMessageID;
 
-@property (weak, nonatomic) IBOutlet UILabel *bornDay;
+@property (weak, nonatomic) IBOutlet UITextField *bornDay;
 
-@property (weak, nonatomic) IBOutlet UILabel *countryID;
-@property (weak, nonatomic) IBOutlet UILabel *nationalID;
-@property (weak, nonatomic) IBOutlet UILabel *pasportStartDay;
-@property (weak, nonatomic) IBOutlet UILabel *pasportAddress;
-@property (weak, nonatomic) IBOutlet UILabel *pasportInUseDay;
-@property (weak, nonatomic) IBOutlet UILabel *livingAddress;
+@property (weak, nonatomic) IBOutlet UITextField *countryID;
+@property (weak, nonatomic) IBOutlet UITextField *nationalID;
+@property (weak, nonatomic) IBOutlet UITextField *pasportStartDay;
+@property (weak, nonatomic) IBOutlet UITextField *pasportAddress;
+@property (weak, nonatomic) IBOutlet UITextField *pasportInUseDay;
+@property (weak, nonatomic) IBOutlet UITextField *livingAddress;
 - (IBAction)attachmentAction:(id)sender;//附件
 
 //@property (nonatomic,copy) NSString *picUrl;
@@ -85,6 +85,9 @@
 
 - (IBAction)remond:(id)sender;
 - (IBAction)deleteCustomer:(id)sender;
+- (IBAction)callPhone:(UIButton *)sender;
+- (IBAction)jumpWeChat:(UIButton *)sender;
+- (IBAction)jumpQQ:(UIButton *)sender;
 
 
 @end

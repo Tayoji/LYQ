@@ -296,7 +296,7 @@
     }
     CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
-    lab.text = @"您分享出去的内容对外只显示门市价";
+    lab.text = @"分享您的专属APP";
     lab.textColor = [UIColor blackColor];
     lab.textAlignment = NSTextAlignmentCenter;
     lab.font = [UIFont systemFontOfSize:12];
