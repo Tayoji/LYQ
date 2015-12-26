@@ -44,7 +44,7 @@
 #endif
 
         [[EaseMob sharedInstance] registerSDKWithAppKey:@"pipikou#ppkskb"
-                                           apnsCertName:@"lvyouquanpush"
+                                           apnsCertName:@"apsenterprise"
                                             otherConfig:@{kSDKConfigEnableConsoleLogger:@YES}];
     NSUserDefaults * def = [NSUserDefaults standardUserDefaults];
     NSString * APPUserId = [def objectForKey:UserInfoKeyAppUserID];
@@ -192,7 +192,7 @@
 - (void)registerRemoteNotification{
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber = 0;
-
+    
     if([application respondsToSelector:@selector(registerUserNotificationSettings:)])
     {
         UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;

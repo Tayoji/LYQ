@@ -48,7 +48,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *tele;
 @property (nonatomic,copy) NSString *weChatStr;
-@property (weak, nonatomic) IBOutlet UILabel *userName;
+@property (weak, nonatomic) IBOutlet UITextField *userName;
 @property (weak, nonatomic) IBOutlet UITextField *passPortId;
 @property (weak, nonatomic) IBOutlet UITextField *userMessageID;
 

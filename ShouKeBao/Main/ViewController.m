@@ -240,6 +240,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
         int badgeV = [_shoukebaoVC.barButton.badgeValue intValue];
         int unreadMessage = badgeV + 1;
         _shoukebaoVC.barButton.badgeValue = [NSString stringWithFormat:@"%d", unreadMessage];
+        _shoukebaoVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", unreadMessage];
     }
     BOOL needShowNotification = (message.messageType != eMessageTypeChat) ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {

@@ -14,6 +14,8 @@
 #import "EditCustomerDetailViewController.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "MBProgressHUD+MJ.h"
+#import "IWHttpTool.h"
 @interface CustomerDetailAndOrderViewController ()
 @property (nonatomic, weak) UISegmentedControl *segmentControl;
 @property (nonatomic, strong)CustomerOrderViewController * orderVC;
@@ -133,12 +135,14 @@
 }
 -(void)customerRightBarItem
 {
-    self.button = [[UIButton alloc]initWithFrame:CGRectMake(0,0,30,30)];
-    
-    [self.button setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
-    
-    [self.button addTarget:self action:@selector(EditCustomerDetail)forControlEvents:UIControlEventTouchUpInside];
-    
+    self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.button.frame = CGRectMake(0,0,40,30);
+//    [self.button setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
+    [self.button setTitle:@"保存" forState:UIControlStateNormal];
+    self.button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.button addTarget:self action:@selector(saveCustomerDetail)forControlEvents:UIControlEventTouchUpInside];
+    [self.button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:self.button];
     
     self.navigationItem.rightBarButtonItem= barItem;
@@ -169,5 +173,48 @@
     [self.navigationController pushViewController:edit animated:YES];
 }
 
-
+- (void)saveCustomerDetail{
+    MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
+    hudView.labelText = @"保存中...";
+    [hudView show:YES];
+    
+    
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:self.detailVC.userName.text forKey:@"Name"];
+        [dic setObject:self.detailVC.tele.text forKey:@"Mobile"];
+        [dic setObject:self.detailVC.weChat.text forKey:@"WeiXinCode"];
+        [dic setObject:self.detailVC.QQ.text forKey:@"QQCode"];
+        [dic setObject:self.detailVC.note.text forKey:@"Remark"];
+        [dic setObject:_detailVC.customerId forKey:@"ID"];
+        
+        //        新添加的内容
+        [dic setObject:self.detailVC.userMessageID.text forKey:@"CardNum"];
+        [dic setObject:self.detailVC.bornDay.text forKey:@"BirthDay"];
+        [dic setObject:self.detailVC.countryID.text forKey:@"Nationality"];
+        [dic setObject:self.detailVC.nationalID.text forKey:@"Country"];
+        [dic setObject:self.detailVC.pasportStartDay.text forKey:@"ValidStartDate"];
+        [dic setObject:self.detailVC.pasportAddress.text forKey:@"ValidAddress"];
+        [dic setObject:self.detailVC.pasportInUseDay.text forKey:@"ValidEndDate"];
+        [dic setObject:self.detailVC.livingAddress.text forKey:@"Address"];
+        [dic setObject:self.detailVC.passPortId.text forKey:@"PassportNum"];
+    
+        NSMutableDictionary *secondDic = [NSMutableDictionary dictionary];
+        [secondDic setObject:dic forKey:@"Customer"];
+        
+        [IWHttpTool WMpostWithURL:@"Customer/EditCustomer" params:secondDic success:^(id json) {
+            NSLog(@"---- b编辑单个客户成功 %@------",json);
+            if ( [[NSString stringWithFormat:@"%@",json[@"IsSuccess"]]isEqualToString:@"0"]) {
+                UIAlertView * aler = [[UIAlertView alloc]initWithTitle:@"提示" message:json[@"ErrorMsg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [aler show];
+            }
+            NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+            hudView.labelText = @"保存成功...";
+            [center postNotificationName:@"refreashCustom" object:@"开心" userInfo:nil];
+            
+            [hudView hide:YES afterDelay:0.4];
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(NSError *error) {
+            NSLog(@"-----创建单个客户失败 %@-----",error);
+        }];
+}
 @end
