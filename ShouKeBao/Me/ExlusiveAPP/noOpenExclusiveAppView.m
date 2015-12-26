@@ -53,7 +53,7 @@ static id _shareView;
     
     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(40*KWidth_Scale, /*CGRectGetMaxY(titleLabel.frame)*/15, shareView.frame.size.width-80*KWidth_Scale, 50*KHeight)];
 //    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App";
-    contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额，赶紧抢！";
+    contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额！";
     contentLabel.numberOfLines = 0;
     contentLabel.textColor = [UIColor grayColor];
     contentLabel.textAlignment = NSTextAlignmentCenter;

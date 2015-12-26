@@ -37,7 +37,8 @@
 #import "EaseMob.h"
 #define pageSize 10
 #import "NSString+FKTools.h"
-
+#import "UserInfo.h"
+#import "NewExclusiveAppIntroduceViewController.h"
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
 @interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh, MFMessageComposeViewControllerDelegate>
 
@@ -96,6 +97,9 @@
 @property (nonatomic, strong)UIButton *titleBtn;
 @property (nonatomic, strong)UIImageView *pointDownImage;
 
+@property (strong, nonatomic) IBOutlet UILabel *alertLabel;
+@property (strong, nonatomic) IBOutlet UIButton *rightBtn;
+
 @property (weak, nonatomic) IBOutlet UIView *Tip_InviteView;
 - (IBAction)inviteCancleBtn:(id)sender;
 - (IBAction)inviteCustomerBtn:(id)sender;
@@ -139,7 +143,7 @@
     
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(receiveNotification:) name:@"下班" object:nil];
+    [center addObserver:self selector:@selector(receiveNotification:) name:@"refreashCustom" object:nil];
     [center addObserver:self selector:@selector(getNotifiList) name:@"reciveNewMessage" object:nil];
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
@@ -150,7 +154,15 @@
 - (void)tipInviteViewShow:(NSString *)telStr{
     self.Tip_InviteView.layer.masksToBounds = YES;
     self.Tip_InviteView.layer.cornerRadius = 5;
-  
+  //未开通
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+        self.alertLabel.text = @"您还未开通专属APP，暂时无法使用客户通讯功能";
+        [self.rightBtn setTitle:@"申请开通" forState:UIControlStateNormal];
+    }else{//开通
+        self.alertLabel.text = @"TA还未绑定您的专属APP，赶快邀请TA来绑定吧!";
+        [self.rightBtn setTitle:@"邀请" forState:UIControlStateNormal];
+    }
+    
     self.Tip_InviteView.hidden = NO;
     self.shadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _shadeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
@@ -179,7 +191,8 @@
     [self loadDataSource];
 }
 - (void)receiveNotification:(NSNotification *)noti{
-    [self initPull];
+//    [self initPull];
+    [self headPull];
 }
 -(void)toRefereshCustomers{
 //    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
@@ -1098,15 +1111,22 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
     
-    if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
-        MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
-        MFMessageVC.body = _InvitationInfo;
-        MFMessageVC.recipients = @[self.telStr];
-        MFMessageVC.messageComposeDelegate = self;
-        [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+    if ([self.rightBtn.titleLabel.text isEqualToString:@"邀请"]) {
+        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+            MFMessageVC.body = _InvitationInfo;
+            MFMessageVC.recipients = @[self.telStr];
+            MFMessageVC.messageComposeDelegate = self;
+            [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+    }else if ([self.rightBtn.titleLabel.text isEqualToString:@"申请开通"]){
+        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+        newExclusiveVC.naVC = self.navigationController;
+//        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
+        [self.navigationController pushViewController:newExclusiveVC animated:YES];
     }
     
 }
