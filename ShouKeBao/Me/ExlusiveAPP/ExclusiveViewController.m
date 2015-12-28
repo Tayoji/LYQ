@@ -478,7 +478,9 @@
     CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
     WRCodeVC.CircleUrl = self.QRCodeAddress;
     WRCodeVC.formType = @"QRCodeAddress";
-    [self.navigationController pushViewController:WRCodeVC animated:YES];
+    if (self.QRCodeAddress) {
+        [self.navigationController pushViewController:WRCodeVC animated:YES];
+    }
 }
 
 - (IBAction)shareButton:(id)sender {

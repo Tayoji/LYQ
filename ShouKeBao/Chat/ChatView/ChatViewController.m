@@ -242,7 +242,6 @@
     
     //如果本地没有
 //    if (![[LocationSeting defaultLocationSeting] getCustomInfoWithID:self.chatter]) {
-        [self getCustomIconAndNickNameWithChatter:self.chatter];
 //    }
     if (_conversationType == eConversationTypeChatRoom)
     {
@@ -328,7 +327,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self getCustomIconAndNickNameWithChatter:self.chatter];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isShowPicker"];
     if (_isScrollToBottom) {
         [self scrollViewToBottom:NO];

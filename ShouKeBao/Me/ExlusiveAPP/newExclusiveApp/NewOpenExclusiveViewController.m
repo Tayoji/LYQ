@@ -101,7 +101,8 @@
     NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:self.ConsultanShareInfo];
     //    ProductModal *model = _dataArr[0];
     //    NSDictionary *temp = [StrToDic dicCleanSpaceWithDict:model.ShareInfo];
-    
+    // NSDictionary *  tmp = @{@"Desc":@"aa", @"Pic":@"http://r.lvyouquan.cn/ppkImageCombo.aspx?w=120&f=http%3a%2f%2fr.lvyouquan.cn%2fKEPicFolder%2fdefault%2fattached%2fimage%2f20141031%2f20141031171258_5481.jpg",@"Title":@"dassda", @"Url":@"http://skb.lvyouquan.cn/mg/53af38b41b3440af83e2b4de5cfd094c/113d033a35a94e35b2b62527bc4208c4/Product/e74d6f2dea8444e09c214b5ad61f9771?source=share_app&viewsource=1&isshareapp=1&apptype=1&version=1.4.0.0&appuid=bdc45124fa474c7889414b55449e573e&substation=10"};
+
     //构造分享内容
     id<ISSContent>publishContent = [ShareSDK content:tmp[@"Desc"]
                                       defaultContent:tmp[@"Desc"]
