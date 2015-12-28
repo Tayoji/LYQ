@@ -115,7 +115,8 @@
         }
         
     }
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
+
     //获取版本信息
     NSDictionary * dic = @{};
     [MeHttpTool inspectionWithParam:dic success:^(id json) {
@@ -628,9 +629,9 @@
                if (kScreenSize.width == 320) {
                    shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/3-10, 0, 100, 50)];
                }else if (kScreenSize.width == 375) {
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
                }else{
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
                }
                 NSLog(@"...%f", [UIScreen mainScreen].bounds.size.width);
                
@@ -1130,6 +1131,27 @@
     
     
 }
+-(void)pushWithBackGroundMe:(NSNotification *)noti{
+    NSString * type = noti.object;
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+    if ([type isEqualToString:@"openAppVip"]) {
+        NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+        newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
+        newOpenVC.naVC = self.navigationController;
+        [self.navigationController pushViewController:newOpenVC animated:YES];
+    }else if([type isEqualToString:@"openAppUnVip"]){
+        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+        newExclusiveVC.naVC = self.navigationController;
+        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
+        [self.navigationController pushViewController:newExclusiveVC animated:YES];
+    }
+    //pipikou://type=openAppUnVip
+
+
+
+}
+
+
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
     
     

@@ -406,7 +406,7 @@
             [self Guide];
         }
     }else{
-        [guiDefault removeObjectForKey:@"NewMeGuide"];
+//        [guiDefault removeObjectForKey:@"NewMeGuide"];
         [guiDefault removeObjectForKey:@"jumpToZSApp"];
         NSString *SKBGuide = [guiDefault objectForKey:@"SKBExclusiveaAppGuide"];
         if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
@@ -1024,7 +1024,11 @@
             self.barButton.badgeValue = [NSString stringWithFormat:@"%ld",count];
             UIApplication *application = [UIApplication sharedApplication];
             application.applicationIconBadgeNumber = count;
-
+            if (count) {
+                self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%ld", count];
+            }else{
+                self.tabBarItem.badgeValue = nil;
+            }
         }
     } failure:^(NSError *eror) {
     }];

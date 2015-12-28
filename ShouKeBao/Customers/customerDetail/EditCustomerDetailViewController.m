@@ -325,7 +325,7 @@
             
             //    CustomModel *model = [[CustomModel alloc]initWithDict:dic];
             hudView.labelText = @"保存成功...";
-            [center postNotificationName:@"下班" object:@"开心" userInfo:nil];
+            [center postNotificationName:@"refreashCustom" object:@"开心" userInfo:nil];
             
             [hudView hide:YES afterDelay:0.4];
         [self.navigationController popViewControllerAnimated:YES];

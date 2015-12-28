@@ -246,7 +246,7 @@
     self.primaryNu = noti.object;
     NSLog(@"%@",noti.object);
     self.conditionDic = (NSMutableDictionary *)noti.userInfo;
-    NSLog(@"%@",self.conditionDic);
+    NSLog(@"%@adsc",self.conditionDic);
     //NSLog(@"%@",self.primaryNu);
     [self initPull];
     

@@ -49,7 +49,7 @@
     self.TimeLabel.text = model.CreateTimeText;
     
     //设置webView样式
-    NSString *webviewText = @"<style>body{margin:0;background-color:transparent;font:14px/18px Custom-Font-Name}a:link { color: #507daf;text-decoration:none; } a:visited { color: #507daf;text-decoration:none; } a:hover { color: #507daf;text-decoration:none; } a:active { color: #507daf; text-decoration:none;}</style>";
+    NSString *webviewText = @"<style>body { margin: 0; background-color: transparent; font: 14px/18px Custom-Font-Name; }a:link { color: #000000; text-decoration: none; }a:visited { color: #000000; text-decoration: none; }a:hover { color: #000000; text-decoration: none; }a:active { color: #507daf; text-decoration: none; }.uname {color: #507daf; }.keyword {color: #ff0000; }</style>";
     NSString *htmlString = [webviewText stringByAppendingFormat:@"%@", self.model.DynamicTitle];
     [self.WebStr loadHTMLString:htmlString baseURL:nil]; //在 WebView 中显示本地的字符串
     

@@ -602,6 +602,8 @@
 		79D8D8211B2ACF2900AE4464 /* BeseWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D8201B2ACF2900AE4464 /* BeseWebView.m */; };
 		79DBC0311BFDED35008D6731 /* ProductDetailWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBC02E1BFDED35008D6731 /* ProductDetailWebView.m */; };
 		79DBC0321BFDED35008D6731 /* ProductListWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBC0301BFDED35008D6731 /* ProductListWebView.m */; };
+		79DF08B91C2E8F2700EB8FBA /* IMTopHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */; };
+		79DF08BA1C2E8F2700EB8FBA /* IMTopHeader@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */; };
 		79EE91681B2BCDE2008C8935 /* TimeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EE91671B2BCDE2008C8935 /* TimeTool.m */; };
 		79FB115E1BD7310B00819FB2 /* UpDateUserPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB115D1BD7310B00819FB2 /* UpDateUserPictureViewController.m */; };
 		79FB11601BD7324100819FB2 /* Orders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79FB115F1BD7324100819FB2 /* Orders.storyboard */; };
@@ -1791,6 +1793,8 @@
 		79DBC02E1BFDED35008D6731 /* ProductDetailWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailWebView.m; sourceTree = "<group>"; };
 		79DBC02F1BFDED35008D6731 /* ProductListWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListWebView.h; sourceTree = "<group>"; };
 		79DBC0301BFDED35008D6731 /* ProductListWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListWebView.m; sourceTree = "<group>"; };
+		79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@2x.png"; sourceTree = "<group>"; };
+		79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@3x.png"; sourceTree = "<group>"; };
 		79EE91661B2BCDE2008C8935 /* TimeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTool.h; sourceTree = "<group>"; };
 		79EE91671B2BCDE2008C8935 /* TimeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTool.m; sourceTree = "<group>"; };
 		79FB115C1BD7310B00819FB2 /* UpDateUserPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpDateUserPictureViewController.h; sourceTree = "<group>"; };
@@ -3779,6 +3783,8 @@
 		796EFC1E1BF5C67D00799120 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */,
+				79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */,
 				796EFC1F1BF5C67D00799120 /* audio */,
 				796EFC501BF5C67D00799120 /* call_out.png */,
 				796EFC511BF5C67D00799120 /* call_out@2x.png */,
@@ -5146,6 +5152,7 @@
 				796EFD3B1BF5C67D00799120 /* chatBar_more_location@2x.png in Resources */,
 				796EFCF91BF5C67D00799120 /* call_out_h@2x.png in Resources */,
 				B36B6BAC1C17D7B8002C89E2 /* NewOpenExclusiveViewController.xib in Resources */,
+				79DF08B91C2E8F2700EB8FBA /* IMTopHeader@2x.png in Resources */,
 				796EFCC41BF5C67D00799120 /* chatListCellHead.png in Resources */,
 				796EFCFB1BF5C67D00799120 /* call_silence@2x.png in Resources */,
 				796EFCE11BF5C67D00799120 /* VoiceSearchFeedback010@2x.png in Resources */,
@@ -5168,6 +5175,7 @@
 				796EFD211BF5C67D00799120 /* chatBar_moreSelected@2x.png in Resources */,
 				796EFD0E1BF5C67D00799120 /* chat_location_detail_disclosureHL.png in Resources */,
 				B3C01E2C1BAC10FC005E4BB5 /* Me.storyboard in Resources */,
+				79DF08BA1C2E8F2700EB8FBA /* IMTopHeader@3x.png in Resources */,
 				796EFCDC1BF5C67D00799120 /* VoiceSearchFeedback008.png in Resources */,
 				796EFCF71BF5C67D00799120 /* call_out@2x.png in Resources */,
 				796EFCD51BF5C67D00799120 /* VoiceSearchFeedback004@2x.png in Resources */,
@@ -5786,7 +5794,7 @@
 		63D31E621AB143D00043B3CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Pipikou Network Technology Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Pipikou Network Technology Co., Ltd.";
@@ -5832,7 +5840,7 @@
 		63D31E631AB143D00043B3CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Pipikou Network Technology Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Pipikou Network Technology Co., Ltd.";
