@@ -61,7 +61,7 @@
 
 
     //加载动画
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:0.6 animations:^{
         yuandian.frame = CGRectMake([UIScreen mainScreen].bounds.size.width*3/4, -4, 10, 10);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{

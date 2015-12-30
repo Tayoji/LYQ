@@ -216,19 +216,29 @@ static id _naVC;
     [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
         NSLog(@"..... %@", publishContent);
-        
+
         if (state == SSResponseStateSuccess){
             
+            NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+            [postDic setObject:@"0" forKey:@"ShareType"];
+            if (_Url) {
+                [postDic setObject:_Url  forKey:@"ShareUrl"];
+            }
+            [postDic setObject:_Url forKey:@"PageUrl"];
             if (type ==ShareTypeWeixiSession) {
-
+                [postDic setObject:@"1" forKey:@"ShareWay"];
             }else if(type == ShareTypeQQ){
-
+                [postDic setObject:@"2" forKey:@"ShareWay"];
             }else if(type == ShareTypeQQSpace){
-
+                [postDic setObject:@"3" forKey:@"ShareWay"];
             }else if(type == ShareTypeWeixiTimeline){
-
+                [postDic setObject:@"4" forKey:@"ShareWay"];
             }
             
+            [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+            } failure:^(NSError *error) {
+                
+            }];
             NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
             if (type == ShareTypeCopy) {
                 [MBProgressHUD showSuccess:@"复制成功"];

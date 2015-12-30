@@ -262,7 +262,9 @@
     circleHotVC.title = @"圈热点";
     circleHotVC.CircleUrl = self.CircleUrl;
     circleHotVC.m = 1;
-    [self.navigationController pushViewController:circleHotVC animated:YES];
+    if (self.CircleUrl) {
+        [self.navigationController pushViewController:circleHotVC animated:YES];
+    }
 }
 - (void)CarouselNews{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickCarouselSCAction:)];
@@ -1553,8 +1555,9 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ShouKeBaoStore" attributes:dict];
 
-    
-      [self.navigationController pushViewController:store animated:YES];
+    if (store.PushUrl) {
+        [self.navigationController pushViewController:store animated:YES];
+    }
 }
 -(void)pushToStoreFromButton
 {
@@ -1564,8 +1567,9 @@
     [MobClick event:@"ShouKeBaoStore" attributes:dict];
 
     store.needOpenShare = YES;
-   
-    [self.navigationController pushViewController:store animated:YES];
+    if (store.PushUrl) {
+        [self.navigationController pushViewController:store animated:YES];
+    }
 }
 - (void)changeStation{
    
@@ -2008,9 +2012,9 @@
         themeDetailVC.title = double12.FirstTitle;
         themeDetailVC.CircleUrl = double12.LinkUrl;
 //        NSLog(@"....%@....___ %@", self.dataSource, double12.LinkUrl);
-        
-        [self.navigationController pushViewController:themeDetailVC animated:YES];
-        
+        if (double12.LinkUrl) {
+            [self.navigationController pushViewController:themeDetailVC animated:YES];
+        }
     }else{//客户提醒
         remondModel *r = model.model;
         RemindDetailViewController *remondDetail = [[RemindDetailViewController alloc] init];

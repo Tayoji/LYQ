@@ -356,8 +356,8 @@
     }else{
         NormalCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"NormalCollectionCell" forIndexPath:indexPath];
         rightModal2 * model = self.NomalDataArray[indexPath.section];
+#warning 错误
         cell.subTatilLab.text = model.subNameArray[indexPath.row];
-        [WMAnimations WMAnimationMakeBoarderWithLayer:cell.subTatilLab.layer andBorderColor:Color(0xdd, 0xdd, 0xdd) andBorderWidth:0.5 andNeedShadow:NO andCornerRadius:2];
         return cell;
     }
 }
@@ -428,7 +428,7 @@
         rightModal *model =  self.hottDataArray[indexPath.section][indexPath.row];
         NSString *productUrl = model.productUrl;
         detail.produceUrl = productUrl;
-        detail.shareInfo = model.ShareInfo;
+        detail.shareInfo = [model.ShareInfo mutableCopy];
         NSLog(@"%@.... %@", model.ShareInfo, productUrl);
         detail.fromType = FromHotProduct;
         //判断下个页面能否有关闭按钮
