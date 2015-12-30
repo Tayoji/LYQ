@@ -26,8 +26,8 @@
     _switch3 = (UISwitch *)[self.view viewWithTag:33];
     // Do any additional setup after loading the view from its nib.
     self.title = @"新消息通知";
-    UIUserNotificationSettings *mySet =[[UIApplication sharedApplication] currentUserNotificationSettings];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationSettings *mySet =[[UIApplication sharedApplication] currentUserNotificationSettings];
         if (mySet.types == UIRemoteNotificationTypeNone) {
             self.NewsState.text = @" 已关闭";
         }else{
