@@ -36,7 +36,14 @@
     
     // Do any additional setup after loading the view.
     self.tableView.rowHeight = 160;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    if (self.listType == previewType) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
+    
+    
     self.tableView.tableFooterView = [[UIView alloc] init];
 //    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
 //
@@ -262,8 +269,10 @@
         CGRect frame = button.frame;
         if (self.listType == previewType) {
             frame.size.height = 160;
+        }else{
+            frame.size.height = 120;
         }
-        frame.size.height = 120;
+        
         frame.size.width = i == 1 ? 140 : 42;
         button.frame = frame;
         if (i == 1) {

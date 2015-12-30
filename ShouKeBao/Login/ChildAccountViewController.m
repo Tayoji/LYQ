@@ -143,9 +143,9 @@
         [cell.iconView sd_setImageWithURL:[NSURL URLWithString:dis.icon] placeholderImage:[UIImage imageNamed:@"bigIcon"]];
         cell.nameLab.text = dis.name;
         NSLog(@"$$$$%@", dis.IsOpenConsultantApp);
-        if (indexPath.row != 0) {
+//        if (indexPath.row != 0) {
             cell.VIPIsOpen.hidden = ![dis.IsOpenConsultantApp integerValue];
-        }
+//        }
         cell.textLabel.textColor = [UIColor blackColor];
     }else{
         cell.imageView.image = [UIImage imageNamed:@"jia"];
@@ -190,7 +190,9 @@
             [def setObject:ConsultantInfoDic[@"SkbMobile"] forKey:UserInfoKeyLYGWPhoneNum];//电话
             NSString *IsLYGWStr = json[@"IsOpenConsultantApp"];
             NSLog(@"%@",IsLYGWStr);
+            
             [def setObject:IsLYGWStr forKey:UserInfoKeyLYGWIsOpenVIP];
+            
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:UserInfoKeyIsShowQuanTouTiao];
 
             [def synchronize];

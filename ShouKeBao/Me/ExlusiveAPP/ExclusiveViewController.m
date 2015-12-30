@@ -20,7 +20,8 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "NewOpenExclusiveViewController.h"
-#import "WhatIsExclusiveViewController.h"
+//#import "WhatIsExclusiveViewController.h"
+#import "CircleHotNewsViewController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -73,8 +74,9 @@
      [MobClick beginLogPageView:@"Me_ExclusiveViewController"];
      self.navigationController.navigationBarHidden = YES;
     
-   // [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"xiaotu"] forBarMetrics:UIBarMetricsDefault];
-   // self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"QRredDot_QRCode"]){
+        _redDot.hidden = YES;
+    }
      [self.view addSubview:self.returnBtn];
      [self.view addSubview:self.titleL];
      [self.view addSubview:self.shareBtn];
@@ -87,14 +89,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+     self.view.backgroundColor = [UIColor colorWithRed:204/225.0f green:204/225.0f blue:204/225.0f alpha:1];
     
     [self loadExclusiveAppData];
     [self redDot];
-    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"redDot_QRCode"]){
-         [self.QRCodeImage addSubview:_redDot];
-    }
-   
-//    [self setRightShareBarItem];
+    
+    [self.QRCodeImage addSubview:_redDot];
+    
+//    if (![[NSUserDefaults standardUserDefaults]boolForKey:@"redDot_QRCodes"]){
+//        _redDot.hidden = YES;
+//    }
 
     [self setHeaderImageView];
     [self setQRCodeImage];
@@ -154,15 +158,7 @@
     [self.guideImageView removeFromSuperview];
     
 }
-- (void)clickCustomerLableToComeInCustomer:(UITapGestureRecognizer *)tap{
-    Customers *customerVC = [[Customers alloc]init];
-//    customerVC.naV = self.naV;
-//    customerVC.naV.navigationBarHidden = NO;
-    customerVC.customerType = 2;
-    customerVC.isMe = 1;
-    [self.navigationController pushViewController:customerVC animated:YES];
-    
-}
+
 
 #pragma mark - tableView-delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -190,6 +186,9 @@
             NSLog(@"------专属App的json is %@-------",json);
             
             self.QRCodeAddress = json[@"QRCodeAddress"];
+            if (self.ConsultanShareInfo.count == 0) {
+                [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+            }
             
             self.IsBinding = json[@"IsBinding"];
             [self setHeaderWith:json[@"AdvisorRank"]];
@@ -202,13 +201,13 @@
         }];
 }
 
-- (void)loadIsOpenAppDataThree{
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
-        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
-    } failure:^(NSError *error) {
-    }];
-}
+//- (void)loadIsOpenAppDataThree{
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
+//        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+//    } failure:^(NSError *error) {
+//    }];
+//}
 
 
 - (void)setCustomerCount:(UILabel *)customerCount str:(NSString *)string{
@@ -231,17 +230,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(pushQRCodeVC)];
         [self.tapView addGestureRecognizer:tap];
     
-}
-
-
-- (void)pushQRCodeVC{
-    
-     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"redDot_QRCode"];
-    WhatIsExclusiveViewController *WRCodeVC = [[WhatIsExclusiveViewController alloc]init];
-    WRCodeVC.url = self.QRCodeAddress;
-    WRCodeVC.formType = @"QRCodeAddress";
-    WRCodeVC.naV = self.navigationController;
-    [self.navigationController pushViewController:WRCodeVC animated:YES];
 }
 
 - (void)setHeaderWith:(NSString *)rank{
@@ -296,15 +284,7 @@
     [self.HeadImageViewSet addSubview:self.tapView];
     
 }
--(UIView *)redDot{
-    if (!_redDot) {
-        _redDot = [[UIView alloc]initWithFrame:CGRectMake(22, -2, 6, 6)];
-        _redDot.backgroundColor = [UIColor redColor];
-        _redDot.layer.cornerRadius = 3.0;
-        _redDot.layer.masksToBounds = YES;
-    }
-    return _redDot;
-}
+
 
 -(void)shareAction:(UIButton *)button{
     if (button.tag == 1011) {
@@ -313,8 +293,6 @@
     }
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_exclusiveAppShareBtnClick" attributes:dict];
-    
-    
     
     NSLog(@"____nnn  self.shareInfo = %@", self.ConsultanShareInfo);
     id<ISSContent> publishContent = [ShareSDK content:self.ConsultanShareInfo[@"Desc"]
@@ -345,10 +323,7 @@
                                 {
                                     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
                                     [MobClick event:@"Me_exclusiveAppShareScccessCount" attributes:dict];
-                                    
-                                    
-                                    
-                                    
+
                                     NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
                                     [postDic setObject:@"0" forKey:@"ShareType"];
                                     if (self.ConsultanShareInfo[@"Url"]) {
@@ -416,6 +391,16 @@
     
 }
 
+#pragma mark - 初始化
+-(UIView *)redDot{
+    if (!_redDot) {
+        _redDot = [[UIView alloc]initWithFrame:CGRectMake(22, -2, 6, 6)];
+        _redDot.backgroundColor = [UIColor redColor];
+        _redDot.layer.cornerRadius = 3.0;
+        _redDot.layer.masksToBounds = YES;
+    }
+    return _redDot;
+}
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {
         self.dataArray = [NSMutableArray array];
@@ -428,6 +413,12 @@
     }
     return _ConsultanShareInfo;
 }
+//- (NSMutableDictionary *)ConsultanShareInfoApp{
+//    if (!_ConsultanShareInfoApp) {
+//        _ConsultanShareInfoApp = [NSMutableDictionary dictionary];
+//    }
+//    return _ConsultanShareInfoApp;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -444,6 +435,7 @@
 }
 */
 
+#pragma mark - 点击事件
 - (IBAction)touchExclusiveAppButton:(id)sender {
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -472,10 +464,29 @@
     [self back];
 }
 
-- (IBAction)shareButton:(id)sender {
-    if ([self.ConsultanShareInfo count] == 0) {
-        [self loadIsOpenAppDataThree];
+- (void)clickCustomerLableToComeInCustomer:(UITapGestureRecognizer *)tap{
+    Customers *customerVC = [[Customers alloc]init];
+    customerVC.customerType = 2;
+    customerVC.isMe = 1;
+    [self.navigationController pushViewController:customerVC animated:YES];
+    
+}
+- (void)pushQRCodeVC{
+//    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//    [MobClick event:@"Me_exclusiveAppDataQR" attributes:dict];
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"QRredDot_QRCode"];
+    CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
+    WRCodeVC.CircleUrl = self.QRCodeAddress;
+    WRCodeVC.formType = @"QRCodeAddress";
+    if (self.QRCodeAddress) {
+        [self.navigationController pushViewController:WRCodeVC animated:YES];
     }
+}
+
+- (IBAction)shareButton:(id)sender {
+//    if ([self.ConsultanShareInfo count] == 0) {
+//        [self loadIsOpenAppDataThree];
+//    }
      [self shareAction:sender];
 }
 @end

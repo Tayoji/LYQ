@@ -57,6 +57,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
    
+    if ([self.formType isEqualToString:@"QRCodeAddress"]) {
+        self.title = @"我的店铺二维码";
+    }
     [self setshareBarItem];
     [self deadWork];
     
@@ -159,7 +162,6 @@
                 [self.shareArr addObject:json[@"ShareInfo"]];
             }
         } failure:^(NSError *error){
-            
             NSLog(@"分享请求数据失败，原因：%@",error);
         }];
    
@@ -294,7 +296,7 @@
     }
     CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
     UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
-    lab.text = @"您分享出去的内容对外只显示门市价";
+    lab.text = @"分享您的专属APP";
     lab.textColor = [UIColor blackColor];
     lab.textAlignment = NSTextAlignmentCenter;
     lab.font = [UIFont systemFontOfSize:12];
@@ -318,6 +320,10 @@
     self.navigationItem.rightBarButtonItem = shareBarItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

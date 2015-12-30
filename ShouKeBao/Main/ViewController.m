@@ -235,17 +235,17 @@ static NSString *kConversationChatter = @"ConversationChatter";
 {
     NSLog(@"%@", _customers);
     if (_customers) {
-        [_customers.table reloadData];
         [self customerInformationCenterTimePrompt];
     }
     if (_shoukebaoVC) {
         int badgeV = [_shoukebaoVC.barButton.badgeValue intValue];
         int unreadMessage = badgeV + 1;
         _shoukebaoVC.barButton.badgeValue = [NSString stringWithFormat:@"%d", unreadMessage];
+        _shoukebaoVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", unreadMessage];
     }
     BOOL needShowNotification = (message.messageType != eMessageTypeChat) ? [self needShowNotification:message.conversationChatter] : YES;
     if (needShowNotification) {
-        //#if !TARGET_IPHONE_SIMULATOR
+//        #if !TARGET_IPHONE_SIMULATOR
         
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
         if (!isAppActivity) {
@@ -253,7 +253,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
         }else {
             [self playSoundAndVibration];
         }
-        //#endif
+//        #endif
     }
 }
 
@@ -340,18 +340,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
                     break;
                 }
             }
-        }
-        else if (message.messageType == eMessageTypeChatRoom)
-        {
-            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            NSString *key = [NSString stringWithFormat:@"OnceJoinedChatrooms_%@", [[[EaseMob sharedInstance].chatManager loginInfo] objectForKey:@"username" ]];
-            NSMutableDictionary *chatrooms = [NSMutableDictionary dictionaryWithDictionary:[ud objectForKey:key]];
-            NSString *chatroomName = [chatrooms objectForKey:message.conversationChatter];
-            if (chatroomName)
-            {
-                title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, chatroomName];
-            }
-            
         }
         if ([[LocationSeting defaultLocationSeting]getCustomInfoWithID:message.from]) {
             title =  [[LocationSeting defaultLocationSeting]getCustomInfoWithID:message.from][@"nickName"];

@@ -140,18 +140,25 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:
-            {
-                if (self.tele.text.length > 6) {
-                    [[[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"是否要拨打电话%@", self.tele.text] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil]show];
-                }else{
-                    [[[UIAlertView alloc]initWithTitle:@"提示" message:@"电话号码不正确" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil]show];
-                }
-            }
-                break;
-            case 1:
+    UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+    for (UIView * subView in cell.contentView.subviews) {
+        if ([subView isKindOfClass:[UITextField  class]]) {
+            [subView becomeFirstResponder];
+        }
+    }
+    
+//    if (indexPath.section == 0) {
+//        switch (indexPath.row) {
+//            case 0:
+//            {
+//                if (self.tele.text.length > 6) {
+//                    [[[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"是否要拨打电话%@", self.tele.text] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil]show];
+//                }else{
+//                    [[[UIAlertView alloc]initWithTitle:@"提示" message:@"电话号码不正确" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil]show];
+//                }
+//            }
+//                break;
+//            case 1:
 //            {
 //                if ([self.weChat.text isEqualToString:@""]) {
 //                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信号码为空！" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -162,13 +169,13 @@
 //                }else if([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"weixin://"]] && ![self.weChat.text isEqualToString:@""]){
 //                    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"weixin://"]];
 //                }
-//                
+//
 ////                if ([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"weixin://"]] && ![self.weChat.text isEqualToString:@""]) {
 ////                    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"weixin://"]];
 ////                }
 //            }
-                break;
-            case 2:
+//                break;
+//            case 2:
 //            {
 //                if ([self.QQ.text isEqualToString:@""]) {
 //                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"QQ号码为空!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -179,19 +186,19 @@
 //                        [ale show];
 //                    }
 //                }
-//                
+//
 ////                
 ////                if (![self joinGroup:nil key:nil] && ![self.QQ.text isEqualToString:@""]) {
 ////                    UIAlertView *ale = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您没有安装手机QQ，请安装手机QQ后重试，或用PC进行操作。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 ////                    [ale show];
 ////                }
 //            }
-                break;
-
-            default:
-                break;
-        }
-    }
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
 
 }
 
@@ -247,6 +254,7 @@
         NSLog(@"------管客户详情json is %@",json);
         
          NSDictionary *dic = json[@"Customer"];
+        self.customerId = dic[@"ID"];
         CustomModel *customerDetail = [CustomModel modalWithDict:dic];
         [self.dataArr addObject:customerDetail];
         [self setSubViews];
@@ -277,4 +285,36 @@
     self.livingAddress.text = [self.dataArr[0]Address];
 }
 
+- (IBAction)callPhone:(UIButton *)sender {
+    if (self.tele.text.length > 6) {
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:[NSString stringWithFormat:@"是否要拨打电话%@", self.tele.text] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil]show];
+    }else{
+        [[[UIAlertView alloc]initWithTitle:@"提示" message:@"电话号码不正确" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil]show];
+    }
+}
+
+- (IBAction)jumpWeChat:(UIButton *)sender {
+    if ([self.weChat.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"微信号码为空！" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }else if(![self.weChat.text isEqualToString:@""] && ![[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"weixin://"]]){
+        UIAlertView*ale=[[UIAlertView alloc] initWithTitle:@"提示" message:@"您没有安装手机微信，请安装手机微信后重试，或用PC进行操作。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [ale show];
+    }else if([[UIApplication sharedApplication]canOpenURL:[NSURL URLWithString:@"weixin://"]] && ![self.weChat.text isEqualToString:@""]){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"weixin://"]];
+    }
+
+}
+
+- (IBAction)jumpQQ:(UIButton *)sender {
+    if ([self.QQ.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"QQ号码为空!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }else{
+        if (![self joinGroup:nil key:nil]) {
+            UIAlertView *ale = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您没有安装手机QQ，请安装手机QQ后重试，或用PC进行操作。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [ale show];
+        }
+    }
+}
 @end

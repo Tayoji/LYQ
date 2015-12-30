@@ -29,10 +29,14 @@ static id _shareView;
     
     NSLog(@"%f", kScreenHeight);
     //  自定义弹出的分享view
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
-    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
+    UIImageView *shareView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, kScreenWidth-20, 150)];
+    shareView.image = [UIImage imageNamed:@"core"];
+//    shareView.backgroundColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1];
     shareView.tag = 441;
+//    shareView.layer.masksToBounds = YES;
+//    shareView.layer.cornerRadius = 5;
     [backgroundShareView addSubview:shareView];
+    shareView.userInteractionEnabled = YES;
     _shareView = shareView;
     
    // UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, -10, shareView.frame.size.width-180, 25*KHeight)];
@@ -49,7 +53,7 @@ static id _shareView;
     
     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(40*KWidth_Scale, /*CGRectGetMaxY(titleLabel.frame)*/15, shareView.frame.size.width-80*KWidth_Scale, 50*KHeight)];
 //    contentLabel.text = @"非常简单，让尽可能多的客人，安装您的专属App";
-    contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额，赶紧抢！";
+    contentLabel.text = @"未达到等级的顾问联系客户经理获取限量名额！";
     contentLabel.numberOfLines = 0;
     contentLabel.textColor = [UIColor grayColor];
     contentLabel.textAlignment = NSTextAlignmentCenter;

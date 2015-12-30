@@ -109,7 +109,7 @@
     [self setContentView];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(receiveNotification:) name:@"下班" object:nil];
+    [center addObserver:self selector:@selector(receiveNotification:) name:@"refreashCustom" object:nil];
     
 }
 

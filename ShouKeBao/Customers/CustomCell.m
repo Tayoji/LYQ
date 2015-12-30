@@ -42,40 +42,32 @@ static id _invitationInfo;
     [MobClick event:@"CustomCallClick" attributes:dict];
     
     if (self.telStr.length>6) {
-        
         NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel://%@",self.telStr];
-        NSLog(@"电话号码是:  %@",str);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         
     }else if (self.telStr.length<=6){
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"失败" message:@"该客户电话号码错误" delegate:self cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
-        
         [alert show];
     }
-    
 }
 
 - (IBAction)informationIM:(id)sender {
  
     if ([self.model.IsOpenIM integerValue] == 0) {
-//        点击的时候进行标记保存布尔值
         NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
-     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:isGray_redID];
-        
+       [[NSUserDefaults standardUserDefaults]setBool:YES forKey:isGray_redID];
+        NSLog(@"....%@", self.telStr);
         //            [self achieveInvitationInfoData:self.model.ID];
        // UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"TA还未绑定您的专属APP,赶快邀请TA来绑定吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"邀请", nil];
        // [alert show];
-        
         if (_delegate && [_delegate respondsToSelector:@selector(tipInviteViewShow:)]) {
-             [_delegate tipInviteViewShow:self.model.Mobile];
+             [_delegate tipInviteViewShow:self.telStr];
              [_delegate tableViewReloadData];
         }
     }else{
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"Customer_newCustomerIMChatIconClick" attributes:dict];
-        
-        NSLog(@"%@", self.model.AppSkbUserId);
+//        NSLog(@"%@", self.model.AppSkbUserId);
         if (_delegate && [_delegate respondsToSelector:@selector(transformPerformation:)]) {
             [_delegate transformPerformation:self.model];
         }
@@ -83,64 +75,9 @@ static id _invitationInfo;
     
 }
 
-//-(void)willPresentAlertView:(UIAlertView *)alertView{
-//    for(UIView *tempView in alertView.subviews){
-//        if([tempView isKindOfClass:[UIView class]]){
-//            UILabel *tempButton=(UILabel *)tempView;
-//            tempButton.textColor = [UIColor redColor];
-//        }
-//    }
-//}
+//+(instancetype)cellWithTableView:(UITableView *)tableView InvitationInfo:(NSString *)invitationInfo navigationC:(UINavigationController *)naNC{
++(instancetype)cellWithTableView:(UITableView *)tableView{
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//
-//    if (buttonIndex == 1) {
-//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-//        [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
-//        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
-//            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
-//            
-//            MFMessageVC.body = _invitationInfo;
-//            MFMessageVC.recipients = @[self.telStr];
-//            MFMessageVC.messageComposeDelegate = self;
-//            [_naNC presentViewController:MFMessageVC animated:YES completion:nil];
-//        }else{
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            [alert show];
-//        }
-//    }
-//     [_delegate tableViewReloadData];
-//}
-//
-////短信代理方法
-//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
-//    // 关闭短信界面
-//    [controller dismissViewControllerAnimated:YES completion:nil];
-//    if (result == MessageComposeResultCancelled) {
-//        NSLog(@"取消发送");
-//    } else if (result == MessageComposeResultSent) {
-//        NSLog(@"已经发出");
-//    } else {
-//        NSLog(@"发送失败");
-//    }
-//    
-//}
-
-- (void)achieveInvitationInfoData:(NSString *)CustomerID {
-    
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:CustomerID forKey:@"CustomerID"];
-    
-    [IWHttpTool WMpostWithURL:@"/Customer/GetCustomer" params:dic success:^(id json){
-        NSLog(@"---cell---管客户json is %@-------",json);
-        //    self.InvitationInfo = json[@"Customer"][@"InvitationInfo"];
-    } failure:^(NSError *error) {
-        NSLog(@"接口请求失败 error is %@------",error);
-    }];
-}
-
-+(instancetype)cellWithTableView:(UITableView *)tableView InvitationInfo:(NSString *)invitationInfo navigationC:(UINavigationController *)naNC{
-    
 //    _invitationInfo = invitationInfo;
 //    _naNC = naNC;
     static NSString *cellID = @"customCell";
@@ -156,6 +93,7 @@ static id _invitationInfo;
     
     //获取消息数， 展示是否有消息未读
     NSUInteger unreaderMessageCount = [[EaseMob sharedInstance].chatManager unreadMessagesCountForConversation:self.model.AppSkbUserId];
+    
     if (unreaderMessageCount) {
         self.redDot.hidden = NO;
     }else{
@@ -183,7 +121,6 @@ static id _invitationInfo;
     self.userTele.text = [NSString stringWithFormat:@"电话：%@",tel];
     self.userOders.text = [NSString stringWithFormat:@"订单数：%@",model.OrderCount];
     
-    
     if ([self.model.IsOpenIM integerValue] == 0) {
         NSString *isGray_redID = [NSString stringWithFormat:@"isGray_red%@", self.model.ID];
         
@@ -198,8 +135,8 @@ static id _invitationInfo;
 -(UIView *)redDot{
     if (!_redDot) {
 //        _redDot = [[UIView alloc]initWithFrame:CGRectMake(28, 20, 8, 8)];
-        NSLog(@"...%f", self.information.frame.size.width);
-         _redDot = [[UIView alloc]initWithFrame:CGRectMake(self.information.frame.size.width*2/3, 20, 8, 8)];
+//        NSLog(@"...%f", self.information.frame.size.width);
+         _redDot = [[UIView alloc]initWithFrame:CGRectMake(self.information.frame.size.width*2/3-2, 20, 8, 8)];
         _redDot.backgroundColor = [UIColor redColor];
         _redDot.layer.cornerRadius = 4.0;
         _redDot.layer.masksToBounds = YES;
@@ -207,5 +144,61 @@ static id _invitationInfo;
     return _redDot;
 }
 
+
+//-(void)willPresentAlertView:(UIAlertView *)alertView{
+//    for(UIView *tempView in alertView.subviews){
+//        if([tempView isKindOfClass:[UIView class]]){
+//            UILabel *tempButton=(UILabel *)tempView;
+//            tempButton.textColor = [UIColor redColor];
+//        }
+//    }
+//}
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//
+//    if (buttonIndex == 1) {
+//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//        [MobClick event:@"Customer_newCustomerInviteChatIconClick" attributes:dict];
+//        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+//            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+//
+//            MFMessageVC.body = _invitationInfo;
+//            MFMessageVC.recipients = @[self.telStr];
+//            MFMessageVC.messageComposeDelegate = self;
+//            [_naNC presentViewController:MFMessageVC animated:YES completion:nil];
+//        }else{
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
+//        }
+//    }
+//     [_delegate tableViewReloadData];
+//}
+//
+////短信代理方法
+//- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+//    // 关闭短信界面
+//    [controller dismissViewControllerAnimated:YES completion:nil];
+//    if (result == MessageComposeResultCancelled) {
+//        NSLog(@"取消发送");
+//    } else if (result == MessageComposeResultSent) {
+//        NSLog(@"已经发出");
+//    } else {
+//        NSLog(@"发送失败");
+//    }
+//
+//}
+
+//- (void)achieveInvitationInfoData:(NSString *)CustomerID {
+//
+//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//    [dic setObject:CustomerID forKey:@"CustomerID"];
+//
+//    [IWHttpTool WMpostWithURL:@"/Customer/GetCustomer" params:dic success:^(id json){
+//        NSLog(@"---cell---管客户json is %@-------",json);
+//        //    self.InvitationInfo = json[@"Customer"][@"InvitationInfo"];
+//    } failure:^(NSError *error) {
+//        NSLog(@"接口请求失败 error is %@------",error);
+//    }];
+//}
 
 @end

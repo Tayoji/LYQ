@@ -4,7 +4,7 @@
 //
 //  Created by Richard on 15/3/12.
 //  Copyright (c) 2015年 shouKeBao. All rights reserved.
-//
+//进行
 
 #import "Me.h"
 #import "MeHeader.h"
@@ -115,7 +115,8 @@
         }
         
     }
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
+
     //获取版本信息
     NSDictionary * dic = @{};
     [MeHttpTool inspectionWithParam:dic success:^(id json) {
@@ -628,9 +629,9 @@
                if (kScreenSize.width == 320) {
                    shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/3-10, 0, 100, 50)];
                }else if (kScreenSize.width == 375) {
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
                }else{
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4, 0, 100, 50)];
+                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
                }
                 NSLog(@"...%f", [UIScreen mainScreen].bounds.size.width);
                
@@ -749,25 +750,23 @@
                 
 #pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
 
-                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&[self.IsOpenConsultantApp isEqualToString:@"1"]){
+                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
                     
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
-                    
-//                    NSLog(@"111 ConsultanShareInfo = %@ %@", _ConsultanShareInfo, exclusiveAPPVC.ConsultanShareInfo);
-                    
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
-                    
-//#pragma mark-  ｛(等级为2000以上&&第一次打开 )|| 等级不够 ||未开通专属App｝ －－－》 走专属或非专属介绍界面
                 }else{
 
-                    if ([self.IsOpenConsultantApp isEqualToString:@"1"]) {
+                    if ([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
+                        
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
                 newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
-                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]){
+                        
+                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]||[[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+                        
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
                         newExclusiveVC.clientManagerTel = self.clientMagagerTel;
@@ -941,7 +940,7 @@
         self.IsOpenConsultantApp = json[@"IsOpenConsultantApp"];
         NSLog(@"///// %@", self.IsOpenConsultantApp);
 //        self.clientMagagerTel = json[@""];
-
+    
     } failure:^(NSError *error) {
         NSLog(@"接口请求失败 error is %@------",error);
     }];
@@ -1132,6 +1131,27 @@
     
     
 }
+-(void)pushWithBackGroundMe:(NSNotification *)noti{
+    NSString * type = noti.object;
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+    if ([type isEqualToString:@"openAppVip"]) {
+        NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+        newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
+        newOpenVC.naVC = self.navigationController;
+        [self.navigationController pushViewController:newOpenVC animated:YES];
+    }else if([type isEqualToString:@"openAppUnVip"]){
+        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+        newExclusiveVC.naVC = self.navigationController;
+        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
+        [self.navigationController pushViewController:newExclusiveVC animated:YES];
+    }
+    //pipikou://type=openAppUnVip
+
+
+
+}
+
+
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
     
     

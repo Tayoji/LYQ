@@ -36,9 +36,9 @@
 // 接收
 #define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_DEFAULT @"chat_receiver_audio_playing_full" // 小喇叭默认图片
 #define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_01 @"chat_receiver_audio_playing000" // 小喇叭动画第一帧
-#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_02 @"chat_receiver_audio_playing001" // 小喇叭动画第二帧
-#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_03 @"chat_receiver_audio_playing002" // 小喇叭动画第三帧
-#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_04 @"chat_receiver_audio_playing003" // 小喇叭动画第四帧
+#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_02 @"chat_receiver_audio_playing_001" // 小喇叭动画第二帧
+#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_03 @"chat_receiver_audio_playing_002" // 小喇叭动画第三帧
+#define RECEIVER_ANIMATION_IMAGEVIEW_IMAGE_04 @"chat_receiver_audio_playing_003" // 小喇叭动画第四帧
 
 extern NSString *const kRouterEventAudioBubbleTapEventName;
 

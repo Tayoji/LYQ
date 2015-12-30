@@ -18,11 +18,15 @@
 #import "ExclusiveViewController.h"
 #import "WhatIsExclusiveViewController.h"
 #define KHeight_Scale    [UIScreen mainScreen].bounds.size.height/480.0f
-@interface NewOpenExclusiveViewController ()
+@interface NewOpenExclusiveViewController ()<UIScrollViewDelegate>
 - (IBAction)returnButton:(id)sender;
 - (IBAction)introduceButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *shareBackground;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVew;
+@property (weak, nonatomic) IBOutlet UIImageView *squarenessView;
+
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *questionButton;
 
 @end
 
@@ -55,6 +59,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.scrollVew.delegate = self;
+
     if ([self.ConsultanShareInfo count] == 0) {
          [self loadIsOpenAppDataTwince];
     }else{
@@ -73,6 +80,20 @@
 
 }
 
+//- (void)setBackButton:(UIButton *)backButton{
+//    _backButton = backButton;
+//    self.backButton.backgroundColor = [UIColor blackColor];
+//    self.backButton.alpha = 0.3;
+//    self.backButton.layer.masksToBounds = YES;
+//    self.backButton.layer.cornerRadius = 3;
+//}
+//- (void)setQuestionButton:(UIButton *)questionButton{
+//    _questionButton = questionButton;
+//    self.questionButton.backgroundColor = [UIColor blackColor];
+//    self.questionButton.alpha = 0.3;
+//    self.questionButton.layer.masksToBounds = YES;
+//    self.questionButton.layer.cornerRadius = 3;
+//}
 
 - (void)shareView{
     
@@ -80,7 +101,8 @@
     NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:self.ConsultanShareInfo];
     //    ProductModal *model = _dataArr[0];
     //    NSDictionary *temp = [StrToDic dicCleanSpaceWithDict:model.ShareInfo];
-    
+    // NSDictionary *  tmp = @{@"Desc":@"aa", @"Pic":@"http://r.lvyouquan.cn/ppkImageCombo.aspx?w=120&f=http%3a%2f%2fr.lvyouquan.cn%2fKEPicFolder%2fdefault%2fattached%2fimage%2f20141031%2f20141031171258_5481.jpg",@"Title":@"dassda", @"Url":@"http://skb.lvyouquan.cn/mg/53af38b41b3440af83e2b4de5cfd094c/113d033a35a94e35b2b62527bc4208c4/Product/e74d6f2dea8444e09c214b5ad61f9771?source=share_app&viewsource=1&isshareapp=1&apptype=1&version=1.4.0.0&appuid=bdc45124fa474c7889414b55449e573e&substation=10"};
+
     //构造分享内容
     id<ISSContent>publishContent = [ShareSDK content:tmp[@"Desc"]
                                       defaultContent:tmp[@"Desc"]
@@ -142,6 +164,32 @@
     whatISExclisiveVC.url = @"http://m.lvyouquan.cn/App/AppExclusiveIntroduces";
     whatISExclisiveVC.naV = self.naVC;
     [self.naVC pushViewController:whatISExclisiveVC animated:YES];
+    
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset < 0){
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }else{
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }
+
+    if (offset > 0) {
+        
+//        [self.squarenessView addSubview:self.backButton];
+//        [self.squarenessView addSubview:self.questionButton];
+        self.squarenessView.hidden = NO;
+        self.squarenessView.alpha = offset*0.01;
+        [self.view addSubview:self.backButton];
+        [self.view addSubview:self.questionButton];
+       
+    }else{
+        self.squarenessView.hidden = YES;
+        [self.scrollVew addSubview:self.backButton];
+        [self.scrollVew addSubview:self.questionButton];
+    }
+    
     
 }
 @end

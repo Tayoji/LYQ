@@ -331,8 +331,17 @@
     self.recordButton = [[UIButton alloc] initWithFrame:CGRectMake(textViewLeftMargin, kVerticalPadding, width, kInputTextViewMinHeight)];
     self.recordButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [self.recordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
-    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordSelectedBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
+//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateNormal];
+//    [self.recordButton setBackgroundColor:[UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0]];
+    
+    self.recordButton.layer.borderWidth = 0.5;
+    self.recordButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.recordButton.layer.cornerRadius = 6;
+    self.recordButton.layer.masksToBounds = YES;
+//    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordSelectedBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
+    [self.recordButton setBackgroundImage:[[UIImage imageNamed:@"chatBar_recordBg"] stretchableImageWithLeftCapWidth:10 topCapHeight:10] forState:UIControlStateHighlighted];
+
+
     [self.recordButton setTitle:kTouchToRecord forState:UIControlStateNormal];
     [self.recordButton setTitle:kTouchToFinish forState:UIControlStateHighlighted];
     self.recordButton.hidden = YES;

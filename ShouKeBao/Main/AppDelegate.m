@@ -102,7 +102,7 @@
 //                if([shortcutItem.type isEqualToString:@"UITouchText.Product"]){
 //                    
 //                    [self setTabbarRoot];
-//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControl lers objectAtIndex:1];
+//                    ((ViewController*)self.window.rootViewController).selectedViewController = [((ViewController*)self.window.rootViewController).viewControllers objectAtIndex:1];
 //                }else if([shortcutItem.type isEqualToString:@"UITouchText.Order"]){
 //                    
 ////                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -497,9 +497,11 @@ void UncaughtExceptionHandler(NSException *exception) {
 
 //        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
 //        [MobClick event:@"OpenAppFromShortMessage" attributes:dict];
-    }else{
-//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-//        [MobClick event:@"OpenAppFromShareLink" attributes:dict];
+    }else if([urlString myContainsString:@"pipikou://type="]){
+        NSLog(@"%@", self.urlstring);
+        [self performSelector:@selector(StartGoAppView) withObject:nil afterDelay:0.5];
+
+        
     }
     
 //    if ([urlString containsString:@"QQ41D9B706"]) {
@@ -553,6 +555,13 @@ void UncaughtExceptionHandler(NSException *exception) {
     [defaultCenter postNotificationName:@"FromiMesseage" object:webStr];
 
 }
+- (void)StartGoAppView{
+    [MobClick event:@"OpenAppFromShortMessage"];
+    NSString * appStr = [self.urlstring stringByReplacingOccurrencesOfString:@"pipikou://type=" withString:@""];
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter postNotificationName:@"pushWithBackGroundMe" object:appStr];
+}
+
 // 切换到主界面
 -(void)setTabbarRoot
 {

@@ -242,12 +242,25 @@
     
     //如果本地没有
 //    if (![[LocationSeting defaultLocationSeting] getCustomInfoWithID:self.chatter]) {
-        [self getCustomIconAndNickNameWithChatter:self.chatter];
 //    }
     if (_conversationType == eConversationTypeChatRoom)
     {
         [self joinChatroom:_chatter];
     }
+    
+    [self setRightBarButton];
+    
+}
+- (void)setRightBarButton{
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0,0,20,20);
+    [button setImage:[UIImage imageNamed:@"IMTopHeader"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"IMTopHeader"] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [button addTarget:self action:@selector(jumpCustomDetail)forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem= barItem;
 }
 //根据chater获取头像和昵称；
 - (void)getCustomIconAndNickNameWithChatter:(NSString *)chatter{
@@ -314,7 +327,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self getCustomIconAndNickNameWithChatter:self.chatter];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"isShowPicker"];
     if (_isScrollToBottom) {
         [self scrollViewToBottom:NO];
@@ -756,7 +769,13 @@
 //    UserInfoEditTableVC * UIETVC = [[UserInfoEditTableVC alloc]init];
 //    [self.navigationController pushViewController:UIETVC animated:YES];
 }
+- (void)jumpCustomDetail{
+    CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
+    VC.customerID = @"";
+    VC.appUserID = self.chatter;
+    [self.navigationController pushViewController:VC animated:YES];
 
+}
 
 //链接被点击
 - (void)chatTextCellUrlPressed:(NSURL *)url
@@ -1303,7 +1322,7 @@
 
             [weakSelf sendAudioMessage:voice];
         }else {
-            [weakSelf showHudInView:self.view hint:NSLocalizedString(@"media.timeShort", @"The recording time is too short")];
+            [weakSelf showHudInView:self.view hint:NSLocalizedString(@"请长按", @"The recording time is too short")];
             weakSelf.chatToolBar.recordButton.enabled = NO;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf hideHud];
