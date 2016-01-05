@@ -166,41 +166,52 @@
 
 #pragma mark - 定位
 - (void)locationMethod{
-    self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     if ([CLLocationManager locationServicesEnabled]) {
-        self.locationManager.distanceFilter = 100;//设置为100米
+//        self.locationManager.distanceFilter = 100;//设置为100米
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        [self.locationManager requestWhenInUseAuthorization];//或者下一句
-//        [self.locationManager requestAlwaysAuthorization];
-        [self.locationManager startUpdatingLocation];
-    } else {
+        if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0){
+            [self.locationManager requestAlwaysAuthorization]; // 请求前台和后台定位权限
+        }else{
+            [self.locationManager startUpdatingLocation];
+        }
+    }else {
         NSLog(@"请检查网络");
     }
 }
 #pragma mark - CLLocationManagerDelegate的代理方法
+/**
+   授权状态发生改变时调用
+ */
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if (status == kCLAuthorizationStatusNotDetermined) {
+        NSLog(@"等待用户授权");
+    }else if (status == kCLAuthorizationStatusAuthorizedAlways ||
+              status == kCLAuthorizationStatusAuthorizedWhenInUse){
+        NSLog(@"授权成功");
+        // 开始定位
+        [self.locationManager startUpdatingLocation];
+    }else{
+        NSLog(@"授权失败");
+    }
+}
+
+
 //   获取到位置数据，返回的是一个CLLocation的数组
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    self.loc = [locations lastObject];
-    //   horizontalAccuracy位置精度
-    if(self.loc.horizontalAccuracy > 0){
-        NSLog(@"纬度 = %f, 经度 = %f, (位置精度)半径 = %f", self.loc.coordinate.latitude, self.loc.coordinate.longitude, self.loc.horizontalAccuracy);
-    }
-    //    verticalAccuracy海拔高度的精度, altitude海拔高度
-    if(self.loc.verticalAccuracy > 0){
-        NSLog(@"当前海拔高度：%.0f +/- %.0f meters",self.loc.altitude, self.loc.verticalAccuracy);
-    }
+     self.loc = [locations lastObject];
+      NSLog(@"%s", __func__);
+      NSLog(@"%f, %f speed = %f", self.loc.coordinate.latitude , self.loc.coordinate.longitude, self.loc.speed);
     
 }
+
 
 //获取用户位置数据失败的回调方法，在此通知用户
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     if ([error code] == kCLErrorDenied) {
-        
         [manager stopUpdatingLocation];
         
     }else if ([error code] == kCLErrorLocationUnknown){
-        NSLog(@"无法获取位置信息");
         static NSInteger i = 1;
         if (i == 1) {
             UIAlertView *theAlertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法获取位置信息,推荐您切换分站到上海" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -209,7 +220,6 @@
         }
         i++;
     }else if ([error code] == kCLErrorNetwork){
-        NSLog(@"用于检索位置的网络不可用");
         UIAlertView *theAlertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络不可用！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [theAlertView show];
         [self.view addSubview:theAlertView];
@@ -262,7 +272,9 @@
     circleHotVC.title = @"圈热点";
     circleHotVC.CircleUrl = self.CircleUrl;
     circleHotVC.m = 1;
-    [self.navigationController pushViewController:circleHotVC animated:YES];
+    if (self.CircleUrl) {
+        [self.navigationController pushViewController:circleHotVC animated:YES];
+    }
 }
 - (void)CarouselNews{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickCarouselSCAction:)];
@@ -330,7 +342,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self prepAudio];
-    
+//    [self locationMethod];
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
@@ -1094,6 +1106,12 @@
 
 
 #pragma mark - getter
+- (CLLocationManager *)locationManager{
+    if (!_locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+    }
+    return _locationManager;
+}
 - (NSTimer *)timer{
     if (!_timer) {
       self.timer = [[NSTimer alloc]init];
@@ -1553,8 +1571,9 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ShouKeBaoStore" attributes:dict];
 
-    
-      [self.navigationController pushViewController:store animated:YES];
+    if (store.PushUrl) {
+        [self.navigationController pushViewController:store animated:YES];
+    }
 }
 -(void)pushToStoreFromButton
 {
@@ -1564,8 +1583,9 @@
     [MobClick event:@"ShouKeBaoStore" attributes:dict];
 
     store.needOpenShare = YES;
-   
-    [self.navigationController pushViewController:store animated:YES];
+    if (store.PushUrl) {
+        [self.navigationController pushViewController:store animated:YES];
+    }
 }
 - (void)changeStation{
    
@@ -2008,9 +2028,9 @@
         themeDetailVC.title = double12.FirstTitle;
         themeDetailVC.CircleUrl = double12.LinkUrl;
 //        NSLog(@"....%@....___ %@", self.dataSource, double12.LinkUrl);
-        
-        [self.navigationController pushViewController:themeDetailVC animated:YES];
-        
+        if (double12.LinkUrl) {
+            [self.navigationController pushViewController:themeDetailVC animated:YES];
+        }
     }else{//客户提醒
         remondModel *r = model.model;
         RemindDetailViewController *remondDetail = [[RemindDetailViewController alloc] init];

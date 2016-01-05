@@ -617,6 +617,10 @@
 		845514EC1ABFFAFB00D588A7 /* SKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845514EB1ABFFAFB00D588A7 /* SKViewController.m */; };
 		845514FB1AC032C000D588A7 /* WriteFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845514FA1AC032C000D588A7 /* WriteFileManager.m */; };
 		B325F7DE1BE24A6A00124271 /* MeTextFieldSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */; };
+		B34007761C3A85180094028C /* ServiceNotifiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B34007741C3A85180094028C /* ServiceNotifiViewController.m */; };
+		B34007771C3A85180094028C /* ServiceNotifiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B34007751C3A85180094028C /* ServiceNotifiViewController.xib */; };
+		B340077B1C3A89900094028C /* ServiceNotifiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */; };
+		B340077C1C3A89900094028C /* ServiceNotifiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */; };
 		B3585A591BFC29960005448F /* noOpenExclusiveAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */; };
 		B36B6BA61C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */; };
 		B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */; };
@@ -1820,6 +1824,12 @@
 		845514FA1AC032C000D588A7 /* WriteFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteFileManager.m; sourceTree = "<group>"; };
 		B325F7DC1BE24A6A00124271 /* MeTextFieldSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeTextFieldSearchViewController.h; path = MeView/MeTextFieldSearchViewController.h; sourceTree = "<group>"; };
 		B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeTextFieldSearchViewController.m; path = MeView/MeTextFieldSearchViewController.m; sourceTree = "<group>"; };
+		B34007731C3A85180094028C /* ServiceNotifiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceNotifiViewController.h; sourceTree = "<group>"; };
+		B34007741C3A85180094028C /* ServiceNotifiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceNotifiViewController.m; sourceTree = "<group>"; };
+		B34007751C3A85180094028C /* ServiceNotifiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceNotifiViewController.xib; sourceTree = "<group>"; };
+		B34007781C3A89900094028C /* ServiceNotifiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceNotifiTableViewCell.h; sourceTree = "<group>"; };
+		B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceNotifiTableViewCell.m; sourceTree = "<group>"; };
+		B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceNotifiTableViewCell.xib; sourceTree = "<group>"; };
 		B3585A571BFC29960005448F /* noOpenExclusiveAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noOpenExclusiveAppView.h; sourceTree = "<group>"; };
 		B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noOpenExclusiveAppView.m; sourceTree = "<group>"; };
 		B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExclusiveAppIntroduceViewController.h; sourceTree = "<group>"; };
@@ -2398,6 +2408,7 @@
 		527E3B7B1BEC7EB000AAA6F6 /* NewMessageCenter */ = {
 			isa = PBXGroup;
 			children = (
+				B34007721C3A84A50094028C /* ServiceNotifi */,
 				79EDD2AA1BFB3218000FEFD7 /* CustomDynamic */,
 				79B5596C1BFB2EDB00C04F92 /* TerraceMessage */,
 				79B5596B1BFB2E8300C04F92 /* MessageCenterList */,
@@ -4461,6 +4472,19 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		B34007721C3A84A50094028C /* ServiceNotifi */ = {
+			isa = PBXGroup;
+			children = (
+				B34007731C3A85180094028C /* ServiceNotifiViewController.h */,
+				B34007741C3A85180094028C /* ServiceNotifiViewController.m */,
+				B34007751C3A85180094028C /* ServiceNotifiViewController.xib */,
+				B34007781C3A89900094028C /* ServiceNotifiTableViewCell.h */,
+				B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */,
+				B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */,
+			);
+			path = ServiceNotifi;
+			sourceTree = "<group>";
+		};
 		B36B6BA21C16E29C002C89E2 /* newExclusiveApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -5062,6 +5086,7 @@
 				5A52FC5C1ACEBF220076DAE6 /* SearchProductViewController.xib in Resources */,
 				793917431C17CD550020372E /* chat_sender_audio_playing_000@2x.png in Resources */,
 				7939172C1C17CD3D0020372E /* chat_receiver_audio_playing_002@2x.png in Resources */,
+				B34007771C3A85180094028C /* ServiceNotifiViewController.xib in Resources */,
 				795E1F021B72F75300072A77 /* read_me.txt in Resources */,
 				B3B7A6781BA6A25F0043DF7C /* CustomerOrdersUIViewController.xib in Resources */,
 				796EFD371BF5C67D00799120 /* chatBar_more_camera@2x.png in Resources */,
@@ -5120,6 +5145,7 @@
 				796EFD301BF5C67D00799120 /* chatBar_colorMore_photo@2x.png in Resources */,
 				5A076EA81ACD8B270077611C /* StoreViewController.xib in Resources */,
 				796EFD111BF5C67D00799120 /* chat_location_preview@2x.png in Resources */,
+				B340077C1C3A89900094028C /* ServiceNotifiTableViewCell.xib in Resources */,
 				796EFE761BF5CCC800799120 /* MLPhotoBrowser.bundle in Resources */,
 				7939172E1C17CD3D0020372E /* chat_receiver_audio_playing_003@2x.png in Resources */,
 				796EFCD91BF5C67D00799120 /* VoiceSearchFeedback006@2x.png in Resources */,
@@ -5326,6 +5352,7 @@
 				796EFE6F1BF5CCC800799120 /* UIImage+MLBrowserPhotoImageForBundle.m in Sources */,
 				796EFC131BF5C5DE00799120 /* MessageReadManager.m in Sources */,
 				5A52FC921ACEBF220076DAE6 /* SKSearckDisplayController.m in Sources */,
+				B340077B1C3A89900094028C /* ServiceNotifiTableViewCell.m in Sources */,
 				52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */,
 				796EFDBE1BF5CA4E00799120 /* MWPhotoBrowser.m in Sources */,
 				63F1A1881B140D5B00DE9867 /* RecentlyViewController.m in Sources */,
@@ -5607,6 +5634,7 @@
 				63F1A18F1B1424B100DE9867 /* yesterDayModel.m in Sources */,
 				632BFFF41AB92A3A003B15AD /* NSData+ImageContentType.m in Sources */,
 				632BFFFE1AB92A3A003B15AD /* UIImage+MultiFormat.m in Sources */,
+				B34007761C3A85180094028C /* ServiceNotifiViewController.m in Sources */,
 				52F275B71BD4E273008543E9 /* InvoiceLowView.m in Sources */,
 				B3C01E3B1BAC10FC005E4BB5 /* OrgSettingViewController.m in Sources */,
 				796EFDC61BF5CA4E00799120 /* EMSDWebImageDownloader.m in Sources */,
