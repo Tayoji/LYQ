@@ -153,11 +153,11 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
             identifier = [identifier stringByAppendingString:@"Video"];
         }
             break;
-        case eMessageBodyType_Product:
-        {
-            identifier = [identifier stringByAppendingString:@"Product"];
-        }
-            break;
+//        case eMessageBodyType_Product:
+//        {
+//            identifier = [identifier stringByAppendingString:@"Product"];
+//        }
+//            break;
    
         default:
             break;
