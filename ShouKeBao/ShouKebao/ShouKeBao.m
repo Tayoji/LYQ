@@ -109,7 +109,7 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataSource;// 列表内容的数组
-
+@property (nonatomic, strong)UIImageView * theImageView;
 @property (nonatomic,strong) NSMutableArray *stationDataSource;
 @property (weak, nonatomic) IBOutlet UIView *upView;
 //@property (weak, nonatomic)  UIButton *stationName;
@@ -332,7 +332,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self prepAudio];
-    
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
@@ -439,7 +438,15 @@
         badgeView.frame = CGRectMake(x, y, 10, 10);
         [self.tabBarController.tabBar addSubview:badgeView];
     }
+    
+    
+//    [self addTheIconInMainView];
+
 }
+
+
+
+
 - (void)checkProductOrder2{
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     [app checkProductOrder];
@@ -2285,8 +2292,36 @@
         }];
 
        }
-   
-   
+}
+//添加主题活动icon
+- (void)addTheIconInMainView{
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    imageView.center = self.view.center;
+    imageView.backgroundColor = [UIColor brownColor];
+    imageView.userInteractionEnabled = YES;
+    self.theImageView = imageView;
+    UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
+    [self.theImageView addGestureRecognizer:panGesture];
+    [self.view addSubview:imageView];
+
+
+
+}
+- (void)handlePanGesture:(UIPanGestureRecognizer *)panGesture{
+//    [self.theImageView bringSubviewToFront:panGesture.view];
+    CGPoint offset = [panGesture translationInView:panGesture.view];
+    CGPoint newPoint = panGesture.view.center;
+    newPoint.x = panGesture.view.center.x + offset.x;
+    newPoint.y = panGesture.view.center.y + offset.y;
+    panGesture.view.center = newPoint;
+    [panGesture setTranslation:CGPointZero inView:panGesture.view];
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event{
+    NSLog(@"began");
+}
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"end");
 }
 - (void)dealloc
 {
