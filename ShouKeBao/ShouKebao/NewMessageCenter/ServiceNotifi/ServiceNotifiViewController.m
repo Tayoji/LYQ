@@ -7,9 +7,9 @@
 //
 
 #import "ServiceNotifiViewController.h"
-
+#import "ServiceNotifiTableViewCell.h"
+#import "TimerCell.h"
 @interface ServiceNotifiViewController ()
-
 @end
 
 @implementation ServiceNotifiViewController
@@ -40,10 +40,12 @@
     return 5;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 250;
+    return 150;
 }
 //-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+//   
+//    
+//    
 //}
 
 

@@ -10,6 +10,28 @@
 
 @implementation ServiceNotifiTableViewCell
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - (void)awakeFromNib {
     // Initialization code
 }
