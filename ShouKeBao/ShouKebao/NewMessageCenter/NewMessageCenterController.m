@@ -23,7 +23,7 @@
 #import "CustomHeaderAndNickName.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
-
+#import "ServiceNotifiViewController.h"
 
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
@@ -72,6 +72,7 @@
         if ([json[@"IsSuccess"]integerValue]) {
             MessageCenterModel * platformModel =[[MessageCenterModel alloc]init];
             MessageCenterModel * customDynamic =[[MessageCenterModel alloc]init];
+            MessageCenterModel * serviceNotiDynamic =[[MessageCenterModel alloc]init];
             platformModel.messageTitle = json[@"LastNoticeTitile"];
             platformModel.messageCount = json[@"NewNoticeCount"];
             platformModel.dateStr = json[@"LastNoticeDate"];
@@ -81,6 +82,7 @@
             [self.dynamicArray removeAllObjects];
             [self.dynamicArray addObject:platformModel];
             [self.dynamicArray addObject:customDynamic];
+            [self.dynamicArray addObject:serviceNotiDynamic];
             [self.tableView reloadData];
         }
         } failure:^(NSError *eror) {
@@ -120,7 +122,7 @@
 #pragma mark - UITableViewDelegate&DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView.tag == 2011) {
-        return 2;
+        return 3;
     }
     return 1;
 }
@@ -168,9 +170,12 @@
             cell.name = self.NameArr[indexPath.row];
             cell.unreadCount = [model.messageCount intValue];
             cell.detailMsg = model.messageTitle;
+            NSLog(@"...%@", model.messageTitle);
             cell.time = model.dateStr;
             if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
+            }else if (indexPath.row == 1){
+                cell.imageView.image = [UIImage imageNamed:@"SNotification"];
             }else{
                 cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
             }
@@ -233,6 +238,9 @@
 
                 TerraceMessageController *Terr = [[TerraceMessageController alloc] init];
                 [self.navigationController pushViewController:Terr animated:YES];
+            }else if (indexPath.row == 1){
+                ServiceNotifiViewController *seviceNotifiVC = [[ServiceNotifiViewController alloc]init];
+                [self.navigationController pushViewController:seviceNotifiVC animated:YES];
             }else{
                 BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
                 [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
@@ -372,7 +380,7 @@
 }
 -(NSArray *)NameArr{
     if (!_NameArr) {
-        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"客人动态", nil];
+        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"业务通知", @"客人动态", nil];
     }
     return _NameArr;
 }
