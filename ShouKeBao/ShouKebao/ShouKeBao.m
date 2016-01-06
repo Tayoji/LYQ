@@ -84,6 +84,7 @@
 #import "APNSHelper.h"
 #import "ZhiVisitorDynamicController.h"
 #import "EaseMob.h"
+#import "CartoonView.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
@@ -158,10 +159,18 @@
 
 @property (nonatomic,strong) AVAudioPlayer *player;
 
+@property (weak, nonatomic) IBOutlet UIButton *cartoonBtn;
 
 @end
 
 @implementation ShouKeBao
+
+#pragma mark - 摇钱树签到抢红包
+
+- (void)circleCartoon{
+    [CartoonView cartoonView:self.cartoonBtn cgsize:self.view.frame.size];
+}
+
 
 
 #pragma mark - 定位
@@ -332,8 +341,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self prepAudio];
+   
+    [self circleCartoon];
+    
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.cartoonBtn];
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
 //    
 //    CGPoint rootViewLocation = [touch locationInView:[UIApplication sharedApplication]];

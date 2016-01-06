@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="CustomerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Toz-M5-5tQ">
+                        <rect key="frame" x="10" y="12" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                        <state key="normal" image="IDInform"/>
+                        <connections>
+                            <action selector="clickIconToCustomerDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8R6-FC-ncc"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" id="Gk1-yP-Dce">
+                        <rect key="frame" x="60" y="0.0" width="190" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大大" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aku-nj-kUA">
+                                <rect key="frame" x="0.0" y="10" width="100" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电话：13478644835" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lFR-I3-cpz">
+                                <rect key="frame" x="0.0" y="35" width="120" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单数：99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VZl-gI-ahA">
+                                <rect key="frame" x="120" y="35" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ylC-mK-4BB">
+                        <rect key="frame" x="60" y="0.0" width="190" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                        <connections>
+                            <action selector="takePhoneAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cmy-kY-UPf"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BNe-ky-IXo">
+                        <rect key="frame" x="255" y="17" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                        <state key="normal" image="blueMessage"/>
+                        <connections>
+                            <action selector="clickIMBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fDM-hC-pbx"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WgT-1F-Vom">
+                        <rect key="frame" x="290" y="0.0" width="30" height="64"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                        <state key="normal" title="跳转" image="SNotificationJiantou"/>
+                        <connections>
+                            <action selector="clickIconToCustomerDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uK0-Y4-W1V"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="IMBtn" destination="BNe-ky-IXo" id="Tca-wU-Igl"/>
+                <outlet property="customerIcon" destination="Toz-M5-5tQ" id="asM-zz-vc0"/>
+                <outlet property="nameL" destination="aku-nj-kUA" id="Kdj-OE-ZhA"/>
+                <outlet property="orderL" destination="VZl-gI-ahA" id="42N-mh-XCd"/>
+                <outlet property="telL" destination="lFR-I3-cpz" id="GfW-nc-EeJ"/>
+                <outlet property="viewAboveOfCalling" destination="Gk1-yP-Dce" id="IXK-1v-I5M"/>
+            </connections>
+            <point key="canvasLocation" x="267" y="228"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="IDInform" width="31" height="31"/>
+        <image name="SNotificationJiantou" width="7" height="14"/>
+        <image name="blueMessage" width="21" height="21"/>
+    </resources>
+</document>

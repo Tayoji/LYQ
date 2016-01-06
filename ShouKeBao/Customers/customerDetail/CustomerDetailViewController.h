@@ -48,7 +48,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *tele;
 @property (nonatomic,copy) NSString *weChatStr;
-@property (weak, nonatomic) IBOutlet UITextField *userName;
+//@property (weak, nonatomic) IBOutlet UITextField *userName;
 @property (weak, nonatomic) IBOutlet UITextField *passPortId;
 @property (weak, nonatomic) IBOutlet UITextField *userMessageID;
 
@@ -62,23 +62,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *livingAddress;
 - (IBAction)attachmentAction:(id)sender;//附件
 
-//@property (nonatomic,copy) NSString *picUrl;
-//@property (nonatomic,strong) NSArray *pictureArray;
-//@property (nonatomic,copy) NSString *QQStr;
-//@property (nonatomic,copy) NSString *noteStr;
-//@property (nonatomic,copy) NSString *teleStr;
-//@property (nonatomic,copy) NSString *userNameStr;
-//@property (nonatomic,copy) NSString *passPortIdStr;
-//@property (nonatomic,copy) NSString *userMessageIDStr;
-//
-//@property (nonatomic,copy) NSString *bornDayStr;
-//
-//@property (nonatomic,copy) NSString *countryIDStr;
-//@property (nonatomic,copy) NSString *nationalIDStr;
-//@property (nonatomic,copy) NSString *pasportStartDayStr;
-//@property (nonatomic,copy) NSString *pasportAddressStr;
-//@property (nonatomic,copy) NSString *pasportInUseDayStr;
-//@property (nonatomic,copy) NSString *livingAddressStr;
 @property (nonatomic,copy) NSString *customerId;
 @property (nonatomic,copy) NSString *AppSkbUserID;
 //@property (nonatomic,strong) CustomModel *customMoel;
@@ -88,6 +71,11 @@
 - (IBAction)callPhone:(UIButton *)sender;
 - (IBAction)jumpWeChat:(UIButton *)sender;
 - (IBAction)jumpQQ:(UIButton *)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *customerIcon;
+@property (weak, nonatomic) IBOutlet UILabel *customerNameLa;
+@property (weak, nonatomic) IBOutlet UITextField *nickNameF;
+
 
 
 @end

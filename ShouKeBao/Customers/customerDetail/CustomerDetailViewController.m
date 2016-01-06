@@ -72,7 +72,7 @@
     self.weChat.text = weChat;
     self.tele.text = phone;
     self.note.text = note;
-    self.userName.text = name;
+    self.customerNameLa.text = name;
     //   新添加
     self.userMessageID.text = cardID;
     self.bornDay.text = birthdate;
@@ -139,6 +139,19 @@
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:telStr]];
     }
 }
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset < 0){
+    
+    }else{
+        
+    }
+    
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     for (UIView * subView in cell.contentView.subviews) {
@@ -269,7 +282,7 @@
     self.weChat.text =  [self.dataArr[0]WeiXinCode]; /*self.weChatStr;*/
     self.tele.text = [self.dataArr[0]Mobile];/*self.teleStr;*/
     self.note.text = [self.dataArr[0]Remark];/*self.noteStr;*/
-    self.userName.text = [self.dataArr[0]Name];/*self.userNameStr;*/
+    self.customerNameLa.text = [self.dataArr[0]Name];/*self.userNameStr;*/
     
     self.passPortId.text = [self.dataArr[0]PassportNum];
     self.userMessageID.text = [self.dataArr[0]CardNum];
