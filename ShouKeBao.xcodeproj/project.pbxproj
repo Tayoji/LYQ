@@ -18,6 +18,7 @@
 		520279651BF4730A0049C0B9 /* NewMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279641BF4730A0049C0B9 /* NewMessageModel.m */; };
 		520279681BF47C3C0049C0B9 /* ChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279671BF47C3C0049C0B9 /* ChatListCell.m */; };
 		520D54AA1BF2EB9400923F6C /* ZhiVisitorDynamicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */; };
+		5222D1241C3B743400F262A3 /* SelectCustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5222D1231C3B743400F262A3 /* SelectCustomerController.m */; };
 		522E80671BD1049500DB48DA /* OrderPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E80661BD1049500DB48DA /* OrderPromptView.m */; };
 		522E80691BD104A800DB48DA /* OrderPromptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522E80681BD104A800DB48DA /* OrderPromptView.xib */; };
 		5237D6B61BF18DED00655CF0 /* TimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5237D6B41BF18DEC00655CF0 /* TimerCell.m */; };
@@ -39,10 +40,14 @@
 		527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */; };
 		527E41CB1BDF237E00CA9CF6 /* OpenInvoiceWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */; };
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
+		52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AEE0181C3BD691008FB583 /* SetRedPacketController.m */; };
+		52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */; };
 		52B858491BC76D4C00B15483 /* CommandTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B858471BC76D4C00B15483 /* CommandTo.m */; };
 		52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B858481BC76D4C00B15483 /* CommandTo.xib */; };
 		52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BEDF981BEB413E003A04CA /* NewNewsController.m */; };
 		52BEDF9B1BEB413E003A04CA /* NewNewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEDF991BEB413E003A04CA /* NewNewsController.xib */; };
+		52CCF86C1C3B5DE400C91387 /* RedPacketMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */; };
+		52CCF86D1C3B5DE400C91387 /* RedPacketMainController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */; };
 		52CF60BE1BDDCAF600DD97B8 /* SubscribeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */; };
 		52CF60BF1BDDCAF600DD97B8 /* SubscribeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */; };
 		52CF60C31BDDD9CF00DD97B8 /* MySubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60C21BDDD9CF00DD97B8 /* MySubscribeController.m */; };
@@ -779,6 +784,8 @@
 		520279671BF47C3C0049C0B9 /* ChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListCell.m; sourceTree = "<group>"; };
 		520D54A71BF2EB9400923F6C /* ZhiVisitorDynamicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiVisitorDynamicController.h; sourceTree = "<group>"; };
 		520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiVisitorDynamicController.m; sourceTree = "<group>"; };
+		5222D1221C3B743400F262A3 /* SelectCustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCustomerController.h; sourceTree = "<group>"; };
+		5222D1231C3B743400F262A3 /* SelectCustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCustomerController.m; sourceTree = "<group>"; };
 		522E80651BD1049500DB48DA /* OrderPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPromptView.h; sourceTree = "<group>"; };
 		522E80661BD1049500DB48DA /* OrderPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPromptView.m; sourceTree = "<group>"; };
 		522E80681BD104A800DB48DA /* OrderPromptView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPromptView.xib; sourceTree = "<group>"; };
@@ -893,12 +900,18 @@
 		527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInvoiceWebController.m; sourceTree = "<group>"; };
 		52A4C1541BB1053200614BFF /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		52A4C1551BB1053200614BFF /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		52AEE0171C3BD691008FB583 /* SetRedPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetRedPacketController.h; sourceTree = "<group>"; };
+		52AEE0181C3BD691008FB583 /* SetRedPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetRedPacketController.m; sourceTree = "<group>"; };
+		52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetRedPacketController.xib; sourceTree = "<group>"; };
 		52B858461BC76D4C00B15483 /* CommandTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandTo.h; sourceTree = "<group>"; };
 		52B858471BC76D4C00B15483 /* CommandTo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandTo.m; sourceTree = "<group>"; };
 		52B858481BC76D4C00B15483 /* CommandTo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommandTo.xib; sourceTree = "<group>"; };
 		52BEDF971BEB413E003A04CA /* NewNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNewsController.h; sourceTree = "<group>"; };
 		52BEDF981BEB413E003A04CA /* NewNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewNewsController.m; sourceTree = "<group>"; };
 		52BEDF991BEB413E003A04CA /* NewNewsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewNewsController.xib; sourceTree = "<group>"; };
+		52CCF8691C3B5DE400C91387 /* RedPacketMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketMainController.h; sourceTree = "<group>"; };
+		52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketMainController.m; sourceTree = "<group>"; };
+		52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedPacketMainController.xib; sourceTree = "<group>"; };
 		52CF60BB1BDDCAF600DD97B8 /* SubscribeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeCell.h; sourceTree = "<group>"; };
 		52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeCell.m; sourceTree = "<group>"; };
 		52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscribeCell.xib; sourceTree = "<group>"; };
@@ -2107,6 +2120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5222D1211C3B740800F262A3 /* SelectCustomers */ = {
+			isa = PBXGroup;
+			children = (
+				5222D1221C3B743400F262A3 /* SelectCustomerController.h */,
+				5222D1231C3B743400F262A3 /* SelectCustomerController.m */,
+			);
+			path = SelectCustomers;
+			sourceTree = "<group>";
+		};
 		522E80641BD1047900DB48DA /* OrderPromptView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2428,6 +2450,16 @@
 			path = OpenInvoiceWeb;
 			sourceTree = "<group>";
 		};
+		52AE17651C3BC6E100114321 /* SetRedPacket */ = {
+			isa = PBXGroup;
+			children = (
+				52AEE0171C3BD691008FB583 /* SetRedPacketController.h */,
+				52AEE0181C3BD691008FB583 /* SetRedPacketController.m */,
+				52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */,
+			);
+			path = SetRedPacket;
+			sourceTree = "<group>";
+		};
 		52B858451BC76D4C00B15483 /* CommendToDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -2449,6 +2481,18 @@
 				52BEDF991BEB413E003A04CA /* NewNewsController.xib */,
 			);
 			path = NewNewsController;
+			sourceTree = "<group>";
+		};
+		52CCF8681C3B5D6100C91387 /* RedPacket */ = {
+			isa = PBXGroup;
+			children = (
+				52AE17651C3BC6E100114321 /* SetRedPacket */,
+				5222D1211C3B740800F262A3 /* SelectCustomers */,
+				52CCF8691C3B5DE400C91387 /* RedPacketMainController.h */,
+				52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */,
+				52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */,
+			);
+			path = RedPacket;
 			sourceTree = "<group>";
 		};
 		52CF60C01BDDD9AD00DD97B8 /* MySubscribe */ = {
@@ -4696,6 +4740,7 @@
 		B3C01DED1BAC10FC005E4BB5 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				52CCF8681C3B5D6100C91387 /* RedPacket */,
 				B3CFF6191BFAEE0E002065AA /* ExlusiveAPP */,
 				52BEDF961BEB4122003A04CA /* NewNewsController */,
 				52CF60C41BDE0EEF00DD97B8 /* addSubscribeCond */,
@@ -5031,6 +5076,7 @@
 				796EFCED1BF5C67D00799120 /* VoiceSearchFeedback016@2x.png in Resources */,
 				B3B810971BFEF9B100C27A9C /* OldcustomerTableViewCell.xib in Resources */,
 				796EFCD41BF5C67D00799120 /* VoiceSearchFeedback004.png in Resources */,
+				52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */,
 				5ABA4F631AD7B8EA004AA8F6 /* Localizable.strings in Resources */,
 				632AF23D1AD3E536004916C0 /* SearchFootView.xib in Resources */,
 				796EFD0D1BF5C67D00799120 /* chat_location_detail_disclosure@2x.png in Resources */,
@@ -5213,6 +5259,7 @@
 				796EFD3C1BF5C67D00799120 /* chatBar_more_locationSelected.png in Resources */,
 				52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */,
 				796EFCD01BF5C67D00799120 /* VoiceSearchFeedback002.png in Resources */,
+				52CCF86D1C3B5DE400C91387 /* RedPacketMainController.xib in Resources */,
 				796EFD1E1BF5C67D00799120 /* chatBar_more.png in Resources */,
 				793917341C17CD3D0020372E /* chat_receiver_bg.png in Resources */,
 				796EFCD81BF5C67D00799120 /* VoiceSearchFeedback006.png in Resources */,
@@ -5564,6 +5611,7 @@
 				B3B7A6771BA6A25F0043DF7C /* CustomerOrdersUIViewController.m in Sources */,
 				632613271AB2AF04003AC2DA /* PGCategoryView.m in Sources */,
 				796EFBFD1BF5C5DE00799120 /* ChatViewController+Category.m in Sources */,
+				5222D1241C3B743400F262A3 /* SelectCustomerController.m in Sources */,
 				798F769E1BD65E2E00457A70 /* TravelConsultantViewControllerNoShare.m in Sources */,
 				5A52FC821ACEBF220076DAE6 /* OrderDetailViewController.m in Sources */,
 				796EFDD91BF5CA4E00799120 /* PSTCollectionViewItemKey.m in Sources */,
@@ -5577,6 +5625,7 @@
 				5A076CA11ACD24050077611C /* CityViewController.m in Sources */,
 				63A81B8E1B39818400D8B37D /* SKBNavBarFor6OrP.m in Sources */,
 				5A52FC541ACEBF220076DAE6 /* rightModal.m in Sources */,
+				52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */,
 				63AE28951B206F8700BDB8C1 /* newModel.m in Sources */,
 				B3B810911BFECF4700C27A9C /* OldCustomerViewController.m in Sources */,
 				7964F4F11B437D6500F56EB2 /* BaseClickAttribute.m in Sources */,
@@ -5632,6 +5681,7 @@
 				796F36C61B78438E0089FEE8 /* LeftTableCell.m in Sources */,
 				796EFAFA1BF4D9A800799120 /* UIResponder+Router.m in Sources */,
 				63F1A18F1B1424B100DE9867 /* yesterDayModel.m in Sources */,
+				52CCF86C1C3B5DE400C91387 /* RedPacketMainController.m in Sources */,
 				632BFFF41AB92A3A003B15AD /* NSData+ImageContentType.m in Sources */,
 				632BFFFE1AB92A3A003B15AD /* UIImage+MultiFormat.m in Sources */,
 				B34007761C3A85180094028C /* ServiceNotifiViewController.m in Sources */,

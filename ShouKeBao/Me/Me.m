@@ -47,6 +47,7 @@
 #import "MeShareDetailModel.h"
 #import "NewExclusiveAppIntroduceViewController.h"
 #import "NewOpenExclusiveViewController.h"
+#import "RedPacketMainController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -91,7 +92,7 @@
     self.title = @"我";
     self.tableView.rowHeight = 50;
     //self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树",@"发票管理"],@[@"账号安全设置"],@[@"勿扰模式",@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
-    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树", @"专属APP",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
+    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树", @"专属APP",@"红包",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *loginType = [def objectForKey:@"LoginType"];
     self.isPerson = [loginType integerValue] != 1;
@@ -651,12 +652,15 @@
                 
             }else if (indexPath.row == 4){
                 cell.imageView.image = [UIImage imageNamed:@"Mebill"];
+
+
+            }else if (indexPath.row == 5){
+                cell.imageView.image = [UIImage imageNamed:@"Mebill"];
                 if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstFindInvoiceManage"]) {
                     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
-
             }
             break;
         case 2://第三个分区
@@ -777,6 +781,12 @@
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
                 
             }else if(indexPath.row == 4){
+                NSLog(@"点击红包");
+                RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
+                [self.navigationController pushViewController:redPacket animated:YES];
+                
+                
+            }else if(indexPath.row == 5){
                 InvoiceManageViewController * IMVC = [[InvoiceManageViewController alloc]init];
                 IMVC.webTitle = @"发票管理";
                 BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
