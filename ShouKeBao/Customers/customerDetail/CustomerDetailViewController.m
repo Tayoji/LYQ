@@ -228,13 +228,10 @@
 }
 
 - (IBAction)attachmentAction:(id)sender {
-//    attachmentViewController *AVC = [[attachmentViewController alloc] init];
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
     AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
-    AVC.picUrl = [self.dataArr[0]PicUrl];
-    AVC.pictureList = [self.dataArr[0]PictureList];
     AVC.customerId = [self.dataArr[0]ID];
-    NSLog(@"%@%@", [self.dataArr[0]ID], [self.dataArr[0]PicUrl]);
+    AVC.fromType = fromTypeCustom;
     [self.Nav pushViewController:AVC animated:YES];
     
 }

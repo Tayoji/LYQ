@@ -49,7 +49,8 @@
     [self setRightBtn];
     
     
-    [self.webView scalesPageToFit];
+//    [self.webView scalesPageToFit];
+    self.webView.scalesPageToFit = YES;
     [self.webView.scrollView setShowsVerticalScrollIndicator:NO];
     [self.webView.scrollView setShowsHorizontalScrollIndicator:NO];
     

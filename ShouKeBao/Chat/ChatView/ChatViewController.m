@@ -1811,6 +1811,7 @@
     if (_isRobot) {
         ext = @{kRobot_Message_Ext:[NSNumber numberWithBool:YES]};
     }
+    
     EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:textMessage
                                                             toUsername:_conversation.chatter
                                                            messageType:[self messageType]
