@@ -15,6 +15,10 @@
 
 - (IBAction)ShakeSwitch:(UISwitch *)sender;
 
+- (IBAction)acceptServiceNotiSwitch:(UISwitch *)sender;
+@property (weak, nonatomic) IBOutlet UIView *setSeviceNotiView;
+@property (nonatomic, copy,)NSString *signStr;
+
 @property (nonatomic,strong) NSUserDefaults *NewsRemind;
 @property (nonatomic,strong) NSUserDefaults *NewsVoiceRemind;
 @property (nonatomic,strong) NSUserDefaults *NewsShakeRemind;

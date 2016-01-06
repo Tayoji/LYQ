@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShouKeBao">
@@ -11,6 +11,7 @@
                 <outlet property="CarouselView" destination="JQr-Xx-Dqn" id="iX0-oJ-Nxg"/>
                 <outlet property="SKBNewBtn" destination="sOf-Ea-0SB" id="DIg-Mz-aFX"/>
                 <outlet property="buttonText" destination="He6-WC-Rvr" id="ZmC-M2-of8"/>
+                <outlet property="cartoonBtn" destination="BJI-Qr-Sm0" id="K9P-j0-6i5"/>
                 <outlet property="hotView" destination="NXf-NC-i79" id="TYE-1I-Rbj"/>
                 <outlet property="phoneBtn" destination="oE9-3F-kUd" id="K8s-va-nGC"/>
                 <outlet property="upView" destination="Bc7-6G-aOu" id="GGQ-vi-Ffv"/>
@@ -121,6 +122,11 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="BJI-Qr-Sm0">
+                    <rect key="frame" x="270" y="120" width="50" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button" image="register"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
@@ -131,10 +137,6 @@
         <image name="Hhot" width="55" height="20"/>
         <image name="SKB" width="225" height="102"/>
         <image name="banjiubing" width="50" height="50"/>
+        <image name="register" width="46" height="52"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

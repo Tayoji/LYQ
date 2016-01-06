@@ -71,6 +71,7 @@
     if (indexPath.section == 1) {
         NSLog(@"点击第一个了");
         NewNewsController *new = [[NewNewsController alloc] init];
+        new.title = @"新消息通知";
         [self.navigationController pushViewController:new animated:YES];
 
     }else if(indexPath.section == 2){

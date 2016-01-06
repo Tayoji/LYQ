@@ -8,6 +8,7 @@
 #import "IWHttpTool.h"
 #import "Customers.h"
 #import "CustomCell.h"
+#import "CustomerTableViewCell.h"
 #import "CustomModel.h"
 #import "CustomerDetailViewController.h"
 //#import "addCustomerViewController.h"
@@ -175,7 +176,7 @@
     self.table.delegate = self;
     self.table.dataSource = self;
     self.table.rowHeight = 64;
-    self.table.separatorStyle = UITableViewCellAccessoryNone;
+    self.table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.table.backgroundColor = [UIColor colorWithRed:220/255.0 green:229/255.0 blue:238/255.0 alpha:1];
     [self CustomerCounts];
 }
@@ -196,7 +197,6 @@
 }
 -(void)toRefereshCustomers{
 //    [[NSUserDefaults standardUserDefaults]setObject:@"2" forKey:@"sortType"];
-    
     [self.table headerBeginRefreshing];
 }
 -(void)referesh{
@@ -583,19 +583,20 @@
     self.table.tableFooterView = label;
     self.noProductWarnLab = label;
 }
+- (void)pushCustomerDetailVC:(NSString *)customerID{
+    CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
+    VC.customVC = self;
+    VC.keyWords = self.searchK;
+    VC.customerID = customerID;
+    VC.appUserID = @"";
+    [self.navigationController pushViewController:VC animated:YES];
+}
+
 
 #pragma mark - tableView－delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-//        CustomModel *model = _dataArr[indexPath.row];
-        CustomModel *model = self.dataArr[indexPath.section][indexPath.row];
-        CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
-        VC.customVC = self;
-        VC.keyWords = self.searchK;
-        VC.customerID = model.ID;
-        VC.appUserID = @"";
-        
-     [self.navigationController pushViewController:VC animated:YES];
+       
     }else if (self.popTableview == tableView){
 //刷新数据
         self.customerType = indexPath.row;
@@ -681,8 +682,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.table == tableView) {
-        CustomCell *cell = [CustomCell cellWithTableView:tableView];
-//        CustomCell *cell = [CustomCell cellWithTableView:tableView InvitationInfo:self.InvitationInfo navigationC:self.navigationController];
+        CustomerTableViewCell *cell = [CustomerTableViewCell cellWithTableView:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.delegate = self;
         cell.model = _dataArr[indexPath.section][indexPath.row];

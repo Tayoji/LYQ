@@ -24,6 +24,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "ServiceNotifiViewController.h"
+#import "ChoseListViewController.h"
 
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
@@ -69,20 +70,33 @@
     }
     NSMutableDictionary * params = nil;
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
+        NSLog(@".... %@", json);
         if ([json[@"IsSuccess"]integerValue]) {
             MessageCenterModel * platformModel =[[MessageCenterModel alloc]init];
             MessageCenterModel * customDynamic =[[MessageCenterModel alloc]init];
-            MessageCenterModel * serviceNotiDynamic =[[MessageCenterModel alloc]init];
+            MessageCenterModel *serviceNotiDynamic =[[MessageCenterModel alloc]init];
+            MessageCenterModel *choseNotiDynamic =[[MessageCenterModel alloc]init];
             platformModel.messageTitle = json[@"LastNoticeTitile"];
             platformModel.messageCount = json[@"NewNoticeCount"];
             platformModel.dateStr = json[@"LastNoticeDate"];
+            
             customDynamic.messageTitle = json[@"LastDynamicTitile"];
             customDynamic.messageCount = json[@"NewDynamicCount"];
             customDynamic.dateStr = json[@"LastDynamicDate"];
+            
+            serviceNotiDynamic.messageTitle = json[@"LastAppMessageTitile"];
+            serviceNotiDynamic.messageCount = json[@"NewAppMessageCount"];
+            serviceNotiDynamic.dateStr = json[@"LastAppMessageDate"];
+            
+            choseNotiDynamic.messageTitle = @"大傻瓜"/*json[@""]*/;
+            choseNotiDynamic.messageCount = @"5";
+            choseNotiDynamic.dateStr = @"01月04日 10:11";
+            
             [self.dynamicArray removeAllObjects];
             [self.dynamicArray addObject:platformModel];
-            [self.dynamicArray addObject:customDynamic];
             [self.dynamicArray addObject:serviceNotiDynamic];
+            [self.dynamicArray addObject:customDynamic];
+            [self.dynamicArray addObject:choseNotiDynamic];
             [self.tableView reloadData];
         }
         } failure:^(NSError *eror) {
@@ -122,7 +136,7 @@
 #pragma mark - UITableViewDelegate&DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView.tag == 2011) {
-        return 3;
+        return 4;
     }
     return 1;
 }
@@ -171,11 +185,13 @@
             cell.unreadCount = [model.messageCount intValue];
             cell.detailMsg = model.messageTitle;
             NSLog(@"...%@", model.messageTitle);
-            cell.time = model.dateStr;
+            cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来 
             if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
             }else if (indexPath.row == 1){
                 cell.imageView.image = [UIImage imageNamed:@"SNotification"];
+            }else if (indexPath.row == 3){
+                cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
             }else{
                 cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
             }
@@ -241,13 +257,18 @@
             }else if (indexPath.row == 1){
                 ServiceNotifiViewController *seviceNotifiVC = [[ServiceNotifiViewController alloc]init];
                 [self.navigationController pushViewController:seviceNotifiVC animated:YES];
-            }else{
+            }else if(indexPath.row == 2){
                 BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
                 [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
                 
                 ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
                 [self.navigationController pushViewController:zhiVisit animated:YES];
+            }else{
+                ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+                [self.navigationController pushViewController:choseListVC animated:YES];
             }
+            
+            
         }else{
             EMConversation *conversation = [self.chatListArray objectAtIndex:indexPath.row];
             NSString *title = @"客户";
@@ -380,7 +401,7 @@
 }
 -(NSArray *)NameArr{
     if (!_NameArr) {
-        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"业务通知", @"客人动态", nil];
+        _NameArr = [[NSArray alloc] initWithObjects:@"平台消息",@"业务通知", @"客人动态",@"每日精选", nil];
     }
     return _NameArr;
 }

@@ -9,4 +9,5 @@
 #import "BaseWebViewController.h"
 
 @interface TerracedetailViewController : BaseWebViewController
+@property (nonatomic, copy)NSString *serviceLinkUrl;
 @end
