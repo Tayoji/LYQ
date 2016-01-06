@@ -31,7 +31,8 @@
     [self setUpleftBarButtonItems];
     self.title = self.webTitle;
     [self.view addSubview:self.webView];
-    [self.webView scalesPageToFit];
+//    [self.webView scalesPageToFit];
+    self.webView.scalesPageToFit = YES;
     [self.webView.scrollView setShowsVerticalScrollIndicator:NO];
     [self.webView.scrollView setShowsHorizontalScrollIndicator:NO];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkUrl]];

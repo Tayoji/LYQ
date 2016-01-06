@@ -18,6 +18,7 @@
 		520279651BF4730A0049C0B9 /* NewMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279641BF4730A0049C0B9 /* NewMessageModel.m */; };
 		520279681BF47C3C0049C0B9 /* ChatListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279671BF47C3C0049C0B9 /* ChatListCell.m */; };
 		520D54AA1BF2EB9400923F6C /* ZhiVisitorDynamicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */; };
+		5222D1241C3B743400F262A3 /* SelectCustomerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5222D1231C3B743400F262A3 /* SelectCustomerController.m */; };
 		522E80671BD1049500DB48DA /* OrderPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 522E80661BD1049500DB48DA /* OrderPromptView.m */; };
 		522E80691BD104A800DB48DA /* OrderPromptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522E80681BD104A800DB48DA /* OrderPromptView.xib */; };
 		5237D6B61BF18DED00655CF0 /* TimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5237D6B41BF18DEC00655CF0 /* TimerCell.m */; };
@@ -36,10 +37,14 @@
 		527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */; };
 		527E41CB1BDF237E00CA9CF6 /* OpenInvoiceWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */; };
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
+		52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AEE0181C3BD691008FB583 /* SetRedPacketController.m */; };
+		52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */; };
 		52B858491BC76D4C00B15483 /* CommandTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B858471BC76D4C00B15483 /* CommandTo.m */; };
 		52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B858481BC76D4C00B15483 /* CommandTo.xib */; };
 		52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BEDF981BEB413E003A04CA /* NewNewsController.m */; };
 		52BEDF9B1BEB413E003A04CA /* NewNewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52BEDF991BEB413E003A04CA /* NewNewsController.xib */; };
+		52CCF86C1C3B5DE400C91387 /* RedPacketMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */; };
+		52CCF86D1C3B5DE400C91387 /* RedPacketMainController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */; };
 		52CF60BE1BDDCAF600DD97B8 /* SubscribeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */; };
 		52CF60BF1BDDCAF600DD97B8 /* SubscribeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */; };
 		52CF60C31BDDD9CF00DD97B8 /* MySubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CF60C21BDDD9CF00DD97B8 /* MySubscribeController.m */; };
@@ -614,7 +619,15 @@
 		845514EC1ABFFAFB00D588A7 /* SKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845514EB1ABFFAFB00D588A7 /* SKViewController.m */; };
 		845514FB1AC032C000D588A7 /* WriteFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 845514FA1AC032C000D588A7 /* WriteFileManager.m */; };
 		B325F7DE1BE24A6A00124271 /* MeTextFieldSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */; };
+		B34007761C3A85180094028C /* ServiceNotifiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B34007741C3A85180094028C /* ServiceNotifiViewController.m */; };
+		B34007771C3A85180094028C /* ServiceNotifiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B34007751C3A85180094028C /* ServiceNotifiViewController.xib */; };
+		B340077B1C3A89900094028C /* ServiceNotifiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */; };
+		B340077C1C3A89900094028C /* ServiceNotifiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */; };
 		B3585A591BFC29960005448F /* noOpenExclusiveAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */; };
+		B35FD5A31C3B950E00DE4F6C /* ServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B35FD5A21C3B950E00DE4F6C /* ServiceModel.m */; };
+		B35FD5A81C3BAF5500DE4F6C /* ChoseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35FD5A61C3BAF5500DE4F6C /* ChoseListViewController.m */; };
+		B35FD5A91C3BAF5500DE4F6C /* ChoseListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B35FD5A71C3BAF5500DE4F6C /* ChoseListViewController.xib */; };
+		B35FD5AF1C3BBA9600DE4F6C /* CartoonView.m in Sources */ = {isa = PBXBuildFile; fileRef = B35FD5AE1C3BBA9600DE4F6C /* CartoonView.m */; };
 		B36B6BA61C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */; };
 		B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */; };
 		B36B6BAB1C17D7B8002C89E2 /* NewOpenExclusiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B36B6BA91C17D7B8002C89E2 /* NewOpenExclusiveViewController.m */; };
@@ -638,6 +651,9 @@
 		B39A1B381C0C3A7E000B7267 /* DoubleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B39A1B371C0C3A7E000B7267 /* DoubleModel.m */; };
 		B39A1B3B1C0C46B2000B7267 /* HotLaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */; };
 		B3A2B6091BF4A715002AB105 /* CircleHotNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */; };
+		B3ABEF2E1C3CC54E0024566D /* ProductDetailShareByMyself.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */; };
+		B3ABEF321C3CE6D50024566D /* CustomerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */; };
+		B3ABEF331C3CE6D50024566D /* CustomerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */; };
 		B3B56BE11B8C47CB002E01B6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B56BE01B8C47CB002E01B6 /* CoreLocation.framework */; };
 		B3B7A6661BA6A25F0043DF7C /* addCustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7A62B1BA6A25F0043DF7C /* addCustomerViewController.m */; };
 		B3B7A6671BA6A25F0043DF7C /* addCustomerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3B7A62C1BA6A25F0043DF7C /* addCustomerViewController.xib */; };
@@ -775,6 +791,8 @@
 		520279671BF47C3C0049C0B9 /* ChatListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListCell.m; sourceTree = "<group>"; };
 		520D54A71BF2EB9400923F6C /* ZhiVisitorDynamicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhiVisitorDynamicController.h; sourceTree = "<group>"; };
 		520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhiVisitorDynamicController.m; sourceTree = "<group>"; };
+		5222D1221C3B743400F262A3 /* SelectCustomerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCustomerController.h; sourceTree = "<group>"; };
+		5222D1231C3B743400F262A3 /* SelectCustomerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCustomerController.m; sourceTree = "<group>"; };
 		522E80651BD1049500DB48DA /* OrderPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPromptView.h; sourceTree = "<group>"; };
 		522E80661BD1049500DB48DA /* OrderPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPromptView.m; sourceTree = "<group>"; };
 		522E80681BD104A800DB48DA /* OrderPromptView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderPromptView.xib; sourceTree = "<group>"; };
@@ -804,12 +822,18 @@
 		527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInvoiceWebController.m; sourceTree = "<group>"; };
 		52A4C1541BB1053200614BFF /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		52A4C1551BB1053200614BFF /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		52AEE0171C3BD691008FB583 /* SetRedPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetRedPacketController.h; sourceTree = "<group>"; };
+		52AEE0181C3BD691008FB583 /* SetRedPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetRedPacketController.m; sourceTree = "<group>"; };
+		52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetRedPacketController.xib; sourceTree = "<group>"; };
 		52B858461BC76D4C00B15483 /* CommandTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandTo.h; sourceTree = "<group>"; };
 		52B858471BC76D4C00B15483 /* CommandTo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandTo.m; sourceTree = "<group>"; };
 		52B858481BC76D4C00B15483 /* CommandTo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommandTo.xib; sourceTree = "<group>"; };
 		52BEDF971BEB413E003A04CA /* NewNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewNewsController.h; sourceTree = "<group>"; };
 		52BEDF981BEB413E003A04CA /* NewNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewNewsController.m; sourceTree = "<group>"; };
 		52BEDF991BEB413E003A04CA /* NewNewsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewNewsController.xib; sourceTree = "<group>"; };
+		52CCF8691C3B5DE400C91387 /* RedPacketMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketMainController.h; sourceTree = "<group>"; };
+		52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketMainController.m; sourceTree = "<group>"; };
+		52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedPacketMainController.xib; sourceTree = "<group>"; };
 		52CF60BB1BDDCAF600DD97B8 /* SubscribeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeCell.h; sourceTree = "<group>"; };
 		52CF60BC1BDDCAF600DD97B8 /* SubscribeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeCell.m; sourceTree = "<group>"; };
 		52CF60BD1BDDCAF600DD97B8 /* SubscribeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscribeCell.xib; sourceTree = "<group>"; };
@@ -1735,8 +1759,21 @@
 		845514FA1AC032C000D588A7 /* WriteFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteFileManager.m; sourceTree = "<group>"; };
 		B325F7DC1BE24A6A00124271 /* MeTextFieldSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeTextFieldSearchViewController.h; path = MeView/MeTextFieldSearchViewController.h; sourceTree = "<group>"; };
 		B325F7DD1BE24A6A00124271 /* MeTextFieldSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeTextFieldSearchViewController.m; path = MeView/MeTextFieldSearchViewController.m; sourceTree = "<group>"; };
+		B34007731C3A85180094028C /* ServiceNotifiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceNotifiViewController.h; sourceTree = "<group>"; };
+		B34007741C3A85180094028C /* ServiceNotifiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceNotifiViewController.m; sourceTree = "<group>"; };
+		B34007751C3A85180094028C /* ServiceNotifiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceNotifiViewController.xib; sourceTree = "<group>"; };
+		B34007781C3A89900094028C /* ServiceNotifiTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceNotifiTableViewCell.h; sourceTree = "<group>"; };
+		B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceNotifiTableViewCell.m; sourceTree = "<group>"; };
+		B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceNotifiTableViewCell.xib; sourceTree = "<group>"; };
 		B3585A571BFC29960005448F /* noOpenExclusiveAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noOpenExclusiveAppView.h; sourceTree = "<group>"; };
 		B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noOpenExclusiveAppView.m; sourceTree = "<group>"; };
+		B35FD5A11C3B950E00DE4F6C /* ServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceModel.h; sourceTree = "<group>"; };
+		B35FD5A21C3B950E00DE4F6C /* ServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceModel.m; sourceTree = "<group>"; };
+		B35FD5A51C3BAF5500DE4F6C /* ChoseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseListViewController.h; sourceTree = "<group>"; };
+		B35FD5A61C3BAF5500DE4F6C /* ChoseListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseListViewController.m; sourceTree = "<group>"; };
+		B35FD5A71C3BAF5500DE4F6C /* ChoseListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoseListViewController.xib; sourceTree = "<group>"; };
+		B35FD5AD1C3BBA9600DE4F6C /* CartoonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartoonView.h; sourceTree = "<group>"; };
+		B35FD5AE1C3BBA9600DE4F6C /* CartoonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartoonView.m; sourceTree = "<group>"; };
 		B36B6BA31C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExclusiveAppIntroduceViewController.h; sourceTree = "<group>"; };
 		B36B6BA41C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExclusiveAppIntroduceViewController.m; sourceTree = "<group>"; };
 		B36B6BA51C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewExclusiveAppIntroduceViewController.xib; sourceTree = "<group>"; };
@@ -1775,6 +1812,11 @@
 		B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotLaButton.m; sourceTree = "<group>"; };
 		B3A2B6071BF4A715002AB105 /* CircleHotNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleHotNewsViewController.h; sourceTree = "<group>"; };
 		B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleHotNewsViewController.m; sourceTree = "<group>"; };
+		B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailShareByMyself.h; sourceTree = "<group>"; };
+		B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailShareByMyself.m; sourceTree = "<group>"; };
+		B3ABEF2F1C3CE6D50024566D /* CustomerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerTableViewCell.h; sourceTree = "<group>"; };
+		B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerTableViewCell.m; sourceTree = "<group>"; };
+		B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerTableViewCell.xib; sourceTree = "<group>"; };
 		B3B56BE01B8C47CB002E01B6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B3B7A62A1BA6A25F0043DF7C /* addCustomerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCustomerViewController.h; sourceTree = "<group>"; };
 		B3B7A62B1BA6A25F0043DF7C /* addCustomerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCustomerViewController.m; sourceTree = "<group>"; };
@@ -2097,6 +2139,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5222D1211C3B740800F262A3 /* SelectCustomers */ = {
+			isa = PBXGroup;
+			children = (
+				5222D1221C3B743400F262A3 /* SelectCustomerController.h */,
+				5222D1231C3B743400F262A3 /* SelectCustomerController.m */,
+			);
+			path = SelectCustomers;
+			sourceTree = "<group>";
+		};
 		522E80641BD1047900DB48DA /* OrderPromptView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2129,6 +2180,8 @@
 		527E3B7B1BEC7EB000AAA6F6 /* NewMessageCenter */ = {
 			isa = PBXGroup;
 			children = (
+				B35FD5A41C3BAEF400DE4F6C /* choseNotifi */,
+				B34007721C3A84A50094028C /* ServiceNotifi */,
 				79EDD2AA1BFB3218000FEFD7 /* CustomDynamic */,
 				79B5596C1BFB2EDB00C04F92 /* TerraceMessage */,
 				79B5596B1BFB2E8300C04F92 /* MessageCenterList */,
@@ -2146,6 +2199,16 @@
 				527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */,
 			);
 			path = OpenInvoiceWeb;
+			sourceTree = "<group>";
+		};
+		52AE17651C3BC6E100114321 /* SetRedPacket */ = {
+			isa = PBXGroup;
+			children = (
+				52AEE0171C3BD691008FB583 /* SetRedPacketController.h */,
+				52AEE0181C3BD691008FB583 /* SetRedPacketController.m */,
+				52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */,
+			);
+			path = SetRedPacket;
 			sourceTree = "<group>";
 		};
 		52B858451BC76D4C00B15483 /* CommendToDetail */ = {
@@ -2169,6 +2232,18 @@
 				52BEDF991BEB413E003A04CA /* NewNewsController.xib */,
 			);
 			path = NewNewsController;
+			sourceTree = "<group>";
+		};
+		52CCF8681C3B5D6100C91387 /* RedPacket */ = {
+			isa = PBXGroup;
+			children = (
+				52AE17651C3BC6E100114321 /* SetRedPacket */,
+				5222D1211C3B740800F262A3 /* SelectCustomers */,
+				52CCF8691C3B5DE400C91387 /* RedPacketMainController.h */,
+				52CCF86A1C3B5DE400C91387 /* RedPacketMainController.m */,
+				52CCF86B1C3B5DE400C91387 /* RedPacketMainController.xib */,
+			);
+			path = RedPacket;
 			sourceTree = "<group>";
 		};
 		52CF60C01BDDD9AD00DD97B8 /* MySubscribe */ = {
@@ -2346,6 +2421,8 @@
 				5A52FB7B1ACEBF220076DAE6 /* ProduceDetailViewController.h */,
 				5A52FB7C1ACEBF220076DAE6 /* ProduceDetailViewController.m */,
 				5A52FB7D1ACEBF220076DAE6 /* ProduceDetailViewController.xib */,
+				B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */,
+				B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */,
 			);
 			path = ProductDetail;
 			sourceTree = "<group>";
@@ -4192,6 +4269,31 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		B34007721C3A84A50094028C /* ServiceNotifi */ = {
+			isa = PBXGroup;
+			children = (
+				B34007731C3A85180094028C /* ServiceNotifiViewController.h */,
+				B34007741C3A85180094028C /* ServiceNotifiViewController.m */,
+				B34007751C3A85180094028C /* ServiceNotifiViewController.xib */,
+				B34007781C3A89900094028C /* ServiceNotifiTableViewCell.h */,
+				B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */,
+				B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */,
+				B35FD5A11C3B950E00DE4F6C /* ServiceModel.h */,
+				B35FD5A21C3B950E00DE4F6C /* ServiceModel.m */,
+			);
+			path = ServiceNotifi;
+			sourceTree = "<group>";
+		};
+		B35FD5A41C3BAEF400DE4F6C /* choseNotifi */ = {
+			isa = PBXGroup;
+			children = (
+				B35FD5A51C3BAF5500DE4F6C /* ChoseListViewController.h */,
+				B35FD5A61C3BAF5500DE4F6C /* ChoseListViewController.m */,
+				B35FD5A71C3BAF5500DE4F6C /* ChoseListViewController.xib */,
+			);
+			path = choseNotifi;
+			sourceTree = "<group>";
+		};
 		B36B6BA21C16E29C002C89E2 /* newExclusiveApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -4258,6 +4360,8 @@
 				B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */,
 				B3A2B6071BF4A715002AB105 /* CircleHotNewsViewController.h */,
 				B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */,
+				B35FD5AD1C3BBA9600DE4F6C /* CartoonView.h */,
+				B35FD5AE1C3BBA9600DE4F6C /* CartoonView.m */,
 			);
 			path = CircleHotNews;
 			sourceTree = "<group>";
@@ -4267,6 +4371,9 @@
 			children = (
 				B3B7A6291BA6A25F0043DF7C /* addCustomer */,
 				B3B7A62F1BA6A25F0043DF7C /* BatchAddCustomers */,
+				B3ABEF2F1C3CE6D50024566D /* CustomerTableViewCell.h */,
+				B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */,
+				B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */,
 				B3B7A6381BA6A25F0043DF7C /* CustomCell.h */,
 				B3B7A6391BA6A25F0043DF7C /* CustomCell.m */,
 				B3B7A63A1BA6A25F0043DF7C /* CustomCell.xib */,
@@ -4403,6 +4510,7 @@
 		B3C01DED1BAC10FC005E4BB5 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				52CCF8681C3B5D6100C91387 /* RedPacket */,
 				B3CFF6191BFAEE0E002065AA /* ExlusiveAPP */,
 				52BEDF961BEB4122003A04CA /* NewNewsController */,
 				52CF60C41BDE0EEF00DD97B8 /* addSubscribeCond */,
@@ -5008,6 +5116,7 @@
 				796EFCED1BF5C67D00799120 /* VoiceSearchFeedback016@2x.png in Resources */,
 				B3B810971BFEF9B100C27A9C /* OldcustomerTableViewCell.xib in Resources */,
 				796EFCD41BF5C67D00799120 /* VoiceSearchFeedback004.png in Resources */,
+				52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */,
 				5ABA4F631AD7B8EA004AA8F6 /* Localizable.strings in Resources */,
 				632AF23D1AD3E536004916C0 /* SearchFootView.xib in Resources */,
 				796EFD0D1BF5C67D00799120 /* chat_location_detail_disclosure@2x.png in Resources */,
@@ -5063,6 +5172,7 @@
 				5A52FC5C1ACEBF220076DAE6 /* SearchProductViewController.xib in Resources */,
 				793917431C17CD550020372E /* chat_sender_audio_playing_000@2x.png in Resources */,
 				7939172C1C17CD3D0020372E /* chat_receiver_audio_playing_002@2x.png in Resources */,
+				B34007771C3A85180094028C /* ServiceNotifiViewController.xib in Resources */,
 				795E1F021B72F75300072A77 /* read_me.txt in Resources */,
 				B3B7A6781BA6A25F0043DF7C /* CustomerOrdersUIViewController.xib in Resources */,
 				796EFD371BF5C67D00799120 /* chatBar_more_camera@2x.png in Resources */,
@@ -5121,6 +5231,7 @@
 				796EFD301BF5C67D00799120 /* chatBar_colorMore_photo@2x.png in Resources */,
 				5A076EA81ACD8B270077611C /* StoreViewController.xib in Resources */,
 				796EFD111BF5C67D00799120 /* chat_location_preview@2x.png in Resources */,
+				B340077C1C3A89900094028C /* ServiceNotifiTableViewCell.xib in Resources */,
 				796EFE761BF5CCC800799120 /* MLPhotoBrowser.bundle in Resources */,
 				7939172E1C17CD3D0020372E /* chat_receiver_audio_playing_003@2x.png in Resources */,
 				796EFCD91BF5C67D00799120 /* VoiceSearchFeedback006@2x.png in Resources */,
@@ -5131,6 +5242,7 @@
 				527E3B851BEC7F8C00AAA6F6 /* NewMessageCell.xib in Resources */,
 				796EFCCC1BF5C67D00799120 /* chatFire_audioPlaying3.png in Resources */,
 				796EFCC81BF5C67D00799120 /* chatFire_audioPlaying1.png in Resources */,
+				B3ABEF331C3CE6D50024566D /* CustomerTableViewCell.xib in Resources */,
 				636C8B761AC2E1420097CAE9 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				796EFCCA1BF5C67D00799120 /* chatFire_audioPlaying2.png in Resources */,
 				796EFD121BF5C67D00799120 /* faceDelete.png in Resources */,
@@ -5182,11 +5294,13 @@
 				B3B7A6671BA6A25F0043DF7C /* addCustomerViewController.xib in Resources */,
 				796EFD2E1BF5C67D00799120 /* chatBar_colorMore_location@2x.png in Resources */,
 				797A5EB91B846DE200751B1D /* FindProductNew.storyboard in Resources */,
+				B35FD5A91C3BAF5500DE4F6C /* ChoseListViewController.xib in Resources */,
 				796EFD251BF5C67D00799120 /* chatBar_recordBg@2x.png in Resources */,
 				7939172B1C17CD3D0020372E /* chat_receiver_audio_playing_001@3x.png in Resources */,
 				796EFD3C1BF5C67D00799120 /* chatBar_more_locationSelected.png in Resources */,
 				52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */,
 				796EFCD01BF5C67D00799120 /* VoiceSearchFeedback002.png in Resources */,
+				52CCF86D1C3B5DE400C91387 /* RedPacketMainController.xib in Resources */,
 				796EFD1E1BF5C67D00799120 /* chatBar_more.png in Resources */,
 				793917341C17CD3D0020372E /* chat_receiver_bg.png in Resources */,
 				796EFCD81BF5C67D00799120 /* VoiceSearchFeedback006.png in Resources */,
@@ -5301,6 +5415,7 @@
 				63D31E8E1AB16EA00043B3CA /* ViewController.m in Sources */,
 				5A52FC5B1ACEBF220076DAE6 /* SearchProductViewController.m in Sources */,
 				B3CFF61D1BFAEE0E002065AA /* ExclusiveViewController.m in Sources */,
+				B35FD5AF1C3BBA9600DE4F6C /* CartoonView.m in Sources */,
 				63D31E441AB143D00043B3CA /* main.m in Sources */,
 				796EFDCD1BF5CA4E00799120 /* UIImage+EMGIF.m in Sources */,
 				796EFDD41BF5CA4E00799120 /* PSTCollectionView.m in Sources */,
@@ -5325,7 +5440,9 @@
 				63F1A1781B134D5D00DE9867 /* RecomViewController.m in Sources */,
 				796EFE6F1BF5CCC800799120 /* UIImage+MLBrowserPhotoImageForBundle.m in Sources */,
 				796EFC131BF5C5DE00799120 /* MessageReadManager.m in Sources */,
+				B35FD5A31C3B950E00DE4F6C /* ServiceModel.m in Sources */,
 				5A52FC921ACEBF220076DAE6 /* SKSearckDisplayController.m in Sources */,
+				B340077B1C3A89900094028C /* ServiceNotifiTableViewCell.m in Sources */,
 				52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */,
 				796EFDBE1BF5CA4E00799120 /* MWPhotoBrowser.m in Sources */,
 				63F1A1881B140D5B00DE9867 /* RecentlyViewController.m in Sources */,
@@ -5386,6 +5503,7 @@
 				B36E57301B74C0D000471AAC /* MinMaxPriceSelectViewController.m in Sources */,
 				796EFC041BF5C5DE00799120 /* DXChatBarMoreView.m in Sources */,
 				796EFDDC1BF5CA4E00799120 /* PSTGridLayoutInfo.m in Sources */,
+				B3ABEF321C3CE6D50024566D /* CustomerTableViewCell.m in Sources */,
 				B3C01E2B1BAC10FC005E4BB5 /* Me.m in Sources */,
 				632BFFFA1AB92A3A003B15AD /* SDWebImageManager.m in Sources */,
 				5A6996101AF8564F002EDD91 /* CreatePersonController.m in Sources */,
@@ -5537,6 +5655,7 @@
 				B3B7A6771BA6A25F0043DF7C /* CustomerOrdersUIViewController.m in Sources */,
 				632613271AB2AF04003AC2DA /* PGCategoryView.m in Sources */,
 				796EFBFD1BF5C5DE00799120 /* ChatViewController+Category.m in Sources */,
+				5222D1241C3B743400F262A3 /* SelectCustomerController.m in Sources */,
 				798F769E1BD65E2E00457A70 /* TravelConsultantViewControllerNoShare.m in Sources */,
 				5A52FC821ACEBF220076DAE6 /* OrderDetailViewController.m in Sources */,
 				796EFDD91BF5CA4E00799120 /* PSTCollectionViewItemKey.m in Sources */,
@@ -5550,6 +5669,7 @@
 				5A076CA11ACD24050077611C /* CityViewController.m in Sources */,
 				63A81B8E1B39818400D8B37D /* SKBNavBarFor6OrP.m in Sources */,
 				5A52FC541ACEBF220076DAE6 /* rightModal.m in Sources */,
+				52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */,
 				63AE28951B206F8700BDB8C1 /* newModel.m in Sources */,
 				B3B810911BFECF4700C27A9C /* OldCustomerViewController.m in Sources */,
 				7964F4F11B437D6500F56EB2 /* BaseClickAttribute.m in Sources */,
@@ -5572,6 +5692,7 @@
 				B3D7B7C31BD76F700080E243 /* IdentifyViewController.m in Sources */,
 				633263DB1AB851590021553B /* IWHttpTool.m in Sources */,
 				B3BC33981BD9031F00C61D83 /* MeSearchViewController.m in Sources */,
+				B35FD5A81C3BAF5500DE4F6C /* ChoseListViewController.m in Sources */,
 				5ABA4F5B1AD7A908004AA8F6 /* RecommendViewController.m in Sources */,
 				796EFE6D1BF5CCC800799120 /* MLPhotoBrowserDatas.m in Sources */,
 				B325F7DE1BE24A6A00124271 /* MeTextFieldSearchViewController.m in Sources */,
@@ -5579,6 +5700,7 @@
 				5AED0A161ADB604C00B0E0E5 /* DayDetail.m in Sources */,
 				796EFB191BF5BCF100799120 /* EMCDDeviceManager+Media.m in Sources */,
 				527D07C01BD5F39A00CA6C39 /* OrderinformationCell.m in Sources */,
+				B3ABEF2E1C3CC54E0024566D /* ProductDetailShareByMyself.m in Sources */,
 				6364A9B01B098CA00099705B /* YYAnimationIndicator.m in Sources */,
 				634469861B342AF7009F7ADF /* messageCellSKBTableViewCell.m in Sources */,
 				6326131D1AB1C175003AC2DA /* MJRefreshFooterView.m in Sources */,
@@ -5605,8 +5727,10 @@
 				796F36C61B78438E0089FEE8 /* LeftTableCell.m in Sources */,
 				796EFAFA1BF4D9A800799120 /* UIResponder+Router.m in Sources */,
 				63F1A18F1B1424B100DE9867 /* yesterDayModel.m in Sources */,
+				52CCF86C1C3B5DE400C91387 /* RedPacketMainController.m in Sources */,
 				632BFFF41AB92A3A003B15AD /* NSData+ImageContentType.m in Sources */,
 				632BFFFE1AB92A3A003B15AD /* UIImage+MultiFormat.m in Sources */,
+				B34007761C3A85180094028C /* ServiceNotifiViewController.m in Sources */,
 				52F275B71BD4E273008543E9 /* InvoiceLowView.m in Sources */,
 				B3C01E3B1BAC10FC005E4BB5 /* OrgSettingViewController.m in Sources */,
 				796EFDC61BF5CA4E00799120 /* EMSDWebImageDownloader.m in Sources */,

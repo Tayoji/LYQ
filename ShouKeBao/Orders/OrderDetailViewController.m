@@ -26,6 +26,8 @@
 #import "NSString+FKTools.h"
 #import "UpDateUserPictureViewController.h"
 #import "ChatViewController.h"
+#import "AttachmentCollectionView.h"
+#import <CoreImage/CoreImage.h>
 //#define urlSuffix @"?isfromapp=1&apptype=1"
 @interface OrderDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2>
 
@@ -50,11 +52,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopIndictor) name:@"stopIndictor" object:nil];
-
     [self.view addSubview:self.webView];
-    
+//    UIImage * image = [self createImageWithColor:[UIColor colorWithRed:15/255.0 green:155/255.0 blue:155/255.0 alpha:0.1]];
+//    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     self.webView.delegate = self;
 //    加载url
     self.request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
@@ -64,7 +65,8 @@
     [self initRightBtn];
     [self setUpleftBarButtonItems];
     //self.navigationItem.leftBarButtonItem.enabled = NO;
-    [self.webView scalesPageToFit];
+//    [self.webView scalesPageToFit];
+    self.webView.scalesPageToFit = YES;
     [self.webView.scrollView setShowsVerticalScrollIndicator:NO];
     [self.webView.scrollView setShowsHorizontalScrollIndicator:NO];
     
@@ -97,6 +99,18 @@
     self.urlSuffix2 = urlSuffix2;
 
    }
+
+-(UIImage*) createImageWithColor:(UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
 -(NSMutableDictionary *)shareInfo
 {
     if ( _shareInfo == nil ) {
@@ -252,6 +266,8 @@
         [self LYQSKBAPP_UpDateUserPhotos:rightUrl];
     }else if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCustomIM"]){
         [self LYQSKBAPP_OpenCustomIM:rightUrl];
+    }else if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateVisitorCertificate"]){
+        [self LYQSKBAPP_UpdateVisitorCertificate:rightUrl];
     }
 
 
@@ -340,6 +356,15 @@
     
     
 }
+- (void)LYQSKBAPP_UpdateVisitorCertificate:(NSString *)urlStr{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
+    AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
+//    AVC.customerId = ;
+    AVC.fromType = fromTypeOrderDetail;
+    [self.navigationController pushViewController:AVC animated:YES];
+
+}
+
 - (void)doIfInWebWithUrl:(NSString *)rightUrl{
     if ([rightUrl myContainsString:@"Product/ProductDetail"]) {
         self.title = @"产品详情";
@@ -599,7 +624,7 @@
     
 }
 
-
+//- (void)upDateVisitorToSerVer:()
 
 
 

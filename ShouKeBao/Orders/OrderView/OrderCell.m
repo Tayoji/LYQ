@@ -52,6 +52,7 @@
 
 @property (nonatomic,strong) NSMutableArray *buttonArr;
 
+@property (weak, nonatomic)UIButton *buttonIcon;
 @end
 
 @implementation OrderCell
@@ -172,6 +173,12 @@
     UIView *bottomView = [[UIView alloc] init];
     [self.contentView addSubview:bottomView];
     self.bottomView = bottomView;
+    
+    //底部icon
+    UIButton *iconB = [[UIButton alloc]init];
+    [self.bottomView addSubview:iconB];
+    self.buttonIcon = iconB;
+   
 }
 
 - (void)layoutSubviews
@@ -255,6 +262,13 @@
     // 底部按钮
     CGFloat bottomY = CGRectGetMaxY(self.sep3.frame);
     self.bottomView.frame = CGRectMake(0, bottomY, screenW, 40);
+    
+    
+    //底部icon
+//    CGFloat iconStatusW = [model.ProgressState integerValue] == 0 ? 0 : 24;
+    self.buttonIcon.frame = CGRectMake(statusIconX, 10, 20, 20);
+    
+    
 }
 
 - (void)setModel:(OrderModel *)model
@@ -317,6 +331,13 @@
         [view removeFromSuperview];
     }
     
+    
+//    [self.buttonIcon setImage:[UIImage imageNamed:@"hongdian"] forState:UIControlStateNormal];
+    self.buttonIcon.backgroundColor = [UIColor redColor];
+    [self.bottomView addSubview:self.buttonIcon];
+
+   
+
 //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
     if (model.buttonList.count) {
 
@@ -341,7 +362,8 @@
             [self.bottomView addSubview:b];
             [self.buttonArr addObject:b];
         }
-        [self layoutButtons];
+        
+              [self layoutButtons];
         
     }else{
   
@@ -356,6 +378,9 @@
         
         self.statusDes.text = nil;
     }
+    
+   
+
 }
 
 #pragma mark - getter
@@ -368,8 +393,8 @@
 }
 
 #pragma mark - private
-- (void)layoutButtons
-{
+- (void)layoutButtons{
+    
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGSize max = CGSizeMake(MAXFLOAT, MAXFLOAT);
     CGFloat btnW = 0;
@@ -382,6 +407,8 @@
         CGFloat btnX = screenW - btnW;
         btn.frame = CGRectMake(btnX, 5, btnSize.width + 12, btnSize.height + 12);
     }
+    
+    
 }
 
 - (void)clickButton:(LinkButton *)sender

@@ -9,6 +9,7 @@
 #import "CustomerDetailAndOrderViewController.h"
 #import "CustomerOrderViewController.h"
 #import "CustomerDetailViewController.h"
+#import "ZhiVisitorDynamicController.h"
 #import "CustomModel.h"
 #import "Customers.h"
 #import "EditCustomerDetailViewController.h"
@@ -20,7 +21,7 @@
 @property (nonatomic, weak) UISegmentedControl *segmentControl;
 @property (nonatomic, strong)CustomerOrderViewController * orderVC;
 @property (nonatomic, strong)CustomerDetailViewController * detailVC;
-
+@property (nonatomic, strong)ZhiVisitorDynamicController *customerDynamicVC;
 @property (nonatomic, strong)UIButton *button;
 @end
 
@@ -29,8 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavSegementView];
-//     self.title = @"客户资料";
     [self customerRightBarItem];
+    [self setNavBack];
     self.button.hidden = NO;
     [self addGest];
     [self.view addSubview:self.detailVC.view];
@@ -43,8 +44,8 @@
     
     [[self view] addGestureRecognizer:recognizer];
 }
--(void)back
-{
+-(void)back{
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -52,18 +53,27 @@
         [self back];
 }
 - (void)setNavSegementView{
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 28)];
-    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"客户资料",@"订单详情",nil];
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 28)];
+    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"客户资料",@"订单详情", @"客人动态",nil];
     UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:segmentedArray];
     [segment addTarget:self action:@selector(sex:)forControlEvents:UIControlEventValueChanged];
     [segment setTintColor:[UIColor whiteColor]];
-    segment.frame = CGRectMake(0, 0, 150, 28);
+    segment.frame = CGRectMake(0, 0, 200, 28);
     [segment setSelected:YES];
     [segment setSelectedSegmentIndex:0];
     [titleView addSubview:segment];
     self.segmentControl = segment;
     self.navigationItem.titleView = titleView;
 
+}
+- (void)setNavBack{
+    
+    UIButton *leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0,0,30,15)];
+    leftBtn.imageEdgeInsets = UIEdgeInsetsMake(-1, -5, 0, 20);
+    [leftBtn setImage:[UIImage imageNamed:@"fanhuian"] forState:UIControlStateNormal];
+    
+    [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,23 +87,30 @@
     if (control.selectedSegmentIndex == 0) {
         self.button.hidden = NO;
         [self.view addSubview:self.detailVC.view];
-        if (self.orderVC) {
+        if (self.orderVC || self.customerDynamicVC) {
             [self.orderVC.view removeFromSuperview];
-            
+            [self.customerDynamicVC.view removeFromSuperview];
         }
         NSLog(@"客户资料" );
-        //    [self.navigationController popViewControllerAnimated:NO];
     }else if (control.selectedSegmentIndex == 1){
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"CustomerOrderDetailClick" attributes:dict];
 
         self.button.hidden = YES;
         [self.view addSubview:self.orderVC.view];
-        if (self.detailVC) {
+        if (self.detailVC || self.customerDynamicVC) {
             [self.detailVC.view removeFromSuperview];
-          
+            [self.customerDynamicVC.view removeFromSuperview];
         }
         NSLog(@"订单详情" );
+    }else if (control.selectedSegmentIndex == 2){
+        self.button.hidden = YES;
+        [self.view addSubview:self.customerDynamicVC.view];
+        if (self.detailVC || self.orderVC) {
+            [self.detailVC.view removeFromSuperview];
+            [self.orderVC.view removeFromSuperview];
+            
+        }
     }
 }
 -(CustomerOrderViewController *)orderVC{
@@ -103,8 +120,6 @@
         _orderVC = [sb instantiateViewControllerWithIdentifier:@"CustomerOrderID"];
         _orderVC.customerId = self.customerID;
         _orderVC.mainNav = self.navigationController;
-        
-        
     }
     return _orderVC;
 }
@@ -114,24 +129,19 @@
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
         _detailVC = [sb instantiateViewControllerWithIdentifier:@"customerDetail"];
         _detailVC.Nav = self.navigationController;
-//            _detailVC.QQStr = self.model.QQCode;
-//            _detailVC.ID = self.model.ID;
-//            _detailVC.weChatStr = self.model.WeiXinCode;
-//            _detailVC.teleStr = self.model.Mobile;
-//            _detailVC.noteStr = self.model.Remark;
-//            _detailVC.userNameStr = self.model.Name;
-//            _detailVC.customMoel = self.model;
-//            _detailVC.picUrl = self.model.PicUrl;
-//        _detailVC.pictureArray = self.model.PictureList;
-//        NSLog(@"%@", _detailVC.pictureArray);
         _detailVC.customerId = self.customerID;
         _detailVC.AppSkbUserID = self.appUserID;
-        NSLog(@"%@---%@", _detailVC.customerId, self.appUserID);
-
-//            _detailVC.delegate = self.customVC;
-//            _detailVC.keyWordss = self.keyWords;
     }
     return _detailVC;
+}
+
+- (ZhiVisitorDynamicController *)customerDynamicVC{
+    if (!_customerDynamicVC) {
+        ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
+        _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
+        _customerDynamicVC = customerDynamicVC;
+    }
+    return _customerDynamicVC;
 }
 -(void)customerRightBarItem
 {
@@ -147,8 +157,7 @@
     
     self.navigationItem.rightBarButtonItem= barItem;
 }
--(void)EditCustomerDetail
-{
+-(void)EditCustomerDetail{
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
     
     EditCustomerDetailViewController *edit = [sb instantiateViewControllerWithIdentifier:@"EditCustomer"];
@@ -158,7 +167,7 @@
     edit.wechatStr = self.detailVC.weChat.text;
     edit.noteStr = self.detailVC.note.text;
     edit.teleStr = self.detailVC.tele.text;
-    edit.nameStr = self.detailVC.userName.text;
+    edit.nameStr = self.detailVC.customerNameLa.text;
     edit.delegate = self.detailVC;
     //    添加的内容
     edit.personCardIDStr = self.detailVC.userMessageID.text;
@@ -180,7 +189,7 @@
     
     
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:self.detailVC.userName.text forKey:@"Name"];
+        [dic setObject:self.detailVC.customerNameLa.text forKey:@"Name"];
         [dic setObject:self.detailVC.tele.text forKey:@"Mobile"];
         [dic setObject:self.detailVC.weChat.text forKey:@"WeiXinCode"];
         [dic setObject:self.detailVC.QQ.text forKey:@"QQCode"];

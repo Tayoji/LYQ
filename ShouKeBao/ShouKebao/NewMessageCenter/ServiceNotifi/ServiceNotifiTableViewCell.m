@@ -1,0 +1,58 @@
+//
+//  ServiceNotifiTableViewCell.m
+//  ShouKeBao
+//
+//  Created by 张正梅 on 16/1/4.
+//  Copyright © 2016年 shouKeBao. All rights reserved.
+//
+
+#import "ServiceNotifiTableViewCell.h"
+
+@implementation ServiceNotifiTableViewCell
+
++ (instancetype)cellWithTableView:(UITableView *)tableView{
+    
+    static NSString *cellID = @"ServiceNotifiTableViewCell";
+    ServiceNotifiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (cell == nil) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ServiceNotifiTableViewCell" owner:nil options:nil] lastObject];
+    }
+
+    return cell;
+}
+
+
+- (void)setServiceModel:(ServiceModel *)serviceModel{
+    _serviceModel = serviceModel;
+//    self.timeL =
+//    self.detailView = 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

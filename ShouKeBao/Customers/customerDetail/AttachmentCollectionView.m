@@ -83,28 +83,49 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     hudView.labelText = @"加载中...";
     [hudView show:YES];
 
+    /*
+     **区分从哪里到的这个界面，传进来的参数是游客或者是客户，做不同的处理
+     **
+     */
+
+    if (self.fromType == fromTypeCustom) {
+        [self loadDateFromCustom];
+    }else if (self.fromType == fromTypeOrderDetail){
+        [self loadDateFromOrderDetail];
+    }
+}
+-(void)loadDateFromCustom{
     NSDictionary * params = @{@"CustomerIds":@[self.customerId]};
     [IWHttpTool postWithURL:@"/Customer/GetCustomerPicList" params:params success:^(id json) {
         NSLog(@"%@", json);
         NSArray * array = json[@"CustomerList"];
         if (array.count) {
             NSArray *productss = array[0][@"PictureList"];
-        for (NSDictionary * dic in productss) {
-            [self.dataSource addObject:dic[@"MinPicUrl"]];
-            [self.bigPicUrlArray addObject:dic[@"PicUrl"]];
-        }
+            for (NSDictionary * dic in productss) {
+                [self.dataSource addObject:dic[@"MinPicUrl"]];
+                [self.bigPicUrlArray addObject:dic[@"PicUrl"]];
+            }
         }
         [self.collectionView reloadData];
-        [hudView hide:YES];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
     } failure:^(NSError * error) {
-        
     }];
-        
-//    for (NSDictionary * dic in self.pictureList) {
-//        [self.dataSource addObject:dic[@"MinPicUrl"]];
-//        [self.bigPicUrlArray addObject:dic[@"PicUrl"]];
-//    }
-//    [self.collectionView reloadData];
+}
+-(void)loadDateFromOrderDetail{
+    NSDictionary * params = @{@"OrderCustomerId":@[self.customerId]};
+    [IWHttpTool postWithURL:@"/Customer/GetOrderCustomerAttachmentById" params:params success:^(id json) {
+        NSLog(@"%@", json);
+        NSArray * array = json[@"OrderCustomerAttachmentList"];
+        if (array.count) {
+            for (NSDictionary * dic in array) {
+                [self.dataSource addObject:dic[@"ImageUrl"]];
+                [self.bigPicUrlArray addObject:dic[@"ImageUrl"]];
+            }
+        }
+        [self.collectionView reloadData];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
+    } failure:^(NSError * error) {
+    }];
 }
 -(NSMutableArray *)dataSource
 {
@@ -157,13 +178,31 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self EditCustomerDetail];
     }else{
         NSLog(@"%@", self.customerId);
-        [IWHttpTool postWithURL:@"/Customer/SavePicToCustomer" params:@{@"PicUrls":self.bigPicUrlArray,@"CustomerId":self.customerId} success:^(id json) {
-            [MBProgressHUD showSuccess:@"保存成功"];
-            NSLog(@"%@", json);
-        } failure:^(NSError *error) {
-        }];
+        
+        if (self.fromType == fromTypeCustom) {
+            [self upDateFromCustom];
+        }else if (self.fromType == fromTypeOrderDetail){
+            [self upDateFromOrderDetail];
+        }
     }
 }
+
+- (void)upDateFromCustom{
+    [IWHttpTool postWithURL:@"/Customer/SavePicToCustomer" params:@{@"PicUrls":self.bigPicUrlArray,@"CustomerId":self.customerId} success:^(id json) {
+        [MBProgressHUD showSuccess:@"保存成功"];
+        NSLog(@"%@", json);
+    } failure:^(NSError *error) {
+    }];
+}
+- (void)upDateFromOrderDetail{
+    [IWHttpTool postWithURL:@"/Customer/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
+        [MBProgressHUD showSuccess:@"保存成功"];
+        NSLog(@"%@", json);
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -335,6 +374,9 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     {
         //        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在添加";
+
     NSLog(@"----%@",info);
     UIImage *image = info[@"UIImagePickerControllerEditedImage"];
     UIImage *imageNew = [self getImage:image];
@@ -346,6 +388,9 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self.dataSource addObject:json[@"PicUrl"]];
         [self.bigPicUrlArray addObject:json[@"PicUrl"]];
         [self.collectionView reloadData];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"添加成功"];
+
     } failure:^(NSError * error) {
         
     }];    

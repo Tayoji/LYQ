@@ -21,11 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([self.signStr isEqualToString:@"fromServiceVC"]) {
+        self.setSeviceNotiView.hidden = NO;
+    }
+    
     _switch1 = (UISwitch *)[self.view viewWithTag:31];
     _switch2 = (UISwitch *)[self.view viewWithTag:32];
     _switch3 = (UISwitch *)[self.view viewWithTag:33];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"新消息通知";
+//    self.title = @"新消息通知";
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         UIUserNotificationSettings *mySet =[[UIApplication sharedApplication] currentUserNotificationSettings];
         if (mySet.types == UIRemoteNotificationTypeNone) {
@@ -137,6 +141,15 @@
     }else{
         sender.on = NO;
         [self.NewsRemind setObject:@"1" forKey:@"NewsShakeRemind"];
+    }
+    
+}
+
+- (IBAction)acceptServiceNotiSwitch:(UISwitch *)sender{
+    if (sender.on) {
+        sender.on = YES;
+    }else{
+        sender.on = NO; 
     }
     
 }
