@@ -21,14 +21,34 @@
     return cell;
 }
 
-
 - (void)setServiceModel:(ServiceModel *)serviceModel{
     _serviceModel = serviceModel;
-//    self.timeL =
-//    self.detailView = 
+    
+    self.circlePayBao.text = [NSString stringWithFormat:@"%@", serviceModel.MessageTypeText];
+    NSLog(@" %@, %@", serviceModel.MessageTypeText, serviceModel.MessageTitle);
+    self.ditailL.text = [NSString stringWithFormat:@"%@",serviceModel.MessageTitle];
 }
 
 
+
+- (void)setMessageTypeWith:(NSString *)messageType{
+    switch ([messageType integerValue]) {
+        case 1:
+            self.circlePayBao.text = @"圈付宝充值";
+            break;
+        case 2:
+            self.circlePayBao.text = @"圈付宝收支";
+            break;
+        case 3:
+            self.circlePayBao.text = @"圈付宝现金券";
+            break;
+        case 4:
+            self.circlePayBao.text = @"订单流程";
+            break;
+        default:
+            break;
+    }
+}
 
 
 

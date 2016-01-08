@@ -21,6 +21,7 @@
 #import "yesterDayModel.h"
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
+#import "ProductDetailShareByMyself.h"
 @interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
 //@property (nonatomic,strong) NSMutableDictionary *shareInfo;
@@ -38,20 +39,28 @@
 @property (nonatomic, assign)BOOL isBack;
 @property (nonatomic,strong) UIButton * rightButton;
 @property (nonatomic,assign) BOOL isSave;
+@property (nonatomic, strong) UIView *blackView;
 //FromQRcode,
 //FromRecommend,
 //FromStore,
 //FromProductSearch,
 //FromFindProduct,
 //FromHotProduct
-
+@property (nonatomic, strong)NSArray *photoArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
-
+@property (nonatomic, strong) ProductDetailShareByMyself *defineV;
 @end
 
 @implementation ProduceDetailViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self blackView];
+       
+//    NSArray *btnImages = @[@"iconfont-kongjian", @"iconfont-qq", @"iconfont-weixin", @"iconfont-pengyouquan", @"iconfont-fuzhi", @"iconfont-duanxin"];
+//    NSArray *btnTitles = @[@"QQ空间", @"QQ", @"微信好友", @"微信朋友圈", @"复制链接", @"短信"];
+   
+    
+    
     self.coverView.hidden = YES;
 
     
@@ -190,6 +199,7 @@
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     self.webView.delegate = nil;
+
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
@@ -536,15 +546,11 @@
 
 
 #pragma 筛选navitem
--(void)shareIt:(id)sender
-{
+-(void)shareIt:(id)sender{
+  
     //每次分享的时候调用此方法，让后台知道当前页面分享的产品
     [self.webView stringByEvaluatingJavaScriptFromString:@"AppHadShareWhenBack()"];
-
-    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-    [MobClick event:@"ClickShareAll" attributes:dict];
-    [MobClick event:@"ProductDetailShareClickAll" attributes:dict];
-    [MobClick event:@"FromZhiVisitorDynamic_ShareClickAll" attributes:dict];
+    
     if (self.fromType == FromQRcode) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"ppkLYQAPP_ShareSuccess()"];
     }
@@ -557,117 +563,173 @@
     }
     [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
     NSLog(@"%@", postDic);
-    //构造分享内容
-//    NSString * str = [NSString stringWithFormat:@"%@%@%@", self.shareInfo[@"Title"], self.shareInfo[@"Desc"], self.shareInfo[@"Url"]];
     
-    
-//    NSMutableDictionary *new =  [StrToDic dicCleanSpaceWithDict:self.shareInfo];
-//    self.shareInfo = new;
-    
-//    NSString * str = [[(NSString *)self.shareInfo[@"Url"] componentsSeparatedByString:@"?"]firstObject];
-//    NSLog(@"shareInfoIs %@",new);
-//    NSString * title = [(NSString *)self.shareInfo[@"Title"] stringByReplacingCharactersInRange:NSMakeRange(10, 10) withString:@".."];
-//    if (self.detail) {
-//        self.shareInfo = self.detail.ShareInfo;
-//    }else{
-//        self.shareInfo = self.detail2.ShareInfo;
-//    }
-    id<ISSContent> publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
-                                       defaultContent:self.shareInfo[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:self.shareInfo[@"Pic"]]
-                                                title:self.shareInfo[@"Title"]
-                                                  url:self.shareInfo[@"Url"]                                  description:self.shareInfo[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
-
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.shareInfo[@"Url"]] image:nil];
-    NSLog(@"%@444", self.shareInfo);
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.shareInfo[@"Url"]]];
-   NSLog(@"self.shareInfo %@, %@", self.shareInfo[@"Url"], self.shareInfo[@"ShareUrl"]);
-    
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
-    
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                [self.warningLab removeFromSuperview];
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    
-                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
-                                    [MobClick event:@"ProductDetailShareSuccessClickAll" attributes:dict];
-                                    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
-                                        [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
-                                    }
-                                    if (self.fromType == FromRecommend) {
-                                        [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-
-                                    }
-                                   
-                                    
-                                        [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:self.fromType]] attributes:dict];
-
+        //构造分享内容
+        id<ISSContent>publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
+                                          defaultContent:self.shareInfo[@"Desc"]
+                                                   image:[ShareSDK imageWithUrl:self.shareInfo[@"Pic"]]
+                                                   title:self.shareInfo[@"Title"]
+                                                     url:self.shareInfo[@"Url"]                                             description:self.shareInfo[@"Desc"]
+                                               mediaType:SSPublishContentMediaTypeNews];
         
-//                                    [self.warningLab removeFromSuperview];
-                                   //精品推荐填1
-                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                    [postDic setObject:@"0" forKey:@"ShareType"];
-                                    if (self.shareInfo[@"Url"]) {
-                                        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
-                                    }
-                                    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
-                                    if (type ==ShareTypeWeixiSession) {
-                                        [postDic setObject:@"1" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQ){
-                                        [postDic setObject:@"2" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQSpace){
-                                        [postDic setObject:@"3" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeWeixiTimeline){
-                                        [postDic setObject:@"4" forKey:@"ShareWay"];
-                                    }
-                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-                                        NSDictionary * dci = json;
-                                        NSMutableString * string = [NSMutableString string];
-                                        for (id str in dci.allValues) {
-                                            [string appendString:str];
-                                        }
-                                        
-                                    } failure:^(NSError *error) {
-                                        
-                                    }];
-                                    //产品详情
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                        [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                        [MBProgressHUD hideHUD];
-                                    });
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-//                                    [self.warningLab removeFromSuperview];
-                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                        [MobClick event:@"ShareFailAll" attributes:dict];
+        [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.shareInfo[@"Url"]] image:nil];
+        NSLog(@"%@444", self.shareInfo);
+        [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.shareInfo[@"Url"]]];
+    
+    [self showDefineView:publishContent];
 
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                }else if (state == SSResponseStateCancel){
+#pragma mark - 系统自带分享先不管
+//    //每次分享的时候调用此方法，让后台知道当前页面分享的产品
+//    [self.webView stringByEvaluatingJavaScriptFromString:@"AppHadShareWhenBack()"];
+//
+//    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//    [MobClick event:@"ClickShareAll" attributes:dict];
+//    [MobClick event:@"ProductDetailShareClickAll" attributes:dict];
+//    [MobClick event:@"FromZhiVisitorDynamic_ShareClickAll" attributes:dict];
+//    if (self.fromType == FromQRcode) {
+//        [self.webView stringByEvaluatingJavaScriptFromString:@"ppkLYQAPP_ShareSuccess()"];
+//    }
+//    NSLog(@"%@", self.shareInfo);
+//    
+//    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//    [postDic setObject:@"0" forKey:@"ShareType"];
+//    if (self.shareInfo[@"Url"]) {
+//        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+//    }
+//    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+//    NSLog(@"%@", postDic);
+//    //构造分享内容
+////    NSString * str = [NSString stringWithFormat:@"%@%@%@", self.shareInfo[@"Title"], self.shareInfo[@"Desc"], self.shareInfo[@"Url"]];
+//    
+//    
+////    NSMutableDictionary *new =  [StrToDic dicCleanSpaceWithDict:self.shareInfo];
+////    self.shareInfo = new;
+//    
+////    NSString * str = [[(NSString *)self.shareInfo[@"Url"] componentsSeparatedByString:@"?"]firstObject];
+////    NSLog(@"shareInfoIs %@",new);
+////    NSString * title = [(NSString *)self.shareInfo[@"Title"] stringByReplacingCharactersInRange:NSMakeRange(10, 10) withString:@".."];
+////    if (self.detail) {
+////        self.shareInfo = self.detail.ShareInfo;
+////    }else{
+////        self.shareInfo = self.detail2.ShareInfo;
+////    }
+//    id<ISSContent> publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
+//                                       defaultContent:self.shareInfo[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:self.shareInfo[@"Pic"]]
+//                                                title:self.shareInfo[@"Title"]
+//                                                  url:self.shareInfo[@"Url"]                                  description:self.shareInfo[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.shareInfo[@"Url"]] image:nil];
+//    NSLog(@"%@444", self.shareInfo);
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.shareInfo[@"Url"]]];
+//   NSLog(@"self.shareInfo %@, %@", self.shareInfo[@"Url"], self.shareInfo[@"ShareUrl"]);
+//    
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
 //                                [self.warningLab removeFromSuperview];
-                                }
-                            }];
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    
+//                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+//                                    [MobClick event:@"ProductDetailShareSuccessClickAll" attributes:dict];
+//                                    if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
+//                                        [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
+//                                    }
+//                                    if (self.fromType == FromRecommend) {
+//                                        [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+//
+//                                    }
+//                                   
+//                                    
+//                                        [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:self.fromType]] attributes:dict];
+//
+//        
+////                                    [self.warningLab removeFromSuperview];
+//                                   //精品推荐填1
+//                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                    [postDic setObject:@"0" forKey:@"ShareType"];
+//                                    if (self.shareInfo[@"Url"]) {
+//                                        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+//                                    }
+//                                    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+//                                    if (type ==ShareTypeWeixiSession) {
+//                                        [postDic setObject:@"1" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQ){
+//                                        [postDic setObject:@"2" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQSpace){
+//                                        [postDic setObject:@"3" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeWeixiTimeline){
+//                                        [postDic setObject:@"4" forKey:@"ShareWay"];
+//                                    }
+//                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+//                                        NSDictionary * dci = json;
+//                                        NSMutableString * string = [NSMutableString string];
+//                                        for (id str in dci.allValues) {
+//                                            [string appendString:str];
+//                                        }
+//                                        
+//                                    } failure:^(NSError *error) {
+//                                        
+//                                    }];
+//                                    //产品详情
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                        [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                        [MBProgressHUD hideHUD];
+//                                    });
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+////                                    [self.warningLab removeFromSuperview];
+//                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                        [MobClick event:@"ShareFailAll" attributes:dict];
+//
+//                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+//                                }else if (state == SSResponseStateCancel){
+////                                [self.warningLab removeFromSuperview];
+//                                }
+//                            }];
+//    
+//    NSLog(@"%@",self.shareInfo[@"Url"]);
+//    [self addAlert];
     
-    NSLog(@"%@",self.shareInfo[@"Url"]);
-    [self addAlert];
+}
+
+- (void)showDefineView:(id)publishContent{
+    self.blackView.hidden = NO;
+    self.defineV.hidden = NO;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
+    self.defineV.eventArray = self.eventArray;
+    self.defineV.URL = self.webView.request.URL.absoluteString;
+    self.defineV.publishContent = publishContent;
+    self.defineV.shareInfo = self.shareInfo;
+    //    defineV.fromType = self.fromType;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView:)];
+    [self.blackView addGestureRecognizer:tap];
     
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(closeBlackView:) name:@"closeBlackView" object:nil];
+}
+- (void)closeBlackView:(NSNotification *)noti{
+    self.blackView.hidden = YES;
+    self.defineV.hidden = YES;
 }
 
 -(void)reloadStateWithType:(ShareType)type
@@ -678,6 +740,21 @@
     NSLog(@"uid :%@ , token :%@ , secret:%@ , expirend:%@ , exInfo:%@",[credential uid],[credential token],[credential secret],[credential expired],[credential extInfo]);
 }
 
+- (UIView *)blackView{
+    if (!_blackView) {
+        self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        self.blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+        self.blackView.hidden = NO;
+    }
+    return _blackView;
+}
+- (ProductDetailShareByMyself *)defineV{
+    if (!_defineV) {
+        self.defineV = [[ProductDetailShareByMyself alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
+        self.defineV.hidden = NO;
+    }
+    return _defineV;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

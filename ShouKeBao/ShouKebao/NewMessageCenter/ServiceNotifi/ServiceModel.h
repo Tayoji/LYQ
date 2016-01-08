@@ -9,11 +9,13 @@
 #import "BaseModel.h"
 
 @interface ServiceModel : BaseModel
-@property (nonatomic, strong)NSString *MessageType;
-@property (nonatomic, strong)NSString *MessageTitle;
-@property (nonatomic, strong)NSString *MessageContent;
-@property (nonatomic, strong)NSString *LyqAppUserId;
-@property (nonatomic, strong)NSString *ReadState;
-@property (nonatomic, strong)NSString *BusinessId;
+@property (nonatomic, copy)NSString *MessageType;
+@property (nonatomic, copy)NSString *MessageTitle;
+@property (nonatomic, copy)NSString *MessageContent;
+@property (nonatomic, copy)NSString *MessageId;
+@property (nonatomic, copy)NSString *ReadState;
+@property (nonatomic, copy)NSString *BusinessId;
+@property (nonatomic, copy)NSString *LinkUrl;
+@property (nonatomic, copy)NSString *MessageTypeText;
 +(ServiceModel *)modelWithDic:(NSDictionary *)dic;
 @end

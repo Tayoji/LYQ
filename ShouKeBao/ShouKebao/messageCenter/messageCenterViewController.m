@@ -154,8 +154,7 @@
     return _isReadArr;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
    // messageDetail.delegate = self;
     messageModel *model = _dataArr[indexPath.row];
@@ -177,9 +176,6 @@
         NSLog(@"++++%ld",self.isReadArr.count);
         [WriteFileManager WMsaveData:_isReadArr name:@"messageRead"];
     }
-    
-   
-    
     [self.navigationController pushViewController:messageDetail animated:YES];
     
 }
