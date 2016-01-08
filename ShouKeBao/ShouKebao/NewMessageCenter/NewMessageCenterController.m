@@ -262,6 +262,7 @@
                 [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
                 
                 ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
+                zhiVisit.visitorDynamicFromType = VisitorDynamicTypeFromMessageCenter;
                 [self.navigationController pushViewController:zhiVisit animated:YES];
             }else{
                 ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];

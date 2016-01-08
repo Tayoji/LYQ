@@ -18,6 +18,7 @@
 #import "MBProgressHUD+MJ.h"
 #import "IWHttpTool.h"
 #import "ChatViewController.h"
+
 @interface CustomerDetailAndOrderViewController ()
 @property (nonatomic, weak) UISegmentedControl *segmentControl;
 @property (nonatomic, strong)CustomerOrderViewController * orderVC;
@@ -136,7 +137,8 @@
         _detailVC = [sb instantiateViewControllerWithIdentifier:@"customerDetail"];
         _detailVC.Nav = self.navigationController;
         _detailVC.customerId = self.customerID;
-        _detailVC.AppSkbUserID = self.appUserID;
+        NSLog(@"%@", self.appUserID);
+        _detailVC.AppSkbUserID = self.AppSkbUserId;
     }
     return _detailVC;
 }
@@ -144,6 +146,9 @@
 - (ZhiVisitorDynamicController *)customerDynamicVC{
     if (!_customerDynamicVC) {
         ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
+        NSLog(@"%@", self.appUserID);
+        customerDynamicVC.AppSkbUserId =self.AppSkbUserId;
+        customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;
     }
