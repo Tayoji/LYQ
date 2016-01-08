@@ -266,6 +266,7 @@
                 [self.navigationController pushViewController:zhiVisit animated:YES];
             }else{
                 ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+                choseListVC.title = @"每日精选";
                 [self.navigationController pushViewController:choseListVC animated:YES];
             }
             

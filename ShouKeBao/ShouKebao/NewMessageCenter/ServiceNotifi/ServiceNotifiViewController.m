@@ -46,22 +46,27 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.dataArr.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 180;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ServiceNotifiTableViewCell *serviceNotiCell = [ServiceNotifiTableViewCell cellWithTableView:tableView];
-//    serviceNotiCell.serviceModel = self.dataArr[indexPath.row];
+    NSLog(@"... %@", _dataArr);
+    ServiceModel *serviceModel = _dataArr[indexPath.row];
+    serviceNotiCell.serviceModel = serviceModel;
+    
     return serviceNotiCell;
 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     TerracedetailViewController *TerracedetailVC = [[TerracedetailViewController alloc]init];
-    TerracedetailVC.serviceLinkUrl = [self.dataArr[indexPath.row]LyqAppUserId];
+    TerracedetailVC.serviceLinkUrl = [self.dataArr[indexPath.row]LinkUrl];
+    NSLog(@"..%@", [self.dataArr[indexPath.row]LinkUrl]);
     [self.navigationController pushViewController:TerracedetailVC animated:YES];
+     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - 数据加载
@@ -85,6 +90,7 @@
               ServiceModel *model = [ServiceModel modelWithDic:dic];
               [self.dataArr addObject:model];
           }
+               NSLog(@",,,,, %@", self.dataArr);
           [self.tableView reloadData];
           [self.tableView headerEndRefreshing];
           [self.tableView footerEndRefreshing];

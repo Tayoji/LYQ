@@ -22,8 +22,8 @@
 
 @implementation ProductCell
 
-+ (instancetype)cellWithTableView:(UITableView *)tableView
-{ static NSString *cellID = @"productCell";
++ (instancetype)cellWithTableView:(UITableView *)tableView{
+    static NSString *cellID = @"productCell";
     ProductCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
         cell = [[ProductCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];

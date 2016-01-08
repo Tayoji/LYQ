@@ -41,9 +41,25 @@
     }else{
         self.redDot.hidden = YES;
     }
-    [self.customerIcon setImage:[UIImage imageNamed:@"quanquange"] forState:UIControlStateNormal];
-    self.nameL.text = model.Name;
+
+    self.customerIcon.layer.masksToBounds = YES;
+    self.customerIcon.layer.cornerRadius = 20;
+    self.customerIcon.backgroundColor = [UIColor orangeColor];
     
+    
+    if ([[NSString stringWithFormat:@"%@", model.HearUrl] isEqualToString:@""]) {
+        
+        NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
+        NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:a];
+        [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 1)];
+        [aa addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 1)];
+        [self.customerIcon1 setAttributedTitle:aa forState:UIControlStateNormal];
+    }else{
+        
+        [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+    }
+    self.nameL.text = model.Name;
+
     NSString *pattern = @"\\d";//@"[0-9]"
     NSRegularExpression *regular = [[NSRegularExpression alloc]initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
     NSArray *results = [regular matchesInString:model.Mobile options:0 range:NSMakeRange(0, model.Mobile.length)];
@@ -94,8 +110,8 @@
 }
 
 - (IBAction)clickIconToCustomerDetail:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:andAppSkbUserId:)]) {
-        [_delegate pushCustomerDetailVC:self.model.ID andAppSkbUserId:self.model.AppSkbUserId];
+    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:AppSkbUserId: name:)]) {
+        [_delegate pushCustomerDetailVC:self.model.ID AppSkbUserId:self.model.AppSkbUserId name:self.model.Name];
     }
 }
 

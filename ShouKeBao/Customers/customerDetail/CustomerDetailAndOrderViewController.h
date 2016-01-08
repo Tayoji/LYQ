@@ -15,5 +15,6 @@
 //@property (nonatomic, strong)CustomModel * model;
 @property (nonatomic, copy)NSString *customerID;
 @property (nonatomic, copy)NSString *appUserID;
-
+@property (nonatomic, copy)NSString *AppSkbUserId;
+@property (nonatomic, copy)NSString *name;
 @end

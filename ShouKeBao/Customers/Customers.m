@@ -583,12 +583,15 @@
     self.table.tableFooterView = label;
     self.noProductWarnLab = label;
 }
-- (void)pushCustomerDetailVC:(NSString *)customerID andAppSkbUserId:(NSString *)appskbId{
+- (void)pushCustomerDetailVC:(NSString *)customerID AppSkbUserId:(NSString *)appSkbUserId name:(NSString *)name{
     CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
     VC.customVC = self;
     VC.keyWords = self.searchK;
     VC.customerID = customerID;
-    VC.appUserID = appskbId;
+    VC.appUserID = @"";
+    VC.AppSkbUserId = appSkbUserId;
+    VC.name = name;
+    NSLog(@"appSkbUserId = %@, %@", appSkbUserId, name);
     [self.navigationController pushViewController:VC animated:YES];
 }
 
