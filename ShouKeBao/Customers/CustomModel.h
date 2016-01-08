@@ -30,7 +30,7 @@
 @property (nonatomic,copy) NSString *Country;
 @property (nonatomic,copy) NSString *PassportNum;
 @property (nonatomic, strong)NSArray *PictureList;
-@property (nonatomic,copy) NSString *HearUrl;
+//@property (nonatomic,copy) NSString *HearUrl;
 
 @property (nonatomic, strong)NSString *AppSkbUserId;
 
