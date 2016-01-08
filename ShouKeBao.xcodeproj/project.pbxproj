@@ -21,6 +21,8 @@
 		522E80691BD104A800DB48DA /* OrderPromptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522E80681BD104A800DB48DA /* OrderPromptView.xib */; };
 		5237D6B61BF18DED00655CF0 /* TimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5237D6B41BF18DEC00655CF0 /* TimerCell.m */; };
 		5237D6B71BF18DED00655CF0 /* TimerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5237D6B51BF18DED00655CF0 /* TimerCell.xib */; };
+		5246EA701C3E05180068D33A /* RedPSelCusterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5246EA6E1C3E05180068D33A /* RedPSelCusterCell.m */; };
+		5246EA711C3E05180068D33A /* RedPSelCusterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5246EA6F1C3E05180068D33A /* RedPSelCusterCell.xib */; };
 		52549BDB1C119349001DABD8 /* libEaseMobClientSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52549BD71C119349001DABD8 /* libEaseMobClientSDK.a */; };
 		52549BDC1C119349001DABD8 /* libEaseMobClientSDKLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52549BD81C119349001DABD8 /* libEaseMobClientSDKLite.a */; };
 		52549BDD1C119349001DABD8 /* EaseMob.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 52549BDA1C119349001DABD8 /* EaseMob.bundle */; };
@@ -37,6 +39,8 @@
 		527E3B891BECAB5B00AAA6F6 /* TerraceMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E3B871BECAB5B00AAA6F6 /* TerraceMessageController.m */; };
 		527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */; };
 		527E41CB1BDF237E00CA9CF6 /* OpenInvoiceWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */; };
+		529CD24B1C3FACFD004F3A09 /* MyReadPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */; };
+		529CD24C1C3FACFD004F3A09 /* MyReadPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */; };
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
 		52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AEE0181C3BD691008FB583 /* SetRedPacketController.m */; };
 		52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */; };
@@ -800,6 +804,9 @@
 		5237D6B31BF18DEC00655CF0 /* TimerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerCell.h; sourceTree = "<group>"; };
 		5237D6B41BF18DEC00655CF0 /* TimerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerCell.m; sourceTree = "<group>"; };
 		5237D6B51BF18DED00655CF0 /* TimerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerCell.xib; sourceTree = "<group>"; };
+		5246EA6D1C3E05180068D33A /* RedPSelCusterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPSelCusterCell.h; sourceTree = "<group>"; };
+		5246EA6E1C3E05180068D33A /* RedPSelCusterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPSelCusterCell.m; sourceTree = "<group>"; };
+		5246EA6F1C3E05180068D33A /* RedPSelCusterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RedPSelCusterCell.xib; sourceTree = "<group>"; };
 		52549B741C119349001DABD8 /* EMCallManagerCallDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerCallDelegate.h; sourceTree = "<group>"; };
 		52549B751C119349001DABD8 /* EMCallManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerDelegate.h; sourceTree = "<group>"; };
 		52549B761C119349001DABD8 /* EaseMob+CallService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMob+CallService.h"; sourceTree = "<group>"; };
@@ -906,6 +913,9 @@
 		527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TerraceMessageController.xib; sourceTree = "<group>"; };
 		527E41C91BDF237E00CA9CF6 /* OpenInvoiceWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInvoiceWebController.h; sourceTree = "<group>"; };
 		527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInvoiceWebController.m; sourceTree = "<group>"; };
+		529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReadPacketController.h; sourceTree = "<group>"; };
+		529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReadPacketController.m; sourceTree = "<group>"; };
+		529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyReadPacketController.xib; sourceTree = "<group>"; };
 		52A4C1541BB1053200614BFF /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		52A4C1551BB1053200614BFF /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		52AEE0171C3BD691008FB583 /* SetRedPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetRedPacketController.h; sourceTree = "<group>"; };
@@ -2169,6 +2179,16 @@
 			path = OrderPromptView;
 			sourceTree = "<group>";
 		};
+		5246EA6C1C3E04CC0068D33A /* RedPSelectCuseterView */ = {
+			isa = PBXGroup;
+			children = (
+				5246EA6D1C3E05180068D33A /* RedPSelCusterCell.h */,
+				5246EA6E1C3E05180068D33A /* RedPSelCusterCell.m */,
+				5246EA6F1C3E05180068D33A /* RedPSelCusterCell.xib */,
+			);
+			path = RedPSelectCuseterView;
+			sourceTree = "<group>";
+		};
 		52549B6F1C119349001DABD8 /* EaseMobSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -2481,6 +2501,16 @@
 			path = OpenInvoiceWeb;
 			sourceTree = "<group>";
 		};
+		529CD2471C3FACCB004F3A09 /* MyRedPacket */ = {
+			isa = PBXGroup;
+			children = (
+				529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */,
+				529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */,
+				529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */,
+			);
+			path = MyRedPacket;
+			sourceTree = "<group>";
+		};
 		52AE17651C3BC6E100114321 /* SetRedPacket */ = {
 			isa = PBXGroup;
 			children = (
@@ -2517,6 +2547,8 @@
 		52CCF8681C3B5D6100C91387 /* RedPacket */ = {
 			isa = PBXGroup;
 			children = (
+				529CD2471C3FACCB004F3A09 /* MyRedPacket */,
+				5246EA6C1C3E04CC0068D33A /* RedPSelectCuseterView */,
 				52AE17651C3BC6E100114321 /* SetRedPacket */,
 				5222D1211C3B740800F262A3 /* SelectCustomers */,
 				52CCF8691C3B5DE400C91387 /* RedPacketMainController.h */,
@@ -5213,6 +5245,7 @@
 				796EFD091BF5C67D00799120 /* chatBar_textBg@2x.png in Resources */,
 				B36B6BA71C16E312002C89E2 /* NewExclusiveAppIntroduceViewController.xib in Resources */,
 				796EFCDE1BF5C67D00799120 /* VoiceSearchFeedback009.png in Resources */,
+				5246EA711C3E05180068D33A /* RedPSelCusterCell.xib in Resources */,
 				5A52FC5E1ACEBF220076DAE6 /* StationSelect.xib in Resources */,
 				7939174B1C17CD550020372E /* chat_sender_audio_playing_full@3x.png in Resources */,
 				796EFCCF1BF5C67D00799120 /* VoiceSearchFeedback001@2x.png in Resources */,
@@ -5332,6 +5365,7 @@
 				793917341C17CD3D0020372E /* chat_receiver_bg.png in Resources */,
 				796EFCD81BF5C67D00799120 /* VoiceSearchFeedback006.png in Resources */,
 				527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */,
+				529CD24C1C3FACFD004F3A09 /* MyReadPacketController.xib in Resources */,
 				796EFD2C1BF5C67D00799120 /* chatBar_colorMore_camera@2x.png in Resources */,
 				B3B7A66A1BA6A25F0043DF7C /* BatchAddViewController.xib in Resources */,
 				796EFCF21BF5C67D00799120 /* VoiceSearchFeedback019.png in Resources */,
@@ -5359,6 +5393,7 @@
 				63B6CFB81B2EA8AA0037E06B /* personIdModel.h in Sources */,
 				5AD891DE1B02FD4200D3A392 /* UIViewController+HUD.m in Sources */,
 				63F1A1AB1B14250E00DE9867 /* MJArgument.m in Sources */,
+				529CD24B1C3FACFD004F3A09 /* MyReadPacketController.m in Sources */,
 				796EFB2D1BF5C02900799120 /* THProgressView.m in Sources */,
 				796EFDC31BF5CA4E00799120 /* EMSDImageCache.m in Sources */,
 				796EFE6C1BF5CCC800799120 /* MLPhotoBrowserAssets.m in Sources */,
@@ -5491,6 +5526,7 @@
 				796F36DC1B7863840089FEE8 /* SpecialLineCollectionCell.m in Sources */,
 				5A52FC521ACEBF220076DAE6 /* rightCell2.m in Sources */,
 				B3C2649B1B5E5E6E00C8FB0D /* ImageCollectionViewCell.m in Sources */,
+				5246EA701C3E05180068D33A /* RedPSelCusterCell.m in Sources */,
 				B3B7A6741BA6A25F0043DF7C /* CustomerDetailViewController.m in Sources */,
 				52F59D881BCF4B1F00DE24FB /* invoiceCell.m in Sources */,
 				5ABA4F661AD7C2E7004AA8F6 /* HomeBase.m in Sources */,

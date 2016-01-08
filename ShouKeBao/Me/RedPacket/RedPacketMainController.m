@@ -8,6 +8,7 @@
 
 #import "RedPacketMainController.h"
 #import "SelectCustomerController.h"
+#import "MyReadPacketController.h"
 #define UserInfoKeyLYGWIsOpenVIP @"LVGWIsOpenVIP"//是否开通银牌以上顾问
 
 @interface RedPacketMainController ()
@@ -36,7 +37,8 @@
 }
 - (IBAction)MyRedPacketBtn:(UIButton *)sender {
     NSLog(@"我的红包");
-    
+    MyReadPacketController *MyreadPack = [[MyReadPacketController alloc]init];
+    [self.navigationController pushViewController:MyreadPack animated:YES];
 }
 
 - (IBAction)AppointRPacketBtn:(UIButton *)sender {
