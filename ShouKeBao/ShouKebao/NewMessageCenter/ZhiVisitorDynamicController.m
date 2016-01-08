@@ -107,6 +107,7 @@
 
 #pragma mark - 刷新和分页
 - (void)initPull{
+    
     self.pageNum = 1;
     [self.tableView addHeaderWithTarget:self action:@selector(headRefish)dateKey:nil];
     [self.tableView addFooterWithTarget:self action:@selector(foodRefish)];
