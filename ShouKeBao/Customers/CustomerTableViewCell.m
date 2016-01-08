@@ -94,8 +94,8 @@
 }
 
 - (IBAction)clickIconToCustomerDetail:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:)]) {
-        [_delegate pushCustomerDetailVC:self.model.ID];
+    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:andAppSkbUserId:)]) {
+        [_delegate pushCustomerDetailVC:self.model.ID andAppSkbUserId:self.model.AppSkbUserId];
     }
 }
 

@@ -13,7 +13,7 @@
 - (void)transformPerformation:(CustomModel *)model;
 - (void)tableViewReloadData;
 - (void)tipInviteViewShow:(NSString *)telStr;
-- (void)pushCustomerDetailVC:(NSString *)customerID;
+- (void)pushCustomerDetailVC:(NSString *)customerID andAppSkbUserId:(NSString *)appskbId;
 @end
 
 @interface CustomerTableViewCell : UITableViewCell

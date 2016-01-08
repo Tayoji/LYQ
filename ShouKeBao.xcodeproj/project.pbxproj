@@ -11,8 +11,6 @@
 		520279531BF438160049C0B9 /* TerraceMessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520279511BF438160049C0B9 /* TerraceMessCell.xib */; };
 		520279571BF43E2B0049C0B9 /* NewCustomerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279551BF43E2B0049C0B9 /* NewCustomerCell.m */; };
 		520279581BF43E2B0049C0B9 /* NewCustomerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520279561BF43E2B0049C0B9 /* NewCustomerCell.xib */; };
-		5202795C1BF443510049C0B9 /* OpportunitykeywordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5202795A1BF443510049C0B9 /* OpportunitykeywordCell.m */; };
-		5202795D1BF443510049C0B9 /* OpportunitykeywordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5202795B1BF443510049C0B9 /* OpportunitykeywordCell.xib */; };
 		520279611BF446090049C0B9 /* OpprotunityFreqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5202795F1BF446090049C0B9 /* OpprotunityFreqCell.m */; };
 		520279621BF446090049C0B9 /* OpprotunityFreqCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 520279601BF446090049C0B9 /* OpprotunityFreqCell.xib */; };
 		520279651BF4730A0049C0B9 /* NewMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 520279641BF4730A0049C0B9 /* NewMessageModel.m */; };
@@ -610,6 +608,9 @@
 		79DF08B91C2E8F2700EB8FBA /* IMTopHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */; };
 		79DF08BA1C2E8F2700EB8FBA /* IMTopHeader@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */; };
 		79EE91681B2BCDE2008C8935 /* TimeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EE91671B2BCDE2008C8935 /* TimeTool.m */; };
+		79F200AD1C3E4545009F9FDE /* VisitorDynamicProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F200AC1C3E4545009F9FDE /* VisitorDynamicProductView.m */; };
+		79F200AF1C3E48FF009F9FDE /* VisitorDynamicProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F200AE1C3E48FF009F9FDE /* VisitorDynamicProductView.xib */; };
+		79F200B21C3E751D009F9FDE /* VisitorDynamicNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F200B11C3E751D009F9FDE /* VisitorDynamicNullView.m */; };
 		79FB115E1BD7310B00819FB2 /* UpDateUserPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB115D1BD7310B00819FB2 /* UpDateUserPictureViewController.m */; };
 		79FB11601BD7324100819FB2 /* Orders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79FB115F1BD7324100819FB2 /* Orders.storyboard */; };
 		79FB11631BD73BB400819FB2 /* UpDateUserPictureViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB11621BD73BB400819FB2 /* UpDateUserPictureViewCell.m */; };
@@ -779,9 +780,6 @@
 		520279541BF43E2B0049C0B9 /* NewCustomerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCustomerCell.h; sourceTree = "<group>"; };
 		520279551BF43E2B0049C0B9 /* NewCustomerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCustomerCell.m; sourceTree = "<group>"; };
 		520279561BF43E2B0049C0B9 /* NewCustomerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCustomerCell.xib; sourceTree = "<group>"; };
-		520279591BF443510049C0B9 /* OpportunitykeywordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpportunitykeywordCell.h; sourceTree = "<group>"; };
-		5202795A1BF443510049C0B9 /* OpportunitykeywordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpportunitykeywordCell.m; sourceTree = "<group>"; };
-		5202795B1BF443510049C0B9 /* OpportunitykeywordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpportunitykeywordCell.xib; sourceTree = "<group>"; };
 		5202795E1BF446090049C0B9 /* OpprotunityFreqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpprotunityFreqCell.h; sourceTree = "<group>"; };
 		5202795F1BF446090049C0B9 /* OpprotunityFreqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpprotunityFreqCell.m; sourceTree = "<group>"; wrapsLines = 1; };
 		520279601BF446090049C0B9 /* OpprotunityFreqCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpprotunityFreqCell.xib; sourceTree = "<group>"; };
@@ -1821,6 +1819,11 @@
 		79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@3x.png"; sourceTree = "<group>"; };
 		79EE91661B2BCDE2008C8935 /* TimeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTool.h; sourceTree = "<group>"; };
 		79EE91671B2BCDE2008C8935 /* TimeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTool.m; sourceTree = "<group>"; };
+		79F200AB1C3E4545009F9FDE /* VisitorDynamicProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorDynamicProductView.h; sourceTree = "<group>"; };
+		79F200AC1C3E4545009F9FDE /* VisitorDynamicProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorDynamicProductView.m; sourceTree = "<group>"; };
+		79F200AE1C3E48FF009F9FDE /* VisitorDynamicProductView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VisitorDynamicProductView.xib; sourceTree = "<group>"; };
+		79F200B01C3E751D009F9FDE /* VisitorDynamicNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorDynamicNullView.h; sourceTree = "<group>"; };
+		79F200B11C3E751D009F9FDE /* VisitorDynamicNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorDynamicNullView.m; sourceTree = "<group>"; };
 		79FB115C1BD7310B00819FB2 /* UpDateUserPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpDateUserPictureViewController.h; sourceTree = "<group>"; };
 		79FB115D1BD7310B00819FB2 /* UpDateUserPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpDateUserPictureViewController.m; sourceTree = "<group>"; };
 		79FB115F1BD7324100819FB2 /* Orders.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Orders.storyboard; sourceTree = "<group>"; };
@@ -4465,14 +4468,16 @@
 			children = (
 				520D54A71BF2EB9400923F6C /* ZhiVisitorDynamicController.h */,
 				520D54A81BF2EB9400923F6C /* ZhiVisitorDynamicController.m */,
+				79F200B01C3E751D009F9FDE /* VisitorDynamicNullView.h */,
+				79F200B11C3E751D009F9FDE /* VisitorDynamicNullView.m */,
 				79619B781BFB5FD60026BAFE /* CustomDynamicModel.h */,
 				79619B791BFB5FD60026BAFE /* CustomDynamicModel.m */,
 				520279541BF43E2B0049C0B9 /* NewCustomerCell.h */,
 				520279551BF43E2B0049C0B9 /* NewCustomerCell.m */,
 				520279561BF43E2B0049C0B9 /* NewCustomerCell.xib */,
-				520279591BF443510049C0B9 /* OpportunitykeywordCell.h */,
-				5202795A1BF443510049C0B9 /* OpportunitykeywordCell.m */,
-				5202795B1BF443510049C0B9 /* OpportunitykeywordCell.xib */,
+				79F200AB1C3E4545009F9FDE /* VisitorDynamicProductView.h */,
+				79F200AC1C3E4545009F9FDE /* VisitorDynamicProductView.m */,
+				79F200AE1C3E48FF009F9FDE /* VisitorDynamicProductView.xib */,
 				5202795E1BF446090049C0B9 /* OpprotunityFreqCell.h */,
 				5202795F1BF446090049C0B9 /* OpprotunityFreqCell.m */,
 				520279601BF446090049C0B9 /* OpprotunityFreqCell.xib */,
@@ -5124,7 +5129,6 @@
 				796EFCD11BF5C67D00799120 /* VoiceSearchFeedback002@2x.png in Resources */,
 				796EFD1F1BF5C67D00799120 /* chatBar_more@2x.png in Resources */,
 				B3B7A6841BA6A25F0043DF7C /* remondTableViewCell.xib in Resources */,
-				5202795D1BF443510049C0B9 /* OpportunitykeywordCell.xib in Resources */,
 				796EFD161BF5C67D00799120 /* chatBar_face.png in Resources */,
 				796EFD1A1BF5C67D00799120 /* chatBar_keyboard.png in Resources */,
 				632613291AB2AF04003AC2DA /* re_product_pan_b@2x.png in Resources */,
@@ -5197,6 +5201,7 @@
 				B36E57331B74C0D000471AAC /* ProductCell.xib in Resources */,
 				796EFD271BF5C67D00799120 /* chatBar_recordSelected@2x.png in Resources */,
 				796EFD151BF5C67D00799120 /* messageSendFail@2x.png in Resources */,
+				79F200AF1C3E48FF009F9FDE /* VisitorDynamicProductView.xib in Resources */,
 				791AA5171B7DDBDB007C5C6A /* ProductRecommend.storyboard in Resources */,
 				796EFD1B1BF5C67D00799120 /* chatBar_keyboard@2x.png in Resources */,
 				636C8B731AC2E1420097CAE9 /* Resource.bundle in Resources */,
@@ -5353,6 +5358,7 @@
 				B3C01E3E1BAC10FC005E4BB5 /* SosViewController.m in Sources */,
 				520279521BF438160049C0B9 /* TerraceMessCell.m in Sources */,
 				796EFB341BF5C1CF00799120 /* EmojiEmoticons.m in Sources */,
+				79F200AD1C3E4545009F9FDE /* VisitorDynamicProductView.m in Sources */,
 				B3C01E2E1BAC10FC005E4BB5 /* Organization.m in Sources */,
 				B3BC33891BD8B95900C61D83 /* MeShareDetailViewController.m in Sources */,
 				B3C01E3C1BAC10FC005E4BB5 /* PersonSettingViewController.m in Sources */,
@@ -5501,6 +5507,7 @@
 				5A52FC851ACEBF220076DAE6 /* Orders.m in Sources */,
 				796EFC031BF5C5DE00799120 /* FacialView.m in Sources */,
 				B36E57301B74C0D000471AAC /* MinMaxPriceSelectViewController.m in Sources */,
+				79F200B21C3E751D009F9FDE /* VisitorDynamicNullView.m in Sources */,
 				796EFC041BF5C5DE00799120 /* DXChatBarMoreView.m in Sources */,
 				796EFDDC1BF5CA4E00799120 /* PSTGridLayoutInfo.m in Sources */,
 				B3ABEF321C3CE6D50024566D /* CustomerTableViewCell.m in Sources */,
@@ -5712,7 +5719,6 @@
 				B3BC338C1BD8BCC600C61D83 /* MeShareDetailTableViewCell.m in Sources */,
 				527E3B891BECAB5B00AAA6F6 /* TerraceMessageController.m in Sources */,
 				797B37971B8C38CF00411DBA /* GTMBase64.m in Sources */,
-				5202795C1BF443510049C0B9 /* OpportunitykeywordCell.m in Sources */,
 				796EFC0B1BF5C5DE00799120 /* EMChatVideoBubbleView.m in Sources */,
 				796EFB1C1BF5BCF100799120 /* EMCDDeviceManager+Remind.m in Sources */,
 				635E70AE1B180763008EFEB6 /* V8HorizontalPickerView.m in Sources */,

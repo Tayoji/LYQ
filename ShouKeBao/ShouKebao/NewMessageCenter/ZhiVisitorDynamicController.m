@@ -8,7 +8,6 @@
 
 #import "ZhiVisitorDynamicController.h"
 #import "NewCustomerCell.h"
-#import "OpportunitykeywordCell.h"
 #import "OpprotunityFreqCell.h"
 #import "IWHttpTool.h"
 #import "MBProgressHUD+MJ.h" 
@@ -19,14 +18,20 @@
 #import "ProduceDetailViewController.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "VisitorDynamicNullView.h"
+
 #define pageSize @"10"
 //
 #define kScreenSize [UIScreen mainScreen].bounds.size
-@interface ZhiVisitorDynamicController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ZhiVisitorDynamicController ()<UITableViewDelegate,UITableViewDataSource, NullViewDelegate>
 @property (nonatomic, strong)NSMutableArray * customDyamicArray;
 @property (nonatomic, assign)int pageNum;
 @property (nonatomic, assign)BOOL isDone;
+@property (nonatomic, strong)VisitorDynamicNullView * nullView;
+@property (nonatomic, strong)NSString * totalCount;
 
+
+@property (nonatomic, strong)UIButton * backToTopBtn;
 @end
 
 @implementation ZhiVisitorDynamicController
@@ -44,6 +49,10 @@
     self.title = @"客人动态";
     self.view.backgroundColor = [UIColor colorWithRed:(247.0/255.0) green:(247.0/255.0) blue:(247.0/255.0) alpha:1];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.nullView];
+    [self.view addSubview:self.backToTopBtn];
+    self.backToTopBtn.hidden = NO;
+//    [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
     [self initPull];
 }
 -(NSMutableArray *)customDyamicArray{
@@ -52,13 +61,33 @@
     }
     return _customDyamicArray;
 }
+
+-(UIButton *)backToTopBtn{
+    if (!_backToTopBtn) {
+        _backToTopBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _backToTopBtn.frame = CGRectMake(kScreenSize.width - 50, kScreenSize.height - 164, 30, 30);
+        [_backToTopBtn setBackgroundImage:[UIImage imageNamed:@"shangjiana"] forState:UIControlStateNormal];
+        [_backToTopBtn addTarget:self action:@selector(backTOTop) forControlEvents:UIControlEventTouchUpInside];
+        _backToTopBtn.hidden = YES;
+    }
+    return _backToTopBtn;
+}
+
 - (void)loadDataSourceFrom:(int)type{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSDictionary * params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize};
+    NSDictionary * params = @{};
+    if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
+        NSLog(@"%@", self.AppSkbUserId);
+        params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize, @"AppSkbUserId":self.AppSkbUserId};
+    }else if(self.visitorDynamicFromType == VisitorDynamicTypeFromMessageCenter){
+        params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize};
+    }
     [IWHttpTool postWithURL:@"Customer/GetCustomerDynamicList" params:params success:^(id json) {
         [self tableViewEndRefreshing];
         if ([json[@"IsSuccess"]integerValue]) {
             NSLog(@"%@", json);
+            self.totalCount = json[@"TodayCount"];
+            ((UILabel *)_tableView.tableHeaderView).text = [NSString stringWithFormat:@"今日动态数： %@", self.totalCount];
             if (self.pageNum*[pageSize integerValue]>[json[@"TotalCount"]integerValue]) {
                 self.isDone = YES;
             }
@@ -114,8 +143,13 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0;
+    }
     return 10;
 }
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
     NSLog(@"DynamicType=%@", model.DynamicType);
@@ -123,26 +157,16 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
-    if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
-        static NSString * str = @"NewCustomerCell";
-        NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
-        cell.model = model;
-        cell.NAV = self.navigationController;
-        return cell;
-    }else /*if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
-        static NSString * str = @"OpportunitykeywordCell";
-
-        OpportunitykeywordCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
-        cell.NAV = self.navigationController;
-        cell.model = model;
-        return cell;
-    }else*/{
-        static NSString * str = @"OpprotunityFreqCell";
-        OpprotunityFreqCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
-        cell.model = model;
-        cell.NAV = self.navigationController;
-        return cell;
+    static NSString * str = @"NewCustomerCell";
+    NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
+    cell.model = model;
+    cell.NAV = self.navigationController;
+    if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
+        cell.MessageButton.hidden = YES;
+    }else if(self.visitorDynamicFromType == VisitorDynamicTypeFromMessageCenter){
+        cell.MessageButton.hidden = NO;
     }
+    return cell;
 }
 -(UITableView *)tableView{
     if (!_tableView) {
@@ -151,9 +175,15 @@
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         [_tableView registerNib:[UINib nibWithNibName:@"NewCustomerCell" bundle:nil] forCellReuseIdentifier:@"NewCustomerCell"];
-//        [_tableView registerNib:[UINib nibWithNibName:@"OpportunitykeywordCell" bundle:nil] forCellReuseIdentifier:@"OpportunitykeywordCell"];
         [_tableView registerNib:[UINib nibWithNibName:@"OpprotunityFreqCell" bundle:nil] forCellReuseIdentifier:@"OpprotunityFreqCell"];
         _tableView.tableFooterView = [[UIView alloc] init];
+        
+        UILabel * topLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 35)];
+        topLable.font = [UIFont systemFontOfSize:14];
+        topLable.textColor = [UIColor grayColor];
+        topLable.backgroundColor = [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255 alpha:1.0];
+        _tableView.tableHeaderView = topLable;
+        
     }
     return _tableView;
 }
@@ -185,14 +215,39 @@
 //4直客浏览线路达二次;5直客浏览产品;6直客收藏产品;7直客分享产品;8点击在线预订未下单;10直客浏览产品留下手机号-C
 - (float)heightWithDynamicType:(CustomDynamicModel *)model{
     if ([model.DynamicType intValue] == 1 || [model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
-        return 48+[model.DynamicTitle heigthWithsysFont:12 withWidth:kScreenSize.width - 52];
-    }else/* if([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 3){
-        return 95+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
-    }else if([model.DynamicType intValue] == 9){
-        return 100+[model.DynamicContent heigthWithsysFont:14 withWidth:kScreenSize.width - 60];
-    }else*/{
-        return 150+[model.DynamicTitle heigthWithsysFont:12 withWidth:kScreenSize.width - 52];
+        return 72+[model.DynamicTitleV2 heigthWithsysFont:14 withWidth:self.tableView.frame.size.width - 20];
+    }else{
+        return 184+[model.DynamicTitleV2 heigthWithsysFont:14 withWidth:self.tableView.frame.size.width - 20];
     }
 }
 
+
+//没有客户动态的时候显示的界面
+-(VisitorDynamicNullView *)nullView{
+    if (!_nullView) {
+        _nullView = [[VisitorDynamicNullView alloc]init];
+        _nullView.delegate = self;
+    }
+    return _nullView;
+}
+//空界面邀请按钮点击
+- (void)ClickInviteVisitor{
+    NSLog(@"邀请");
+}
+
+//空界面发红包点击
+- (void)ClickSendRedPacket{
+    NSLog(@"发红包");
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y > self.tableView.frame.size.height) {
+        self.backToTopBtn.hidden = NO;
+    }else{
+        self.backToTopBtn.hidden = YES;
+    }
+}
+- (void)backTOTop{
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
 @end

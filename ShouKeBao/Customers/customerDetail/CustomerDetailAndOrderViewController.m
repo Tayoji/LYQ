@@ -130,6 +130,7 @@
         _detailVC = [sb instantiateViewControllerWithIdentifier:@"customerDetail"];
         _detailVC.Nav = self.navigationController;
         _detailVC.customerId = self.customerID;
+        NSLog(@"%@", self.appUserID);
         _detailVC.AppSkbUserID = self.appUserID;
     }
     return _detailVC;
@@ -138,6 +139,9 @@
 - (ZhiVisitorDynamicController *)customerDynamicVC{
     if (!_customerDynamicVC) {
         ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
+        NSLog(@"%@", self.appUserID);
+        customerDynamicVC.AppSkbUserId =self.appUserID;
+        customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;
     }
