@@ -760,6 +760,9 @@
 		B3D7B7D01BD76F700080E243 /* URLOpenFromQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D7B7BE1BD76F700080E243 /* URLOpenFromQRCodeViewController.m */; };
 		B3D7B7D11BD76F700080E243 /* URLOpenFromQRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3D7B7BF1BD76F700080E243 /* URLOpenFromQRCodeViewController.xib */; };
 		B3D7B7D21BD76F700080E243 /* userIDTableviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D7B7C11BD76F700080E243 /* userIDTableviewController.m */; };
+		B3E983C91C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E983C71C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m */; };
+		B3E983CA1C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */; };
+		B3E983CD1C3E778500BA84CE /* DefineShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E983CC1C3E778500BA84CE /* DefineShareModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1897,8 +1900,8 @@
 		B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotLaButton.m; sourceTree = "<group>"; };
 		B3A2B6071BF4A715002AB105 /* CircleHotNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleHotNewsViewController.h; sourceTree = "<group>"; };
 		B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleHotNewsViewController.m; sourceTree = "<group>"; };
-		B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailShareByMyself.h; sourceTree = "<group>"; };
-		B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailShareByMyself.m; sourceTree = "<group>"; };
+		B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductDetailShareByMyself.h; path = ../ProductDetailShareByMyself.h; sourceTree = "<group>"; };
+		B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductDetailShareByMyself.m; path = ../ProductDetailShareByMyself.m; sourceTree = "<group>"; };
 		B3ABEF2F1C3CE6D50024566D /* CustomerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerTableViewCell.h; sourceTree = "<group>"; };
 		B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerTableViewCell.m; sourceTree = "<group>"; };
 		B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerTableViewCell.xib; sourceTree = "<group>"; };
@@ -2080,6 +2083,11 @@
 		B3D7B7BF1BD76F700080E243 /* URLOpenFromQRCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = URLOpenFromQRCodeViewController.xib; sourceTree = "<group>"; };
 		B3D7B7C01BD76F700080E243 /* userIDTableviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userIDTableviewController.h; sourceTree = "<group>"; };
 		B3D7B7C11BD76F700080E243 /* userIDTableviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userIDTableviewController.m; sourceTree = "<group>"; };
+		B3E983C61C3E774A00BA84CE /* DefineShareViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineShareViewCollectionViewCell.h; sourceTree = "<group>"; };
+		B3E983C71C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefineShareViewCollectionViewCell.m; sourceTree = "<group>"; };
+		B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefineShareViewCollectionViewCell.xib; sourceTree = "<group>"; };
+		B3E983CB1C3E778500BA84CE /* DefineShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineShareModel.h; sourceTree = "<group>"; };
+		B3E983CC1C3E778500BA84CE /* DefineShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefineShareModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2687,11 +2695,10 @@
 		5A52FB7A1ACEBF220076DAE6 /* ProductDetail */ = {
 			isa = PBXGroup;
 			children = (
+				B3E983C51C3E774A00BA84CE /* DefineShare */,
 				5A52FB7B1ACEBF220076DAE6 /* ProduceDetailViewController.h */,
 				5A52FB7C1ACEBF220076DAE6 /* ProduceDetailViewController.m */,
 				5A52FB7D1ACEBF220076DAE6 /* ProduceDetailViewController.xib */,
-				B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */,
-				B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */,
 			);
 			path = ProductDetail;
 			sourceTree = "<group>";
@@ -4953,6 +4960,20 @@
 			path = QRCode;
 			sourceTree = "<group>";
 		};
+		B3E983C51C3E774A00BA84CE /* DefineShare */ = {
+			isa = PBXGroup;
+			children = (
+				B3E983C61C3E774A00BA84CE /* DefineShareViewCollectionViewCell.h */,
+				B3E983C71C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m */,
+				B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */,
+				B3E983CB1C3E778500BA84CE /* DefineShareModel.h */,
+				B3E983CC1C3E778500BA84CE /* DefineShareModel.m */,
+				B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */,
+				B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */,
+			);
+			path = DefineShare;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5273,6 +5294,7 @@
 				796EFCEE1BF5C67D00799120 /* VoiceSearchFeedback017.png in Resources */,
 				796EFCE41BF5C67D00799120 /* VoiceSearchFeedback012.png in Resources */,
 				5A52FC411ACEBF220076DAE6 /* ProduceDetailViewController.xib in Resources */,
+				B3E983CA1C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib in Resources */,
 				793917461C17CD550020372E /* chat_sender_audio_playing_002@2x.png in Resources */,
 				793917351C17CD3D0020372E /* chat_receiver_bg@2x.png in Resources */,
 				796EFD5E1BF5C67D00799120 /* group_detail@2x.png in Resources */,
@@ -5466,6 +5488,7 @@
 				B3B7A6741BA6A25F0043DF7C /* CustomerDetailViewController.m in Sources */,
 				52F59D881BCF4B1F00DE24FB /* invoiceCell.m in Sources */,
 				5ABA4F661AD7C2E7004AA8F6 /* HomeBase.m in Sources */,
+				B3E983C91C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m in Sources */,
 				63AA23211B847639009CD44D /* ShaiXuanCell.m in Sources */,
 				79FB11631BD73BB400819FB2 /* UpDateUserPictureViewCell.m in Sources */,
 				796EFC101BF5C5DE00799120 /* EMChatViewCell.m in Sources */,
@@ -5700,6 +5723,7 @@
 				5AED0A161ADB604C00B0E0E5 /* DayDetail.m in Sources */,
 				796EFB191BF5BCF100799120 /* EMCDDeviceManager+Media.m in Sources */,
 				527D07C01BD5F39A00CA6C39 /* OrderinformationCell.m in Sources */,
+				B3E983CD1C3E778500BA84CE /* DefineShareModel.m in Sources */,
 				B3ABEF2E1C3CC54E0024566D /* ProductDetailShareByMyself.m in Sources */,
 				6364A9B01B098CA00099705B /* YYAnimationIndicator.m in Sources */,
 				634469861B342AF7009F7ADF /* messageCellSKBTableViewCell.m in Sources */,

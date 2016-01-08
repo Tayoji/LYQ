@@ -19,6 +19,7 @@
 #import "CustomerOrderViewController.h"
 #import "IWHttpTool.h"  
 #import "CustomModel.h"
+#import "UIImageView+WebCache.h"
 @interface CustomerDetailViewController ()<UITextFieldDelegate,notifiToRefereshCustomerDetailInfo,UIActionSheetDelegate, UITableViewDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *SetRemindBtnOutlet;
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -50,6 +51,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     self.SetRemindBtnOutlet.imageEdgeInsets = UIEdgeInsetsMake(0, 32, 0, 0);
 }
+
 
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -268,7 +270,7 @@
         CustomModel *customerDetail = [CustomModel modalWithDict:dic];
         [self.dataArr addObject:customerDetail];
         [self setSubViews];
-        NSLog(@".. %@  %@", self.dataArr, [self.dataArr[0]Name]);
+        NSLog(@". %@. %@  %@", [self.dataArr[0]HearUrl], self.dataArr, [self.dataArr[0]Name]);
         
         hudView.labelText = @"加载成功...";
         [hudView hide:YES afterDelay:0.4];
@@ -277,7 +279,35 @@
     }];
 }
 
+- (void)setCustomerIconActin{
+    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(30, 30, 60, 60)];
+    [self.tableView addSubview:customerIm];
+    self.customerIcon = customerIm;
+    
+    self.customerIcon.layer.masksToBounds = YES;
+    self.customerIcon.layer.cornerRadius = 20;
+    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]) {
+        self.customerIcon.image = [UIImage imageNamed:@"IDInform"];
+        UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
+        [self.customerIcon.image drawAtPoint:CGPointZero];
+         NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
+        NSDictionary *dict = @{
+                               NSFontAttributeName:[UIFont systemFontOfSize:18],
+                               NSForegroundColorAttributeName:[UIColor redColor]
+                               };
+        [text drawAtPoint:CGPointMake(5, 5) withAttributes:dict];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        self.customerIcon.image = newImage;
+    }else{
+       [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HearUrl]]];
+    }
+    
+    
+
+}
 -(void)setSubViews{
+    [self setCustomerIconActin];
     self.QQ.text = [self.dataArr[0]QQCode];
     self.weChat.text =  [self.dataArr[0]WeiXinCode]; /*self.weChatStr;*/
     self.tele.text = [self.dataArr[0]Mobile];/*self.teleStr;*/
