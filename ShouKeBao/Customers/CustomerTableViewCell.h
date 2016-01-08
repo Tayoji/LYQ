@@ -13,13 +13,14 @@
 - (void)transformPerformation:(CustomModel *)model;
 - (void)tableViewReloadData;
 - (void)tipInviteViewShow:(NSString *)telStr;
-- (void)pushCustomerDetailVC:(NSString *)customerID;
+- (void)pushCustomerDetailVC:(NSString *)customerID AppSkbUserId:(NSString *)appSkbUserId name:(NSString *)name;
 @end
 
 @interface CustomerTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIButton *customerIcon1;
+@property (weak, nonatomic) IBOutlet UIImageView *customerIcon;
 - (IBAction)clickIconToCustomerDetail:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *customerIcon;
 @property (weak, nonatomic) IBOutlet UIView *viewAboveOfCalling;
 @property (weak, nonatomic) IBOutlet UILabel *nameL;
 @property (weak, nonatomic) IBOutlet UILabel *telL;

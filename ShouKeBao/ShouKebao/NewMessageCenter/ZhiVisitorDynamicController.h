@@ -7,8 +7,16 @@
 //
 
 #import "SKViewController.h"
-
+typedef enum{
+    VisitorDynamicTypeFromMessageCenter,
+    VisitorDynamicTypeFromCustom,
+}TheFromType;
 @interface ZhiVisitorDynamicController : SKViewController
+
+@property (assign, nonatomic) TheFromType visitorDynamicFromType;
 @property (strong, nonatomic) UITableView *tableView;
+
+@property (nonatomic, strong) NSString * AppSkbUserId;
+
 
 @end

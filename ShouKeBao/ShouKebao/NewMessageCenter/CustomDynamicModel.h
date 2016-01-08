@@ -20,6 +20,8 @@
 @property (nonatomic, strong)NSString *  CustomerMobile;
 @property (nonatomic, strong)NSString *  CreateTime;
 @property (nonatomic, strong)NSString *  CreateTimeText;
+@property (nonatomic, strong)NSString * WeixinNickName;
+@property (nonatomic, strong)NSString * DynamicTitleV2;
 @property (nonatomic, strong)ProductModal *  ProductdetailModel;//
 +(CustomDynamicModel*)modelWithDic:(NSDictionary *)dic;
 @end

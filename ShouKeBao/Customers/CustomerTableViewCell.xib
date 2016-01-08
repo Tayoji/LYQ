@@ -14,10 +14,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Toz-M5-5tQ">
-                        <rect key="frame" x="10" y="12" width="40" height="40"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="fQj-Kd-HlP">
+                        <rect key="frame" x="8" y="12" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <state key="normal" image="IDInform"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Toz-M5-5tQ">
+                        <rect key="frame" x="8" y="12" width="40" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         <connections>
                             <action selector="clickIconToCustomerDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8R6-FC-ncc"/>
                         </connections>
@@ -77,7 +80,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="IMBtn" destination="BNe-ky-IXo" id="Tca-wU-Igl"/>
-                <outlet property="customerIcon" destination="Toz-M5-5tQ" id="asM-zz-vc0"/>
+                <outlet property="customerIcon" destination="fQj-Kd-HlP" id="IPZ-Qd-sDu"/>
+                <outlet property="customerIcon1" destination="Toz-M5-5tQ" id="Jc9-Kk-1el"/>
                 <outlet property="nameL" destination="aku-nj-kUA" id="Kdj-OE-ZhA"/>
                 <outlet property="orderL" destination="VZl-gI-ahA" id="42N-mh-XCd"/>
                 <outlet property="telL" destination="lFR-I3-cpz" id="GfW-nc-EeJ"/>
@@ -87,7 +91,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="IDInform" width="31" height="31"/>
         <image name="SNotificationJiantou" width="7" height="14"/>
         <image name="blueMessage" width="21" height="21"/>
     </resources>

@@ -17,6 +17,8 @@
 #import "MobClick.h"
 #import "MBProgressHUD+MJ.h"
 #import "IWHttpTool.h"
+#import "ChatViewController.h"
+
 @interface CustomerDetailAndOrderViewController ()
 @property (nonatomic, weak) UISegmentedControl *segmentControl;
 @property (nonatomic, strong)CustomerOrderViewController * orderVC;
@@ -83,9 +85,12 @@
 -(void)sex:(UISegmentedControl *)sender
 {
     UISegmentedControl *control = (UISegmentedControl *)sender;
-    
+    self.segmentControl.selectedSegmentIndex = control.selectedSegmentIndex;
+    NSLog(@"..%ld", self.segmentControl.selectedSegmentIndex);
     if (control.selectedSegmentIndex == 0) {
         self.button.hidden = NO;
+        [self.button setTitle:@"保存" forState:UIControlStateNormal];
+        [self.button setImage:nil forState:UIControlStateNormal];
         [self.view addSubview:self.detailVC.view];
         if (self.orderVC || self.customerDynamicVC) {
             [self.orderVC.view removeFromSuperview];
@@ -104,8 +109,10 @@
         }
         NSLog(@"订单详情" );
     }else if (control.selectedSegmentIndex == 2){
-        self.button.hidden = YES;
+        self.button.hidden = NO;
         [self.view addSubview:self.customerDynamicVC.view];
+        [self.button setImage:[UIImage imageNamed:@"grayxiaoxi"] forState:UIControlStateNormal];
+        [self.button setTitle:@"" forState:UIControlStateNormal];
         if (self.detailVC || self.orderVC) {
             [self.detailVC.view removeFromSuperview];
             [self.orderVC.view removeFromSuperview];
@@ -130,7 +137,8 @@
         _detailVC = [sb instantiateViewControllerWithIdentifier:@"customerDetail"];
         _detailVC.Nav = self.navigationController;
         _detailVC.customerId = self.customerID;
-        _detailVC.AppSkbUserID = self.appUserID;
+        NSLog(@"%@", self.appUserID);
+        _detailVC.AppSkbUserID = self.AppSkbUserId;
     }
     return _detailVC;
 }
@@ -138,56 +146,61 @@
 - (ZhiVisitorDynamicController *)customerDynamicVC{
     if (!_customerDynamicVC) {
         ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
+        NSLog(@"%@", self.appUserID);
+        customerDynamicVC.AppSkbUserId =self.AppSkbUserId;
+        customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;
     }
     return _customerDynamicVC;
 }
--(void)customerRightBarItem
-{
+-(void)customerRightBarItem{
+    
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = CGRectMake(0,0,40,30);
-//    [self.button setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
     [self.button setTitle:@"保存" forState:UIControlStateNormal];
     self.button.titleLabel.font = [UIFont systemFontOfSize:15];
-    [self.button addTarget:self action:@selector(saveCustomerDetail)forControlEvents:UIControlEventTouchUpInside];
+    [self.button addTarget:self action:@selector(saveCustomerDetail:)forControlEvents:UIControlEventTouchUpInside];
     [self.button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
 
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:self.button];
     
     self.navigationItem.rightBarButtonItem= barItem;
 }
--(void)EditCustomerDetail{
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
-    
-    EditCustomerDetailViewController *edit = [sb instantiateViewControllerWithIdentifier:@"EditCustomer"];
-    edit.ID = _detailVC.customerId;
-    NSLog(@"%@", _detailVC.customerId);
-    edit.QQStr = self.detailVC.QQ.text;
-    edit.wechatStr = self.detailVC.weChat.text;
-    edit.noteStr = self.detailVC.note.text;
-    edit.teleStr = self.detailVC.tele.text;
-    edit.nameStr = self.detailVC.customerNameLa.text;
-    edit.delegate = self.detailVC;
-    //    添加的内容
-    edit.personCardIDStr = self.detailVC.userMessageID.text;
-    edit.birthdateStr = self.detailVC.bornDay.text;
-    edit.nationalityStr = self.detailVC.countryID.text;
-    edit.nationStr = self.detailVC.nationalID.text;
-    edit.passportDataStr = self.detailVC.pasportStartDay.text;
-    edit.passportAddressStr = self.detailVC.pasportAddress.text;
-    edit.passportValidityStr = self.detailVC.pasportInUseDay.text;
-    edit.addressStr = self.detailVC.livingAddress.text;
-    edit.passportStr = self.detailVC.passPortId.text;
-    [self.navigationController pushViewController:edit animated:YES];
-}
 
-- (void)saveCustomerDetail{
+
+//-(void)EditCustomerDetail{
+//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
+//    
+//    EditCustomerDetailViewController *edit = [sb instantiateViewControllerWithIdentifier:@"EditCustomer"];
+//    edit.ID = _detailVC.customerId;
+//    NSLog(@"%@", _detailVC.customerId);
+//    edit.QQStr = self.detailVC.QQ.text;
+//    edit.wechatStr = self.detailVC.weChat.text;
+//    edit.noteStr = self.detailVC.note.text;
+//    edit.teleStr = self.detailVC.tele.text;
+//    edit.nameStr = self.detailVC.customerNameLa.text;
+//    edit.delegate = self.detailVC;
+//    //    添加的内容
+//    edit.personCardIDStr = self.detailVC.userMessageID.text;
+//    edit.birthdateStr = self.detailVC.bornDay.text;
+//    edit.nationalityStr = self.detailVC.countryID.text;
+//    edit.nationStr = self.detailVC.nationalID.text;
+//    edit.passportDataStr = self.detailVC.pasportStartDay.text;
+//    edit.passportAddressStr = self.detailVC.pasportAddress.text;
+//    edit.passportValidityStr = self.detailVC.pasportInUseDay.text;
+//    edit.addressStr = self.detailVC.livingAddress.text;
+//    edit.passportStr = self.detailVC.passPortId.text;
+//    [self.navigationController pushViewController:edit animated:YES];
+//}
+
+- (void)saveCustomerDetail:(NSString *)seg{
+    
+    if ( self.segmentControl.selectedSegmentIndex==0) {
+  
     MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
     hudView.labelText = @"保存中...";
     [hudView show:YES];
-    
-    
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:self.detailVC.customerNameLa.text forKey:@"Name"];
         [dic setObject:self.detailVC.tele.text forKey:@"Mobile"];
@@ -225,5 +238,10 @@
         } failure:^(NSError *error) {
             NSLog(@"-----创建单个客户失败 %@-----",error);
         }];
+    }else if (self.segmentControl.selectedSegmentIndex == 2){
+        ChatViewController *chatController = [[ChatViewController alloc] initWithChatter:self.AppSkbUserId conversationType:eConversationTypeChat];
+        chatController.title = self.name;
+        [self.navigationController pushViewController:chatController animated:YES];
+    }
 }
 @end

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *ditailL;
 @property (weak, nonatomic) IBOutlet UILabel *lookDetailL;
 @property (weak, nonatomic) IBOutlet UIButton *jianTouB;
+
 @property (nonatomic, strong)ServiceModel *serviceModel;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

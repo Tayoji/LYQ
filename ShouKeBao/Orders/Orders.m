@@ -254,7 +254,7 @@ typedef void (^ChangeFrameBlock)();
                     [self.dataArr removeAllObjects];
                 }
                 self.totalCount = json[@"TotalCount"];
-                
+            NSLog(@"..%@", json);
                 for (NSDictionary *dic in json[@"OrderList"]) {
                     OrderModel *order = [OrderModel orderModelWithDict:dic];
                     [self.dataArr addObject:order];

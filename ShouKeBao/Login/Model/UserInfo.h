@@ -35,6 +35,8 @@
 #define UserInfoKeyLYGWIsOpenVIP @"LVGWIsOpenVIP"//是否开通银牌以上顾问
 #define UserInfoKeyIsShowQuanTouTiao @"IsShowQuanTouTiao"
 #define IsShowInvoiceManage @"IsShowInvoiceManage"
+#define UserInfoKeyLYGWHeaderPic @"UserInfoHeaderPic"//头像
+#define UserInfoKeyLYGWName @"UserInfoName"//名字
 #import "BaseModel.h"
 @interface UserInfo : BaseModel
 
