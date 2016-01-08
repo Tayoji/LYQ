@@ -10,10 +10,12 @@
 #import "IWHttpTool.h"
 #import "UIScrollView+MJRefresh.h"
 #import "CustomModel.h"
+#import "RedPSelCusterCell.h"
 #import "SetRedPacketController.h"
+#import "UIImageView+WebCache.h"
 #define pageSize 10
 #define kScreenSize [UIScreen mainScreen].bounds.size
-
+#define UserDefault [NSUserDefaults standardUserDefaults]
 @interface SelectCustomerController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong)UISearchBar *searchBar;
 @property (nonatomic,strong) UITableView *tableView;
@@ -23,8 +25,15 @@
 @property (nonatomic,assign) int pageIndex;// 当前页
 @property (nonatomic,copy) NSString *totalCount;
 @property (nonatomic,copy) NSString *searchK;
+@property (nonatomic,strong) NSMutableArray *dataArr;
 @property (nonatomic,assign) BOOL isAll;
-@property (nonatomic, assign)BOOL isNUll;
+@property (nonatomic, assign)BOOL isRefresh;
+@property (nonatomic,strong) NSMutableArray *SELCustomerArr;
+@property (nonatomic,strong) UITableView *searchTableView;
+@property (nonatomic,strong) UIView *historyView;
+@property (nonatomic,strong) UIView *nullView;
+
+@property (nonatomic,strong) NSMutableArray *guideHistoryArr;
 
 @end
 
@@ -32,19 +41,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([UserDefault objectForKey:@"GuideHistoryRP"]) {
+        
+       NSMutableArray *mutabArr = [UserDefault objectForKey:@"GuideHistoryRP"];
+        [self.guideHistoryArr addObjectsFromArray:mutabArr];
+    }
     self.isAll = NO;
+    self.isRefresh = YES;
+    self.pageIndex = 1;
+    self.searchK = @"";
+    [self.tableView addSubview:self.nullView];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBarHidden = NO;
     self.title = @"选择客人";
+    [self iniHeader];
+    [self loadDataSource];
+    
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
-    
     //浮动图
     [self.lowView addSubview:self.AllSelectedBtn];
     [self.lowView addSubview:self.determineBtn];
     [self.view addSubview:self.lowView];
-    [self iniHeader];
+    
 }
 #pragma mark - 刷新
 -(void)iniHeader
@@ -61,90 +81,137 @@
 }
 -(void)headRefresh
 {
-    if (self.isNUll) {
-        
+    if (self.isRefresh) {
+        [self.SELCustomerArr removeAllObjects];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+        self.isRefresh = NO;
         self.searchK = @"";
+        self.pageIndex = 1;
+        [self  loadDataSource];
     }
-    self.pageIndex = 1;
-//加载数据
-    NSLog(@"加载数据");
-    [self.tableView headerEndRefreshing];
-//    [self  loadDataSource];
+   
 }
 -(void)footRefresh
 {
     self.pageIndex ++;
+    [self loadDataSource];
     
-   [self.tableView footerEndRefreshing];
+}
+-(void)loadDataSource{
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[NSString stringWithFormat:@"%d",self.pageIndex] forKey:@"PageIndex"];
+    [dic setObject:[NSString stringWithFormat:@"%d",pageSize] forKey:@"PageSize"];
+    [dic setObject:@"7" forKey:@"SortType"];
+    [dic setObject:self.searchK forKey:@"SearchKey"];
+    [dic setObject:@"4" forKey:@"CustomerType"];
+    
+    [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
+        NSLog(@"------红包客户json is %@-------",json);
+        NSMutableArray *arrs = [NSMutableArray array];
+        arrs = json[@"CustomerList"];
+        if (!self.isRefresh) {
+            [self.dataArr removeAllObjects];
+            self.isRefresh = YES;
+            [self.SELCustomerArr removeAllObjects];
+            [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+        }
+        if (arrs.count == 0){
+            self.nullView.alpha = 1;
+        }else{
+            self.nullView.alpha = 0;
+            for (NSDictionary *dic in arrs) {
+                CustomModel *model = [CustomModel modalWithDict:dic];
+                NSLog(@"%@",model.AppSkbUserId);
+                [self.dataArr addObject:model];
+            }
+        }
+        NSLog(@"dataArr:---%ld",self.dataArr.count);
+        [self.tableView reloadData];
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"-------管客户第一个接口请求失败 error is %@------",error);
+    }];
     
     
 }
-//- (NSInteger)getEndPage
-//{
-//    NSInteger cos = [self.totalCount integerValue] % pageSize;
-//    if (cos == 0) {
-//        return [self.totalCount integerValue] / pageSize;
-//    }else{
-//        return [self.totalCount integerValue] / pageSize + 1;
-//        
-//    }
-//}
-- (UITableView *)tableView{
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, kScreenSize.width, kScreenSize.height-60-50-50) style:UITableViewStyleGrouped];
-        _tableView.separatorInset = UIEdgeInsetsZero;
-//        _tableView.dataSource = self;
-//        _tableView.delegate = self;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.backgroundColor = [UIColor colorWithRed:220/255.0 green:229/255.0 blue:238/255.0 alpha:1];
+#pragma  mark - UITableViewDelegage&&UITableViewDataSource
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (tableView.tag == 010) {
+        return self.guideHistoryArr.count;
     }
-    return _tableView;
+    NSLog(@"走了");
+    return self.dataArr.count;
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+    return 1;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 010) {
+        UITableViewCell *cell1 = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 50, kScreenSize.width, 50)];
+        cell1.textLabel.text = self.guideHistoryArr[indexPath.row];
+        return cell1;
+    }
+//    RedPSelCusterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RedPSelCusterCell" forIndexPath:indexPath];
+    RedPSelCusterCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"RedPSelCusterCell" owner:nil options:nil] firstObject];
+    CustomModel *model = self.dataArr[indexPath.row];
+    cell.nameLabel.text = model.Name;
+    cell.NumberLabel.text = model.Mobile;
+    if ([model.HearUrl  isEqual: @""]) {
+        cell.NameFirstlabel.text = [model.Name substringToIndex:1];
+        cell.NameFirstlabel.alpha = 1;
+    }else{
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HearUrl]];
+        cell.NameFirstlabel.alpha = 0;
+    }
+    
+    return cell;
 }
 
-//-(void)loadDataSource{
-//
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setObject:[NSString stringWithFormat:@"%d", self.pageIndex] forKey:@"PageIndex"];
-//    [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
-//    [dic setObject:@"7" forKey:@"SortType"];
-//    [dic setObject:self.searchK forKey:@"SearchKey"];
-//    [dic setObject:@"4" forKey:@"CustomerType"];
-//    
-//    [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
-//        NSLog(@"------管客户json is %@-------",json);
-//        NSMutableArray *arrs = [NSMutableArray array];
-////        self.totalNumber = json[@"TotalCount"];
-//        
-//        arrs = json[@"CustomerList"];
-//        
-//        if (arrs.count == 0){
-//            
-//        }else{
-//            
-//            for (NSDictionary *dic in json[@"CustomerList"]) {
-//                
-//                CustomModel *model = [CustomModel modalWithDict:dic];
-//                
-//            }
-//        }
-//        
-//        [self.tableView reloadData];
-//        [self.tableView headerEndRefreshing];
-//        [self.tableView footerEndRefreshing];
-//        
-//    } failure:^(NSError *error) {
-//        NSLog(@"-------管客户第一个接口请求失败 error is %@------",error);
-//    }];
-//    
-//}
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 010) {
+        return;
+    }
+    CustomModel *model = self.dataArr[indexPath.row];
+    [self.SELCustomerArr removeObject:model.AppSkbUserId];
+    [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+    if (self.SELCustomerArr.count < self.dataArr.count) {
+        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+        _isAll = NO;
+    }
+
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 010) {
+        return;
+    }
+    CustomModel *model = self.dataArr[indexPath.row];
+    [self.SELCustomerArr addObject:model.AppSkbUserId];
+    [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+    if (self.SELCustomerArr.count == self.dataArr.count) {
+        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
+        _isAll = YES;
+    }
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
+}
+
 #pragma mark - UISearchBarDelegate
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     [_searchBar setShowsCancelButton:YES];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 50, kScreenSize.width, kScreenSize.height-50)];
-    view.backgroundColor = [UIColor blueColor];
-    view.tag = 1001;
-    [self.view addSubview:view];
+    [self.view addSubview:self.historyView];
 
+    if (self.guideHistoryArr.count != 0) {
+        [_historyView addSubview:self.searchTableView];
+        [self.searchTableView reloadData];
+    }
+    
     for(id cc in [searchBar.subviews[0] subviews]){
         
         if([cc isKindOfClass:[UIButton class]]){
@@ -192,20 +259,63 @@
     UITableView *vvv = [self.view viewWithTag:1001];
     [vvv removeFromSuperview];
 }
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    //搜索历史存本地
+    NSString *sstr = [searchBar.text mutableCopy];
+    [self.guideHistoryArr addObject:sstr];
+    NSMutableArray *mutabArr = [[NSMutableArray alloc] init];
+    [mutabArr addObjectsFromArray:self.guideHistoryArr];
+    [UserDefault setObject:mutabArr forKey:@"GuideHistoryRP"];
+    //请求数据
+    self.searchK = searchBar.text;
+    _isRefresh = NO;
+    [self loadDataSource];
+    self.navigationController.navigationBarHidden = NO;
+    [searchBar setShowsCancelButton:NO];
+    [searchBar resignFirstResponder];
+    UITableView *vvv = [self.view viewWithTag:1001];
+    [vvv removeFromSuperview];
+}
+#pragma mark - 按钮的点击处理方法
 -(void)BtnClick:(UIButton *)button{
     if (button.tag == 101) {//确定按钮
+        NSLog(@"个数:%ld----数组:%@",self.SELCustomerArr.count,self.SELCustomerArr);
         SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+        setRPacket.NumOfPeopleArr = self.SELCustomerArr;
         [self.navigationController pushViewController:setRPacket animated:YES];
         
     }else if(button.tag == 102){//全选
         if (_isAll) {
             [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+            [self.SELCustomerArr removeAllObjects];
+            for (NSInteger i = 0; i<self.dataArr.count; i++) {
+                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
+                [self.tableView  deselectRowAtIndexPath:indexPath animated:NO];
+            }
+            
+            NSLog(@"---%ld",self.SELCustomerArr.count);
             _isAll = NO;
         }else{
             [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
+            [self.SELCustomerArr removeAllObjects];
+            for (NSInteger i = 0; i<self.dataArr.count; i++) {
+                CustomModel *model = self.dataArr[i];
+                [self.SELCustomerArr addObject:model.AppSkbUserId];
+                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+            
+            NSLog(@"---%ld",self.SELCustomerArr.count);
             _isAll = YES;
 
         }
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+
+    }else if(button.tag == 105){
+        
+        [self.searchTableView removeFromSuperview];
+        self.guideHistoryArr = nil;
+        [UserDefault setObject:self.guideHistoryArr forKey:@"GuideHistoryRP"];
     }
 }
 -(UISearchBar *)searchBar{
@@ -219,12 +329,12 @@
     }
     return _searchBar;
 }
-//-(UITableView *)tableView{
-//    if (!_tableView) {
-//        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, kScreenSize.width, kScreenSize.height-60-50-60)];
-//    }
-//    return _tableView;
-//}
+-(NSMutableArray *)dataArr{
+    if (!_dataArr) {
+        _dataArr = [[NSMutableArray alloc] init];
+    }
+    return _dataArr;
+}
 -(UIButton *)AllSelectedBtn{
     if (!_AllSelectedBtn) {
         _AllSelectedBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 2, 80, 40)];
@@ -236,8 +346,6 @@
         [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
         [_AllSelectedBtn setImageEdgeInsets:UIEdgeInsetsMake(8, 0, 8,55)];
         [_AllSelectedBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-//        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateSelected];
     }
     return _AllSelectedBtn;
 }
@@ -251,13 +359,84 @@
 -(UIButton *)determineBtn{
     if (!_determineBtn) {
         _determineBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width-80, 2, 80, 40)];
-        [_determineBtn setTitle:@"确定(0)" forState:UIControlStateNormal];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         [_determineBtn setTitleColor:[UIColor colorWithRed:65.0/255.0 green:121.0/255.0 blue:253.0/255.0 alpha:1] forState:UIControlStateNormal];
         _determineBtn.tag = 101;
         [_determineBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
 
     }
     return _determineBtn;
+}
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, kScreenSize.width, kScreenSize.height-60-50-50) style:UITableViewStylePlain];
+        _tableView.separatorInset = UIEdgeInsetsZero;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView setEditing:YES animated:YES];
+        _tableView.rowHeight = 80;
+        _tableView.tag = 011;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.backgroundColor = [UIColor colorWithRed:220/255.0 green:229/255.0 blue:238/255.0 alpha:1];
+//        [_tableView registerNib:[UINib nibWithNibName:@"RedPSelCusterCell" bundle:nil] forCellReuseIdentifier:@"RedPSelCusterCell"];
+    }
+    return _tableView;
+}
+-(UIView *)nullView{
+    if (!_nullView) {
+        _nullView = [[UIView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-90, 100, 160, 200)];
+        _nullView.backgroundColor = [UIColor  colorWithPatternImage: [UIImage imageNamed:@"content_null" ]];
+        _nullView.alpha = 0;
+    }
+   
+    return _nullView;
+}
+-(UITableView *)searchTableView{
+    if (!_searchTableView) {
+        _searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 40, kScreenSize.width-20, kScreenSize.height-49) style:UITableViewStylePlain];
+        _searchTableView.delegate = self;
+        _searchTableView.dataSource = self;
+        _searchTableView.tag = 010;
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, kScreenSize.width-40, 50)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(footView.frame.size.width/2-50, 0, 100, 30)];
+        [btn setTitle:@"清除历史纪录" forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
+        btn.tag = 105;
+        [btn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [footView addSubview:btn];
+        _searchTableView.tableFooterView = footView;
+    }
+    return _searchTableView;
+}
+-(UIView *)historyView{
+    if (!_historyView) {
+        _historyView = [[UIView alloc] initWithFrame:CGRectMake(0, 49, kScreenSize.width, kScreenSize.height-49)];
+        _historyView.tag = 1001;
+        _historyView.backgroundColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:238.0/255.0 alpha:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 80, 30)];
+        label.text = @"历史搜索";
+        label.font = [UIFont systemFontOfSize:14];
+        label.textColor = [UIColor lightGrayColor];
+        [_historyView addSubview:label];
+        if (self.guideHistoryArr.count != 0) {
+            [_historyView addSubview:self.searchTableView];
+
+        }
+    }
+    return _historyView;
+}
+-(NSMutableArray *)guideHistoryArr{
+    if (!_guideHistoryArr) {
+        _guideHistoryArr = [[NSMutableArray alloc] init];
+    }
+    return _guideHistoryArr;
+}
+-(NSMutableArray *)SELCustomerArr{
+    if (!_SELCustomerArr) {
+        _SELCustomerArr = [[NSMutableArray alloc] init];
+    }
+    return _SELCustomerArr;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

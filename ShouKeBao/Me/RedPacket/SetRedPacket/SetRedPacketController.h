@@ -14,6 +14,13 @@
 @property (weak, nonatomic) IBOutlet UITextView *ExitCountryTextView;
 @property (weak, nonatomic) IBOutlet UITextView *InlandTextView;
 @property (weak, nonatomic) IBOutlet UITextView *RimtextView;
+@property (nonatomic,strong) NSMutableArray *NumOfPeopleArr;//人数
+@property (nonatomic) CGFloat InlandN;//国内游
+@property (nonatomic) CGFloat RimN;//周边
+@property (nonatomic) CGFloat ExitCountryN;//出境游
+@property (nonatomic) CGFloat FinalMoney;
 - (IBAction)GrantRPBtn:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *NumOfRedPLabel;
+@property (weak, nonatomic) IBOutlet UILabel *FinalMoneyLabel;
 
 @end

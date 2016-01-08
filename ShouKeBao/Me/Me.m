@@ -337,9 +337,11 @@
             _meheader.personType.text =[[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyLYGWPhoneNum];
             _meheader.positionLab.text = [[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyLYGWPosition];
             [[NSUserDefaults standardUserDefaults]setObject:muta[@"ConsultantLevel"] forKey:UserInfoKeyLYGWLevel];
-            
+            [[NSUserDefaults standardUserDefaults] setObject:muta[@"Avatar"] forKey:UserInfoKeyLYGWHeaderPic];
             [[NSUserDefaults standardUserDefaults]setObject:muta[@"ConsultantUrl"] forKey:UserInfoKeyLYGWLinkUrl];
             [[NSUserDefaults standardUserDefaults]setObject:muta[@"Position"] forKey:UserInfoKeyLYGWPosition];
+            [[NSUserDefaults standardUserDefaults]setObject:muta[@"Name"] forKey:UserInfoKeyLYGWName];
+
             [[NSUserDefaults standardUserDefaults]setObject:muta[@"Mobile"] forKey:UserInfoKeyLYGWPhoneNum];
             
 //            [self.tableView reloadData];
