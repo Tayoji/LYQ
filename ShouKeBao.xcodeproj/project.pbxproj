@@ -611,6 +611,9 @@
 		79DBC0321BFDED35008D6731 /* ProductListWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBC0301BFDED35008D6731 /* ProductListWebView.m */; };
 		79DF08B91C2E8F2700EB8FBA /* IMTopHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */; };
 		79DF08BA1C2E8F2700EB8FBA /* IMTopHeader@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */; };
+		79E132BE1C43827B00E96F0C /* FKSendRedPacketView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E132BD1C43827B00E96F0C /* FKSendRedPacketView.m */; };
+		79E132C11C4382AA00E96F0C /* FKReceiveProductLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E132C01C4382AA00E96F0C /* FKReceiveProductLinkView.m */; };
+		79E132C41C438DD300E96F0C /* EMChatCustomBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E132C31C438DD300E96F0C /* EMChatCustomBubbleView.m */; };
 		79EE91681B2BCDE2008C8935 /* TimeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EE91671B2BCDE2008C8935 /* TimeTool.m */; };
 		79F200AD1C3E4545009F9FDE /* VisitorDynamicProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F200AC1C3E4545009F9FDE /* VisitorDynamicProductView.m */; };
 		79F200AF1C3E48FF009F9FDE /* VisitorDynamicProductView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F200AE1C3E48FF009F9FDE /* VisitorDynamicProductView.xib */; };
@@ -1830,6 +1833,12 @@
 		79DBC0301BFDED35008D6731 /* ProductListWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListWebView.m; sourceTree = "<group>"; };
 		79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@2x.png"; sourceTree = "<group>"; };
 		79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@3x.png"; sourceTree = "<group>"; };
+		79E132BC1C43827B00E96F0C /* FKSendRedPacketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKSendRedPacketView.h; sourceTree = "<group>"; };
+		79E132BD1C43827B00E96F0C /* FKSendRedPacketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKSendRedPacketView.m; sourceTree = "<group>"; };
+		79E132BF1C4382AA00E96F0C /* FKReceiveProductLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKReceiveProductLinkView.h; sourceTree = "<group>"; };
+		79E132C01C4382AA00E96F0C /* FKReceiveProductLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKReceiveProductLinkView.m; sourceTree = "<group>"; };
+		79E132C21C438DD300E96F0C /* EMChatCustomBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatCustomBubbleView.h; sourceTree = "<group>"; };
+		79E132C31C438DD300E96F0C /* EMChatCustomBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatCustomBubbleView.m; sourceTree = "<group>"; };
 		79EE91661B2BCDE2008C8935 /* TimeTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTool.h; sourceTree = "<group>"; };
 		79EE91671B2BCDE2008C8935 /* TimeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTool.m; sourceTree = "<group>"; };
 		79F200AB1C3E4545009F9FDE /* VisitorDynamicProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorDynamicProductView.h; sourceTree = "<group>"; };
@@ -3864,6 +3873,8 @@
 				796EFBDC1BF5C5DE00799120 /* EMChatTextBubbleView.m */,
 				796EFBDD1BF5C5DE00799120 /* EMChatVideoBubbleView.h */,
 				796EFBDE1BF5C5DE00799120 /* EMChatVideoBubbleView.m */,
+				79E132C21C438DD300E96F0C /* EMChatCustomBubbleView.h */,
+				79E132C31C438DD300E96F0C /* EMChatCustomBubbleView.m */,
 				796EFBDF1BF5C5DE00799120 /* FKCustomViewInTextBubbleView */,
 			);
 			path = ChatCellBubble;
@@ -3876,6 +3887,10 @@
 				796EFBE11BF5C5DE00799120 /* FKProductModel.m */,
 				796EFBE21BF5C5DE00799120 /* FKProductViewInTextBubbleView.h */,
 				796EFBE31BF5C5DE00799120 /* FKProductViewInTextBubbleView.m */,
+				79E132BC1C43827B00E96F0C /* FKSendRedPacketView.h */,
+				79E132BD1C43827B00E96F0C /* FKSendRedPacketView.m */,
+				79E132BF1C4382AA00E96F0C /* FKReceiveProductLinkView.h */,
+				79E132C01C4382AA00E96F0C /* FKReceiveProductLinkView.m */,
 			);
 			path = FKCustomViewInTextBubbleView;
 			sourceTree = "<group>";
@@ -5524,6 +5539,7 @@
 				79FB115E1BD7310B00819FB2 /* UpDateUserPictureViewController.m in Sources */,
 				796EFDD21BF5CA4E00799120 /* UIView+EMWebCacheOperation.m in Sources */,
 				796F36DC1B7863840089FEE8 /* SpecialLineCollectionCell.m in Sources */,
+				79E132C41C438DD300E96F0C /* EMChatCustomBubbleView.m in Sources */,
 				5A52FC521ACEBF220076DAE6 /* rightCell2.m in Sources */,
 				B3C2649B1B5E5E6E00C8FB0D /* ImageCollectionViewCell.m in Sources */,
 				5246EA701C3E05180068D33A /* RedPSelCusterCell.m in Sources */,
@@ -5617,6 +5633,7 @@
 				B3C01E2F1BAC10FC005E4BB5 /* Server.m in Sources */,
 				5A6165821AE79AEF00641837 /* NullContentView.m in Sources */,
 				796EFDD11BF5CA4E00799120 /* UIImageView+EMWebCache.m in Sources */,
+				79E132BE1C43827B00E96F0C /* FKSendRedPacketView.m in Sources */,
 				799B987A1BDF7534003A76F6 /* MoreLvYouGuWenInfoViewController.m in Sources */,
 				63B6CFB41B2E745B0037E06B /* personIdModel.m in Sources */,
 				527D4A381BC8A0620020AAF3 /* LeaveShare.m in Sources */,
@@ -5743,6 +5760,7 @@
 				5AB725811AD68C5B0044B318 /* Recommend.m in Sources */,
 				796EFB001BF4DAE300799120 /* MessageModel2.m in Sources */,
 				796EFC181BF5C5DE00799120 /* EditUserNameVC.m in Sources */,
+				79E132C11C4382AA00E96F0C /* FKReceiveProductLinkView.m in Sources */,
 				7982F1581B33C6CB009F878D /* CityPlistTool.m in Sources */,
 				63F1A1B01B14250E00DE9867 /* MJMethod.m in Sources */,
 				79DBC0311BFDED35008D6731 /* ProductDetailWebView.m in Sources */,

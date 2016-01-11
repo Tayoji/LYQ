@@ -12,7 +12,7 @@ typedef enum {
     fromTypeOrderDetail
 }TheFromType;
 @interface AttachmentCollectionView : UICollectionViewController
-
+@property (nonatomic, strong)UIViewController * OrderVC;
 @property (nonatomic,copy) NSString *customerId;
 @property (nonatomic, assign)TheFromType fromType;
 

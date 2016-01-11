@@ -259,9 +259,10 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     NSString *appSkbUserID = self.AppSkbUserID;
+    NSLog(@"%@", self.AppSkbUserID);
+
     [dic setObject:self.customerId forKey:@"CustomerID"];
     [dic setObject:appSkbUserID forKey:@"AppSkbUserID"];
-    NSLog(@"%@", self.customerId);
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomer" params:dic success:^(id json){
         NSLog(@"------管客户详情json is %@",json);
         

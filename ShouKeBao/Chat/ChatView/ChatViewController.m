@@ -47,6 +47,7 @@
 #import "LocationSeting.h"
 #import "UserInfo.h"
 #import "CustomerDetailAndOrderViewController.h"
+#import "EMChatCustomBubbleView.h"
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
 {
     UIMenuController *_menuController;
@@ -249,6 +250,25 @@
     }
     
     [self setRightBarButton];
+    
+    
+   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
+
+    
+    
+}
+- (void)AAAAA{
+    for (int i = 0; i < 5; i++) {
+        NSString * AppRedEnvelopeId = @"";
+        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
+        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@""
+                                                                toUsername:_conversation.chatter
+                                                               messageType:[self messageType]
+                                                         requireEncryption:NO
+                                                                       ext:ext];
+        [self addMessage:tempMessage];
+        
+    }
     
 }
 - (void)setRightBarButton{
@@ -741,6 +761,10 @@
         [self productDetailClickWithUserInfo:userInfo];
     }else if ([eventName isEqualToString:kRouterEventProductListEventName]){//更多产品
         [self productListClickWithUserInfo:userInfo];
+    }else if ([eventName isEqualToString:kRouterEventSendProductEventName]){//点击产品链接
+        [self SendProductClickWithUrlStr:userInfo[@"URL"]];
+    }else if ([eventName isEqualToString:kRouterEventOpenRedPacketEventName]){//点击查看红包
+        [self OpenRedpacketClickWURL:@""];
     }
 }
 
@@ -756,6 +780,14 @@
     ProductListWebView * PLWV = [[ProductListWebView alloc]init];
     PLWV.linkUrl = @"http://www.lvyouquan.cn";
     [self.navigationController pushViewController:PLWV animated:YES];
+}
+//向顾问分享的产品被点击跳转页面
+- (void)SendProductClickWithUrlStr:(NSString *)ProductLinkUrl{
+    NSLog(@"点击产品");
+}
+//红包点击事件
+- (void)OpenRedpacketClickWURL:(NSString *)URL{
+    NSLog(@"点击查看红包");
 }
 
 //头像被点击
