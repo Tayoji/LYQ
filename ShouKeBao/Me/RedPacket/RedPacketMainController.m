@@ -21,6 +21,8 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     // Do any additional setup after loading the view from its nib.
+    UIImage *image = [UIImage imageNamed:@"RedPacketBackg"];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:image];
     
     [self.backButton setImage:[UIImage imageNamed:@"fanhuian"] forState:UIControlStateNormal];
     self.backButton.imageEdgeInsets = UIEdgeInsetsMake(-1, -10, 0, 50);
