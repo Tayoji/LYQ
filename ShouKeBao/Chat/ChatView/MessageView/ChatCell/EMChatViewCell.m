@@ -13,6 +13,8 @@
 #import "EMChatViewCell.h"
 #import "EMChatVideoBubbleView.h"
 #import "UIResponder+Router.h"
+
+#import "EMChatCustomBubbleView.h"
 NSString *const kResendButtonTapEventName = @"kResendButtonTapEventName";
 NSString *const kShouldResendCell = @"kShouldResendCell";
 
@@ -177,6 +179,14 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
 
 - (EMChatBaseBubbleView *)bubbleViewForMessageModel:(MessageModel *)messageModel
 {
+    
+    if (messageModel.message.ext) {
+        // MsgType = 1 推送产品；
+        if ([messageModel.message.ext[@"MsgType"]isEqualToString:@"1"]||[messageModel.message.ext[@"MsgType"]isEqualToString:@"3"]||[messageModel.message.ext[@"MsgType"]isEqualToString:@"4"]) {
+            return [[EMChatCustomBubbleView alloc]init];
+        }
+    }
+
     switch (messageModel.type) {
         case eMessageBodyType_Text:
         {
@@ -251,6 +261,14 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
 
 + (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath withObject:(MessageModel *)model
 {
+    
+    if (model.message.ext) {
+        // MsgType = 1 推送产品；
+        if ([model.message.ext[@"MsgType"]isEqualToString:@"1"]||[model.message.ext[@"MsgType"]isEqualToString:@"3"]||[model.message.ext[@"MsgType"]isEqualToString:@"4"]) {
+            return [EMChatCustomBubbleView heightForBubbleWithObject:model];
+        }
+    }
+
     NSInteger bubbleHeight = [self bubbleViewHeightForMessageModel:model];
     NSInteger headHeight = HEAD_PADDING * 2 + HEAD_SIZE;
     if ((model.messageType != eMessageTypeChat) && !model.isSender) {

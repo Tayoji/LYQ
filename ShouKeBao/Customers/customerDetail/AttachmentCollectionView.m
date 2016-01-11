@@ -14,6 +14,8 @@
 #import "NSString+FKTools.h"
 #import "Customers.h"
 #import "MBProgressHUD+MJ.h"
+#import "OrderDetailViewController.h"
+#import "ButtonDetailViewController.h"
 @interface AttachmentCollectionView ()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic ,strong) NSMutableArray *dataSource;
 @property (nonatomic, strong)NSMutableArray *bigPicUrlArray;
@@ -112,8 +114,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     }];
 }
 -(void)loadDateFromOrderDetail{
-    NSDictionary * params = @{@"OrderCustomerId":@[self.customerId]};
-    [IWHttpTool postWithURL:@"/Customer/GetOrderCustomerAttachmentById" params:params success:^(id json) {
+    NSDictionary * params = @{@"OrderCustomerId":self.customerId};
+    [IWHttpTool postWithURL:@"/Order/GetOrderCustomerAttachmentById" params:params success:^(id json) {
         NSLog(@"%@", json);
         NSArray * array = json[@"OrderCustomerAttachmentList"];
         if (array.count) {
@@ -125,6 +127,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self.collectionView reloadData];
         [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
     } failure:^(NSError * error) {
+        
     }];
 }
 -(NSMutableArray *)dataSource
@@ -195,9 +198,11 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     }];
 }
 - (void)upDateFromOrderDetail{
-    [IWHttpTool postWithURL:@"/Customer/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
+    [IWHttpTool postWithURL:@"/Order/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
         [MBProgressHUD showSuccess:@"保存成功"];
         NSLog(@"%@", json);
+        
+        [(OrderDetailViewController *)self.OrderVC postPicToServer:self.bigPicUrlArray];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
     }];

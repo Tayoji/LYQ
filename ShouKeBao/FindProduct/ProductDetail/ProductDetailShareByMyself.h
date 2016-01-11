@@ -15,15 +15,19 @@
 #import "IWHttpTool.h"
 
 //typedef enum{
-//    FromQRcode,
-//    FromRecommend,
-//    FromStore,
-//    FromProductSearch,
-//    FromFindProduct,
-//    FromHotProduct,
-//    FromScanHistory,
-//    FromZhiVisitorDynamic
+//    fromQRcode,
+//    fromRecommend,
+//    fromStore,
+//    fromProductSearch,
+//    fromFindProduct,
+//    fromHotProduct,
+//    fromScanHistory,
+//    fromZhiVisitorDynamic
 //}JumpinFrom;
+
+@protocol notiPopUpBox<NSObject>
+-(void)notiPopUpBoxView;
+@end
 
 @interface ProductDetailShareByMyself : UIView
 
@@ -37,10 +41,11 @@
 
 @property (nonatomic, strong)NSDictionary *shareInfo;
 @property (nonatomic, copy)NSString *URL;
-//@property (nonatomic, assign)JumpinFrom fromType;
+@property (nonatomic, copy)NSString *fromType;
 @property (nonatomic, strong)NSArray *eventArray;
 @property (nonatomic, strong)id publishContent;
 @property (nonatomic, strong)UIView *blackView;
+@property (nonatomic, strong)id<notiPopUpBox>delegate;
 
 //+(void)shareWithContent:(id)publishContent andUrl:(NSString *)url eventArray:(NSArray *)eventArray shareInfo:(NSDictionary *)shareInfo ;
 @end

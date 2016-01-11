@@ -100,8 +100,11 @@
 */
 
 - (IBAction)returnBtn:(id)sender {
+    if (self.pushFrom == FromProductDetail) {
+        [self.naVC popViewControllerAnimated:YES];
+    }else{
     [self.naVC popToRootViewControllerAnimated:YES];
-    
+    }
 }
 
 - (IBAction)introduceBtn:(id)sender {

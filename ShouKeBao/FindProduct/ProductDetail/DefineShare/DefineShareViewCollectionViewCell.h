@@ -13,7 +13,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *pic;
 @property (weak, nonatomic) IBOutlet UILabel *title;
 
-
-
 @property (nonatomic, strong)DefineShareModel *model;
 @end

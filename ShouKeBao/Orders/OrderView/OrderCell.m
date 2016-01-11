@@ -53,13 +53,13 @@
 @property (nonatomic,strong) NSMutableArray *buttonArr;
 
 @property (weak, nonatomic)UIButton *buttonIcon;
+@property (weak, nonatomic)UIButton *moreBtn;
 @end
 
 @implementation OrderCell
 
 #pragma mark - initailize
-+ (instancetype)cellWithTableView:(UITableView *)tableView
-{
++ (instancetype)cellWithTableView:(UITableView *)tableView{
     static NSString *ID = @"ordercellaa";
     OrderCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
@@ -178,6 +178,10 @@
     UIButton *iconB = [[UIButton alloc]init];
     [self.bottomView addSubview:iconB];
     self.buttonIcon = iconB;
+    
+//    UIButton *moreB = [[UIButton alloc]init];
+//    [self.bottomView addSubview:moreB];
+//    self.moreBtn = moreB;
    
 }
 
@@ -269,6 +273,7 @@
     self.buttonIcon.frame = CGRectMake(statusIconX, 10, 20, 20);
     
     
+   
 }
 
 - (void)setModel:(OrderModel *)model
@@ -335,8 +340,17 @@
 //    [self.buttonIcon setImage:[UIImage imageNamed:@"hongdian"] forState:UIControlStateNormal];
     self.buttonIcon.backgroundColor = [UIColor redColor];
     [self.bottomView addSubview:self.buttonIcon];
-
-   
+    
+    
+    UIButton *moreB = [[UIButton alloc]init];
+    [self.bottomView addSubview:moreB];
+    self.moreBtn = moreB;
+    self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
+    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
+    [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+    [self.bottomView addSubview:self.moreBtn];
+    [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
 
 //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
     if (model.buttonList.count) {
@@ -356,7 +370,7 @@
             b.linkUrl = btn.linkurl;
             b.text = btn.text;
             NSLog(@"btn.text= %@", btn.text);
-            NSLog(@"b.text= %@", b.text);
+            NSLog(@"b.text= %@, %@", b.text, btn.color);
             NSLog(@"model.buttonList.count = %ld", model.buttonList.count);
             [b addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
             [self.bottomView addSubview:b];
@@ -382,6 +396,20 @@
    
 
 }
+
+- (void)meunmView:(UIButton *)down{
+    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:)]) {
+        [_upAndDownDelegate DidMenumSelectDownBtn:down];
+        
+    }else if(_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(didMenumSelectUpBtn:)]){
+            [_upAndDownDelegate didMenumSelectUpBtn:down];
+        }
+    
+   
+   
+    
+}
+   
 
 #pragma mark - getter
 - (NSMutableArray *)buttonArr

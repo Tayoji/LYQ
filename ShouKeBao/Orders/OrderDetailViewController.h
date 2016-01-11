@@ -15,4 +15,5 @@
 @property (nonatomic,copy) NSString *url;
 @property (nonatomic, strong)NSDictionary * userInfoDic;
 - (void)postCustomerToServer:(NSArray * )customerIDs;
+- (void)postPicToServer:(NSArray *)PicArray;
 @end
