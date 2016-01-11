@@ -132,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/ChatViewController.m"
-            timestampString = "473744719.945712"
+            timestampString = "474196780.412488"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1815"
-            endingLineNumber = "1815"
+            startingLineNumber = "1847"
+            endingLineNumber = "1847"
             landmarkName = "-sendTextMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,6 +154,38 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "-layoutSubviews"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Orders/ButtonDetailViewController.m"
+            timestampString = "473947712.172079"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
+            landmarkName = "-postPicToServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
+            timestampString = "474193047.67077"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "-loadCustomerDetailData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

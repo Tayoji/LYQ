@@ -62,18 +62,18 @@ NSString *const kRouterEventProductListEventName = @"kRouterEventProductListEven
     frame.origin.y = BUBBLE_VIEW_PADDING;
     [self.textLabel setFrame:frame];
     
-    //产品推送 对产品进行布局  将视图放在textLable上
-    if ([self.model.content myContainsString:@"$$"]) {
-        FKProductModel * model = [[FKProductModel alloc]init];
-        model.productName = @"这是一条死数据 模型";
-        model.productImageUrl = @"http://r.lvyouquan.cn/ppkImageCombo.aspx?w=480&f=http%3a%2f%2fr.lvyouquan.cn%2flyqpic%2fhold%2f2015-09-09%2fimage%2f20150909%2f20150909105307_6942.jpg";
-        FKProductViewInTextBubbleView * FKV = [FKProductViewInTextBubbleView FKProductViewWithModel:model andFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        [_textLabel addSubview:FKV];
-    }else{
-        for (UIView * view in _textLabel.subviews) {
-            [view removeFromSuperview];
-        }
-    }
+//    //产品推送 对产品进行布局  将视图放在textLable上
+//    if ([self.model.content myContainsString:@"$$"]) {
+//        FKProductModel * model = [[FKProductModel alloc]init];
+//        model.productName = @"这是一条死数据 模型";
+//        model.productImageUrl = @"http://r.lvyouquan.cn/ppkImageCombo.aspx?w=480&f=http%3a%2f%2fr.lvyouquan.cn%2flyqpic%2fhold%2f2015-09-09%2fimage%2f20150909%2f20150909105307_6942.jpg";
+//        FKProductViewInTextBubbleView * FKV = [FKProductViewInTextBubbleView FKProductViewWithModel:model andFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+//        [_textLabel addSubview:FKV];
+//    }else{
+//        for (UIView * view in _textLabel.subviews) {
+//            [view removeFromSuperview];
+//        }
+//    }
     
     
 }

@@ -15,6 +15,7 @@
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
 @property (nonatomic,strong) UIView *backGroundView;
+@property (nonatomic,strong) NSMutableArray *IDsdataArr;
 @end
 
 @implementation SetRedPacketController
@@ -26,6 +27,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
     self.NumOfRedPLabel.text = [NSString stringWithFormat:@"%ld",self.NumOfPeopleArr.count];
     [self creatNavOfRight];
+    NSLog(@"%@",self.NumOfPeopleArr);
     self.ExitCountryTextView.keyboardType = UIKeyboardTypeNumberPad;
     self.InlandTextView.keyboardType = UIKeyboardTypeNumberPad;
     self.RimtextView.keyboardType = UIKeyboardTypeNumberPad;
@@ -203,12 +205,21 @@
     [dic setValue:self.NumOfPeopleArr forKey:@"AppSkbUserList"];
     [IWHttpTool WMpostWithURL:@"/Customer/HairRedEnvelope" params:dic success:^(id json) {
         NSLog(@"----------红包返回列表%@---------",json);
+        self.IDsdataArr = json[@"AppRedEnvelopeIdList"];//服务器返回的发红包数据
+        
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     } failure:^(NSError *error) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
     }];
+}//AppRedEnvelopeId
+//AppSkbUserId
+-(NSMutableArray  *)IDsdataArr{
+    if (!_IDsdataArr) {
+        _IDsdataArr = [[NSMutableArray alloc] init];
+    }
+    return _IDsdataArr;
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"jianbian"] forBarMetrics:UIBarMetricsDefault];

@@ -259,6 +259,7 @@
     }
     NSLog(@"%@", rightUrl);
     if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCardScanning"]) {
+
         [self LYQSKBAPP_OpenCardScanning];
 //        return NO;
     }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpDateUserPhotos"]){
@@ -267,6 +268,8 @@
     }else if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCustomIM"]){
         [self LYQSKBAPP_OpenCustomIM:rightUrl];
     }else if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateVisitorCertificate"]){
+        [_indicator stopAnimationWithLoadText:@"加载成功" withType:YES];
+
         [self LYQSKBAPP_UpdateVisitorCertificate:rightUrl];
     }
 
@@ -357,12 +360,39 @@
     
 }
 - (void)LYQSKBAPP_UpdateVisitorCertificate:(NSString *)urlStr{
+    urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"Certificate(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        NSArray * picArray = [resultStr componentsSeparatedByString:@","];
+        NSMutableArray * customerIDsArray = [NSMutableArray array];
+        for (NSString * str in picArray) {
+            NSString * tempStr = @"";
+            if ([str myContainsString:@"Certificate("]) {
+                tempStr = [str stringByReplacingOccurrencesOfString:@"Certificate(" withString:@""];
+                tempStr = [tempStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+
+            }
+            if (![tempStr isEqualToString:@""]) {
+                [customerIDsArray addObject:tempStr];
+            }
+        }
+
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
     AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
-//    AVC.customerId = ;
-    AVC.fromType = fromTypeOrderDetail;
-    [self.navigationController pushViewController:AVC animated:YES];
-
+    NSLog(@"%@", customerIDsArray[0]);
+        if (customerIDsArray.count) {
+            AVC.customerId = customerIDsArray[0];
+            AVC.fromType = fromTypeOrderDetail;
+            AVC.OrderVC = self;
+            [self.navigationController pushViewController:AVC animated:YES];
+        }
+    }
 }
 
 - (void)doIfInWebWithUrl:(NSString *)rightUrl{
@@ -624,7 +654,12 @@
     
 }
 
-//- (void)upDateVisitorToSerVer:()
+- (void)postPicToServer:(NSArray *)PicArray{
+    NSDictionary * dic = @{@"OrderVisitorPicArray":PicArray};
+    NSString * jsonStr = [dic JSONString];
+    NSLog(@"%@", dic);
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_GetVisitorCertificatePicFromApp_CallBack(%@, '%@')", @1, jsonStr]];
+}
 
 
 
