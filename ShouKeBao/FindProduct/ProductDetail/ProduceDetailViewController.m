@@ -22,7 +22,9 @@
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
 #import "ProductDetailShareByMyself.h"
-@interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate>
+
+
+@interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate, notiPopUpBox>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
 //@property (nonatomic,strong) NSMutableDictionary *shareInfo;
 
@@ -55,11 +57,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self blackView];
-       
-//    NSArray *btnImages = @[@"iconfont-kongjian", @"iconfont-qq", @"iconfont-weixin", @"iconfont-pengyouquan", @"iconfont-fuzhi", @"iconfont-duanxin"];
-//    NSArray *btnTitles = @[@"QQ空间", @"QQ", @"微信好友", @"微信朋友圈", @"复制链接", @"短信"];
-   
     
+  
     
     self.coverView.hidden = YES;
 
@@ -227,9 +226,9 @@
 //    }
 //}
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"ProduceDetailView"];
    }
 -(void)viewWillDisappear:(BOOL)animated
@@ -546,6 +545,8 @@
 
 
 #pragma 筛选navitem
+
+
 -(void)shareIt:(id)sender{
   
     //每次分享的时候调用此方法，让后台知道当前页面分享的产品
@@ -716,11 +717,13 @@
     self.defineV.hidden = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
     [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
+   
+    self.defineV.delegate = self;
     self.defineV.eventArray = self.eventArray;
     self.defineV.URL = self.webView.request.URL.absoluteString;
     self.defineV.publishContent = publishContent;
     self.defineV.shareInfo = self.shareInfo;
-    //    defineV.fromType = self.fromType;
+    _defineV.fromType = [NSString stringWithFormat:@"%d", self.fromType];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView:)];
     [self.blackView addGestureRecognizer:tap];
     
@@ -732,6 +735,32 @@
     self.defineV.hidden = YES;
 }
 
+
+- (void)notiPopUpBoxView{
+    [self.blackView removeFromSuperview];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
+    self.defineBox.hidden = NO;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.defineBox];
+
+}
+- (IBAction)cancleDefineBox:(id)sender {
+    self.defineBox.hidden = YES;
+    [self.blackView removeFromSuperview];
+    [self.defineV removeFromSuperview];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
+}
+
+- (IBAction)applyForOpenVip:(id)sender {
+    self.defineBox.hidden = YES;
+    [self.blackView removeFromSuperview];
+    [self.defineV removeFromSuperview];
+    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+    newExclusiveVC.naVC = self.navigationController;
+    newExclusiveVC.pushFrom = FromProductDetail;
+    [self.navigationController pushViewController:newExclusiveVC animated:YES];
+  
+}
 -(void)reloadStateWithType:(ShareType)type
 {
     //现实授权信息，包括授权ID、授权有效期等。
@@ -740,6 +769,18 @@
     NSLog(@"uid :%@ , token :%@ , secret:%@ , expirend:%@ , exInfo:%@",[credential uid],[credential token],[credential secret],[credential expired],[credential extInfo]);
 }
 
+- (void)setApplyOpenVip:(UIButton *)applyOpenVip{
+    _applyOpenVip = applyOpenVip;
+    _applyOpenVip.layer.borderColor = [UIColor orangeColor].CGColor;
+    _applyOpenVip.layer.borderWidth = 1.0f;
+    _applyOpenVip.layer.masksToBounds = YES;
+    _applyOpenVip.layer.cornerRadius = 20.0f;
+}
+- (void)setDefineBox:(UIView *)defineBox{
+    _defineBox = defineBox;
+    _defineBox.layer.masksToBounds = YES;
+    _defineBox.layer.cornerRadius = 10;
+}
 - (UIView *)blackView{
     if (!_blackView) {
         self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -755,6 +796,7 @@
     }
     return _defineV;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

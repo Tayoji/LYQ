@@ -18,6 +18,8 @@ static NSString * cellid = @"reuseaa";
 
 @interface ProductDetailShareByMyself()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) NSArray *photosArr;
+
+
 @end
 
 @implementation ProductDetailShareByMyself
@@ -88,8 +90,6 @@ static NSString * cellid = @"reuseaa";
     self.collectionView = collectionView;
    
     
-    
-    
 }
 
 
@@ -127,6 +127,9 @@ static NSString * cellid = @"reuseaa";
         switch (indexPath.row) {
             case 0:{
                 shareType = ShareTypeOther;
+                if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
+                    [_delegate notiPopUpBoxView];
+                }
             }
                 break;
             case 1:{
@@ -159,7 +162,8 @@ static NSString * cellid = @"reuseaa";
                 break;
                 
         }
-        
+    
+   
         [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
             
             NSLog(@"..... %@", publishContent);
@@ -170,15 +174,16 @@ static NSString * cellid = @"reuseaa";
                 [MobClick event:@"ShareSuccessAll" attributes:dict];
                 [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
                 [MobClick event:@"ProductDetailShareSuccessClickAll" attributes:dict];
-//                if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
-//                
-//                    [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
-//                }
-//                if (self.fromType == FromRecommend) {
-//                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-//                    
-//                }
-//                [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:self.fromType]] attributes:dict];
+               
+                if ([self.fromType isEqualToString:@"FromFindProduct"] || [self.fromType isEqualToString:@"FromHotProduct"] || [self.fromType isEqualToString:@"FromProductSearch"] || [self.fromType isEqualToString:@"FromZhiVisitorDynamic"]) {
+                
+                    [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
+                }
+                if ([self.fromType isEqualToString:@"FromRecommend"]) {
+                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+                    
+                }
+                [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:[self.fromType integerValue]]] attributes:dict];
                 
                 //精品推荐填1
                 NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
@@ -197,6 +202,8 @@ static NSString * cellid = @"reuseaa";
                 }else if(type == ShareTypeWeixiTimeline){
                     [postDic setObject:@"4" forKey:@"ShareWay"];
                 }
+                
+                
                 [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
                     NSDictionary * dci = json;
                     NSMutableString * string = [NSMutableString string];
@@ -234,12 +241,7 @@ static NSString * cellid = @"reuseaa";
 - (void)cancleBtnClickAction{
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:@"closeBlackView" object:@"close" userInfo:nil];
-    
-//    self.shareView.hidden = YES;
-    [self.shareView removeFromSuperview];
-
 }
-
 
 - (void)dealloc{
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];

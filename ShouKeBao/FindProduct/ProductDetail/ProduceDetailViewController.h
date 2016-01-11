@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SKViewController.h"
 #import "BeseWebView.h"
+#import "NewExclusiveAppIntroduceViewController.h"
+#import "Customers.h"
 typedef void (^CancelLeaveShare)(UINavigationController *na);
 @class DayDetail;
 @class yesterDayModel;
@@ -41,6 +43,17 @@ typedef enum{
 @property (nonatomic,copy) CancelLeaveShare canCelLeaveShare;
 @property (nonatomic , strong)yesterDayModel *detail2;
 @property(nonatomic,weak) id<notiQRCToStartRuning>delegate;
+
+
+//弹出框
+@property (strong, nonatomic) IBOutlet UIView *defineBox;
+- (IBAction)cancleDefineBox:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *applyOpenVip;
+- (IBAction)applyForOpenVip:(id)sender;
+
+
+
+
 -(void)shareIt:(id)sender;
 
 -(void)CancelLeaveShareBlock:(UINavigationController *)uinav;

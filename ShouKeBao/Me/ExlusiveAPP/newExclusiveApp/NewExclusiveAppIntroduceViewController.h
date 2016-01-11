@@ -8,7 +8,12 @@
 
 #import "SKViewController.h"
 
+typedef enum{
+    FromProductDetail,
+    FromMe,
+}pushFrom;
 @interface NewExclusiveAppIntroduceViewController : SKViewController
 @property (nonatomic, strong)UINavigationController *naVC;
 @property (nonatomic, copy)NSString *clientManagerTel;
+@property (nonatomic, assign)pushFrom *pushFrom;
 @end
