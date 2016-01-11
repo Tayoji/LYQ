@@ -14,10 +14,12 @@
 @class OrderTmpView;
 
 @protocol OrderCellDelegate <NSObject>
-
-//- (void)checkDetailAtIndex:(NSInteger)index button:(UIButton *)button;
 - (void)checkDetailAtIndex:(NSInteger)index;
+@end
 
+@protocol upAndDownBtnDelegate <NSObject>
+- (void)didMenumSelectUpBtn:(UIButton *)upBtn;
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn;
 @end
 
 @interface OrderCell : MGSwipeTableCell
@@ -31,5 +33,5 @@
 @property (nonatomic,strong) OrderTmpView *orderTmpView;
 
 @property (nonatomic,weak) id<OrderCellDelegate> orderDelegate;
-
+@property (nonatomic,weak) id<upAndDownBtnDelegate>upAndDownDelegate;
 @end

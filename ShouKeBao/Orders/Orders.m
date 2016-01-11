@@ -42,7 +42,7 @@
 #define historyCount 6
 typedef void (^ChangeFrameBlock)();
 
-@interface Orders () <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,DressViewDelegate,AreaViewControllerDelegate,UISearchBarDelegate,UISearchDisplayDelegate,OrderCellDelegate,MGSwipeTableCellDelegate,MenuButtonDelegate,QDMenuDelegate,ChooseDayViewControllerDelegate>
+@interface Orders () <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,DressViewDelegate,AreaViewControllerDelegate,UISearchBarDelegate,UISearchDisplayDelegate,OrderCellDelegate,MGSwipeTableCellDelegate,MenuButtonDelegate,QDMenuDelegate,ChooseDayViewControllerDelegate, upAndDownBtnDelegate>
 
 @property (nonatomic,strong) NSMutableArray *dataArr;
 
@@ -107,6 +107,7 @@ typedef void (^ChangeFrameBlock)();
 @property (nonatomic,strong) InvoiceAlertView *invoiceAlert;//提示弹框
 @property (nonatomic) NSInteger FirstOpenNav;
 
+@property (nonatomic,strong) NSMutableArray *stateArr;
 @end
 
 @implementation Orders
@@ -114,6 +115,9 @@ typedef void (^ChangeFrameBlock)();
 #pragma mark - lifeCircle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    self.stateArr = @[@"确认单", @"投诉", @"申请合同", @"申请退款"];
+    self.stateArr = [NSMutableArray arrayWithObjects:@"确认单", @"投诉", @"申请合同", @"申请退款", nil];
     self.navigationItem.leftBarButtonItem = nil;
     self.title = @"理订单";
     [self.dataArr removeAllObjects];// 进来时清空数组 心情舒畅些
@@ -852,6 +856,43 @@ typedef void (^ChangeFrameBlock)();
     }
     return _searchDisplay;
 }
+- (NSMutableArray *)stateArr{
+    if (!_stateArr) {
+        _stateArr = [NSMutableArray array];
+    }
+    return _stateArr;
+}
+
+#pragma mark - upAndDownBtnDelegate
+/**
+ *  点击选择向下
+ */
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn{
+//    CGRect frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3-35, 200,70, 30 *4);
+//    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:self.stateArr direct:0];
+    
+}
+
+- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct{
+    self.qdmenu = [[QDMenu alloc] init];
+    self.qdmenu.direct = direct;
+    self.qdmenu.currentIndex = index;
+    self.qdmenu.delegate = self;
+    self.qdmenu.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
+    self.qdmenu.frame = frame;
+    self.qdmenu.dataSource = dataSource;
+    if (direct == 1) {
+        self.qdmenu.layer.anchorPoint = CGPointMake(1, 0);
+        UIImage *image = [UIImage imageNamed:@"bubble"];
+        CGFloat w = image.size.width;
+        CGFloat h = image.size.height;
+        self.qdmenu.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(h * 0.5, w * 0.2, h * 0.5, w * 0.8)];
+    }
+    [self.coverView addSubview:self.qdmenu];
+    
+    [self.view.window addSubview:self.coverView];
+}
+
 
 #pragma mark - MenuButtonDelegate
 /**
@@ -920,6 +961,7 @@ typedef void (^ChangeFrameBlock)();
 {
     OrderCell *cell = [OrderCell cellWithTableView:tableView];
     cell.delegate = self;
+    cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
     NSLog(@"%f",cell.frame.size.height);
