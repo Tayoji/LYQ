@@ -39,6 +39,10 @@
 		527E3B891BECAB5B00AAA6F6 /* TerraceMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E3B871BECAB5B00AAA6F6 /* TerraceMessageController.m */; };
 		527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */; };
 		527E41CB1BDF237E00CA9CF6 /* OpenInvoiceWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */; };
+		52983EB11C434D2C00025ECD /* MyRedPacketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52983EAF1C434D2C00025ECD /* MyRedPacketCell.m */; };
+		52983EB21C434D2C00025ECD /* MyRedPacketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52983EB01C434D2C00025ECD /* MyRedPacketCell.xib */; };
+		52983EB71C43900600025ECD /* MyRedPDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52983EB51C43900600025ECD /* MyRedPDetailController.m */; };
+		52983EB81C43900600025ECD /* MyRedPDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52983EB61C43900600025ECD /* MyRedPDetailController.xib */; };
 		529CD24B1C3FACFD004F3A09 /* MyReadPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */; };
 		529CD24C1C3FACFD004F3A09 /* MyReadPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */; };
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
@@ -916,6 +920,12 @@
 		527E3B881BECAB5B00AAA6F6 /* TerraceMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TerraceMessageController.xib; sourceTree = "<group>"; };
 		527E41C91BDF237E00CA9CF6 /* OpenInvoiceWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInvoiceWebController.h; sourceTree = "<group>"; };
 		527E41CA1BDF237E00CA9CF6 /* OpenInvoiceWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInvoiceWebController.m; sourceTree = "<group>"; };
+		52983EAE1C434D2C00025ECD /* MyRedPacketCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPacketCell.h; sourceTree = "<group>"; };
+		52983EAF1C434D2C00025ECD /* MyRedPacketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPacketCell.m; sourceTree = "<group>"; };
+		52983EB01C434D2C00025ECD /* MyRedPacketCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRedPacketCell.xib; sourceTree = "<group>"; };
+		52983EB41C43900600025ECD /* MyRedPDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPDetailController.h; sourceTree = "<group>"; };
+		52983EB51C43900600025ECD /* MyRedPDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPDetailController.m; sourceTree = "<group>"; };
+		52983EB61C43900600025ECD /* MyRedPDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRedPDetailController.xib; sourceTree = "<group>"; };
 		529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReadPacketController.h; sourceTree = "<group>"; };
 		529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReadPacketController.m; sourceTree = "<group>"; };
 		529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyReadPacketController.xib; sourceTree = "<group>"; };
@@ -2510,9 +2520,31 @@
 			path = OpenInvoiceWeb;
 			sourceTree = "<group>";
 		};
+		52983EAD1C434D0D00025ECD /* MyRedPacketCell */ = {
+			isa = PBXGroup;
+			children = (
+				52983EAE1C434D2C00025ECD /* MyRedPacketCell.h */,
+				52983EAF1C434D2C00025ECD /* MyRedPacketCell.m */,
+				52983EB01C434D2C00025ECD /* MyRedPacketCell.xib */,
+			);
+			path = MyRedPacketCell;
+			sourceTree = "<group>";
+		};
+		52983EB31C438FDC00025ECD /* MyRedPacketDetail */ = {
+			isa = PBXGroup;
+			children = (
+				52983EB41C43900600025ECD /* MyRedPDetailController.h */,
+				52983EB51C43900600025ECD /* MyRedPDetailController.m */,
+				52983EB61C43900600025ECD /* MyRedPDetailController.xib */,
+			);
+			path = MyRedPacketDetail;
+			sourceTree = "<group>";
+		};
 		529CD2471C3FACCB004F3A09 /* MyRedPacket */ = {
 			isa = PBXGroup;
 			children = (
+				52983EB31C438FDC00025ECD /* MyRedPacketDetail */,
+				52983EAD1C434D0D00025ECD /* MyRedPacketCell */,
 				529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */,
 				529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */,
 				529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */,
@@ -5218,6 +5250,7 @@
 				796EFD221BF5C67D00799120 /* chatBar_record.png in Resources */,
 				79D69BD01BDDFE13006881DD /* DayDetailTableViewCell.xib in Resources */,
 				5237D6B71BF18DED00655CF0 /* TimerCell.xib in Resources */,
+				52983EB81C43900600025ECD /* MyRedPDetailController.xib in Resources */,
 				796EFD381BF5C67D00799120 /* chatBar_more_cameraSelected.png in Resources */,
 				796EFCFF1BF5C67D00799120 /* chat_video_play.png in Resources */,
 				B3B7A6721BA6A25F0043DF7C /* Customer.storyboard in Resources */,
@@ -5295,6 +5328,7 @@
 				793917441C17CD550020372E /* chat_sender_audio_playing_001@2x.png in Resources */,
 				796EFCEC1BF5C67D00799120 /* VoiceSearchFeedback016.png in Resources */,
 				52F275B91BD4E27B008543E9 /* InvoiceLowView.xib in Resources */,
+				52983EB21C434D2C00025ECD /* MyRedPacketCell.xib in Resources */,
 				793917301C17CD3D0020372E /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				796EFD3A1BF5C67D00799120 /* chatBar_more_location.png in Resources */,
 				52BEDF9B1BEB413E003A04CA /* NewNewsController.xib in Resources */,
@@ -5598,6 +5632,7 @@
 				796EFC171BF5C5DE00799120 /* EditPhoneNumberVC.m in Sources */,
 				796EFAFD1BF4D9B400799120 /* NSString+Valid.m in Sources */,
 				79FE7B351BD09EFD0057B56E /* AttachmentCollectionView.m in Sources */,
+				52983EB71C43900600025ECD /* MyRedPDetailController.m in Sources */,
 				632BFFFD1AB92A3A003B15AD /* UIImage+GIF.m in Sources */,
 				5A3CC4C41ADE02480047A5E1 /* MyCalendarItem.m in Sources */,
 				52CF60BE1BDDCAF600DD97B8 /* SubscribeCell.m in Sources */,
@@ -5683,6 +5718,7 @@
 				796EFDC81BF5CA4E00799120 /* EMSDWebImageManager.m in Sources */,
 				B3C01E2A1BAC10FC005E4BB5 /* InspectionViewController.m in Sources */,
 				522E80671BD1049500DB48DA /* OrderPromptView.m in Sources */,
+				52983EB11C434D2C00025ECD /* MyRedPacketCell.m in Sources */,
 				5A52FC561ACEBF220076DAE6 /* HeaderView.m in Sources */,
 				B3D7B77D1BD76DF10080E243 /* QRPhotoCollectionViewCell.m in Sources */,
 				B3B7A6691BA6A25F0043DF7C /* BatchAddViewController.m in Sources */,
