@@ -9,6 +9,7 @@
 #import "RedPacketMainController.h"
 #import "SelectCustomerController.h"
 #import "MyReadPacketController.h"
+#import "RuleWebViewController.h"
 #define UserInfoKeyLYGWIsOpenVIP @"LVGWIsOpenVIP"//是否开通银牌以上顾问
 
 @interface RedPacketMainController ()
@@ -58,7 +59,11 @@
 
 - (IBAction)RPacketRuleBtn:(UIButton *)sender {
     NSLog(@"红包规则");
-    
+    RuleWebViewController *cont = [[RuleWebViewController alloc] init];
+    cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyProduceNote";
+    cont.webTitle = @"红包生成说明";
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cont];
+    [self.navigationController pushViewController:cont animated:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

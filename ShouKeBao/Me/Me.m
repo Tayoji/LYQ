@@ -81,6 +81,8 @@
 @property (nonatomic, strong) UIImageView *guideImageView;
 @property (nonatomic, copy)NSString *clientMagagerTel;
 
+@property (nonatomic,strong) UIView *RedPacketAlertView;
+@property (nonatomic,strong) UIView *backGroundRPView;
 @end
 
 @implementation Me
@@ -784,9 +786,13 @@
                 
             }else if(indexPath.row == 4){
                 NSLog(@"点击红包");
-                RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
-                [self.navigationController pushViewController:redPacket animated:YES];
-                
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
+                    RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
+                    [self.navigationController pushViewController:redPacket animated:YES];
+                }else{
+                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+                }
+               
                 
             }else if(indexPath.row == 5){
                 InvoiceManageViewController * IMVC = [[InvoiceManageViewController alloc]init];
@@ -1162,7 +1168,20 @@
 
 
 }
-
+-(UIView *)RedPacketAlertView{
+    if (!_RedPacketAlertView) {
+        _RedPacketAlertView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 150)];
+    }
+    return _RedPacketAlertView;
+}
+-(UIView *)backGroundRPView{
+    if (!_backGroundRPView) {
+        _backGroundRPView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+        _backGroundRPView.backgroundColor = [UIColor blackColor];
+        _backGroundRPView.alpha = 0.5;
+    }
+    return _backGroundRPView;
+}
 
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
     

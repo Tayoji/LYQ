@@ -203,6 +203,7 @@
     [dic setValue:[NSString stringWithFormat:@"%f",self.InlandN] forKey:@"InsideTotalPrice"];
     [dic setValue:[NSString stringWithFormat:@"%f",self.RimN] forKey:@"NearbyTotalPrice"];
     [dic setValue:self.NumOfPeopleArr forKey:@"AppSkbUserList"];
+    NSLog(@"%@",dic);
     [IWHttpTool WMpostWithURL:@"/Customer/HairRedEnvelope" params:dic success:^(id json) {
         NSLog(@"----------红包返回列表%@---------",json);
         self.IDsdataArr = json[@"AppRedEnvelopeIdList"];//服务器返回的发红包数据
