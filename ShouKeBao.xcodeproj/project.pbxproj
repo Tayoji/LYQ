@@ -28,6 +28,11 @@
 		52549BDD1C119349001DABD8 /* EaseMob.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 52549BDA1C119349001DABD8 /* EaseMob.bundle */; };
 		525B2A6B1C044195003B1F99 /* CommendToNo.m in Sources */ = {isa = PBXBuildFile; fileRef = 525B2A6A1C044195003B1F99 /* CommendToNo.m */; };
 		525B2A6D1C0441AF003B1F99 /* CommendToNo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 525B2A6C1C0441AF003B1F99 /* CommendToNo.xib */; };
+		526C19101C44E4C200551A0B /* MyRedPcketDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 526C190E1C44E4C200551A0B /* MyRedPcketDetailCell.m */; };
+		526C19111C44E4C200551A0B /* MyRedPcketDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526C190F1C44E4C200551A0B /* MyRedPcketDetailCell.xib */; };
+		526C19151C44E76E00551A0B /* NoRedPacketDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 526C19131C44E76E00551A0B /* NoRedPacketDetailCell.m */; };
+		526C19161C44E76E00551A0B /* NoRedPacketDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526C19141C44E76E00551A0B /* NoRedPacketDetailCell.xib */; };
+		5272EAB11C45161400282396 /* RuleWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5272EAB01C45161400282396 /* RuleWebViewController.m */; };
 		527D07B71BD5D56000CA6C39 /* OpenInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527D07B61BD5D56000CA6C39 /* OpenInvoiceViewController.m */; };
 		527D07C01BD5F39A00CA6C39 /* OrderinformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 527D07BE1BD5F39A00CA6C39 /* OrderinformationCell.m */; };
 		527D4A381BC8A0620020AAF3 /* LeaveShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 527D4A371BC8A0620020AAF3 /* LeaveShare.m */; };
@@ -42,9 +47,7 @@
 		52983EB11C434D2C00025ECD /* MyRedPacketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52983EAF1C434D2C00025ECD /* MyRedPacketCell.m */; };
 		52983EB21C434D2C00025ECD /* MyRedPacketCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52983EB01C434D2C00025ECD /* MyRedPacketCell.xib */; };
 		52983EB71C43900600025ECD /* MyRedPDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52983EB51C43900600025ECD /* MyRedPDetailController.m */; };
-		52983EB81C43900600025ECD /* MyRedPDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52983EB61C43900600025ECD /* MyRedPDetailController.xib */; };
 		529CD24B1C3FACFD004F3A09 /* MyReadPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */; };
-		529CD24C1C3FACFD004F3A09 /* MyReadPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */; };
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
 		52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AEE0181C3BD691008FB583 /* SetRedPacketController.m */; };
 		52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */; };
@@ -902,6 +905,14 @@
 		525B2A691C044195003B1F99 /* CommendToNo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommendToNo.h; sourceTree = "<group>"; };
 		525B2A6A1C044195003B1F99 /* CommendToNo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommendToNo.m; sourceTree = "<group>"; };
 		525B2A6C1C0441AF003B1F99 /* CommendToNo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommendToNo.xib; sourceTree = "<group>"; };
+		526C190D1C44E4C200551A0B /* MyRedPcketDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPcketDetailCell.h; sourceTree = "<group>"; };
+		526C190E1C44E4C200551A0B /* MyRedPcketDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPcketDetailCell.m; sourceTree = "<group>"; };
+		526C190F1C44E4C200551A0B /* MyRedPcketDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRedPcketDetailCell.xib; sourceTree = "<group>"; };
+		526C19121C44E76E00551A0B /* NoRedPacketDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoRedPacketDetailCell.h; sourceTree = "<group>"; };
+		526C19131C44E76E00551A0B /* NoRedPacketDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoRedPacketDetailCell.m; sourceTree = "<group>"; };
+		526C19141C44E76E00551A0B /* NoRedPacketDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoRedPacketDetailCell.xib; sourceTree = "<group>"; };
+		5272EAAF1C45161400282396 /* RuleWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleWebViewController.h; sourceTree = "<group>"; };
+		5272EAB01C45161400282396 /* RuleWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleWebViewController.m; sourceTree = "<group>"; };
 		527D07B51BD5D56000CA6C39 /* OpenInvoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInvoiceViewController.h; sourceTree = "<group>"; };
 		527D07B61BD5D56000CA6C39 /* OpenInvoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInvoiceViewController.m; sourceTree = "<group>"; };
 		527D07BD1BD5F39A00CA6C39 /* OrderinformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderinformationCell.h; sourceTree = "<group>"; };
@@ -925,10 +936,8 @@
 		52983EB01C434D2C00025ECD /* MyRedPacketCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRedPacketCell.xib; sourceTree = "<group>"; };
 		52983EB41C43900600025ECD /* MyRedPDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRedPDetailController.h; sourceTree = "<group>"; };
 		52983EB51C43900600025ECD /* MyRedPDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRedPDetailController.m; sourceTree = "<group>"; };
-		52983EB61C43900600025ECD /* MyRedPDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRedPDetailController.xib; sourceTree = "<group>"; };
 		529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReadPacketController.h; sourceTree = "<group>"; };
 		529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReadPacketController.m; sourceTree = "<group>"; };
-		529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyReadPacketController.xib; sourceTree = "<group>"; };
 		52A4C1541BB1053200614BFF /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		52A4C1551BB1053200614BFF /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		52AEE0171C3BD691008FB583 /* SetRedPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetRedPacketController.h; sourceTree = "<group>"; };
@@ -2477,6 +2486,28 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		526C190C1C44E4A900551A0B /* RedPacketDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				526C190D1C44E4C200551A0B /* MyRedPcketDetailCell.h */,
+				526C190E1C44E4C200551A0B /* MyRedPcketDetailCell.m */,
+				526C190F1C44E4C200551A0B /* MyRedPcketDetailCell.xib */,
+				526C19121C44E76E00551A0B /* NoRedPacketDetailCell.h */,
+				526C19131C44E76E00551A0B /* NoRedPacketDetailCell.m */,
+				526C19141C44E76E00551A0B /* NoRedPacketDetailCell.xib */,
+			);
+			path = RedPacketDetailCell;
+			sourceTree = "<group>";
+		};
+		5272EAAE1C45150300282396 /* RuleWebView */ = {
+			isa = PBXGroup;
+			children = (
+				5272EAAF1C45161400282396 /* RuleWebViewController.h */,
+				5272EAB01C45161400282396 /* RuleWebViewController.m */,
+			);
+			path = RuleWebView;
+			sourceTree = "<group>";
+		};
 		527D07B41BD5D54300CA6C39 /* OpenInvoice */ = {
 			isa = PBXGroup;
 			children = (
@@ -2533,9 +2564,9 @@
 		52983EB31C438FDC00025ECD /* MyRedPacketDetail */ = {
 			isa = PBXGroup;
 			children = (
+				526C190C1C44E4A900551A0B /* RedPacketDetailCell */,
 				52983EB41C43900600025ECD /* MyRedPDetailController.h */,
 				52983EB51C43900600025ECD /* MyRedPDetailController.m */,
-				52983EB61C43900600025ECD /* MyRedPDetailController.xib */,
 			);
 			path = MyRedPacketDetail;
 			sourceTree = "<group>";
@@ -2543,11 +2574,11 @@
 		529CD2471C3FACCB004F3A09 /* MyRedPacket */ = {
 			isa = PBXGroup;
 			children = (
+				5272EAAE1C45150300282396 /* RuleWebView */,
 				52983EB31C438FDC00025ECD /* MyRedPacketDetail */,
 				52983EAD1C434D0D00025ECD /* MyRedPacketCell */,
 				529CD2481C3FACFD004F3A09 /* MyReadPacketController.h */,
 				529CD2491C3FACFD004F3A09 /* MyReadPacketController.m */,
-				529CD24A1C3FACFD004F3A09 /* MyReadPacketController.xib */,
 			);
 			path = MyRedPacket;
 			sourceTree = "<group>";
@@ -5154,6 +5185,7 @@
 				7939174C1C17CD550020372E /* chat_sender_bg.png in Resources */,
 				796EFD011BF5C67D00799120 /* chatBar_more_card@2x.png in Resources */,
 				796EFD001BF5C67D00799120 /* chatBar_more_card.png in Resources */,
+				526C19111C44E4C200551A0B /* MyRedPcketDetailCell.xib in Resources */,
 				52EFF5641BD9CFB10020E540 /* InvInformCell.xib in Resources */,
 				796EFCF61BF5C67D00799120 /* call_out.png in Resources */,
 				5A5B1AD61AFA220E00B6E16B /* ChildCell.xib in Resources */,
@@ -5250,7 +5282,6 @@
 				796EFD221BF5C67D00799120 /* chatBar_record.png in Resources */,
 				79D69BD01BDDFE13006881DD /* DayDetailTableViewCell.xib in Resources */,
 				5237D6B71BF18DED00655CF0 /* TimerCell.xib in Resources */,
-				52983EB81C43900600025ECD /* MyRedPDetailController.xib in Resources */,
 				796EFD381BF5C67D00799120 /* chatBar_more_cameraSelected.png in Resources */,
 				796EFCFF1BF5C67D00799120 /* chat_video_play.png in Resources */,
 				B3B7A6721BA6A25F0043DF7C /* Customer.storyboard in Resources */,
@@ -5344,6 +5375,7 @@
 				796EFCD91BF5C67D00799120 /* VoiceSearchFeedback006@2x.png in Resources */,
 				636C8B791AC2E1420097CAE9 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				5A52FC3E1ACEBF220076DAE6 /* leftCell.xib in Resources */,
+				526C19161C44E76E00551A0B /* NoRedPacketDetailCell.xib in Resources */,
 				796EFD031BF5C67D00799120 /* chatBar_more_cardSelected@2x.png in Resources */,
 				525B2A6D1C0441AF003B1F99 /* CommendToNo.xib in Resources */,
 				527E3B851BEC7F8C00AAA6F6 /* NewMessageCell.xib in Resources */,
@@ -5414,7 +5446,6 @@
 				793917341C17CD3D0020372E /* chat_receiver_bg.png in Resources */,
 				796EFCD81BF5C67D00799120 /* VoiceSearchFeedback006.png in Resources */,
 				527E3B8A1BECAB5B00AAA6F6 /* TerraceMessageController.xib in Resources */,
-				529CD24C1C3FACFD004F3A09 /* MyReadPacketController.xib in Resources */,
 				796EFD2C1BF5C67D00799120 /* chatBar_colorMore_camera@2x.png in Resources */,
 				B3B7A66A1BA6A25F0043DF7C /* BatchAddViewController.xib in Resources */,
 				796EFCF21BF5C67D00799120 /* VoiceSearchFeedback019.png in Resources */,
@@ -5565,6 +5596,7 @@
 				636C8B941AC2E6860097CAE9 /* MBProgressHUD+MJ.m in Sources */,
 				796EFDCE1BF5CA4E00799120 /* UIImage+EMMultiFormat.m in Sources */,
 				7971A77B1BF4D96700939E8B /* TTGlobalUICommon.m in Sources */,
+				5272EAB11C45161400282396 /* RuleWebViewController.m in Sources */,
 				63CE06081B203D44008B98B0 /* LLSimpleCamera.m in Sources */,
 				5A52FC681ACEBF220076DAE6 /* ResultViewController.m in Sources */,
 				B3BFDB661BDA1D190053504C /* MeSearchView.m in Sources */,
@@ -5634,6 +5666,7 @@
 				79FE7B351BD09EFD0057B56E /* AttachmentCollectionView.m in Sources */,
 				52983EB71C43900600025ECD /* MyRedPDetailController.m in Sources */,
 				632BFFFD1AB92A3A003B15AD /* UIImage+GIF.m in Sources */,
+				526C19101C44E4C200551A0B /* MyRedPcketDetailCell.m in Sources */,
 				5A3CC4C41ADE02480047A5E1 /* MyCalendarItem.m in Sources */,
 				52CF60BE1BDDCAF600DD97B8 /* SubscribeCell.m in Sources */,
 				B3C01E3F1BAC10FC005E4BB5 /* SuggestViewController.m in Sources */,
@@ -5655,6 +5688,7 @@
 				632BFFF91AB92A3A003B15AD /* SDWebImageDownloaderOperation.m in Sources */,
 				5ABA4F611AD7B26E004AA8F6 /* NSDateFormatter+Category.m in Sources */,
 				796EFC011BF5C5DE00799120 /* DXMessageToolBar.m in Sources */,
+				526C19151C44E76E00551A0B /* NoRedPacketDetailCell.m in Sources */,
 				5A82161C1AD3843B009388DA /* HomeList.m in Sources */,
 				796EFC0D1BF5C5DE00799120 /* FKProductViewInTextBubbleView.m in Sources */,
 				7977912D1B6F121C0075CC70 /* MLTransitionAnimation.m in Sources */,

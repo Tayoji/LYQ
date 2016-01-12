@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProduceDetailViewController">
             <connections>
                 <outlet property="applyOpenVip" destination="y6N-7u-4Eb" id="0Hm-GF-hO5"/>
-                <outlet property="coverView" destination="erd-BL-4Ij" id="C50-uL-orj"/>
                 <outlet property="defineBox" destination="j69-0c-dAO" id="vGW-P9-Jg6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="Bri-0F-yj1" id="EZp-sO-RIc"/>
@@ -21,17 +20,12 @@
             <subviews>
                 <webView contentMode="scaleToFill" id="Bri-0F-yj1">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="R0n-A1-mCR"/>
                     </connections>
                 </webView>
-                <view hidden="YES" contentMode="scaleToFill" id="erd-BL-4Ij">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view hidden="YES" contentMode="scaleToFill" id="j69-0c-dAO">
                     <rect key="frame" x="10" y="140" width="300" height="200"/>
                     <autoresizingMask key="autoresizingMask"/>

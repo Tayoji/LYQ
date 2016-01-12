@@ -9,19 +9,7 @@
 #import "SKViewController.h"
 
 @interface MyRedPDetailController : SKViewController
-@property (weak, nonatomic) IBOutlet UILabel *TitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *LuckContentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *DateTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *PriceTotalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *MixLabel;
-@property (weak, nonatomic) IBOutlet UILabel *DescribeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *OutLuckMixLabel;
-@property (weak, nonatomic) IBOutlet UILabel *OutTotalPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *InsideuckMixLabel;
-@property (weak, nonatomic) IBOutlet UILabel *InsideTotalPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *NearbyLuckMixLabel;
-@property (weak, nonatomic) IBOutlet UILabel *NearbyTotalPriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *LuckMoneyGetCountLabael;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, copy) NSString *MainString;
+
+//@property (nonatomic, copy) NSString *MainString;
+@property (nonatomic,strong) NSDictionary *lastData;
 @end
