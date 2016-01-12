@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProduceDetailViewController">
             <connections>
                 <outlet property="applyOpenVip" destination="y6N-7u-4Eb" id="0Hm-GF-hO5"/>
-                <outlet property="coverView" destination="erd-BL-4Ij" id="C50-uL-orj"/>
                 <outlet property="defineBox" destination="j69-0c-dAO" id="vGW-P9-Jg6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="Bri-0F-yj1" id="EZp-sO-RIc"/>
@@ -27,11 +26,6 @@
                         <outlet property="delegate" destination="-1" id="R0n-A1-mCR"/>
                     </connections>
                 </webView>
-                <view hidden="YES" contentMode="scaleToFill" id="erd-BL-4Ij">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view hidden="YES" contentMode="scaleToFill" id="j69-0c-dAO">
                     <rect key="frame" x="10" y="140" width="300" height="200"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -54,7 +48,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y6N-7u-4Eb">

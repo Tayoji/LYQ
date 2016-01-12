@@ -325,6 +325,7 @@
 		7939174C1C17CD550020372E /* chat_sender_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 793917401C17CD550020372E /* chat_sender_bg.png */; };
 		7939174D1C17CD550020372E /* chat_sender_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 793917411C17CD550020372E /* chat_sender_bg@2x.png */; };
 		793F4C191BBB8374004A0436 /* message.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 793F4C181BBB8374004A0436 /* message.mp3 */; };
+		795ACD261C45058300C160F0 /* FKRedPacketStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 795ACD251C45058300C160F0 /* FKRedPacketStateCell.m */; };
 		795C96681B4E0FA1006F996F /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 795C96661B4E0FA1006F996F /* libUMessage_Sdk_1.1.0.a */; };
 		795CCC6D1BF4A30E00AF31AF /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 795CCC6C1BF4A30E00AF31AF /* libxml2.dylib */; };
 		795CCC6F1BF4A31900AF31AF /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 795CCC6E1BF4A31900AF31AF /* libresolv.dylib */; };
@@ -1398,6 +1399,8 @@
 		793917401C17CD550020372E /* chat_sender_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_sender_bg.png; sourceTree = "<group>"; };
 		793917411C17CD550020372E /* chat_sender_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sender_bg@2x.png"; sourceTree = "<group>"; };
 		793F4C181BBB8374004A0436 /* message.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = message.mp3; sourceTree = "<group>"; };
+		795ACD241C45058300C160F0 /* FKRedPacketStateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKRedPacketStateCell.h; sourceTree = "<group>"; };
+		795ACD251C45058300C160F0 /* FKRedPacketStateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKRedPacketStateCell.m; sourceTree = "<group>"; };
 		795C96661B4E0FA1006F996F /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
 		795C96671B4E0FA1006F996F /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		795CCC6C1BF4A30E00AF31AF /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -3882,10 +3885,12 @@
 				796EFBD21BF5C5DE00799120 /* ChatCellBubble */,
 				796EFBE41BF5C5DE00799120 /* EMChatTimeCell.h */,
 				796EFBE51BF5C5DE00799120 /* EMChatTimeCell.m */,
-				796EFBE61BF5C5DE00799120 /* EMChatViewBaseCell.h */,
-				796EFBE71BF5C5DE00799120 /* EMChatViewBaseCell.m */,
+				795ACD241C45058300C160F0 /* FKRedPacketStateCell.h */,
+				795ACD251C45058300C160F0 /* FKRedPacketStateCell.m */,
 				796EFBE81BF5C5DE00799120 /* EMChatViewCell.h */,
 				796EFBE91BF5C5DE00799120 /* EMChatViewCell.m */,
+				796EFBE61BF5C5DE00799120 /* EMChatViewBaseCell.h */,
+				796EFBE71BF5C5DE00799120 /* EMChatViewBaseCell.m */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -5710,6 +5715,7 @@
 				5A52FC911ACEBF220076DAE6 /* SKSearchBar.m in Sources */,
 				5AED0A191ADB767D00B0E0E5 /* ShowRemindCell.m in Sources */,
 				B3D0548A1BF9700100A4E193 /* CustomerSection.m in Sources */,
+				795ACD261C45058300C160F0 /* FKRedPacketStateCell.m in Sources */,
 				B3D7B7CE1BD76F700080E243 /* ScanningViewController.m in Sources */,
 				845514FB1AC032C000D588A7 /* WriteFileManager.m in Sources */,
 				796EFDCC1BF5CA4E00799120 /* UIButton+EMWebCache.m in Sources */,

@@ -25,12 +25,14 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 @end
 @implementation EMChatCustomBubbleView
 
-//-(instancetype)initWithFrame:(CGRect)frame{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//    }
-//    return self;
-//}
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        
+    }
+    return self;
+}
 -(void)layoutSubviews{
     [super layoutSubviews];
 
@@ -42,7 +44,6 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
     [super setModel:model];
     
     if (self.model.message.ext) {
-        
         CGRect frame = self.bounds;
         frame.size.width -= BUBBLE_ARROW_WIDTH;
         frame = CGRectInset(frame, BUBBLE_VIEW_PADDING, BUBBLE_VIEW_PADDING);
@@ -52,10 +53,12 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
             frame.origin.x = BUBBLE_VIEW_PADDING + BUBBLE_ARROW_WIDTH;
         }
         frame.origin.y = BUBBLE_VIEW_PADDING;
-        if (frame.size.width == 0) {
-            return;
-        }
+        [self sizeToFit];
+
         NSLog(@"%@", NSStringFromCGRect(frame));
+        for (UIView * view in self.subviews) {
+            [view removeFromSuperview];
+        }
 
         // MsgType = 1 推送产品；
         if ([self.model.message.ext[@"MsgType"]isEqualToString:@"1"]) {
@@ -80,9 +83,9 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
             FKSendRedPacketView * FKV = [FKSendRedPacketView FKSendRedPacketWithModel:self.model andFrame:aframe];
             [self addSubview:FKV];
         }else{
-            for (UIView * view in self.subviews) {
-                [view removeFromSuperview];
-            }
+//            for (UIView * view in self.subviews) {
+//                [view removeFromSuperview];
+//            }
         }
     }
 
