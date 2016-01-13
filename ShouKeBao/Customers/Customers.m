@@ -594,6 +594,7 @@
     VC.IsOpenIM = model.IsOpenIM;
     VC.name = model.Name;
     VC.model = model;
+    VC.InvitationInfo = self.InvitationInfo;
 //    NSLog(@"appSkbUserId = %@, %@", appSkbUserId, name);
     [self.navigationController pushViewController:VC animated:YES];
 }

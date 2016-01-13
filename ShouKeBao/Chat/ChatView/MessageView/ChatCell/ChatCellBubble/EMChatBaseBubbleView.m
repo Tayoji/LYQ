@@ -50,7 +50,13 @@ NSString *const kRouterEventChatCellBubbleTapEventName = @"kRouterEventChatCellB
     _model = model;
     
     BOOL isReceiver = !_model.isSender;
+    
     NSString *imageName = isReceiver ? BUBBLE_LEFT_IMAGE_NAME : BUBBLE_RIGHT_IMAGE_NAME;
+    if (model.message.ext) {
+        if ([model.message.ext[@"MsgType"]isEqualToString:@"4"]) {
+            imageName = @"SendRedPacket";
+        }
+    }
     NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger topCapHeight =  isReceiver?BUBBLE_LEFT_TOP_CAP_HEIGHT:BUBBLE_RIGHT_TOP_CAP_HEIGHT;
     self.backImageView.image = [[UIImage imageNamed:imageName] stretchableImageWithLeftCapWidth:leftCapWidth topCapHeight:topCapHeight];

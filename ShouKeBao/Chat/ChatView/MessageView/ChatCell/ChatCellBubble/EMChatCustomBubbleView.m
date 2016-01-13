@@ -72,7 +72,7 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"4"]){
             CGRect aframe = self.bounds;
-            aframe.size.width -= 7 ;
+            aframe.size.width -= 9 ;
             aframe = CGRectInset(aframe, 0, 0);
             if (self.model.isSender) {
                 aframe.origin.x = 0;

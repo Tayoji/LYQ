@@ -604,6 +604,8 @@
 		798BB6641B9FCBC300D8C070 /* NSString+FKTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 798BB6631B9FCBC300D8C070 /* NSString+FKTools.m */; };
 		798F769E1BD65E2E00457A70 /* TravelConsultantViewControllerNoShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 798F769D1BD65E2E00457A70 /* TravelConsultantViewControllerNoShare.m */; };
 		799B987A1BDF7534003A76F6 /* MoreLvYouGuWenInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799B98791BDF7534003A76F6 /* MoreLvYouGuWenInfoViewController.m */; };
+		799BBA991C464AD60040E8AB /* SendRedPacket@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BBA971C464AD60040E8AB /* SendRedPacket@2x.png */; };
+		799BBA9A1C464AD60040E8AB /* SendRedPacket@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 799BBA981C464AD60040E8AB /* SendRedPacket@3x.png */; };
 		799F3E0E1B3A512400C14FBB /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 799F3E0B1B3A512400C14FBB /* libMobClickLibrary.a */; };
 		79A963021BCC937100CCAB2B /* AppDelegate+Extend.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A963011BCC937100CCAB2B /* AppDelegate+Extend.m */; };
 		79AEC9101BBB8EA000A1E83D /* LvYouGuWenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AEC90F1BBB8EA000A1E83D /* LvYouGuWenViewController.m */; };
@@ -1827,6 +1829,8 @@
 		798F769D1BD65E2E00457A70 /* TravelConsultantViewControllerNoShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelConsultantViewControllerNoShare.m; sourceTree = "<group>"; };
 		799B98781BDF7534003A76F6 /* MoreLvYouGuWenInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreLvYouGuWenInfoViewController.h; sourceTree = "<group>"; };
 		799B98791BDF7534003A76F6 /* MoreLvYouGuWenInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreLvYouGuWenInfoViewController.m; sourceTree = "<group>"; };
+		799BBA971C464AD60040E8AB /* SendRedPacket@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacket@2x.png"; sourceTree = "<group>"; };
+		799BBA981C464AD60040E8AB /* SendRedPacket@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacket@3x.png"; sourceTree = "<group>"; };
 		799F3E0B1B3A512400C14FBB /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		799F3E0C1B3A512400C14FBB /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		799F3E0D1B3A512400C14FBB /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -4208,6 +4212,8 @@
 				7939173F1C17CD550020372E /* chat_sender_audio_playing_full@3x.png */,
 				793917401C17CD550020372E /* chat_sender_bg.png */,
 				793917411C17CD550020372E /* chat_sender_bg@2x.png */,
+				799BBA971C464AD60040E8AB /* SendRedPacket@2x.png */,
+				799BBA981C464AD60040E8AB /* SendRedPacket@3x.png */,
 			);
 			path = sender_bubble;
 			sourceTree = "<group>";
@@ -5260,6 +5266,7 @@
 				52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */,
 				5ABA4F631AD7B8EA004AA8F6 /* Localizable.strings in Resources */,
 				632AF23D1AD3E536004916C0 /* SearchFootView.xib in Resources */,
+				799BBA991C464AD60040E8AB /* SendRedPacket@2x.png in Resources */,
 				796EFD0D1BF5C67D00799120 /* chat_location_detail_disclosure@2x.png in Resources */,
 				B3CFF62C1BFB1E69002065AA /* EstablelishedViewController.xib in Resources */,
 				52F59D891BCF4B1F00DE24FB /* invoiceCell.xib in Resources */,
@@ -5445,6 +5452,7 @@
 				7939172B1C17CD3D0020372E /* chat_receiver_audio_playing_001@3x.png in Resources */,
 				796EFD3C1BF5C67D00799120 /* chatBar_more_locationSelected.png in Resources */,
 				52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */,
+				799BBA9A1C464AD60040E8AB /* SendRedPacket@3x.png in Resources */,
 				796EFCD01BF5C67D00799120 /* VoiceSearchFeedback002.png in Resources */,
 				52CCF86D1C3B5DE400C91387 /* RedPacketMainController.xib in Resources */,
 				796EFD1E1BF5C67D00799120 /* chatBar_more.png in Resources */,
