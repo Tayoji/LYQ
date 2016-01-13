@@ -267,9 +267,10 @@
     
 }
 - (void)ClickCarouselSCAction:(NSInteger)pageNum{
-    CircleHotNewsViewController *circleHotVC = [[CircleHotNewsViewController alloc]init];
+//    CircleHotNewsViewController *circleHotVC = [[CircleHotNewsViewController alloc]init];
+    ProduceDetailViewController *circleHotVC = [[ProduceDetailViewController alloc]init];
     circleHotVC.title = @"圈热点";
-    circleHotVC.CircleUrl = self.CircleUrl;
+    circleHotVC.produceUrl = self.CircleUrl;
     circleHotVC.m = 1;
     if (self.CircleUrl) {
         [self.navigationController pushViewController:circleHotVC animated:YES];

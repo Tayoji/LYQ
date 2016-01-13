@@ -27,6 +27,7 @@
 @property (nonatomic, assign) BOOL isRefresh;
 @property (nonatomic, copy)NSString *Copies;
 @property (nonatomic, copy)NSString *PushDate;
+@property (nonatomic, strong)ProductModal *model;
 
 @end
 
@@ -53,7 +54,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ProductCell *cell = [ProductCell cellWithTableView:tableView];
-   // ProductModal *model = _dataArr[indexPath.row];
+   // self.model = _dataArr[indexPath.row];
    // cell.modal = model;
     cell.delegate = self;
     cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
@@ -65,6 +66,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
+//    produceDetailVC.productId = self.model.productId;
     [self.navigationController pushViewController:produceDetailVC animated:YES];
      [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
 }

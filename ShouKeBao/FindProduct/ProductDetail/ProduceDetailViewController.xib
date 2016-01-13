@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProduceDetailViewController">
@@ -30,15 +30,15 @@
                     <rect key="frame" x="10" y="140" width="300" height="200"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Wfe-Uy-nuf">
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boxBackg1" id="Wfe-Uy-nuf">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="1" green="0.31913021460000002" blue="0.0955458691" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Se5-G0-F1J">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Se5-G0-F1J">
                             <rect key="frame" x="250" y="0.0" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="取消"/>
+                            <state key="normal" image="iconfont-cancle"/>
                             <connections>
                                 <action selector="cancleDefineBox:" destination="-1" eventType="touchUpInside" id="K5N-vi-wut"/>
                             </connections>
@@ -71,4 +71,8 @@
             <point key="canvasLocation" x="275" y="257"/>
         </view>
     </objects>
+    <resources>
+        <image name="boxBackg1" width="271" height="37"/>
+        <image name="iconfont-cancle" width="17" height="17"/>
+    </resources>
 </document>

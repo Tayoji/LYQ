@@ -45,9 +45,10 @@
 @property (nonatomic, copy)NSString *URL;
 @property (nonatomic, copy)NSString *fromType;
 @property (nonatomic, strong)NSArray *eventArray;
+@property (nonatomic,strong) NSArray *photosArr;
 @property (nonatomic, strong)id publishContent;
 @property (nonatomic, strong)UIView *blackView;
 @property (nonatomic, strong)id<notiPopUpBox>delegate;
+@property (nonatomic, copy)NSString *ProductId;
 
-//+(void)shareWithContent:(id)publishContent andUrl:(NSString *)url eventArray:(NSArray *)eventArray shareInfo:(NSDictionary *)shareInfo ;
 @end

@@ -191,7 +191,7 @@
             }else if (indexPath.row == 1){
                 cell.imageView.image = [UIImage imageNamed:@"SNotification"];
             }else if (indexPath.row == 3){
-                cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
+                cell.imageView.image = [UIImage imageNamed:@"iconfont-choseToday"];
             }else{
                 cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
             }
