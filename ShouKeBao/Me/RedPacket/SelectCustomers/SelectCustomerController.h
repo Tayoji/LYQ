@@ -12,5 +12,5 @@ typedef enum {
     FromeProDetail
 }From;
 @interface SelectCustomerController : SKViewController
-@property (nonatomic,assign) From *FromWhere;
+@property (nonatomic,assign) From FromWhere;
 @end
