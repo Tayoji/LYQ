@@ -790,7 +790,7 @@
 - (void)pushChoseCustomerView{
     [self closeBlackView];
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
-//    selectVC.FromWhere = @"FromeProDetail";
+    selectVC.FromWhere = FromeProDetail;
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type

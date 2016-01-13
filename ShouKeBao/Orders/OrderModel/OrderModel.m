@@ -63,8 +63,16 @@
         // 返回底部按钮组
         for (NSDictionary *dic2 in dic[@"ButtonList"]) {
             ButtonList *btn = [ButtonList buttonListWithDict:dic2];
-            [self.buttonList addObject:btn];
+            
+            if ([btn.color isEqual:[UIColor configureColorWithNum:1]]) {
+                [self.btnList addObject:btn];
+            }else{
+                [self.buttonList addObject:btn];
+            }
+            
         }
+        [self.buttonList addObject:self.btnList];
+        NSLog(@"... %@ ...%@", self.buttonList, self.btnList);
     }
     return self;
 }
@@ -86,5 +94,11 @@
     }
     return _buttonList;
 }
-
+- (NSMutableArray *)btnList
+{
+    if (!_btnList) {
+        _btnList = [NSMutableArray array];
+    }
+    return _btnList;
+}
 @end
