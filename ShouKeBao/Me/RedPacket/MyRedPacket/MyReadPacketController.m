@@ -45,7 +45,7 @@
     [self.imageview sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWHeaderPic]]];
     self.UserInfoName.text = [NSString stringWithFormat:@"%@共发出",[[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyLYGWName]];
     [self.view addSubview:self.tableView];
-    [self creatNavOfRight];
+//    [self creatNavOfRight];
     [self loadDataSource];
     [self iniHeader];
 }
@@ -119,21 +119,21 @@
         NSLog(@"请求失败");
     }];
 }
--(void)creatNavOfRight{
-    UIButton *myBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [myBtn setImage:[UIImage imageNamed:@"RedPacketHelp"] forState:UIControlStateNormal];
-    myBtn.tag = 106;
-    [myBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:myBtn];
-    self.navigationItem.rightBarButtonItem = item;
-}
--(void)BtnClick:(UIButton *)button{
-    NSLog(@"又是问号");
-    RuleWebViewController *cont = [[RuleWebViewController alloc] init];
-    cont.webTitle = @"红包规则介绍";
-    cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyRule";
-    [self.navigationController pushViewController:cont animated:YES];
-}
+//-(void)creatNavOfRight{
+//    UIButton *myBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+//    [myBtn setImage:[UIImage imageNamed:@"RedPacketHelp"] forState:UIControlStateNormal];
+//    myBtn.tag = 106;
+//    [myBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:myBtn];
+//    self.navigationItem.rightBarButtonItem = item;
+//}
+//-(void)BtnClick:(UIButton *)button{
+//    NSLog(@"又是问号");
+//    RuleWebViewController *cont = [[RuleWebViewController alloc] init];
+//    cont.webTitle = @"红包规则介绍";
+//    cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyRule";
+//    [self.navigationController pushViewController:cont animated:YES];
+//}
 #pragma mark - UITableViewDataSource&&UITableViewDelegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

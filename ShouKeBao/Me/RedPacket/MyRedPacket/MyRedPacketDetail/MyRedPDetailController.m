@@ -147,10 +147,12 @@
         tableView.rowHeight = 80;
         NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
+        NSLog(@"%@",cell.HeadtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.HeadtitLabel.alpha = 0;
             }else{
+                
                 if ([dataDic[@"FirstName"]   isEqual: @""]) {
                     cell.HeadtitLabel.text = @"空";
                 }else{
@@ -176,6 +178,7 @@
         tableView.rowHeight = 100;
         MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MyRedPcketDetailCell" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
+        NSLog(@"%@",cell.headtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
@@ -207,6 +210,7 @@
         tableView.rowHeight = 100;
         MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
+        NSLog(@"%@",cell.headtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
@@ -238,6 +242,7 @@
         tableView.rowHeight = 800;
         NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
+        NSLog(@"%@",cell.HeadtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.HeadtitLabel.alpha = 0;
@@ -247,7 +252,8 @@
                 }else{
                     cell.HeadtitLabel.text = dataDic[@"FirstName"];
                     
-                }            }
+                }
+            }
         cell.StateLabel.text = @"已过期";
         cell.NumLabel.text = dataDic[@"Mobile"];
         

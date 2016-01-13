@@ -46,15 +46,16 @@
 
 - (IBAction)AppointRPacketBtn:(UIButton *)sender {
     NSLog(@"指定发红包");
-    NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
-    if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-        //没有开通
-    
-    }else{
+//    NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
+//    if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+//        //没有开通
+//    
+//    }else{
         SelectCustomerController *selectCustomer = [[SelectCustomerController alloc] init];
+        selectCustomer.FromWhere = FromeRedPacket;
         [self.navigationController pushViewController:selectCustomer animated:YES];
 
-    }
+//    }
 }
 
 - (IBAction)RPacketRuleBtn:(UIButton *)sender {
