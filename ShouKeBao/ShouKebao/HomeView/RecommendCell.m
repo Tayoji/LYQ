@@ -121,8 +121,7 @@ NSInteger theNumbe;
     return CGSizeMake(imgW, imgW);
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString *markStr = [self.photosArr objectAtIndex:indexPath.row][@"PushId"];
     NSLog(@"mark = %@", markStr);
@@ -131,10 +130,14 @@ NSInteger theNumbe;
     [def setObject:_recommend.CreatedDate forKey:@"redTip"];//标记createdate，下次该cell红点不显示
 
     
+//    传productId
+    NSString *markProductId = [self.photosArr objectAtIndex:indexPath.row][@"productId"];
+    
+    
     UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
     ProductRecommendViewController * PRVC = (ProductRecommendViewController *)[SB instantiateViewControllerWithIdentifier:@"eeee"];
     PRVC.pushId = markStr;
-
+    PRVC.markProductId = markProductId;
     [self.ShouKeBaoNav pushViewController:PRVC animated:YES];
 
 }

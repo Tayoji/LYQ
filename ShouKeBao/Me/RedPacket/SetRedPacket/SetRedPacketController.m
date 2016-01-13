@@ -11,6 +11,8 @@
 #import "CustomModel.h"
 #import "IWHttpTool.h"
 #import "MBProgressHUD.h"
+#import "EaseMob.h"
+#import "ChatSendHelper.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
@@ -207,7 +209,7 @@
     [IWHttpTool WMpostWithURL:@"/Customer/HairRedEnvelope" params:dic success:^(id json) {
         NSLog(@"----------红包返回列表%@---------",json);
         self.IDsdataArr = json[@"AppRedEnvelopeIdList"];//服务器返回的发红包数据
-        
+        [self performSelectorInBackground:@selector(sendRedPacket) withObject:nil];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     } failure:^(NSError *error) {
@@ -229,16 +231,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark --此处发红包
+- (void)sendRedPacket{
+    
+    for (NSDictionary * postDic in self.IDsdataArr) {
+        NSString * AppRedEnvelopeId = postDic[@"AppRedEnvelopeId"];
+        NSString * AppSkbUserId = postDic[@"AppSkbUserId"];
+        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
+        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
+                                                                toUsername:AppSkbUserId
+                                                               messageType:eMessageTypeChat
+                                                         requireEncryption:NO
+                                                                       ext:ext];
+        [[EaseMob sharedInstance].chatManager sendMessage:tempMessage progress:nil error:nil];
+    }
+    if (self.IDsdataArr.count == 1) {
 
-/*
-#pragma mark - Navigation
+    }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
 }
-*/
 
 - (IBAction)GrantRPBtn:(UIButton *)sender {
     [self.view.window addSubview:self.backGroundView];

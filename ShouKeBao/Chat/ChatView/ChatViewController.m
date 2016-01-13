@@ -48,6 +48,9 @@
 #import "UserInfo.h"
 #import "CustomerDetailAndOrderViewController.h"
 #import "EMChatCustomBubbleView.h"
+#import "FKRedPacketStateCell.h"
+
+
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
 {
     UIMenuController *_menuController;
@@ -258,10 +261,10 @@
     
 }
 - (void)AAAAA{
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 2; i++) {
         NSString * AppRedEnvelopeId = @"";
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@""
+        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
                                                                 toUsername:_conversation.chatter
                                                                messageType:[self messageType]
                                                          requireEncryption:NO
@@ -601,8 +604,27 @@
             
             return timeCell;
         }
-        else{
+        else if([obj isKindOfClass:[MessageModel class]]){
+
             MessageModel *model = (MessageModel *)obj;
+            if (model.message.ext) {
+                if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {//红包状态显示
+                    FKRedPacketStateCell *redPacketCell = (FKRedPacketStateCell *)[tableView dequeueReusableCellWithIdentifier:@"MessageredPacketCell"];
+                    if (redPacketCell == nil) {
+                        redPacketCell = [[FKRedPacketStateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MessageredPacketCell"];
+                        redPacketCell.backgroundColor = [UIColor clearColor];
+                        redPacketCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    NSString * stateMsga = [NSString stringWithFormat:@"%@领取了你的红包", self.title];
+                    redPacketCell.stateMsg= stateMsga;
+                    return redPacketCell;
+                    
+                }
+            }
+
+            
+            
+            
             if (!model.isSender) {
                 NSString * nickName = [[LocationSeting defaultLocationSeting]getCustomInfoWithID:self.chatter][@"nickName"];
                 NSString * headerUrl = [[LocationSeting defaultLocationSeting]getCustomInfoWithID:self.chatter][@"headerUrl"];
@@ -622,8 +644,13 @@
             }
             cell.messageModel = model;
             
+            
+            
             return cell;
+        }else if([obj isKindOfClass:[NSDictionary class]]){
         }
+        
+        
     }
     
     return nil;
@@ -637,9 +664,16 @@
     if ([obj isKindOfClass:[NSString class]]) {
         return 40;
     }
-    else{
+    else if([obj isKindOfClass:[MessageModel class]]){
+        MessageModel * model = (MessageModel *)obj;
+        if (model.message.ext) {//红包状态显示
+            if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {
+                return 25;
+            }
+        }
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];
     }
+    return 0;
 }
 
 #pragma mark - scrollView delegate

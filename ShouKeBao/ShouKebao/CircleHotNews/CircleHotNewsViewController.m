@@ -226,6 +226,8 @@
     [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", shareDic[@"Url"]]];
 
     
+    
+    
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:btn  arrowDirect:UIPopoverArrowDirectionUp];
@@ -249,6 +251,7 @@
                                         [postDic setObject:shareDic[@"Url"]  forKey:@"ShareUrl"];
                                     }
                                     [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+                                    
                                     if (type ==ShareTypeWeixiSession) {
                                       
                                     }else if(type == ShareTypeQQ){

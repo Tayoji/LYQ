@@ -136,7 +136,7 @@
 #pragma mark - UITableViewDelegate&DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView.tag == 2011) {
-        return 4;
+        return 2;
     }
     return 1;
 }
