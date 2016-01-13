@@ -27,5 +27,5 @@
 @property (nonatomic,strong) UITableView *tableView;
 
 @property (nonatomic,assign) NSInteger direct;// 0左边 1右边
-
+@property (nonatomic, copy)NSString *tip;
 @end

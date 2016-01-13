@@ -22,7 +22,7 @@
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
 #import "ProductDetailShareByMyself.h"
-
+#import "SelectCustomerController.h"
 
 @interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate, notiPopUpBox>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
@@ -724,17 +724,17 @@
     self.defineV.publishContent = publishContent;
     self.defineV.shareInfo = self.shareInfo;
     _defineV.fromType = [NSString stringWithFormat:@"%d", self.fromType];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView)];
     [self.blackView addGestureRecognizer:tap];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(closeBlackView:) name:@"closeBlackView" object:nil];
-}
-- (void)closeBlackView:(NSNotification *)noti{
-    self.blackView.hidden = YES;
-    self.defineV.hidden = YES;
+   
 }
 
+- (void)closeBlackView{
+    self.blackView.hidden = YES;
+    self.defineV.hidden = YES;
+
+}
 
 - (void)notiPopUpBoxView{
     [self.blackView removeFromSuperview];
@@ -760,6 +760,12 @@
     newExclusiveVC.pushFrom = FromProductDetail;
     [self.navigationController pushViewController:newExclusiveVC animated:YES];
   
+}
+
+- (void)pushChoseCustomerView{
+    [self closeBlackView];
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type
 {

@@ -53,7 +53,7 @@ static NSString * cellid = @"reuseaa";
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 45)];
     titleLabel.text = @"分享";
-    titleLabel.backgroundColor = [UIColor orangeColor];
+    titleLabel.backgroundColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont systemFontOfSize:25];
     [shareView addSubview:titleLabel];
@@ -127,8 +127,14 @@ static NSString * cellid = @"reuseaa";
         switch (indexPath.row) {
             case 0:{
                 shareType = ShareTypeOther;
-                if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
-                    [_delegate notiPopUpBoxView];
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
+                    if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
+                        [_delegate notiPopUpBoxView];
+                    }
+                }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
+                    if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView)]) {
+                        [_delegate pushChoseCustomerView];
+                    }
                 }
             }
                 break;
@@ -239,14 +245,13 @@ static NSString * cellid = @"reuseaa";
 }
 
 - (void)cancleBtnClickAction{
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:@"closeBlackView" object:@"close" userInfo:nil];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(closeBlackView)]) {
+        [_delegate closeBlackView];
+    }
 }
 
-- (void)dealloc{
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self];
-}
+
 
 - (void)layoutSubviews{
     [super layoutSubviews];

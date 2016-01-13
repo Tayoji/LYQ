@@ -20,6 +20,8 @@
 #import "IWHttpTool.h"  
 #import "CustomModel.h"
 #import "UIImageView+WebCache.h"
+#define Height [UIScreen mainScreen].bounds.size.height/480
+#define Width [UIScreen mainScreen].bounds.size.width/320
 @interface CustomerDetailViewController ()<UITextFieldDelegate,notifiToRefereshCustomerDetailInfo,UIActionSheetDelegate, UITableViewDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *SetRemindBtnOutlet;
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -281,7 +283,7 @@
 }
 
 - (void)setCustomerIconActin{
-    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(30, 30, 60, 60)];
+    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(230*Width, 30*Height, 60, 60)];
     [self.tableView addSubview:customerIm];
     self.customerIcon = customerIm;
     
