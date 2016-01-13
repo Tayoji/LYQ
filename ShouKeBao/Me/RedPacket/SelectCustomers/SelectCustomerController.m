@@ -16,8 +16,10 @@
 #define pageSize 10
 #define kScreenSize [UIScreen mainScreen].bounds.size
 #define UserDefault [NSUserDefaults standardUserDefaults]
+
 @interface SelectCustomerController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong)UISearchBar *searchBar;
+
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIView *lowView;
 @property (nonatomic,strong) UIButton *AllSelectedBtn;
@@ -280,9 +282,17 @@
 -(void)BtnClick:(UIButton *)button{
     if (button.tag == 101) {//确定按钮
         NSLog(@"个数:%ld----数组:%@",self.SELCustomerArr.count,self.SELCustomerArr);
-        SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
-        setRPacket.NumOfPeopleArr = self.SELCustomerArr;
-        [self.navigationController pushViewController:setRPacket animated:YES];
+        if (self.SELCustomerArr.count == 0) {
+             [[[UIAlertView alloc] initWithTitle:@"提示" message:@"您没有选中客人" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+        }else{
+            if (self.FromWhere == FromeRedPacket) {//来自我的红包界面
+                SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+                setRPacket.NumOfPeopleArr = self.SELCustomerArr;
+                [self.navigationController pushViewController:setRPacket animated:YES];
+            }else{//来自产品详情
+            
+            }
+        }
         
     }else if(button.tag == 102){//全选
         if (_isAll) {

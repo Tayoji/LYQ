@@ -790,7 +790,9 @@
                     RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
                     [self.navigationController pushViewController:redPacket animated:YES];
                 }else{
-                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+                    [self.view.window addSubview:self.backGroundRPView];
+                    [self.view.window  addSubview:self.RedPacketAlertView];
+//                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
                 }
                
                 
@@ -1170,9 +1172,53 @@
 }
 -(UIView *)RedPacketAlertView{
     if (!_RedPacketAlertView) {
-        _RedPacketAlertView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 150)];
+        _RedPacketAlertView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 200)];
+        _RedPacketAlertView.layer.masksToBounds = YES;
+        _RedPacketAlertView.layer.cornerRadius = 7;
+        _RedPacketAlertView.backgroundColor = [UIColor whiteColor];
+        UIImageView *HeadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-60, 200)];
+        HeadImageView.userInteractionEnabled = YES;
+        
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(_RedPacketAlertView.frame.size.width-40, 10, 25, 25)];
+        [btn setImage:[UIImage imageNamed:@"WowOfRedPacketCanal"] forState:UIControlStateNormal];
+        btn.tag = 2002;
+        [btn addTarget:self action:@selector(BtnOfCancal:) forControlEvents:UIControlEventTouchUpInside];
+        [HeadImageView addSubview:btn];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, HeadImageView.frame.size.height/2-20, HeadImageView.frame.size.width-20, 30)];
+        label.text = @"开通专属APP,才能享受此功能!";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = [UIFont systemFontOfSize:20];
+        [HeadImageView addSubview:label];
+        UIButton *btn2 = [[UIButton alloc]   initWithFrame:CGRectMake(HeadImageView.frame.size.width/2-70, HeadImageView.frame.size.height-HeadImageView.frame.size.height/3, 140, 40)];
+        [btn2 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
+        [btn2 addTarget:self action:@selector(BtnOfCancal:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [btn2 setTitle:@"立即申请开通" forState:UIControlStateNormal];
+        btn2.tag = 2001;
+        [btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [HeadImageView addSubview:btn2];
+        [HeadImageView setImage:[UIImage imageNamed:@"WowOfRedPacket1"]];
+        [_RedPacketAlertView addSubview:HeadImageView];
     }
     return _RedPacketAlertView;
+}
+-(void)BtnOfCancal:(UIButton *)button{
+    [self.RedPacketAlertView removeFromSuperview];
+    [self.backGroundRPView removeFromSuperview];
+    if (button.tag == 2001) {
+        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        [MobClick event:@"Me_applyForOpening" attributes:dict];
+        
+        NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
+        exc.clientManagerTel = self.clientMagagerTel;
+        exc.naVC = self.navigationController;
+        [self.navigationController pushViewController:exc animated:YES];
+    }
+//    }else if(button.tag == 2002){
+//        [self.RedPacketAlertView removeFromSuperview];
+//        [self.backGroundRPView removeFromSuperview];
+//    }
+
 }
 -(UIView *)backGroundRPView{
     if (!_backGroundRPView) {
