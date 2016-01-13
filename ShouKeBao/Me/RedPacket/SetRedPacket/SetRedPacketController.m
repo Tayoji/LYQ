@@ -14,6 +14,7 @@
 #import "EaseMob.h"
 #import "ChatSendHelper.h"
 #import "NewMessageCenterController.h"
+#import "RuleWebViewController.h"
 #import "APNSHelper.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
@@ -36,6 +37,8 @@
     self.InlandTextView.keyboardType = UIKeyboardTypeNumberPad;
     self.RimtextView.keyboardType = UIKeyboardTypeNumberPad;
     self.ScrollView.contentSize = CGSizeMake(kScreenSize.width, kScreenSize.height);
+    self.SendRedPacketBtn.enabled = NO;
+    self.SendRedPacketBtn.alpha = 0.5;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -45,6 +48,7 @@
     [self.ExitCountryTextView resignFirstResponder];
     [self.InlandTextView resignFirstResponder];
     [self.RimtextView resignFirstResponder];
+//    [self computeMoney];
 }
 
 -(void)creatNavOfRight{
@@ -62,6 +66,10 @@
 -(void)BtnClick:(UIButton *)button{
     if (button.tag == 106) {//问好
         NSLog(@"点击问号");
+        RuleWebViewController *cont = [[RuleWebViewController alloc] init];
+        cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyProduceNote";
+        cont.webTitle = @"红包生成说明";
+        [self.navigationController pushViewController:cont animated:YES];
     }else if(button.tag == 105){//叉号
         [self removeWowView];
     }else if(button.tag == 107){//取消
@@ -78,12 +86,15 @@
     switch (textView.tag) {
         case 101:
             self.ExitCountryTextView.text = @"";
+            self.ExitCountryTextView.textColor = [UIColor blackColor];
             break;
         case 102:
             self.InlandTextView.text = @"";
+            self.InlandTextView.textColor = [UIColor blackColor];
             break;
         case 103:
             self.RimtextView.text = @"";
+            self.RimtextView.textColor = [UIColor blackColor];
             break;
         case 104:
             
@@ -142,6 +153,13 @@
     CGFloat sum = self.ExitCountryN+self.InlandN+self.RimN;
     self.FinalMoney = sum*self.NumOfPeopleArr.count;
     self.FinalMoneyLabel.text = [NSString stringWithFormat:@"%.2f",self.FinalMoney];
+    if (self.FinalMoney !=  0) {
+        self.SendRedPacketBtn.enabled = YES;
+        self.SendRedPacketBtn.alpha = 1;
+    }else{
+        self.SendRedPacketBtn.enabled = NO;
+        self.SendRedPacketBtn.alpha = 0.5;
+    }
 }
 -(NSMutableArray *)NumOfPeopleArr{
     if (!_NumOfPeopleArr) {

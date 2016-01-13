@@ -22,5 +22,6 @@
 - (IBAction)GrantRPBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *NumOfRedPLabel;
 @property (weak, nonatomic) IBOutlet UILabel *FinalMoneyLabel;
+@property (weak, nonatomic) IBOutlet UIButton *SendRedPacketBtn;
 
 @end

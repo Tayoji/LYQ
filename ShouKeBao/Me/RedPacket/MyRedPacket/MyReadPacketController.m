@@ -95,7 +95,7 @@
             self.isRefresh = YES;
         }
         if (![json[@"GetTotalPrice"]  isEqual: @""]) {
-            self.GetTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",json[@"GetTotalPrice"]];
+            self.GetTotalPriceLabel.text = json[@"GetTotalPrice"];
         }
         if (![json[@"AllCount"]  isEqual: @""]) {
             self.AllCountLabel.text = json[@"AllCount"];
@@ -224,7 +224,7 @@
 }
 -(UILabel *)GetTotalPriceLabel{
     if (!_GetTotalPriceLabel) {
-        _GetTotalPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-50, 170, 100, 30)];
+        _GetTotalPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-100, 170, 200, 30)];
         _GetTotalPriceLabel.font = [UIFont systemFontOfSize:30];
         _GetTotalPriceLabel.textAlignment = NSTextAlignmentCenter;
         _GetTotalPriceLabel.textColor = [UIColor colorWithRed:223.0/255.0 green:67.0/255.0 blue:55.0/255.0 alpha:1];

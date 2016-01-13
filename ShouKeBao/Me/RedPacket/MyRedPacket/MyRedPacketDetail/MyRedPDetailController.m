@@ -153,10 +153,14 @@
                 cell.HeadtitLabel.alpha = 0;
             }else{
                 
-                if ([dataDic[@"FirstName"]   isEqual: @""]) {
-                    cell.HeadtitLabel.text = @"空";
+                if ([dataDic[@"Name"]   isEqual: @""]) {
+                    if ([dataDic[@"FirstName"] isEqual:@""]) {
+                        cell.HeadtitLabel.text = @"空";
+                    }else{
+                        cell.HeadtitLabel.text = dataDic[@"FirstName"];
+                    }
                 }else{
-                    cell.HeadtitLabel.text = dataDic[@"FirstName"];
+                    cell.HeadtitLabel.text = dataDic[@"Name"];
 
                 }
             }
@@ -183,10 +187,14 @@
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"FirstName"]   isEqual: @""]) {
-                    cell.headtitLabel.text = @"空";
+                if ([dataDic[@"Name"]   isEqual: @""]) {
+                    if ([dataDic[@"FirstName"] isEqual:@""]) {
+                        cell.headtitLabel.text = @"空";
+                    }else{
+                        cell.headtitLabel.text = dataDic[@"FirstName"];
+                    }
                 }else{
-                    cell.headtitLabel.text = dataDic[@"FirstName"];
+                    cell.headtitLabel.text = dataDic[@"Name"];
                     
                 }
             }
@@ -215,10 +223,14 @@
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"FirstName"]   isEqual: @""]) {
-                    cell.headtitLabel.text = @"空";
+                if ([dataDic[@"Name"]   isEqual: @""]) {
+                    if ([dataDic[@"FirstName"] isEqual:@""]) {
+                        cell.headtitLabel.text = @"空";
+                    }else{
+                        cell.headtitLabel.text = dataDic[@"FirstName"];
+                    }
                 }else{
-                    cell.headtitLabel.text = dataDic[@"FirstName"];
+                    cell.headtitLabel.text = dataDic[@"Name"];
                     
                 }
             }
@@ -247,10 +259,15 @@
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.HeadtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"FirstName"]   isEqual: @""]) {
-                    cell.HeadtitLabel.text = @"空";
+                if ([dataDic[@"Name"]   isEqual: @""]) {
+                    if ([dataDic[@"FirstName"] isEqual:@""]) {
+                        cell.HeadtitLabel.text = @"空";
+                    }else{
+                        cell.HeadtitLabel.text = dataDic[@"FirstName"];
+                    }
+                    
                 }else{
-                    cell.HeadtitLabel.text = dataDic[@"FirstName"];
+                    cell.HeadtitLabel.text = dataDic[@"Name"];
                     
                 }
             }
