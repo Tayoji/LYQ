@@ -93,15 +93,23 @@
     cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
     NSLog(@"text = %@", self.dataSource);
     
-    if (_currentIndex == indexPath.row) {
+    if (!self.tip.length) {
+      if (_currentIndex == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
+      }
     }
     
     return cell;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.tip.length) {
+        return 30;
+    }else{
+        return 45;
+    }
+}
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

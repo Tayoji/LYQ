@@ -11,4 +11,5 @@
 @interface ProductRecommendViewController : SKViewController
 @property (nonatomic, copy)NSString * pushId;
 @property (nonatomic, assign)NSInteger pushIdNum;
+@property (nonatomic, copy)NSString *markProductId;
 @end

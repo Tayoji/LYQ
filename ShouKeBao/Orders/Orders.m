@@ -107,7 +107,8 @@ typedef void (^ChangeFrameBlock)();
 @property (nonatomic,strong) InvoiceAlertView *invoiceAlert;//提示弹框
 @property (nonatomic) NSInteger FirstOpenNav;
 
-@property (nonatomic,strong) NSMutableArray *stateArr;
+@property (nonatomic,strong) NSArray *stateArr;
+@property (nonatomic, assign)CGFloat currentY;
 @end
 
 @implementation Orders
@@ -117,7 +118,12 @@ typedef void (^ChangeFrameBlock)();
     [super viewDidLoad];
     
 //    self.stateArr = @[@"确认单", @"投诉", @"申请合同", @"申请退款"];
-    self.stateArr = [NSMutableArray arrayWithObjects:@"确认单", @"投诉", @"申请合同", @"申请退款", nil];
+//    self.stateArr = [NSMutableArray arrayWithObjects:@"确认单", @"投诉", @"申请合同", @"申请退款", nil];
+    self.stateArr = @[@{@"Text":@"确认单"},
+                         @{@"Text":@"投诉"},
+                         @{@"Text":@"申请合同"},
+                         @{@"Text":@"申请退款"}];
+    
     self.navigationItem.leftBarButtonItem = nil;
     self.title = @"理订单";
     [self.dataArr removeAllObjects];// 进来时清空数组 心情舒畅些
@@ -856,9 +862,9 @@ typedef void (^ChangeFrameBlock)();
     }
     return _searchDisplay;
 }
-- (NSMutableArray *)stateArr{
+- (NSArray *)stateArr{
     if (!_stateArr) {
-        _stateArr = [NSMutableArray array];
+        _stateArr = [NSArray array];
     }
     return _stateArr;
 }
@@ -866,19 +872,22 @@ typedef void (^ChangeFrameBlock)();
 #pragma mark - upAndDownBtnDelegate
 /**
  *  点击选择向下
+ 
  */
 - (void)DidMenumSelectDownBtn:(UIButton *)downBtn{
-//    CGRect frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3-35, 200,70, 30 *4);
-//    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:self.stateArr direct:0];
+    NSLog(@"down = %f", self.currentY);
+    CGRect frame = CGRectMake(downBtn.frame.size.width,2*self.currentY-40,90, 30*4);
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:(NSMutableArray *)self.stateArr direct:0 tip:@"100"];
     
 }
 
-- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct{
+- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip{
     self.qdmenu = [[QDMenu alloc] init];
     self.qdmenu.direct = direct;
     self.qdmenu.currentIndex = index;
     self.qdmenu.delegate = self;
     self.qdmenu.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
+    self.qdmenu.tip = tip;
     self.qdmenu.frame = frame;
     self.qdmenu.dataSource = dataSource;
     if (direct == 1) {
@@ -957,14 +966,17 @@ typedef void (^ChangeFrameBlock)();
     return  1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderCell *cell = [OrderCell cellWithTableView:tableView];
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
-    NSLog(@"%f",cell.frame.size.height);
+    NSLog(@"cell%f",cell.frame.size.height);
+    
+    self.currentY = cell.frame.origin.y - self.tableView.contentOffset.y;
+//   self.currentY = cell.frame.origin.y;
+    NSLog(@"self.current = %f %f %f", cell.frame.origin.y, cell.frame.size.height, cell.frame.origin.x);
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];

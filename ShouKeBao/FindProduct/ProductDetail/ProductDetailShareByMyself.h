@@ -27,6 +27,8 @@
 
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
+-(void)pushChoseCustomerView;
+-(void)closeBlackView;
 @end
 
 @interface ProductDetailShareByMyself : UIView
