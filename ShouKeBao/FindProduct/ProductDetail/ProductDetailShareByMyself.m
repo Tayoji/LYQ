@@ -17,7 +17,7 @@ static NSString * cellid = @"reuseaa";
 
 
 @interface ProductDetailShareByMyself()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-@property (nonatomic,strong) NSArray *photosArr;
+
 
 
 @end
@@ -29,15 +29,30 @@ static NSString * cellid = @"reuseaa";
     if (self) {
         [self setLayout];
         self.photosArr = [NSArray array];
-        self.photosArr = @[@{@"pic":@"iconfont-duanxin", @"title":@"专属客人"},
-                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-                           @{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"},
-                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"}
-                           ];
+     
+        
+//        if (self.shareInfo[@"ProductId"]) {
+//        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+//                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+//                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
+//                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+//                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+////                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
+//                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+//                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+//                           ];
+//        }else{
+//            self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+//                               @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+//                               @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
+//                               @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+//                               @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+//                               @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+//                               @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+//                               ];
+//   
+//            
+//        }
 
     }
     return self;
@@ -126,42 +141,45 @@ static NSString * cellid = @"reuseaa";
         id publishContent = self.publishContent;
         switch (indexPath.row) {
             case 0:{
-                shareType = ShareTypeOther;
-                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
-                    if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
-                        [_delegate notiPopUpBoxView];
-                    }
-                }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
-                    if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView)]) {
-                        [_delegate pushChoseCustomerView];
-                    }
-                }
-            }
+                shareType =  ShareTypeWeixiTimeline;            }
                 break;
             case 1:{
-                 shareType = ShareTypeQQSpace;
+                 shareType = ShareTypeWeixiSession;
             }
                 break;
             case 2:{
-                shareType =  ShareTypeQQ;
+                if (self.shareInfo[@"ProductId"]) {
+                    shareType = ShareTypeOther;
+                    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
+                        if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
+                            [_delegate notiPopUpBoxView];
+                        }
+                    }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
+                        if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView)]) {
+                            [_delegate pushChoseCustomerView];
+                        }
+                    }
+                }else{
+                    shareType = ShareTypeQQSpace;
+                }
             }
                 break;
             case 3:{
-                shareType =  ShareTypeWeixiSession;
+                shareType =  ShareTypeWeixiFav;
             }
                 break;
             case 4:{
-                shareType = ShareTypeWeixiTimeline;
+                shareType = ShareTypeQQ;
             }
-            case 5:{
-                shareType = ShareTypeWeixiFav;
-            }
+//            case 5:{
+//                shareType = ShareTypeQQSpace;
+//            }
                 break;
+            case 5:{
+                 shareType = ShareTypeSMS;
+            }
             case 6:{
                  shareType = ShareTypeCopy;
-            }
-            case 7:{
-                 shareType = ShareTypeSMS;
             }
                 break;
             default:

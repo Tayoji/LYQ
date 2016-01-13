@@ -148,6 +148,7 @@
         ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
         NSLog(@"%@", self.appUserID);
         customerDynamicVC.AppSkbUserId =self.AppSkbUserId;
+        customerDynamicVC.NaV = self.navigationController;
         customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;

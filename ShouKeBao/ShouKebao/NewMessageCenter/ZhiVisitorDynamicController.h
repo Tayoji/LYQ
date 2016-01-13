@@ -15,7 +15,7 @@ typedef enum{
 
 @property (assign, nonatomic) TheFromType visitorDynamicFromType;
 @property (strong, nonatomic) UITableView *tableView;
-
+@property (nonatomic, strong)UINavigationController *NaV;
 @property (nonatomic, strong) NSString * AppSkbUserId;
 
 

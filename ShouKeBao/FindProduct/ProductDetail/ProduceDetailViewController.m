@@ -48,9 +48,10 @@
 //FromProductSearch,
 //FromFindProduct,
 //FromHotProduct
-@property (nonatomic, strong)NSArray *photoArr;
+@property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
 @property (nonatomic, strong) ProductDetailShareByMyself *defineV;
+
 @end
 
 @implementation ProduceDetailViewController
@@ -58,11 +59,34 @@
     [super viewDidLoad];
     [self blackView];
     
-  
+    if (self.shareInfo[@"ProductId"]) {
+        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+                           ];
+    }else{
+        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+                           ];
+        
+        
+    }
+    
+    
+    if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
+        self.title = @"我的店铺二维码";
+    }
     
     self.coverView.hidden = YES;
-
-    
     if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"FromFindProductAll" attributes:dict];
@@ -720,6 +744,7 @@
    
     self.defineV.delegate = self;
     self.defineV.eventArray = self.eventArray;
+    self.defineV.photosArr = self.photosArr;
     self.defineV.URL = self.webView.request.URL.absoluteString;
     self.defineV.publishContent = publishContent;
     self.defineV.shareInfo = self.shareInfo;
@@ -765,6 +790,7 @@
 - (void)pushChoseCustomerView{
     [self closeBlackView];
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+//    selectVC.FromWhere = @"FromeProDetail";
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type
@@ -802,7 +828,12 @@
     }
     return _defineV;
 }
-
+- (NSArray *)photosArr{
+    if (!_photosArr) {
+        self.photosArr = [NSArray array];
+    }
+    return _photosArr;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

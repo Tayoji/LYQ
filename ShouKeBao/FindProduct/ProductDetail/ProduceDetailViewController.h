@@ -50,12 +50,16 @@ typedef enum{
 - (IBAction)cancleDefineBox:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *applyOpenVip;
 - (IBAction)applyForOpenVip:(id)sender;
-
+@property (nonatomic, copy)NSString *productId;
 
 
 
 -(void)shareIt:(id)sender;
 
 -(void)CancelLeaveShareBlock:(UINavigationController *)uinav;
-
+//轮播
+//@property (nonatomic, copy)NSString *CircleUrl;
+@property (nonatomic, strong)UINavigationController *naV;
+//专属App二维码
+@property (nonatomic, copy)NSString *formTypeExclusive;
 @end

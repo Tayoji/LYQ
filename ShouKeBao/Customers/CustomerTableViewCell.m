@@ -110,8 +110,11 @@
 }
 
 - (IBAction)clickIconToCustomerDetail:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:AppSkbUserId: name:)]) {
-        [_delegate pushCustomerDetailVC:self.model.ID AppSkbUserId:self.model.AppSkbUserId name:self.model.Name];
+//    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:AppSkbUserId: name: IsOpenIM:)]) {
+//        [_delegate pushCustomerDetailVC:self.model.ID AppSkbUserId:self.model.AppSkbUserId name:self.model.Name IsOpenIM:self.model.IsOpenIM];
+//    }
+    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:)]) {
+        [_delegate pushCustomerDetailVC:self.model];
     }
 }
 

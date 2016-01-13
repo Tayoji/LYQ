@@ -109,6 +109,7 @@ typedef void (^ChangeFrameBlock)();
 
 @property (nonatomic,strong) NSArray *stateArr;
 @property (nonatomic, assign)CGFloat currentY;
+@property (nonatomic, assign) CGRect ff;
 @end
 
 @implementation Orders
@@ -876,7 +877,7 @@ typedef void (^ChangeFrameBlock)();
  */
 - (void)DidMenumSelectDownBtn:(UIButton *)downBtn{
     NSLog(@"down = %f", self.currentY);
-    CGRect frame = CGRectMake(downBtn.frame.size.width,2*self.currentY-40,90, 30*4);
+    CGRect frame = CGRectMake(downBtn.frame.size.width, self.ff.origin.y-self.tableView.contentOffset.y-89+202,90, 30*4);
     [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:(NSMutableArray *)self.stateArr direct:0 tip:@"100"];
     
 }
@@ -973,10 +974,11 @@ typedef void (^ChangeFrameBlock)();
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
     NSLog(@"cell%f",cell.frame.size.height);
+    self.ff = [tableView rectForRowAtIndexPath:indexPath];
     
     self.currentY = cell.frame.origin.y - self.tableView.contentOffset.y;
-//   self.currentY = cell.frame.origin.y;
-    NSLog(@"self.current = %f %f %f", cell.frame.origin.y, cell.frame.size.height, cell.frame.origin.x);
+//    self.currentY = ff.origin.y-self.tableView.contentOffset.y;
+
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];

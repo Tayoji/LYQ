@@ -337,20 +337,19 @@
     }
     
     
-//    [self.buttonIcon setImage:[UIImage imageNamed:@"hongdian"] forState:UIControlStateNormal];
-    self.buttonIcon.backgroundColor = [UIColor redColor];
+    [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
     [self.bottomView addSubview:self.buttonIcon];
     
     
-    UIButton *moreB = [[UIButton alloc]init];
-    [self.bottomView addSubview:moreB];
-    self.moreBtn = moreB;
-    self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
-    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
-    [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
-    [self.bottomView addSubview:self.moreBtn];
-    [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *moreB = [[UIButton alloc]init];
+//    [self.bottomView addSubview:moreB];
+//    self.moreBtn = moreB;
+//    self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
+//    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
+//    [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+//    [self.bottomView addSubview:self.moreBtn];
+//    [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
 
 //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
     if (model.buttonList.count) {
