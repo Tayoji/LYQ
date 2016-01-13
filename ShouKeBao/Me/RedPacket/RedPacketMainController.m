@@ -59,10 +59,10 @@
 }
 
 - (IBAction)RPacketRuleBtn:(UIButton *)sender {
-    NSLog(@"红包规则");
+    NSLog(@"红包规则介绍");
     RuleWebViewController *cont = [[RuleWebViewController alloc] init];
-    cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyProduceNote";
-    cont.webTitle = @"红包生成说明";
+    cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyRule";
+    cont.webTitle = @"红包规则介绍";
 //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cont];
     [self.navigationController pushViewController:cont animated:YES];
 }

@@ -647,7 +647,7 @@
                 [cell.contentView addSubview:shouKeBaoL];
                 
                 
-                if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]) {
+                if (![[[NSUserDefaults standardUserDefaults]objectForKey:@"isFirstOpenExclusiveVC"]  isEqual: @"1"]) {
                     
                     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
@@ -655,7 +655,13 @@
                 }
                 
             }else if (indexPath.row == 4){
-                cell.imageView.image = [UIImage imageNamed:@"Mebill"];
+                if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveRedP"]) {
+                    UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
+                    imgView.image = [UIImage imageNamed:@"yaoqianshu"];
+                    [cell.contentView addSubview:imgView];
+                }
+
+                cell.imageView.image = [UIImage imageNamed:@"RedPacketIcon"];
 
 
             }else if (indexPath.row == 5){
@@ -786,6 +792,7 @@
                 
             }else if(indexPath.row == 4){
                 NSLog(@"点击红包");
+                [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstOpenExclusiveRedP"];
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
                     RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
                     [self.navigationController pushViewController:redPacket animated:YES];
