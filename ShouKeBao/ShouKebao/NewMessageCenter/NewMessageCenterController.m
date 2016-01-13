@@ -25,7 +25,7 @@
 #import "MobClick.h"
 #import "ServiceNotifiViewController.h"
 #import "ChoseListViewController.h"
-
+#import "MBProgressHUD+MJ.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
@@ -69,9 +69,11 @@
         return;
     }
     NSMutableDictionary * params = nil;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
         NSLog(@".... %@", json);
         if ([json[@"IsSuccess"]integerValue]) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             MessageCenterModel * platformModel =[[MessageCenterModel alloc]init];
             MessageCenterModel * customDynamic =[[MessageCenterModel alloc]init];
             MessageCenterModel *serviceNotiDynamic =[[MessageCenterModel alloc]init];
@@ -100,6 +102,7 @@
             [self.tableView reloadData];
         }
         } failure:^(NSError *eror) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 -(void)refreshDataSource

@@ -255,7 +255,7 @@
     [self setRightBarButton];
     
     
-   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
+//   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
 
     
     

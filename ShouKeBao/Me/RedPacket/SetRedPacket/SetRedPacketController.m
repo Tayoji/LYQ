@@ -13,6 +13,8 @@
 #import "MBProgressHUD.h"
 #import "EaseMob.h"
 #import "ChatSendHelper.h"
+#import "NewMessageCenterController.h"
+#import "APNSHelper.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
@@ -206,11 +208,11 @@
     [dic setValue:[NSString stringWithFormat:@"%f",self.RimN] forKey:@"NearbyTotalPrice"];
     [dic setValue:self.NumOfPeopleArr forKey:@"AppSkbUserList"];
     NSLog(@"%@",dic);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [IWHttpTool WMpostWithURL:@"/Customer/HairRedEnvelope" params:dic success:^(id json) {
         NSLog(@"----------红包返回列表%@---------",json);
         self.IDsdataArr = json[@"AppRedEnvelopeIdList"];//服务器返回的发红包数据
         [self performSelectorInBackground:@selector(sendRedPacket) withObject:nil];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
     } failure:^(NSError *error) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -246,12 +248,19 @@
         [[EaseMob sharedInstance].chatManager sendMessage:tempMessage progress:nil error:nil];
     }
     if (self.IDsdataArr.count == 1) {
-
+        [APNSHelper defaultAPNSHelper].isJumpChat = YES;
+        [APNSHelper defaultAPNSHelper].chatName = self.IDsdataArr[0][@"AppSkbUserId"];
+    }else if(self.IDsdataArr.count > 1){
+        [APNSHelper defaultAPNSHelper].isJumpChatList = YES;
     }
-
-    
+    [self performSelectorOnMainThread:@selector(pushInMainTheard) withObject:nil waitUntilDone:YES];
 }
+- (void)pushInMainTheard{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 
+}
 - (IBAction)GrantRPBtn:(UIButton *)sender {
     [self.view.window addSubview:self.backGroundView];
     [self.view.window addSubview:self.WarningView];

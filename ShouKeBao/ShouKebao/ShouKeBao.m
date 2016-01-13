@@ -84,6 +84,7 @@
 #import "APNSHelper.h"
 #import "ZhiVisitorDynamicController.h"
 #import "EaseMob.h"
+#import "ChatViewController.h"
 #import "CartoonView.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
@@ -364,8 +365,8 @@
 
     [WMAnimations WMAnimationMakeBoarderWithLayer:self.searchBtn.layer andBorderColor:[UIColor lightGrayColor] andBorderWidth:0.5 andNeedShadow:NO];
     
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thirdTouchPushScan:) name:@"3dTouchPushScan" object:nil];//3D Touch通知跳转二维码界面
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thirdTouchPushScan:) name:@"3dTouchPushScan" object:nil];//3D Touch通知跳转二维码界面
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpToMessageCenterOrChatVC:) name:@"jumpToMessageCenterOrChatVC" object:nil];
 //    [self.view addSubview:self.tableView];
     
     // 取出隐藏的数据 看下有没有过期的 有就去掉
@@ -511,6 +512,17 @@
     
         [self.navigationController pushViewController:scan animated:YES];
     }
+}
+- (void)jumpToChatList{//跳转至消息中心
+    NewMessageCenterController * NewVC2 = [[NewMessageCenterController alloc]init];
+    [self.navigationController pushViewController:NewVC2 animated:YES];
+}
+- (void)jumpToChat{//跳转至聊天界面
+    NewMessageCenterController * NewVC = [[NewMessageCenterController alloc]init];
+    [self.navigationController pushViewController:NewVC animated:NO];
+    
+    ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:[APNSHelper defaultAPNSHelper].chatName  conversationType:eConversationTypeChat];
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 //设置头部搜索与分站按钮
@@ -1090,6 +1102,14 @@
     self.navBarView.userInteractionEnabled = YES;
     if (self.isFromDowmload && self.isMustUpdate) {
         [self checkNewVerSion];
+    }
+    
+    if ([APNSHelper defaultAPNSHelper].isJumpChat) {
+        [APNSHelper defaultAPNSHelper].isJumpChat = NO;
+        [self jumpToChat];
+    }else if([APNSHelper defaultAPNSHelper].isJumpChatList){
+        [APNSHelper defaultAPNSHelper].isJumpChatList = NO;
+        [self jumpToChatList];
     }
 }
 

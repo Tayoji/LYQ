@@ -19,7 +19,8 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "VisitorDynamicNullView.h"
-
+#import "RedPacketMainController.h"
+#import "SetRedPacketController.h"
 #define pageSize @"10"
 //
 #define kScreenSize [UIScreen mainScreen].bounds.size
@@ -52,7 +53,6 @@
     [self.view addSubview:self.nullView];
     [self.view addSubview:self.backToTopBtn];
     self.backToTopBtn.hidden = NO;
-//    [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
     [self initPull];
 }
 -(NSMutableArray *)customDyamicArray{
@@ -100,6 +100,16 @@
             }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.tableView reloadData];
+
+//            if (self.customDyamicArray.count==0) {
+//                if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
+//                    [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
+//                }
+//            }else{
+//                [self.nullView hideNullViewFromView:self.view];
+//            }
+            [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
+
         }
     } failure:^(NSError * eror) {
     }];
@@ -234,11 +244,16 @@
 //空界面邀请按钮点击
 - (void)ClickInviteVisitor{
     NSLog(@"邀请");
+    
+    
 }
 
 //空界面发红包点击
 - (void)ClickSendRedPacket{
     NSLog(@"发红包");
+    SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.AppSkbUserId, nil];
+    [self.navigationController pushViewController:setRPacket animated:YES];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

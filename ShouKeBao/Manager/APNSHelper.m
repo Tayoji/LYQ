@@ -19,6 +19,9 @@
         apnsHelpers.isNeedOpenChat = NO;
         apnsHelpers.isHideCheckNewVertion = NO;
         apnsHelpers.dataStr = @"";
+        apnsHelpers.isJumpChat = NO;
+        apnsHelpers.isJumpChatList = NO;
+        apnsHelpers.chatName = @"";
     });
     return apnsHelpers;
 }
