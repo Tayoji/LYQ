@@ -39,9 +39,6 @@
 #define KHintAdjustY    50
 #import "EaseMob.h"
 #import "IEMChatFile.h"
-#import "UserInfoEditTableVC.h"
-#import "ProductDetailWebView.h"
-#import "ProductListWebView.h"
 #import "IWHttpTool.h"
 #import "CustomHeaderAndNickName.h"
 #import "LocationSeting.h"
@@ -50,7 +47,9 @@
 #import "EMChatCustomBubbleView.h"
 #import "FKRedPacketStateCell.h"
 #import "SetRedPacketController.h"
-
+#import "ProduceDetailViewController.h"
+#import "ProductModal.h"
+#import "MyRedPDetailController.h"
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
 {
     UIMenuController *_menuController;
@@ -792,35 +791,31 @@
     }else if ([eventName isEqualToString:kRouterEventChatHeadImageTapEventName]){
         [self chatHeaderIconPressed:model];
     }else if ([eventName isEqualToString:kRouterEventProductEventName]){//产品详情点击
-        [self productDetailClickWithUserInfo:userInfo];
+//        [self productDetailClickWithUserInfo:userInfo];
     }else if ([eventName isEqualToString:kRouterEventProductListEventName]){//更多产品
-        [self productListClickWithUserInfo:userInfo];
+//        [self productListClickWithUserInfo:userInfo];
     }else if ([eventName isEqualToString:kRouterEventSendProductEventName]){//点击产品链接
-        [self SendProductClickWithUrlStr:userInfo[@"URL"]];
+        [self SendProductClickWithUrlStr:userInfo[@"model"]];
     }else if ([eventName isEqualToString:kRouterEventOpenRedPacketEventName]){//点击查看红包
-        [self OpenRedpacketClickWURL:@""];
+        [self OpenRedpacketClickWURL:userInfo[@"URL"]];
     }
 }
 
-//TextCell中产品被点击
-- (void)productDetailClickWithUserInfo:(NSDictionary *)userInfo{
-    ProductDetailWebView * PDWV = [[ProductDetailWebView alloc]init];
-    PDWV.linkUrl = @"http://www.lvyouquan.cn/Product/SearchResult?key=%E4%BA%91%E5%8D%97&source=login";
-    [self.navigationController pushViewController:PDWV animated:YES];
-}
 
-//TextCell更多产品被点击
-- (void)productListClickWithUserInfo:(NSDictionary *)userInfo{
-    ProductListWebView * PLWV = [[ProductListWebView alloc]init];
-    PLWV.linkUrl = @"http://www.lvyouquan.cn";
-    [self.navigationController pushViewController:PLWV animated:YES];
-}
 //向顾问分享的产品被点击跳转页面
-- (void)SendProductClickWithUrlStr:(NSString *)ProductLinkUrl{
+- (void)SendProductClickWithUrlStr:(ProductModal *)model{
+    ProduceDetailViewController * ProductView = [[ProduceDetailViewController alloc]init];
+    ProductView.produceUrl = model.LinkUrlLyq;
+    ProductView.shareInfo = model.ShareInfo;
+    [self.navigationController pushViewController:ProductView animated:YES];
     NSLog(@"点击产品");
 }
 //红包点击事件
-- (void)OpenRedpacketClickWURL:(NSString *)URL{
+- (void)OpenRedpacketClickWURL:(MessageModel *)model{
+    NSString * redPacketID = model.message.ext[@"MsgValue"];
+    MyRedPDetailController * MyRedDetaile = [[MyRedPDetailController alloc]init];
+//    MyRedDetaile.alloc = redPacketID;
+    [self.navigationController pushViewController:MyRedDetaile animated:YES];
     NSLog(@"点击查看红包");
 }
 
@@ -829,11 +824,9 @@
     if (!model.isSender) {
         CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
         VC.customerID = @"";
-        VC.appUserID = self.chatter;
+        VC.AppSkbUserId = self.chatter;
         [self.navigationController pushViewController:VC animated:YES];
     }
-//    UserInfoEditTableVC * UIETVC = [[UserInfoEditTableVC alloc]init];
-//    [self.navigationController pushViewController:UIETVC animated:YES];
 }
 - (void)jumpCustomDetail{
     CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];

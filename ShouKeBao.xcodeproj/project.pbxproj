@@ -381,7 +381,6 @@
 		796EFC0A1BF5C5DE00799120 /* EMChatTextBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBDC1BF5C5DE00799120 /* EMChatTextBubbleView.m */; };
 		796EFC0B1BF5C5DE00799120 /* EMChatVideoBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBDE1BF5C5DE00799120 /* EMChatVideoBubbleView.m */; };
 		796EFC0C1BF5C5DE00799120 /* FKProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBE11BF5C5DE00799120 /* FKProductModel.m */; };
-		796EFC0D1BF5C5DE00799120 /* FKProductViewInTextBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBE31BF5C5DE00799120 /* FKProductViewInTextBubbleView.m */; };
 		796EFC0E1BF5C5DE00799120 /* EMChatTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBE51BF5C5DE00799120 /* EMChatTimeCell.m */; };
 		796EFC0F1BF5C5DE00799120 /* EMChatViewBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBE71BF5C5DE00799120 /* EMChatViewBaseCell.m */; };
 		796EFC101BF5C5DE00799120 /* EMChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBE91BF5C5DE00799120 /* EMChatViewCell.m */; };
@@ -390,10 +389,6 @@
 		796EFC131BF5C5DE00799120 /* MessageReadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBEF1BF5C5DE00799120 /* MessageReadManager.m */; };
 		796EFC141BF5C5DE00799120 /* RobotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBF11BF5C5DE00799120 /* RobotManager.m */; };
 		796EFC151BF5C5DE00799120 /* XHMessageTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBF31BF5C5DE00799120 /* XHMessageTextView.m */; };
-		796EFC161BF5C5DE00799120 /* EditNickNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBF51BF5C5DE00799120 /* EditNickNameVC.m */; };
-		796EFC171BF5C5DE00799120 /* EditPhoneNumberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBF71BF5C5DE00799120 /* EditPhoneNumberVC.m */; };
-		796EFC181BF5C5DE00799120 /* EditUserNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBF91BF5C5DE00799120 /* EditUserNameVC.m */; };
-		796EFC191BF5C5DE00799120 /* UserInfoEditTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFBFB1BF5C5DE00799120 /* UserInfoEditTableVC.m */; };
 		796EFCC41BF5C67D00799120 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 796EFC1C1BF5C67D00799120 /* chatListCellHead.png */; };
 		796EFCC51BF5C67D00799120 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 796EFC1D1BF5C67D00799120 /* chatListCellHead@2x.png */; };
 		796EFCC61BF5C67D00799120 /* chatFire_audioPlaying0.png in Resources */ = {isa = PBXBuildFile; fileRef = 796EFC201BF5C67D00799120 /* chatFire_audioPlaying0.png */; };
@@ -623,8 +618,6 @@
 		79D69BCF1BDDFE13006881DD /* DayDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D69BCD1BDDFE13006881DD /* DayDetailTableViewCell.m */; };
 		79D69BD01BDDFE13006881DD /* DayDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D69BCE1BDDFE13006881DD /* DayDetailTableViewCell.xib */; };
 		79D8D8211B2ACF2900AE4464 /* BeseWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D8201B2ACF2900AE4464 /* BeseWebView.m */; };
-		79DBC0311BFDED35008D6731 /* ProductDetailWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBC02E1BFDED35008D6731 /* ProductDetailWebView.m */; };
-		79DBC0321BFDED35008D6731 /* ProductListWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBC0301BFDED35008D6731 /* ProductListWebView.m */; };
 		79DF08B91C2E8F2700EB8FBA /* IMTopHeader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */; };
 		79DF08BA1C2E8F2700EB8FBA /* IMTopHeader@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */; };
 		79E132BE1C43827B00E96F0C /* FKSendRedPacketView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E132BD1C43827B00E96F0C /* FKSendRedPacketView.m */; };
@@ -1517,8 +1510,6 @@
 		796EFBDE1BF5C5DE00799120 /* EMChatVideoBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatVideoBubbleView.m; sourceTree = "<group>"; };
 		796EFBE01BF5C5DE00799120 /* FKProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKProductModel.h; sourceTree = "<group>"; };
 		796EFBE11BF5C5DE00799120 /* FKProductModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKProductModel.m; sourceTree = "<group>"; };
-		796EFBE21BF5C5DE00799120 /* FKProductViewInTextBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKProductViewInTextBubbleView.h; sourceTree = "<group>"; };
-		796EFBE31BF5C5DE00799120 /* FKProductViewInTextBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKProductViewInTextBubbleView.m; sourceTree = "<group>"; };
 		796EFBE41BF5C5DE00799120 /* EMChatTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatTimeCell.h; sourceTree = "<group>"; };
 		796EFBE51BF5C5DE00799120 /* EMChatTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMChatTimeCell.m; sourceTree = "<group>"; };
 		796EFBE61BF5C5DE00799120 /* EMChatViewBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMChatViewBaseCell.h; sourceTree = "<group>"; };
@@ -1535,14 +1526,6 @@
 		796EFBF11BF5C5DE00799120 /* RobotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotManager.m; sourceTree = "<group>"; };
 		796EFBF21BF5C5DE00799120 /* XHMessageTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XHMessageTextView.h; sourceTree = "<group>"; };
 		796EFBF31BF5C5DE00799120 /* XHMessageTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XHMessageTextView.m; sourceTree = "<group>"; };
-		796EFBF41BF5C5DE00799120 /* EditNickNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditNickNameVC.h; sourceTree = "<group>"; };
-		796EFBF51BF5C5DE00799120 /* EditNickNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNickNameVC.m; sourceTree = "<group>"; };
-		796EFBF61BF5C5DE00799120 /* EditPhoneNumberVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPhoneNumberVC.h; sourceTree = "<group>"; };
-		796EFBF71BF5C5DE00799120 /* EditPhoneNumberVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPhoneNumberVC.m; sourceTree = "<group>"; };
-		796EFBF81BF5C5DE00799120 /* EditUserNameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditUserNameVC.h; sourceTree = "<group>"; };
-		796EFBF91BF5C5DE00799120 /* EditUserNameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditUserNameVC.m; sourceTree = "<group>"; };
-		796EFBFA1BF5C5DE00799120 /* UserInfoEditTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoEditTableVC.h; sourceTree = "<group>"; };
-		796EFBFB1BF5C5DE00799120 /* UserInfoEditTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoEditTableVC.m; sourceTree = "<group>"; };
 		796EFC1C1BF5C67D00799120 /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		796EFC1D1BF5C67D00799120 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
 		796EFC201BF5C67D00799120 /* chatFire_audioPlaying0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatFire_audioPlaying0.png; sourceTree = "<group>"; };
@@ -1865,10 +1848,6 @@
 		79D69BCE1BDDFE13006881DD /* DayDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayDetailTableViewCell.xib; sourceTree = "<group>"; };
 		79D8D81F1B2ACF2900AE4464 /* BeseWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeseWebView.h; sourceTree = "<group>"; };
 		79D8D8201B2ACF2900AE4464 /* BeseWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeseWebView.m; sourceTree = "<group>"; };
-		79DBC02D1BFDED35008D6731 /* ProductDetailWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductDetailWebView.h; sourceTree = "<group>"; };
-		79DBC02E1BFDED35008D6731 /* ProductDetailWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductDetailWebView.m; sourceTree = "<group>"; };
-		79DBC02F1BFDED35008D6731 /* ProductListWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListWebView.h; sourceTree = "<group>"; };
-		79DBC0301BFDED35008D6731 /* ProductListWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListWebView.m; sourceTree = "<group>"; };
 		79DF08B71C2E8F2700EB8FBA /* IMTopHeader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@2x.png"; sourceTree = "<group>"; };
 		79DF08B81C2E8F2700EB8FBA /* IMTopHeader@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMTopHeader@3x.png"; sourceTree = "<group>"; };
 		79E132BC1C43827B00E96F0C /* FKSendRedPacketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKSendRedPacketView.h; sourceTree = "<group>"; };
@@ -3822,14 +3801,6 @@
 			children = (
 				796EFC1A1BF5C67D00799120 /* Resources */,
 				796EFBB61BF5C5DE00799120 /* ChatView */,
-				796EFBF41BF5C5DE00799120 /* EditNickNameVC.h */,
-				796EFBF51BF5C5DE00799120 /* EditNickNameVC.m */,
-				796EFBF61BF5C5DE00799120 /* EditPhoneNumberVC.h */,
-				796EFBF71BF5C5DE00799120 /* EditPhoneNumberVC.m */,
-				796EFBF81BF5C5DE00799120 /* EditUserNameVC.h */,
-				796EFBF91BF5C5DE00799120 /* EditUserNameVC.m */,
-				796EFBFA1BF5C5DE00799120 /* UserInfoEditTableVC.h */,
-				796EFBFB1BF5C5DE00799120 /* UserInfoEditTableVC.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -3837,20 +3808,20 @@
 		796EFBB61BF5C5DE00799120 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
-				796EFBB71BF5C5DE00799120 /* ChatSendHelper.h */,
-				796EFBB81BF5C5DE00799120 /* ChatSendHelper.m */,
-				796EFBB91BF5C5DE00799120 /* ChatViewController+Category.h */,
-				796EFBBA1BF5C5DE00799120 /* ChatViewController+Category.m */,
+				796EFBC11BF5C5DE00799120 /* MessageToolbar */,
+				796EFBD01BF5C5DE00799120 /* MessageView */,
 				796EFBBB1BF5C5DE00799120 /* ChatViewController.h */,
 				796EFBBC1BF5C5DE00799120 /* ChatViewController.m */,
+				796EFBB91BF5C5DE00799120 /* ChatViewController+Category.h */,
+				796EFBBA1BF5C5DE00799120 /* ChatViewController+Category.m */,
 				79FB4C661C0D91C2006D58C3 /* CustomHeaderAndNickName.h */,
 				79FB4C671C0D91C2006D58C3 /* CustomHeaderAndNickName.m */,
+				796EFBB71BF5C5DE00799120 /* ChatSendHelper.h */,
+				796EFBB81BF5C5DE00799120 /* ChatSendHelper.m */,
 				796EFBBD1BF5C5DE00799120 /* ConvertToCommonEmoticonsHelper.h */,
 				796EFBBE1BF5C5DE00799120 /* ConvertToCommonEmoticonsHelper.m */,
 				796EFBBF1BF5C5DE00799120 /* LocationViewController.h */,
 				796EFBC01BF5C5DE00799120 /* LocationViewController.m */,
-				796EFBC11BF5C5DE00799120 /* MessageToolbar */,
-				796EFBD01BF5C5DE00799120 /* MessageView */,
 				796EFBF01BF5C5DE00799120 /* RobotManager.h */,
 				796EFBF11BF5C5DE00799120 /* RobotManager.m */,
 				796EFBF21BF5C5DE00799120 /* XHMessageTextView.h */,
@@ -3911,10 +3882,6 @@
 		796EFBD01BF5C5DE00799120 /* MessageView */ = {
 			isa = PBXGroup;
 			children = (
-				79DBC02D1BFDED35008D6731 /* ProductDetailWebView.h */,
-				79DBC02E1BFDED35008D6731 /* ProductDetailWebView.m */,
-				79DBC02F1BFDED35008D6731 /* ProductListWebView.h */,
-				79DBC0301BFDED35008D6731 /* ProductListWebView.m */,
 				796EFBD11BF5C5DE00799120 /* ChatCell */,
 				796EFBEA1BF5C5DE00799120 /* MessageModel.h */,
 				796EFBEB1BF5C5DE00799120 /* MessageModel.m */,
@@ -3930,10 +3897,10 @@
 			isa = PBXGroup;
 			children = (
 				796EFBD21BF5C5DE00799120 /* ChatCellBubble */,
-				796EFBE41BF5C5DE00799120 /* EMChatTimeCell.h */,
-				796EFBE51BF5C5DE00799120 /* EMChatTimeCell.m */,
 				795ACD241C45058300C160F0 /* FKRedPacketStateCell.h */,
 				795ACD251C45058300C160F0 /* FKRedPacketStateCell.m */,
+				796EFBE41BF5C5DE00799120 /* EMChatTimeCell.h */,
+				796EFBE51BF5C5DE00799120 /* EMChatTimeCell.m */,
 				796EFBE81BF5C5DE00799120 /* EMChatViewCell.h */,
 				796EFBE91BF5C5DE00799120 /* EMChatViewCell.m */,
 				796EFBE61BF5C5DE00799120 /* EMChatViewBaseCell.h */,
@@ -3945,6 +3912,9 @@
 		796EFBD21BF5C5DE00799120 /* ChatCellBubble */ = {
 			isa = PBXGroup;
 			children = (
+				796EFBDF1BF5C5DE00799120 /* FKCustomViewInTextBubbleView */,
+				79E132C21C438DD300E96F0C /* EMChatCustomBubbleView.h */,
+				79E132C31C438DD300E96F0C /* EMChatCustomBubbleView.m */,
 				796EFBD31BF5C5DE00799120 /* EMChatAudioBubbleView.h */,
 				796EFBD41BF5C5DE00799120 /* EMChatAudioBubbleView.m */,
 				796EFBD51BF5C5DE00799120 /* EMChatBaseBubbleView.h */,
@@ -3957,9 +3927,6 @@
 				796EFBDC1BF5C5DE00799120 /* EMChatTextBubbleView.m */,
 				796EFBDD1BF5C5DE00799120 /* EMChatVideoBubbleView.h */,
 				796EFBDE1BF5C5DE00799120 /* EMChatVideoBubbleView.m */,
-				79E132C21C438DD300E96F0C /* EMChatCustomBubbleView.h */,
-				79E132C31C438DD300E96F0C /* EMChatCustomBubbleView.m */,
-				796EFBDF1BF5C5DE00799120 /* FKCustomViewInTextBubbleView */,
 			);
 			path = ChatCellBubble;
 			sourceTree = "<group>";
@@ -3969,8 +3936,6 @@
 			children = (
 				796EFBE01BF5C5DE00799120 /* FKProductModel.h */,
 				796EFBE11BF5C5DE00799120 /* FKProductModel.m */,
-				796EFBE21BF5C5DE00799120 /* FKProductViewInTextBubbleView.h */,
-				796EFBE31BF5C5DE00799120 /* FKProductViewInTextBubbleView.m */,
 				79E132BC1C43827B00E96F0C /* FKSendRedPacketView.h */,
 				79E132BD1C43827B00E96F0C /* FKSendRedPacketView.m */,
 				79E132BF1C4382AA00E96F0C /* FKReceiveProductLinkView.h */,
@@ -5540,7 +5505,6 @@
 				B3D7B7CC1BD76F700080E243 /* QRPhotoTableViewController.m in Sources */,
 				632BFFFB1AB92A3A003B15AD /* SDWebImagePrefetcher.m in Sources */,
 				B3B7A66E1BA6A25F0043DF7C /* CustomCell.m in Sources */,
-				796EFC191BF5C5DE00799120 /* UserInfoEditTableVC.m in Sources */,
 				5A52FC891ACEBF220076DAE6 /* DetailView.m in Sources */,
 				796EFB181BF5BCF100799120 /* EMAudioRecorderUtil.m in Sources */,
 				796EFC021BF5C5DE00799120 /* DXFaceView.m in Sources */,
@@ -5698,7 +5662,6 @@
 				5A52FC811ACEBF220076DAE6 /* CalendarViewController.m in Sources */,
 				796EFDC91BF5CA4E00799120 /* EMSDWebImagePrefetcher.m in Sources */,
 				796EFDC11BF5CA4E00799120 /* MWZoomingScrollView.m in Sources */,
-				796EFC171BF5C5DE00799120 /* EditPhoneNumberVC.m in Sources */,
 				796EFAFD1BF4D9B400799120 /* NSString+Valid.m in Sources */,
 				79FE7B351BD09EFD0057B56E /* AttachmentCollectionView.m in Sources */,
 				52983EB71C43900600025ECD /* MyRedPDetailController.m in Sources */,
@@ -5727,7 +5690,6 @@
 				796EFC011BF5C5DE00799120 /* DXMessageToolBar.m in Sources */,
 				526C19151C44E76E00551A0B /* NoRedPacketDetailCell.m in Sources */,
 				5A82161C1AD3843B009388DA /* HomeList.m in Sources */,
-				796EFC0D1BF5C5DE00799120 /* FKProductViewInTextBubbleView.m in Sources */,
 				7977912D1B6F121C0075CC70 /* MLTransitionAnimation.m in Sources */,
 				B3C01E251BAC10FC005E4BB5 /* ModifyPwdViewController.m in Sources */,
 				5A60FC7A1AE0FC6D00CDAC4B /* ArrowBtn.m in Sources */,
@@ -5735,7 +5697,6 @@
 				B3C01E2D1BAC10FC005E4BB5 /* MeHttpTool.m in Sources */,
 				6326131B1AB1C175003AC2DA /* MJRefreshBaseView.m in Sources */,
 				5AB7C9841ACBC9EA00217CAC /* QDActionSheet.m in Sources */,
-				796EFC161BF5C5DE00799120 /* EditNickNameVC.m in Sources */,
 				B3C01E2F1BAC10FC005E4BB5 /* Server.m in Sources */,
 				5A6165821AE79AEF00641837 /* NullContentView.m in Sources */,
 				796EFDD11BF5CA4E00799120 /* UIImageView+EMWebCache.m in Sources */,
@@ -5867,18 +5828,15 @@
 				5A4965CD1AD4F30E00233E5E /* Business.m in Sources */,
 				5AB725811AD68C5B0044B318 /* Recommend.m in Sources */,
 				796EFB001BF4DAE300799120 /* MessageModel2.m in Sources */,
-				796EFC181BF5C5DE00799120 /* EditUserNameVC.m in Sources */,
 				79E132C11C4382AA00E96F0C /* FKReceiveProductLinkView.m in Sources */,
 				7982F1581B33C6CB009F878D /* CityPlistTool.m in Sources */,
 				63F1A1B01B14250E00DE9867 /* MJMethod.m in Sources */,
-				79DBC0311BFDED35008D6731 /* ProductDetailWebView.m in Sources */,
 				5A52FC831ACEBF220076DAE6 /* ButtonList.m in Sources */,
 				79619B7A1BFB5FD60026BAFE /* CustomDynamicModel.m in Sources */,
 				632613211AB1C175003AC2DA /* UIView+MJExtension.m in Sources */,
 				5AED0A121ADB5C5400B0E0E5 /* DayDetailCell.m in Sources */,
 				633263D81AB851590021553B /* AFURLRequestSerialization.m in Sources */,
 				5A52FC601ACEBF220076DAE6 /* BindPhoneViewController.m in Sources */,
-				79DBC0321BFDED35008D6731 /* ProductListWebView.m in Sources */,
 				63B8C6FE1ACE906B00328C8C /* messageCell.m in Sources */,
 				796EFDD31BF5CA4E00799120 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				B3D7B7C31BD76F700080E243 /* IdentifyViewController.m in Sources */,
