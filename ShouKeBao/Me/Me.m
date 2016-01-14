@@ -647,7 +647,7 @@
                 [cell.contentView addSubview:shouKeBaoL];
                 
                 
-                if (![[[NSUserDefaults standardUserDefaults]objectForKey:@"isFirstOpenExclusiveVC"]  isEqual: @"1"]) {
+                if (![[[NSUserDefaults standardUserDefaults]objectForKey:@"isFirstOpenExclusiveVC"]  isEqual:@"1"]) {
                     
                     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
@@ -762,14 +762,15 @@
                 
 //                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
                 
-//不是第一次打开 &&已经开通专属App－－》 走数据界面
-                if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
+#pragma mark 不是第一次打开 &&已经开通专属App－－》 走数据界面
+                if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"isFirstOpenExclusiveVC"]  isEqual:@"1"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
                     
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
-                }else if(![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+                    
+                }else{
 
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
                         
@@ -788,7 +789,7 @@
                     }
                 }
                 
-                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+                [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"isFirstOpenExclusiveVC"];
                 
             }else if(indexPath.row == 4){
                 NSLog(@"点击红包");
