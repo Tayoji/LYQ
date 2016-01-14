@@ -175,7 +175,7 @@
         param = @{@"PageSize":pageSize,
                                 @"PageIndex":[NSString stringWithFormat:@"%ld",(long)pageNum],
                                 @"DateRangeType":@"1",
-//                  @"ProductId":[NSString stringWithFormat:@"%@", self.markProductId]
+                  @"ProductId":[NSString stringWithFormat:@"%@", self.markProductId]
                   };
         currentTagDic = self.todayTagDic;
     }else if([tableView isEqual:self.yestdayTableView]){

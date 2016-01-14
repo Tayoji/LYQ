@@ -272,9 +272,7 @@
         self.customerId = dic[@"ID"];
         CustomModel *customerDetail = [CustomModel modalWithDict:dic];
         [self.dataArr addObject:customerDetail];
-        [self setSubViews];
-        NSLog(@". %@. %@  %@", [self.dataArr[0]HearUrl], self.dataArr, [self.dataArr[0]Name]);
-        
+        [self setSubViews];        
         hudView.labelText = @"加载成功...";
         [hudView hide:YES afterDelay:0.4];
     } failure:^(NSError *error) {
@@ -288,17 +286,18 @@
     self.customerIcon = customerIm;
     
     self.customerIcon.layer.masksToBounds = YES;
-    self.customerIcon.layer.cornerRadius = 20;
+    self.customerIcon.layer.cornerRadius = 30;
     if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
-        self.customerIcon.image = [UIImage imageNamed:@"IDInform"];
+        self.customerIcon.image = [UIImage imageNamed:@"userB"];        
         UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
         [self.customerIcon.image drawAtPoint:CGPointZero];
          NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
         NSDictionary *dict = @{
-                               NSFontAttributeName:[UIFont systemFontOfSize:18],
-                               NSForegroundColorAttributeName:[UIColor redColor]
+                               NSFontAttributeName:[UIFont systemFontOfSize:70.0f],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]
                                };
-        [text drawAtPoint:CGPointMake(5, 5) withAttributes:dict];
+        NSLog(@"text =  %@", text);
+        [text drawAtPoint:CGPointMake(35, 30) withAttributes:dict];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         self.customerIcon.image = newImage;

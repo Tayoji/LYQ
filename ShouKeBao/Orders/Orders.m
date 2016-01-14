@@ -34,7 +34,7 @@
 #import "BaseClickAttribute.h"
 #import "NSString+FKTools.h"
 #import "InvoiceAlertView.h"
-
+#import "ButtonList.h"
 #import "MySubscribeController.h"//分享，临时用的
 #define pageSize 10
 #define searchDefaultPlaceholder @"订单号/产品名称/供应商名称"
@@ -110,6 +110,7 @@ typedef void (^ChangeFrameBlock)();
 @property (nonatomic,strong) NSArray *stateArr;
 @property (nonatomic, assign)CGFloat currentY;
 @property (nonatomic, assign) CGRect ff;
+@property (nonatomic, assign)CGFloat cellFrom;
 @end
 
 @implementation Orders
@@ -672,7 +673,7 @@ typedef void (^ChangeFrameBlock)();
 - (void)createMenuWithSelectedIndex:(NSInteger)SelectedIndex frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct
 {
     
-    NSLog(@"fffff");
+    NSLog(@"fffff %@", dataSource);
     self.qdmenu = [[QDMenu alloc] init];
     self.qdmenu.direct = direct;
     self.qdmenu.currentIndex = SelectedIndex;
@@ -717,7 +718,8 @@ typedef void (^ChangeFrameBlock)();
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if (touch.view == self.cover || touch.view == self.coverView) {
+    if (touch.view == self.cover || touch.view == self.coverView ) {
+//        [self removeMenuFunc];
         return YES;
     }
     return NO;
@@ -875,10 +877,16 @@ typedef void (^ChangeFrameBlock)();
  *  点击选择向下
  
  */
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn{
-    NSLog(@"down = %f", self.currentY);
-    CGRect frame = CGRectMake(downBtn.frame.size.width, self.ff.origin.y-self.tableView.contentOffset.y-89+202,90, 30*4);
-    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:(NSMutableArray *)self.stateArr direct:0 tip:@"100"];
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList{
+    NSLog(@"down = %f %f", self.currentY, CGRectGetMaxY(downBtn.frame));
+    
+//    cell.frame.origin.y - self.tableView.contentOffset.y;
+    
+//    CGRect frame = CGRectMake(/*downBtn.frame.size.width*/ CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202,90, 40*btnList.count);
+    
+    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202+20,90, 40*btnList.count);
+    
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100"];
     
 }
 
@@ -899,7 +907,6 @@ typedef void (^ChangeFrameBlock)();
         self.qdmenu.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(h * 0.5, w * 0.2, h * 0.5, w * 0.8)];
     }
     [self.coverView addSubview:self.qdmenu];
-    
     [self.view.window addSubview:self.coverView];
 }
 
@@ -927,28 +934,38 @@ typedef void (^ChangeFrameBlock)();
 }
 
 #pragma mark - QDMenuDelegate
-- (void)menu:(QDMenu *)menu didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-        self.isNUll = NO;
-        if (menu.direct == 0) {// 时间筛选
-        NSString *title = menu.dataSource[indexPath.row][@"Text"];
-        self.menuButton.leftBtn.text = title;
-        
-        self.choosedTime = menu.dataSource[indexPath.row][@"Value"];
-        [self removeMenuFunc];
-        self.LselectedIndex = indexPath.row;
-        [self.tableView headerBeginRefreshing];
+- (void)menu:(QDMenu *)menu didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    self.isNUll = NO;
     
-       
-    }else{// 状态筛选
-         NSString *title = menu.dataSource[indexPath.row][@"Text"];
-        self.menuButton.rightBtn.text = title;
-        
-        self.choosedStatus = menu.dataSource[indexPath.row][@"Value"];
-        [self removeMenuFunc];
-        self.RselectedIndex = indexPath.row;
-        
-        [self.tableView headerBeginRefreshing];
+    if (menu.tip.length) {
+        ButtonList *bb = menu.dataSource[indexPath.row];
+        ButtonDetailViewController *detail = [[ButtonDetailViewController alloc] init];
+        detail.linkUrl = bb.linkurl;
+        detail.title = bb.text;
+         [self removeMenuFunc];
+        [self.navigationController pushViewController:detail animated:YES];
+    }else{
+      
+        if (menu.direct == 0) {// 时间筛选
+            NSString *title = menu.dataSource[indexPath.row][@"Text"];
+            self.menuButton.leftBtn.text = title;
+            
+            self.choosedTime = menu.dataSource[indexPath.row][@"Value"];
+            [self removeMenuFunc];
+            self.LselectedIndex = indexPath.row;
+            [self.tableView headerBeginRefreshing];
+            
+            
+        }else{// 状态筛选
+            NSString *title = menu.dataSource[indexPath.row][@"Text"];
+            self.menuButton.rightBtn.text = title;
+            
+            self.choosedStatus = menu.dataSource[indexPath.row][@"Value"];
+            [self removeMenuFunc];
+            self.RselectedIndex = indexPath.row;
+            
+            [self.tableView headerBeginRefreshing];
+        }
     }
 }
 
@@ -975,10 +992,9 @@ typedef void (^ChangeFrameBlock)();
     cell.indexPath = indexPath;
     NSLog(@"cell%f",cell.frame.size.height);
     self.ff = [tableView rectForRowAtIndexPath:indexPath];
-    
+    self.cellFrom = cell.frame.size.height;
     self.currentY = cell.frame.origin.y - self.tableView.contentOffset.y;
-//    self.currentY = ff.origin.y-self.tableView.contentOffset.y;
-
+   
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];

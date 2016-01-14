@@ -47,7 +47,7 @@
         self.CreatedDate = dic[@"CreatedDate"];// 创建时间
         
         self.GoDate = dic[@"GoDate"];// 出发时间
-        
+        self.FromOrder = dic[@"FromOrder"];//显示标示
         self.Code = dic[@"Code"];// 订单编号
         
         self.DetailLinkUrl = dic[@"DetailLinkUrl"];
@@ -60,18 +60,35 @@
         
         //获取OrderId用于再次请求后台数据；
         self.OrderId = dic[@"OrderId"];
+        
         // 返回底部按钮组
+//        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
+//            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
+//            [self.buttonList addObject:btn];
+//        }
+        
+        
+        
         for (NSDictionary *dic2 in dic[@"ButtonList"]) {
             ButtonList *btn = [ButtonList buttonListWithDict:dic2];
             
-            if (![btn.color isEqual:[UIColor configureColorWithNum:1]]) {
+            if (![btn.color isEqual:[UIColor configureColorWithNum:1]] || [btn.text isEqualToString:@"订单催办"]) {//将一级现实放在数组外里
                 [self.buttonList addObject:btn];
             }else{
                  [self.btnList addObject:btn];
             }
         }
-        [self.buttonList addObject:self.btnList];
+        
+        if (self.btnList.count) {
+             [self.buttonList addObject:self.btnList];//将二级现实放在数组里作为一个元素
+        }
+        
         NSLog(@"... %@ ...%@", self.buttonList, self.btnList);
+        
+        
+        
+        
+        
     }
     return self;
 }

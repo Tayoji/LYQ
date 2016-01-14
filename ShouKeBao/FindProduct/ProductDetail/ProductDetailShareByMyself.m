@@ -141,10 +141,11 @@ static NSString * cellid = @"reuseaa";
         id publishContent = self.publishContent;
         switch (indexPath.row) {
             case 0:{
-                shareType =  ShareTypeWeixiTimeline;            }
+                shareType =  ShareTypeWeixiSession;
+            }
                 break;
             case 1:{
-                 shareType = ShareTypeWeixiSession;
+                 shareType = ShareTypeWeixiTimeline;
             }
                 break;
             case 2:{
@@ -159,6 +160,7 @@ static NSString * cellid = @"reuseaa";
                             [_delegate pushChoseCustomerView:self.shareInfo[@"IMProductMsgValue"]];
                         }
                     }
+                    
                 }else{
                     shareType = ShareTypeQQSpace;
                 }
@@ -171,13 +173,11 @@ static NSString * cellid = @"reuseaa";
             case 4:{
                 shareType = ShareTypeQQ;
             }
-//            case 5:{
-//                shareType = ShareTypeQQSpace;
-//            }
                 break;
             case 5:{
                  shareType = ShareTypeSMS;
             }
+                break;
             case 6:{
                  shareType = ShareTypeCopy;
             }

@@ -52,7 +52,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="daTu-1" id="gi8-lW-rMO">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detailC1" id="gi8-lW-rMO">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1746,7 +1746,7 @@
         <image name="bornDay" width="20" height="20"/>
         <image name="country" width="20" height="20"/>
         <image name="customTel" width="19" height="19"/>
-        <image name="daTu-1" width="156" height="372"/>
+        <image name="detailC1" width="639" height="145"/>
         <image name="dianhua" width="18" height="18"/>
         <image name="fujian" width="20" height="20"/>
         <image name="lygw" width="20" height="20"/>
