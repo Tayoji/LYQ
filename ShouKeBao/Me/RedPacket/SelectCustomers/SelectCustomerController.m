@@ -24,7 +24,7 @@
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UIView *lowView;
-@property (nonatomic,strong) UIButton *AllSelectedBtn;
+//@property (nonatomic,strong) UIButton *AllSelectedBtn;
 @property (nonatomic,strong) UIButton *determineBtn;
 @property (nonatomic,assign) int pageIndex;// 当前页
 @property (nonatomic,copy) NSString *totalCount;
@@ -65,7 +65,7 @@
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
     //浮动图
-    [self.lowView addSubview:self.AllSelectedBtn];
+//    [self.lowView addSubview:self.AllSelectedBtn];
     [self.lowView addSubview:self.determineBtn];
     [self.view addSubview:self.lowView];
     
@@ -79,16 +79,16 @@
         //设置文字
         self.tableView.headerPullToRefreshText = @"下拉刷新";
         self.tableView.headerRefreshingText = @"正在刷新中";
-        
+    
         self.tableView.footerPullToRefreshText = @"上拉刷新";
         self.tableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headRefresh
 {
     if (self.isRefresh) {
-        [self.SELCustomerArr removeAllObjects];
-        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
-        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+//        [self.SELCustomerArr removeAllObjects];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+//        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
         self.isRefresh = NO;
         self.searchK = @"";
         self.pageIndex = 1;
@@ -119,9 +119,9 @@
             [self.dataArr removeAllObjects];
             self.isRefresh = YES;
             [self.SELCustomerArr removeAllObjects];
-            [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+            [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         }
-        if (arrs.count == 0){
+        if (arrs.count == 0 && self.dataArr.count == 0){
             self.nullView.alpha = 1;
         }else{
             self.nullView.alpha = 0;
@@ -165,7 +165,8 @@
     CustomModel *model = self.dataArr[indexPath.row];
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
-    if ([model.HearUrl  isEqual: @""]) {
+    NSLog(@"%@",model.Mobile);
+    if (!model.HearUrl) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
     }else{
@@ -182,24 +183,30 @@
     }
     CustomModel *model = self.dataArr[indexPath.row];
     [self.SELCustomerArr removeObject:model.AppSkbUserId];
-    [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
-    if (self.SELCustomerArr.count < self.dataArr.count) {
-        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
-        _isAll = NO;
-    }
+    [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+//    if (self.SELCustomerArr.count < self.dataArr.count) {
+//        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+//        _isAll = NO;
+//    }
 
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView.tag == 010) {
         return;
     }
-    CustomModel *model = self.dataArr[indexPath.row];
-    [self.SELCustomerArr addObject:model.AppSkbUserId];
-    [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
-    if (self.SELCustomerArr.count == self.dataArr.count) {
-        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
-        _isAll = YES;
+    if (self.SELCustomerArr.count != 8) {
+        CustomModel *model = self.dataArr[indexPath.row];
+        [self.SELCustomerArr addObject:model.AppSkbUserId];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+    }else{
+        UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+        cell.selected = NO;
     }
+    
+//    if (self.SELCustomerArr.count == self.dataArr.count) {
+//        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
+//        _isAll = YES;
+//    }
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -308,7 +315,7 @@
         
     }else if(button.tag == 102){//全选
         if (_isAll) {
-            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+//            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
             [self.SELCustomerArr removeAllObjects];
             for (NSInteger i = 0; i<self.dataArr.count; i++) {
                 NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
@@ -318,7 +325,7 @@
             NSLog(@"---%ld",self.SELCustomerArr.count);
             _isAll = NO;
         }else{
-            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
+//            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
             [self.SELCustomerArr removeAllObjects];
             for (NSInteger i = 0; i<self.dataArr.count; i++) {
                 CustomModel *model = self.dataArr[i];
@@ -331,7 +338,7 @@
             _isAll = YES;
 
         }
-        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
 
     }else if(button.tag == 105){
         
@@ -357,20 +364,20 @@
     }
     return _dataArr;
 }
--(UIButton *)AllSelectedBtn{
-    if (!_AllSelectedBtn) {
-        _AllSelectedBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 2, 80, 40)];
-        [_AllSelectedBtn setTitle:@"全选" forState:UIControlStateNormal];
-//        _AllSelectedBtn.titleLabel.font = [UIFont systemFontOfSize:1];
-        [_AllSelectedBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
-        [_AllSelectedBtn setTitleColor:[UIColor colorWithRed:65.0/255.0 green:121.0/255.0 blue:253.0/255.0 alpha:1] forState:UIControlStateNormal];
-        _AllSelectedBtn.tag = 102;
-        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
-        [_AllSelectedBtn setImageEdgeInsets:UIEdgeInsetsMake(8, 0, 8,55)];
-        [_AllSelectedBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _AllSelectedBtn;
-}
+//-(UIButton *)AllSelectedBtn{
+//    if (!_AllSelectedBtn) {
+//        _AllSelectedBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 2, 80, 40)];
+//        [_AllSelectedBtn setTitle:@"全选" forState:UIControlStateNormal];
+////        _AllSelectedBtn.titleLabel.font = [UIFont systemFontOfSize:1];
+//        [_AllSelectedBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+//        [_AllSelectedBtn setTitleColor:[UIColor colorWithRed:65.0/255.0 green:121.0/255.0 blue:253.0/255.0 alpha:1] forState:UIControlStateNormal];
+//        _AllSelectedBtn.tag = 102;
+//        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
+//        [_AllSelectedBtn setImageEdgeInsets:UIEdgeInsetsMake(8, 0, 8,55)];
+//        [_AllSelectedBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//    return _AllSelectedBtn;
+//}
 -(UIView *)lowView{
     if (!_lowView) {
         _lowView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height-60-50, kScreenSize.width, 50)];
@@ -381,7 +388,7 @@
 -(UIButton *)determineBtn{
     if (!_determineBtn) {
         _determineBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width-80, 2, 80, 40)];
-        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         [_determineBtn setTitleColor:[UIColor colorWithRed:65.0/255.0 green:121.0/255.0 blue:253.0/255.0 alpha:1] forState:UIControlStateNormal];
         _determineBtn.tag = 101;
         [_determineBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];

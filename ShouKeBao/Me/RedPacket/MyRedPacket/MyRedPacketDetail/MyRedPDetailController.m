@@ -55,7 +55,7 @@
     self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",self.lastData[@"PriceTotal"]];
     self.LuckContentLabel.text = self.lastData[@"LuckContent"];
     self.DateTimeLabel.text = self.lastData[@"DateTime"];
-    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"UnGetCount"],self.lastData[@"GetCount"]];
+    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"GetCount"],self.lastData[@"UnGetCount"]];
     [self loadDataSource];
     [self.view addSubview:self.tableView];
     [self iniHeader];
@@ -76,7 +76,6 @@
 -(void)headRefresh
 {
     if (self.isRefresh) {
-        [self.cellDataArr removeAllObjects];
         self.isRefresh = NO;
         self.pageIndex = 1;
         [self  loadDataSource];
@@ -85,13 +84,8 @@
 }
 -(void)footRefresh
 {
-    if (self.isRefresh) {
         self.pageIndex ++;
         [self loadDataSource];
-        self.isRefresh = NO;
-    }
-    
-    
 }
 
 -(void)loadDataSource{
@@ -107,6 +101,8 @@
         
         if (!self.isRefresh) {
             self.isRefresh = YES;
+            [self.cellDataArr removeAllObjects];
+
         }
         self.DescribeLabel.text = json[@"Title"];//红包描述
         self.OutLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutLuckMoneyCount"] ];//出境游

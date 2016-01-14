@@ -289,7 +289,7 @@
     
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
-    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]) {
+    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
         self.customerIcon.image = [UIImage imageNamed:@"IDInform"];
         UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
         [self.customerIcon.image drawAtPoint:CGPointZero];
