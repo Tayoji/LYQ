@@ -44,19 +44,22 @@
 
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
-    self.customerIcon.backgroundColor = [UIColor orangeColor];
     
+    NSString *hearUrl = [NSString stringWithFormat:@"%@", model.HearUrl];
+     NSLog(@"..hearUrl = %@ %@ %ld", hearUrl, model.HearUrl, hearUrl.length);
     
-    if ([[NSString stringWithFormat:@"%@", model.HearUrl] isEqualToString:@""]) {
-        
+    if (hearUrl.length != 0) {
+          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+    }else{
+        self.customerIcon.backgroundColor = [UIColor orangeColor];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
         NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:a];
         [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 1)];
         [aa addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 1)];
         [self.customerIcon1 setAttributedTitle:aa forState:UIControlStateNormal];
-    }else{
         
-        [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+        NSLog(@"..aa = %@", aa);
+      
     }
     self.nameL.text = model.Name;
 

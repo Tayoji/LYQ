@@ -762,15 +762,14 @@
                 
 //                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
                 
-#pragma mark---等级为2000以上 && 不是第一次打开 &&已经开通专属App－－》 走数据界面
-
+//不是第一次打开 &&已经开通专属App－－》 走数据界面
                 if (/*[level intValue] > 2000 &&*/ [[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
                     
                     ExclusiveViewController *exclusiveAPPVC = [[ExclusiveViewController alloc]init];
                     exclusiveAPPVC.title = @"专属APP";
                     exclusiveAPPVC.ConsultanShareInfo = self.ConsultanShareInfo;
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
-                }else{
+                }else if(![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveVC"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
 
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
                         
@@ -779,7 +778,7 @@
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
                         
-                    }else if([self.IsOpenConsultantApp isEqualToString:@"0"]||[[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+                    }else{
                         
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
@@ -788,6 +787,7 @@
                         
                     }
                 }
+                
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
                 
             }else if(indexPath.row == 4){

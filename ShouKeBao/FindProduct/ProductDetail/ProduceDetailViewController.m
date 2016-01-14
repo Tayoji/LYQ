@@ -59,7 +59,7 @@
     [super viewDidLoad];
     [self blackView];
     
-    if (self.shareInfo[@"ProductId"]) {
+    if (self.shareInfo[@"IMProductMsgValue"]) {
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
                            @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
                            @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
