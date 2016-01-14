@@ -11,6 +11,6 @@
 @interface ChoseListViewController : SKViewController
 @property (weak, nonatomic) IBOutlet UILabel *timeTip;
 @property (weak, nonatomic) IBOutlet UITableView *choseTableView;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *backGroundView;
 
 @end

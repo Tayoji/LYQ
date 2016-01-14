@@ -19,7 +19,7 @@
 
 @protocol upAndDownBtnDelegate <NSObject>
 - (void)didMenumSelectUpBtn:(UIButton *)upBtn;
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn;
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList;
 @end
 
 @interface OrderCell : MGSwipeTableCell

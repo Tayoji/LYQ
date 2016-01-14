@@ -48,7 +48,7 @@
     if (model.HearUrl.length != 0) {
           [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
     }else{
-        self.customerIcon.backgroundColor = [UIColor orangeColor];
+        self.customerIcon.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
         NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:a];
         [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 1)];

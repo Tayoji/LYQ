@@ -38,9 +38,10 @@
     // Do any additional setup after loading the view from its nib.
     
     [self choseTableView];
-     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, /*self.choseTableView.frame.size.height*/1200 + 50);
-    _choseTableView.frame = CGRectMake(10, 50, self.view.frame.size.width-20, _scrollView.contentSize.height-50);
-    _choseTableView.scrollEnabled = NO;
+//     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, /*self.choseTableView.frame.size.height*/1200 + 50);
+//    _choseTableView.frame = CGRectMake(10, 50, self.view.frame.size.width-20, _scrollView.contentSize.height-50);
+//    _choseTableView.scrollEnabled = NO;
+    
     _choseTableView.tableHeaderView = _choseView;
     [self initPull];
     
@@ -201,5 +202,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)setBackGroundView:(UIView *)backGroundView{
+    _backGroundView = backGroundView;
+//    _backGroundView.backgroundColor = [UIColor colorWithRed:235.0/225.0f green:235.0/225.0f blue:235.0/225.0f alpha:1];
+}
 @end

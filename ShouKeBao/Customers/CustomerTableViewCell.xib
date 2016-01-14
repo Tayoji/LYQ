@@ -71,7 +71,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WgT-1F-Vom">
                         <rect key="frame" x="290" y="0.0" width="30" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                        <state key="normal" title="跳转" image="SNotificationJiantou"/>
+                        <state key="normal" image="SNotificationJiantou"/>
                         <connections>
                             <action selector="clickIconToCustomerDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uK0-Y4-W1V"/>
                         </connections>

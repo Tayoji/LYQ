@@ -31,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    detailC
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"userNS"]forBarMetrics:UIBarMetricsDefault];
+    
     [self setNavSegementView];
     [self customerRightBarItem];
     [self setNavBack];

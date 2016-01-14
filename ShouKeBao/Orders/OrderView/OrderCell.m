@@ -336,29 +336,40 @@
         [view removeFromSuperview];
     }
     
-    
+    if ([model.FromOrder integerValue] == 1) {
     [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
     [self.bottomView addSubview:self.buttonIcon];
-    
-    
-//    UIButton *moreB = [[UIButton alloc]init];
-//    [self.bottomView addSubview:moreB];
-//    self.moreBtn = moreB;
-//    self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
-//    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//    [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
-//    [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
-//    [self.bottomView addSubview:self.moreBtn];
-//    [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
+    }
 
 //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
-    NSLog(@"count..%d", (int)model.buttonList.count);
+//    if (model.buttonList.count) {
+//        for (int i = (int)model.buttonList.count-1;i > -1; i--) {
+//            ButtonList * btn = [model.buttonList objectAtIndex:i];
+//            LinkButton *b = [[LinkButton alloc] init];
+//            [b setBackgroundImage:[UIImage imageNamed:@"lightgraybg"] forState:UIControlStateHighlighted];
+//            b.titleLabel.font = [UIFont systemFontOfSize:14];
+//            [b setTitle:btn.text forState:UIControlStateNormal];
+//            [b setTitleColor:btn.color forState:UIControlStateNormal];
+//            b.layer.borderWidth = 1;
+//            b.layer.cornerRadius = 3;
+//            b.layer.borderColor = btn.color.CGColor;
+//            b.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+//            b.linkUrl = btn.linkurl;
+//            b.text = btn.text;
+//            [b addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+//            [self.bottomView addSubview:b];
+//            [self.buttonArr addObject:b];
+//        }
+
+    NSLog(@"model.buttonList  %@", model.buttonList);
     if (model.buttonList.count) {
-        //        for (ButtonList *btn in model.buttonList) {
         for (int i = (int)model.buttonList.count-1;i > -1; i--) {
             
-            if (i != (int)model.buttonList.count-1) {
+            if (model.btnList.count != 0 && model.buttonList.count-1 == i) {
+        
+                [self setMoreBtnStyle];
                 
+            }else{
                 ButtonList * btn = [model.buttonList objectAtIndex:i];
                 LinkButton *b = [[LinkButton alloc] init];
                 [b setBackgroundImage:[UIImage imageNamed:@"lightgraybg"] forState:UIControlStateHighlighted];
@@ -374,30 +385,16 @@
                 [b addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
                 [self.bottomView addSubview:b];
                 [self.buttonArr addObject:b];
-                
-            }else{
-                
-                UIButton *moreB = [[UIButton alloc]init];
-                [self.bottomView addSubview:moreB];
-                self.moreBtn = moreB;
-                self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
-                [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
-                [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
-                [self.bottomView addSubview:self.moreBtn];
-                [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
-                
-                
             }
+            
 //            [self.buttonArr addObject:self.moreBtn];
-            NSLog(@".... %ld", self.buttonArr.count);
             
         }
               [self layoutButtons];
         
     }else{
   
-        NSLog(@"2 model.buttonList.count = %ld", model.buttonList.count);
+        NSLog(@"2 model.buttonList.count = %d", model.buttonList.count);
 
         CGFloat x = [UIScreen mainScreen].bounds.size.width - 90 - gap;
         UILabel *doneLab = [[UILabel alloc] initWithFrame:CGRectMake(x, 5, 90, 25)];
@@ -412,14 +409,31 @@
    
 
 }
+- (void)setMoreBtnStyle{
+    UIButton *moreB = [[UIButton alloc]init];
+    [self.bottomView addSubview:moreB];
+    self.moreBtn = moreB;
+    if (_model.buttonList.count == 1) {
+       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-50, 0, 40, 40);
+    }else{
+      self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
 
+    }
+        [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
+    [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
+    [self.bottomView addSubview:self.moreBtn];
+    [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
+}
 - (void)meunmView:(UIButton *)down{
-    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:)]) {
-        [_upAndDownDelegate DidMenumSelectDownBtn:down];
+    NSLog(@"btnList... %@", _model.btnList);
+    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:)]) {
+        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList];
         
-    }else if(_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(didMenumSelectUpBtn:)]){
-            [_upAndDownDelegate didMenumSelectUpBtn:down];
-        }
+    }
+//    else if(_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(didMenumSelectUpBtn:)]){
+//            [_upAndDownDelegate didMenumSelectUpBtn:down];
+//        }
     
    
    

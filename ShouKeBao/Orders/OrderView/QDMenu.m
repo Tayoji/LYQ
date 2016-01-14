@@ -10,6 +10,7 @@
 #import "UIImage+QD.h"
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
+#import "ButtonList.h"
 @interface QDMenu() <UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -37,7 +38,11 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         _tableView.separatorInset = UIEdgeInsetsMake(0, -67, 0, 0);
-        _tableView.rowHeight = 45;
+//        if (self.tip.length) {
+//           _tableView.rowHeight = 40;
+//        }else{
+//           _tableView.rowHeight = 45;
+//        }
         _tableView.dataSource = self;
         _tableView.delegate = self;
     }
@@ -76,6 +81,7 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"...%d", self.dataSource.count);
     return self.dataSource.count;
 }
 
@@ -90,22 +96,32 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.tintColor = [UIColor colorWithRed:249/255.0 green:132/255.0 blue:12/255.0 alpha:1];
     }
-    cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
+    
+//    cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
+    
+
+
     NSLog(@"text = %@", self.dataSource);
     
     if (!self.tip.length) {
-      if (_currentIndex == indexPath.row) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-      }
+        if (_currentIndex == indexPath.row) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
+        
+    }else{
+        ButtonList *bb = self.dataSource[indexPath.row];
+        cell.textLabel.text = bb.text;
+        
     }
     
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.tip.length) {
-        return 30;
+        return 40;
     }else{
         return 45;
     }
