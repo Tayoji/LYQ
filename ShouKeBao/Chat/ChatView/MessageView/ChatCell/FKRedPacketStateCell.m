@@ -7,7 +7,7 @@
 //
 
 #import "FKRedPacketStateCell.h"
-
+#import "NSString+FKTools.h"
 @interface FKRedPacketStateCell()
 
 @property (nonatomic, strong)UIView * grayBackgroundView;
@@ -66,13 +66,11 @@
 {
     [super layoutSubviews];
     self.grayBackgroundView.frame = self.bounds;
-    self.grayBackgroundView.frame = CGRectInset(self.grayBackgroundView.frame, ([UIScreen mainScreen].bounds.size.width - 200)/2.0,0);
+    self.grayBackgroundView.frame = CGRectInset(self.grayBackgroundView.frame, ([UIScreen mainScreen].bounds.size.width - [self.stateMsg widthWithsysFont:14] - 50)/2.0,7.5);
+    self.stateMsgLab.frame = CGRectMake(0, 2, [self.stateMsg widthWithsysFont:14], 25);
+    self.stateMsgLab.center = CGPointMake(self.grayBackgroundView.center.x + 10, self.grayBackgroundView.center.y) ;
     
-    
-    self.stateMsgLab.frame = CGRectMake(0, 2, 150, 25);
-    self.stateMsgLab.center = self.grayBackgroundView.center;
-    
-    self.iconImage.frame = CGRectMake(CGRectGetMinX(self.stateMsgLab.frame)-15, 4, 15, 17);
+    self.iconImage.frame = CGRectMake(CGRectGetMinX(self.stateMsgLab.frame)-20, 11.5, 15, 17);
     
 }
 @end

@@ -94,7 +94,7 @@
     self.title = @"我";
     self.tableView.rowHeight = 50;
     //self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树",@"发票管理"],@[@"账号安全设置"],@[@"勿扰模式",@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
-    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树", @"专属APP",@"红包",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
+    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"圈付宝",@"摇钱树",@"专属APP", @"红包",@"我的旅行社",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *loginType = [def objectForKey:@"LoginType"];
     self.isPerson = [loginType integerValue] != 1;
@@ -606,18 +606,12 @@
         case 1://第二个分区
             /*if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"lygw"];
-            }else */if(indexPath.row == 0){
-                if (self.isPerson) {
-                    cell.imageView.image = [UIImage imageNamed:@"wodelvxingshe"];
-                }else{
-                    cell.textLabel.text = nil;
-                    cell.accessoryType = UITableViewCellAccessoryNone;
-                }
-
-            }else if(indexPath.row == 1){
+            }else */
+            if(indexPath.row == 0){
                 cell.imageView.image = [UIImage imageNamed:@"money"];
+            }else if(indexPath.row == 1){
+               
 
-            }else if(indexPath.row == 2){
                 /**
                  * *摇钱树图片设置
                  **/
@@ -628,18 +622,20 @@
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
-            }else if(indexPath.row == 3){
+            }else if(indexPath.row == 2){
+            
+                
                 cell.imageView.image = [UIImage imageNamed:@"vip"];
                 UILabel *shouKeBaoL;
-               if (kScreenSize.width == 320) {
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/3-10, 0, 100, 50)];
-               }else if (kScreenSize.width == 375) {
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
-               }else{
-                   shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
-               }
+                if (kScreenSize.width == 320) {
+                    shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/3-10, 0, 100, 50)];
+                }else if (kScreenSize.width == 375) {
+                    shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
+                }else{
+                    shouKeBaoL = [[UILabel alloc]initWithFrame:CGRectMake(kScreenSize.width/4 + 5, 0, 100, 50)];
+                }
                 NSLog(@"...%f", [UIScreen mainScreen].bounds.size.width);
-               
+                
                 shouKeBaoL.text = @"收客宝2.0";
                 shouKeBaoL.textColor = [UIColor grayColor];
                 shouKeBaoL.textAlignment = NSTextAlignmentCenter;
@@ -653,16 +649,26 @@
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
+            }else if(indexPath.row == 3){
                 
-            }else if (indexPath.row == 4){
                 if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveRedP"]) {
                     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
-
+                
                 cell.imageView.image = [UIImage imageNamed:@"RedPacketIcon"];
+                
+            }else if (indexPath.row == 4){
+               
 
+
+                if (self.isPerson) {
+                    cell.imageView.image = [UIImage imageNamed:@"wodelvxingshe"];
+                }else{
+                    cell.textLabel.text = nil;
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
 
             }else if (indexPath.row == 5){
                 cell.imageView.image = [UIImage imageNamed:@"Mebill"];
@@ -733,34 +739,28 @@
                TravelConsultantViewControllerNoShare * TCTVC = [sb instantiateViewControllerWithIdentifier:@"TravelConsultantVCNS"];
                [self.navigationController pushViewController:TCTVC animated:YES];
            }else */if(indexPath.row == 0){
-                MyOrgViewController *myOrg = [sb instantiateViewControllerWithIdentifier:@"MyOrg"];
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"MeOrgViewClick" attributes:dict];
-                
-                [self.navigationController pushViewController:myOrg animated:YES];
+               // 圈付宝
+               QuanViewController *quan = [[QuanViewController alloc] init];
+               BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+               [MobClick event:@"MeQFBClick" attributes:dict];
+               
+               [self.navigationController pushViewController:quan animated:YES];
 
-            }else if(indexPath.row == 1){
-                // 圈付宝
-                QuanViewController *quan = [[QuanViewController alloc] init];
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"MeQFBClick" attributes:dict];
-                
-                [self.navigationController pushViewController:quan animated:YES];
+           }else if(indexPath.row == 1){
+              
+               MoneyTreeViewController * moneyTreeVC = [[MoneyTreeViewController alloc]init];
+               moneyTreeVC.webTitle = @"摇钱树";
+               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstFindMoneyTree"];
+               BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+               [MobClick event:@"MeMoenyTreeClick" attributes:dict];
+               [self.navigationController pushViewController:moneyTreeVC animated:YES];
 
             }else if(indexPath.row == 2){
-                MoneyTreeViewController * moneyTreeVC = [[MoneyTreeViewController alloc]init];
-                moneyTreeVC.webTitle = @"摇钱树";
-                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstFindMoneyTree"];
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"MeMoenyTreeClick" attributes:dict];
-                [self.navigationController pushViewController:moneyTreeVC animated:YES];
-            
-            }else if(indexPath.row == 3){
-
+                
                 BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
                 [MobClick event:@"Me_exclusiveAppClick" attributes:dict];
                 
-//                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
+                //                NSString *level = [[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWLevel];
                 
 #pragma mark 不是第一次打开 &&已经开通专属App－－》 走数据界面
                 if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"isFirstOpenExclusiveVC"]  isEqual:@"1"]&&([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"])){
@@ -771,11 +771,11 @@
                     [self.navigationController pushViewController:exclusiveAPPVC animated:YES];
                     
                 }else{
-
+                    
                     if ([self.IsOpenConsultantApp isEqualToString:@"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
                         
                         NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
-                newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
+                        newOpenVC.ConsultanShareInfo = self.ConsultanShareInfo;
                         newOpenVC.naVC = self.navigationController;
                         [self.navigationController pushViewController:newOpenVC animated:YES];
                         
@@ -791,7 +791,9 @@
                 
                 [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"isFirstOpenExclusiveVC"];
                 
-            }else if(indexPath.row == 4){
+
+            }else if(indexPath.row == 3){
+
                 NSLog(@"点击红包");
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstOpenExclusiveRedP"];
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
@@ -800,9 +802,17 @@
                 }else{
                     [self.view.window addSubview:self.backGroundRPView];
                     [self.view.window  addSubview:self.RedPacketAlertView];
-//                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+                    //                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
                 }
-               
+
+            }else if(indexPath.row == 4){
+                MyOrgViewController *myOrg = [sb instantiateViewControllerWithIdentifier:@"MyOrg"];
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"MeOrgViewClick" attributes:dict];
+                
+                [self.navigationController pushViewController:myOrg animated:YES];
+                
+
                 
             }else if(indexPath.row == 5){
                 InvoiceManageViewController * IMVC = [[InvoiceManageViewController alloc]init];

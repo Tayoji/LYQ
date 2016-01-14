@@ -79,14 +79,14 @@
         //设置文字
         self.tableView.headerPullToRefreshText = @"下拉刷新";
         self.tableView.headerRefreshingText = @"正在刷新中";
-        
+    
         self.tableView.footerPullToRefreshText = @"上拉刷新";
         self.tableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headRefresh
 {
     if (self.isRefresh) {
-        [self.SELCustomerArr removeAllObjects];
+//        [self.SELCustomerArr removeAllObjects];
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
 //        [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
         self.isRefresh = NO;
@@ -121,7 +121,7 @@
             [self.SELCustomerArr removeAllObjects];
             [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         }
-        if (arrs.count == 0){
+        if (arrs.count == 0 && self.dataArr.count == 0){
             self.nullView.alpha = 1;
         }else{
             self.nullView.alpha = 0;
@@ -165,7 +165,8 @@
     CustomModel *model = self.dataArr[indexPath.row];
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
-    if ([model.HearUrl  isEqual: @""]) {
+    NSLog(@"%@",model.Mobile);
+    if (!model.HearUrl) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
     }else{
