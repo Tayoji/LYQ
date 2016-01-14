@@ -52,7 +52,16 @@
     [_takePicButton setImage:[UIImage imageNamed:@"chatBar_colorMore_cameraSelected"] forState:UIControlStateHighlighted];
     [_takePicButton addTarget:self action:@selector(takePicAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_takePicButton];
+    
+//fkfk
+    _SendRedPacket =[UIButton buttonWithType:UIButtonTypeCustom];
+    [_SendRedPacket setFrame:CGRectMake(insets * 3 + CHAT_BUTTON_SIZE*2, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+    [_SendRedPacket setImage:[UIImage imageNamed:@"SendRedPacket2"] forState:UIControlStateNormal];
+    [_SendRedPacket setImage:[UIImage imageNamed:@"SendRedPacket2"] forState:UIControlStateHighlighted];
+    [_SendRedPacket addTarget:self action:@selector(takeRedPacketAction) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_SendRedPacket];
 
+    
     CGRect frame = self.frame;
     if (type == ChatMoreTypeChat) {
         frame.size.height = 150;
@@ -67,7 +76,7 @@
         [_videoCallButton setFrame:CGRectMake(insets, 10 * 2 + CHAT_BUTTON_SIZE + 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
         [_videoCallButton setImage:[UIImage imageNamed:@"chatBar_colorMore_videoCall"] forState:UIControlStateNormal];
         [_videoCallButton setImage:[UIImage imageNamed:@"chatBar_colorMore_videoCallSelected"] forState:UIControlStateHighlighted];
-        [_videoCallButton addTarget:self action:@selector(takeVideoCallAction) forControlEvents:UIControlEventTouchUpInside];
+        [_videoCallButton addTarget:self action:@selector(takeRedPacketAction) forControlEvents:UIControlEventTouchUpInside];
 //        [self addSubview:_videoCallButton];
     }
     else if (type == ChatMoreTypeGroupChat)
@@ -112,5 +121,13 @@
         [_delegate moreViewVideoCallAction:self];
     }
 }
+
+- (void)takeRedPacketAction{
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(moreViewRedPacketAction:)]) {
+        [_delegate moreViewRedPacketAction:self];
+    }
+}
+
 
 @end

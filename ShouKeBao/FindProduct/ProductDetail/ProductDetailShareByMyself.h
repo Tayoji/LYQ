@@ -27,7 +27,7 @@
 
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
--(void)pushChoseCustomerView;
+-(void)pushChoseCustomerView:(NSString *)productJsonStr;
 -(void)closeBlackView;
 @end
 

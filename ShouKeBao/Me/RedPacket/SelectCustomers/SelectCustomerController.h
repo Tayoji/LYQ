@@ -13,4 +13,6 @@ typedef enum {
 }From;
 @interface SelectCustomerController : SKViewController
 @property (nonatomic,assign) From FromWhere;
+@property (nonatomic, copy)NSString * productJsonString;
+
 @end

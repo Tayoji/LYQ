@@ -155,8 +155,8 @@ static NSString * cellid = @"reuseaa";
                             [_delegate notiPopUpBoxView];
                         }
                     }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
-                        if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView)]) {
-                            [_delegate pushChoseCustomerView];
+                        if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView:)]) {
+                            [_delegate pushChoseCustomerView:self.shareInfo[@"IMProductMsgValue"]];
                         }
                     }
                 }else{

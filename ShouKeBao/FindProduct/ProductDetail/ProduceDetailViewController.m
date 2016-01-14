@@ -787,10 +787,12 @@
   
 }
 
-- (void)pushChoseCustomerView{
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
     [self closeBlackView];
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
     selectVC.FromWhere = FromeProDetail;
+    
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type

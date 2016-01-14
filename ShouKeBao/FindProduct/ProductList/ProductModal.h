@@ -31,6 +31,10 @@
 @property (copy,nonatomic) NSString *ContactMobile;//联系人电话
 @property (copy,nonatomic) NSString *LinkUrl;//产品详情页
 
+@property (copy,nonatomic) NSString *LinkUrlLyq;//在旅游圈里面显示的页面
+
+
+
 @property (nonatomic,copy) NSString *IsOffLine;// 是否离线
 @property (nonatomic,copy) NSString *HistoryViewTime;// 历史流浪时间
 @property (nonatomic,strong) NSMutableDictionary *ShareInfo;

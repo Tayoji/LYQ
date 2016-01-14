@@ -266,6 +266,7 @@
 - (void)ClickSendRedPacket{
     NSLog(@"发红包");
     SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.sendRedPacketType = sendRedPacketTypeCustom;
     setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.AppSkbUserId, nil];
     [self.NaV pushViewController:setRPacket animated:YES];
 }

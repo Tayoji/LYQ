@@ -614,6 +614,12 @@
 		79B5596A1BFB151500C04F92 /* TerraceMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B559691BFB151500C04F92 /* TerraceMessageModel.m */; };
 		79B951491BD0DAAC0027C1F7 /* AttachmentCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B951481BD0DAAC0027C1F7 /* AttachmentCollectionCell.m */; };
 		79C35C1A1C048B0200FDF44A /* APNSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C35C191C048B0200FDF44A /* APNSHelper.m */; };
+		79D38B141C46799D00A90DFA /* sendhongbao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B121C46799D00A90DFA /* sendhongbao@2x.png */; };
+		79D38B151C46799D00A90DFA /* sendhongbao@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B131C46799D00A90DFA /* sendhongbao@3x.png */; };
+		79D38B181C467C2E00A90DFA /* SendRedPacketNew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B161C467C2E00A90DFA /* SendRedPacketNew@2x.png */; };
+		79D38B191C467C2E00A90DFA /* SendRedPacketNew@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B171C467C2E00A90DFA /* SendRedPacketNew@3x.png */; };
+		79D38B1C1C467CFA00A90DFA /* SendRedPacket2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B1A1C467CFA00A90DFA /* SendRedPacket2@2x.png */; };
+		79D38B1D1C467CFA00A90DFA /* SendRedPacket2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D38B1B1C467CFA00A90DFA /* SendRedPacket2@3x.png */; };
 		79D69BCF1BDDFE13006881DD /* DayDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D69BCD1BDDFE13006881DD /* DayDetailTableViewCell.m */; };
 		79D69BD01BDDFE13006881DD /* DayDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D69BCE1BDDFE13006881DD /* DayDetailTableViewCell.xib */; };
 		79D8D8211B2ACF2900AE4464 /* BeseWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D8D8201B2ACF2900AE4464 /* BeseWebView.m */; };
@@ -1848,6 +1854,12 @@
 		79B951481BD0DAAC0027C1F7 /* AttachmentCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentCollectionCell.m; sourceTree = "<group>"; };
 		79C35C181C048B0200FDF44A /* APNSHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APNSHelper.h; sourceTree = "<group>"; };
 		79C35C191C048B0200FDF44A /* APNSHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APNSHelper.m; sourceTree = "<group>"; };
+		79D38B121C46799D00A90DFA /* sendhongbao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendhongbao@2x.png"; sourceTree = "<group>"; };
+		79D38B131C46799D00A90DFA /* sendhongbao@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendhongbao@3x.png"; sourceTree = "<group>"; };
+		79D38B161C467C2E00A90DFA /* SendRedPacketNew@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacketNew@2x.png"; sourceTree = "<group>"; };
+		79D38B171C467C2E00A90DFA /* SendRedPacketNew@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacketNew@3x.png"; sourceTree = "<group>"; };
+		79D38B1A1C467CFA00A90DFA /* SendRedPacket2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacket2@2x.png"; sourceTree = "<group>"; };
+		79D38B1B1C467CFA00A90DFA /* SendRedPacket2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SendRedPacket2@3x.png"; sourceTree = "<group>"; };
 		79D69BCC1BDDFE13006881DD /* DayDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayDetailTableViewCell.h; sourceTree = "<group>"; };
 		79D69BCD1BDDFE13006881DD /* DayDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayDetailTableViewCell.m; sourceTree = "<group>"; };
 		79D69BCE1BDDFE13006881DD /* DayDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -4143,6 +4155,12 @@
 		796EFC881BF5C67D00799120 /* Color */ = {
 			isa = PBXGroup;
 			children = (
+				79D38B1A1C467CFA00A90DFA /* SendRedPacket2@2x.png */,
+				79D38B1B1C467CFA00A90DFA /* SendRedPacket2@3x.png */,
+				79D38B161C467C2E00A90DFA /* SendRedPacketNew@2x.png */,
+				79D38B171C467C2E00A90DFA /* SendRedPacketNew@3x.png */,
+				79D38B121C46799D00A90DFA /* sendhongbao@2x.png */,
+				79D38B131C46799D00A90DFA /* sendhongbao@3x.png */,
 				796EFC891BF5C67D00799120 /* chatBar_colorMore_audioCall@2x.png */,
 				796EFC8A1BF5C67D00799120 /* chatBar_colorMore_audioCallSelected@2x.png */,
 				796EFC8B1BF5C67D00799120 /* chatBar_colorMore_camera@2x.png */,
@@ -5203,6 +5221,7 @@
 				796EFCDA1BF5C67D00799120 /* VoiceSearchFeedback007.png in Resources */,
 				B36E57351B74C0D000471AAC /* ProductList.xib in Resources */,
 				793F4C191BBB8374004A0436 /* message.mp3 in Resources */,
+				79D38B1C1C467CFA00A90DFA /* SendRedPacket2@2x.png in Resources */,
 				63A81B8B1B39065F00D8B37D /* SKBNavBar.xib in Resources */,
 				796EFCC51BF5C67D00799120 /* chatListCellHead@2x.png in Resources */,
 				79FB11601BD7324100819FB2 /* Orders.storyboard in Resources */,
@@ -5245,6 +5264,7 @@
 				B36E57311B74C0D000471AAC /* MinMaxPriceSelectViewController.xib in Resources */,
 				796EFD051BF5C67D00799120 /* chatBar_more_face@2x.png in Resources */,
 				796EFCF11BF5C67D00799120 /* VoiceSearchFeedback018@2x.png in Resources */,
+				79D38B141C46799D00A90DFA /* sendhongbao@2x.png in Resources */,
 				63B8C6FF1ACE906B00328C8C /* messageCell.xib in Resources */,
 				B3B7A6711BA6A25F0043DF7C /* attachmentViewController.xib in Resources */,
 				796EFCC71BF5C67D00799120 /* chatFire_audioPlaying0@2x.png in Resources */,
@@ -5274,6 +5294,7 @@
 				796EFD1F1BF5C67D00799120 /* chatBar_more@2x.png in Resources */,
 				B3B7A6841BA6A25F0043DF7C /* remondTableViewCell.xib in Resources */,
 				796EFD161BF5C67D00799120 /* chatBar_face.png in Resources */,
+				79D38B1D1C467CFA00A90DFA /* SendRedPacket2@3x.png in Resources */,
 				796EFD1A1BF5C67D00799120 /* chatBar_keyboard.png in Resources */,
 				632613291AB2AF04003AC2DA /* re_product_pan_b@2x.png in Resources */,
 				796EFCF81BF5C67D00799120 /* call_out_h.png in Resources */,
@@ -5374,10 +5395,12 @@
 				52983EB21C434D2C00025ECD /* MyRedPacketCell.xib in Resources */,
 				793917301C17CD3D0020372E /* chat_receiver_audio_playing_full@2x.png in Resources */,
 				796EFD3A1BF5C67D00799120 /* chatBar_more_location.png in Resources */,
+				79D38B181C467C2E00A90DFA /* SendRedPacketNew@2x.png in Resources */,
 				52BEDF9B1BEB413E003A04CA /* NewNewsController.xib in Resources */,
 				796EFCDB1BF5C67D00799120 /* VoiceSearchFeedback007@2x.png in Resources */,
 				796EFCE01BF5C67D00799120 /* VoiceSearchFeedback010.png in Resources */,
 				796EFD401BF5C67D00799120 /* chatBar_more_photoSelected.png in Resources */,
+				79D38B151C46799D00A90DFA /* sendhongbao@3x.png in Resources */,
 				796EFD301BF5C67D00799120 /* chatBar_colorMore_photo@2x.png in Resources */,
 				5A076EA81ACD8B270077611C /* StoreViewController.xib in Resources */,
 				796EFD111BF5C67D00799120 /* chat_location_preview@2x.png in Resources */,
@@ -5424,6 +5447,7 @@
 				5A52FC881ACEBF220076DAE6 /* ContactView.xib in Resources */,
 				796EFCEE1BF5C67D00799120 /* VoiceSearchFeedback017.png in Resources */,
 				796EFCE41BF5C67D00799120 /* VoiceSearchFeedback012.png in Resources */,
+				79D38B191C467C2E00A90DFA /* SendRedPacketNew@3x.png in Resources */,
 				5A52FC411ACEBF220076DAE6 /* ProduceDetailViewController.xib in Resources */,
 				B3E983CA1C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib in Resources */,
 				793917461C17CD550020372E /* chat_sender_audio_playing_002@2x.png in Resources */,

@@ -258,12 +258,15 @@
         NSString * AppRedEnvelopeId = postDic[@"AppRedEnvelopeId"];
         NSString * AppSkbUserId = postDic[@"AppSkbUserId"];
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
+        [ChatSendHelper sendTextMessageWithString:@"红包"
                                                                 toUsername:AppSkbUserId
                                                                messageType:eMessageTypeChat
                                                          requireEncryption:NO
                                                                        ext:ext];
-        [[EaseMob sharedInstance].chatManager sendMessage:tempMessage progress:nil error:nil];
+    }
+    if (self.sendRedPacketType == sendRedPacketTypeChatVC) {
+        [self performSelectorOnMainThread:@selector(backToChat) withObject:nil waitUntilDone:YES];
+        return;
     }
     if (self.IDsdataArr.count == 1) {
         [APNSHelper defaultAPNSHelper].isJumpChat = YES;
@@ -272,6 +275,10 @@
         [APNSHelper defaultAPNSHelper].isJumpChatList = YES;
     }
     [self performSelectorOnMainThread:@selector(pushInMainTheard) withObject:nil waitUntilDone:YES];
+}
+
+- (void)backToChat{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)pushInMainTheard{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

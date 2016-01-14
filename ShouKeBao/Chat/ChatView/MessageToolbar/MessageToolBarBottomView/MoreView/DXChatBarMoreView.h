@@ -24,6 +24,7 @@ typedef enum{
 
 @property (nonatomic, strong) UIButton *photoButton;
 @property (nonatomic, strong) UIButton *takePicButton;
+@property (nonatomic, strong) UIButton *SendRedPacket;
 @property (nonatomic, strong) UIButton *locationButton;
 @property (nonatomic, strong) UIButton *videoButton;
 @property (nonatomic, strong) UIButton *audioCallButton;
@@ -43,5 +44,6 @@ typedef enum{
 - (void)moreViewLocationAction:(DXChatBarMoreView *)moreView;
 - (void)moreViewAudioCallAction:(DXChatBarMoreView *)moreView;
 - (void)moreViewVideoCallAction:(DXChatBarMoreView *)moreView;
+- (void)moreViewRedPacketAction:(DXChatBarMoreView *)moreView;
 
 @end
