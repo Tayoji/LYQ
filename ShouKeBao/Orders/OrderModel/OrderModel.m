@@ -64,12 +64,11 @@
         for (NSDictionary *dic2 in dic[@"ButtonList"]) {
             ButtonList *btn = [ButtonList buttonListWithDict:dic2];
             
-            if ([btn.color isEqual:[UIColor configureColorWithNum:1]]) {
-                [self.btnList addObject:btn];
-            }else{
+            if (![btn.color isEqual:[UIColor configureColorWithNum:1]]) {
                 [self.buttonList addObject:btn];
+            }else{
+                 [self.btnList addObject:btn];
             }
-            
         }
         [self.buttonList addObject:self.btnList];
         NSLog(@"... %@ ...%@", self.buttonList, self.btnList);

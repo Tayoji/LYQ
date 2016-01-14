@@ -90,9 +90,9 @@
             serviceNotiDynamic.messageCount = json[@"NewAppMessageCount"];
             serviceNotiDynamic.dateStr = json[@"LastAppMessageDate"];
             
-            choseNotiDynamic.messageTitle = @"大傻瓜"/*json[@""]*/;
-            choseNotiDynamic.messageCount = @"5";
-            choseNotiDynamic.dateStr = @"01月04日 10:11";
+            choseNotiDynamic.messageTitle = json[@"LastEveryRecommendTitile"];
+            choseNotiDynamic.messageCount = json[@"NewEveryRecommendCount"];
+            choseNotiDynamic.dateStr = json[@"LastEveryRecommendDate"];
             
             [self.dynamicArray removeAllObjects];
             [self.dynamicArray addObject:platformModel];

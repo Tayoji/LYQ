@@ -156,6 +156,7 @@
 @property (nonatomic, strong)HotLaButton *hotLableButton;
 @property (nonatomic, strong)NSMutableArray *circleArr;
 @property (nonatomic, copy)NSString *CircleUrl;
+@property (nonatomic, copy)NSString *CircleIcon;
 @property (nonatomic,strong)UIImageView *SmallGuidance;
 
 @property (nonatomic,strong) AVAudioPlayer *player;
@@ -1213,6 +1214,7 @@
             CircleModel *model = [[CircleModel alloc]initWithDict:dic];
             [self.circleArr addObject:model];
         }
+        self.CircleIcon = json[@"CircleIcon"];
          NSLog(@"轮播  %@", self.circleArr);
         [self estimateCircleArrData:json[@"IsVisible"]];
         
@@ -1221,8 +1223,11 @@
     }];
 }
 
+- (void)setHotView:(UIImageView *)hotView{
+    _hotView = hotView;
+    [self.hotView sd_setImageWithURL:[NSURL URLWithString:self.CircleIcon] placeholderImage:[UIImage imageNamed:@"Hhot"]];
+}
 - (void)estimateCircleArrData:(NSString *)IsVisible{
-//     NSLog(@"轮播  %@", IsVisible);
     if (self.circleArr.count == 0 || [IsVisible isEqualToString:@"0"] || IsVisible.length == 0) {
         self.CarouselView.hidden = YES;
         self.tableView.frame = CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 164);

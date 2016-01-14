@@ -12,6 +12,7 @@
 //圈头条数据
 @property (nonatomic, copy)NSString *CreateDate;
 @property (nonatomic, copy)NSString *ProductThemeName;
+//@property (nonatomic, copy)NSString *CircleIcon;
 
 -(instancetype)initWithDict:(NSDictionary *)dic;
 

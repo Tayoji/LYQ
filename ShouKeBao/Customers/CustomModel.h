@@ -10,7 +10,7 @@
 
 @interface CustomModel : NSObject
 //@property (nonatomic,copy) NSString *userIcon;
-@property (nonatomic,copy)NSString *HearUrl;
+@property (nonatomic,copy) NSString *HearUrl;
 @property (nonatomic,copy) NSString *Name;
 @property (nonatomic,copy) NSString *Mobile;
 @property (nonatomic,copy) NSString *OrderCount;
