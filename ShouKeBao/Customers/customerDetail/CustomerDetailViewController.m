@@ -20,6 +20,8 @@
 #import "IWHttpTool.h"  
 #import "CustomModel.h"
 #import "UIImageView+WebCache.h"
+#define Height [UIScreen mainScreen].bounds.size.height/480
+#define Width [UIScreen mainScreen].bounds.size.width/320
 @interface CustomerDetailViewController ()<UITextFieldDelegate,notifiToRefereshCustomerDetailInfo,UIActionSheetDelegate, UITableViewDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *SetRemindBtnOutlet;
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -270,9 +272,7 @@
         self.customerId = dic[@"ID"];
         CustomModel *customerDetail = [CustomModel modalWithDict:dic];
         [self.dataArr addObject:customerDetail];
-        [self setSubViews];
-        NSLog(@". %@. %@  %@", [self.dataArr[0]HearUrl], self.dataArr, [self.dataArr[0]Name]);
-        
+        [self setSubViews];        
         hudView.labelText = @"加载成功...";
         [hudView hide:YES afterDelay:0.4];
     } failure:^(NSError *error) {
@@ -281,22 +281,23 @@
 }
 
 - (void)setCustomerIconActin{
-    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(30, 30, 60, 60)];
+    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(230*Width, 30*Height, 60, 60)];
     [self.tableView addSubview:customerIm];
     self.customerIcon = customerIm;
     
     self.customerIcon.layer.masksToBounds = YES;
-    self.customerIcon.layer.cornerRadius = 20;
-    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]) {
-        self.customerIcon.image = [UIImage imageNamed:@"IDInform"];
+    self.customerIcon.layer.cornerRadius = 30;
+    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
+        self.customerIcon.image = [UIImage imageNamed:@"userB"];        
         UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
         [self.customerIcon.image drawAtPoint:CGPointZero];
          NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
         NSDictionary *dict = @{
-                               NSFontAttributeName:[UIFont systemFontOfSize:18],
-                               NSForegroundColorAttributeName:[UIColor redColor]
+                               NSFontAttributeName:[UIFont systemFontOfSize:70.0f],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]
                                };
-        [text drawAtPoint:CGPointMake(5, 5) withAttributes:dict];
+        NSLog(@"text =  %@", text);
+        [text drawAtPoint:CGPointMake(35, 30) withAttributes:dict];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         self.customerIcon.image = newImage;

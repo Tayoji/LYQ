@@ -9,9 +9,10 @@
 #import "EMChatCustomBubbleView.h"
 #import "FKProductModel.h"
 #import "ProductModal.h"
-
+#import "JSONKit.h"
 #import "FKReceiveProductLinkView.h"
 #import "FKSendRedPacketView.h"
+#import "NSString+FKTools.h"
 NSString *const kRouterEventSendProductEventName = @"kRouterEventSendProductEventName";
 NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacketEventName";
 @interface EMChatCustomBubbleView()
@@ -25,12 +26,14 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 @end
 @implementation EMChatCustomBubbleView
 
-//-(instancetype)initWithFrame:(CGRect)frame{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//    }
-//    return self;
-//}
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        
+    }
+    return self;
+}
 -(void)layoutSubviews{
     [super layoutSubviews];
 
@@ -42,7 +45,6 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
     [super setModel:model];
     
     if (self.model.message.ext) {
-        
         CGRect frame = self.bounds;
         frame.size.width -= BUBBLE_ARROW_WIDTH;
         frame = CGRectInset(frame, BUBBLE_VIEW_PADDING, BUBBLE_VIEW_PADDING);
@@ -52,24 +54,29 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
             frame.origin.x = BUBBLE_VIEW_PADDING + BUBBLE_ARROW_WIDTH;
         }
         frame.origin.y = BUBBLE_VIEW_PADDING;
-        if (frame.size.width == 0) {
-            return;
+        [self sizeToFit];
+
+        for (UIView * view in self.subviews) {
+            [view removeFromSuperview];
         }
-        NSLog(@"%@", NSStringFromCGRect(frame));
 
         // MsgType = 1 推送产品；
         if ([self.model.message.ext[@"MsgType"]isEqualToString:@"1"]) {
-//            NSDictionary * json = [self parseJSONStringToNSDictionary:self.model.message.ext[@"MsgValue"]];
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"3"]){//MsgType = 3 发送产品链接
-            
-            NSDictionary * json = [self parseJSONStringToNSDictionary:self.model.message.ext[@"MsgValue"]];
-            self.FKProductModel = [ProductModal modalWithDict:json];
+            NSDictionary * dic = @{};
+            if ([self.model.message.ext[@"MsgValue"]isKindOfClass:[NSString class]]) {
+                dic = [self parseJSONStringToNSDictionary:self.model.message.ext[@"MsgValue"]];
+            }else{
+                dic = self.model.message.ext[@"MsgValue"];
+            }
+            NSLog(@"aaaa%d",self.backImageView.hidden);
+            self.FKProductModel = [ProductModal modalWithDict:dic];
             FKReceiveProductLinkView  * FKV = [FKReceiveProductLinkView FKProductViewWithModel:self.FKProductModel andFrame:frame];
-            [self addSubview:FKV];
+//            [self addSubview:FKV];
 
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"4"]){
             CGRect aframe = self.bounds;
-            aframe.size.width -= 7 ;
+            aframe.size.width -= 9 ;
             aframe = CGRectInset(aframe, 0, 0);
             if (self.model.isSender) {
                 aframe.origin.x = 0;
@@ -80,17 +87,15 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
             FKSendRedPacketView * FKV = [FKSendRedPacketView FKSendRedPacketWithModel:self.model andFrame:aframe];
             [self addSubview:FKV];
         }else{
-            for (UIView * view in self.subviews) {
-                [view removeFromSuperview];
-            }
         }
     }
 
     
 }
 -(NSDictionary *)parseJSONStringToNSDictionary:(NSString *)JSONString {
+
     NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
+    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableContainers error:nil];
     return responseJSON;
 }
 
@@ -113,12 +118,10 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 
 -(void)bubbleViewPressed:(id)sender
 {
-//    UITapGestureRecognizer *tap = (UITapGestureRecognizer *)sender;
-//    CGPoint point = [tap locationInView:self];
     if ([self.model.message.ext[@"MsgType"]isEqualToString:@"1"]) {
 
     }else if ([self.model.message.ext[@"MsgType"]isEqualToString:@"3"]) {
-        NSDictionary * dict = @{@"URL":self.FKProductModel.LinkUrl};
+        NSDictionary * dict = @{@"model":self.FKProductModel};
         NSLog(@"%@", self.FKProductModel.LinkUrl);
         [self routerEventWithName:kRouterEventSendProductEventName userInfo:dict];
         

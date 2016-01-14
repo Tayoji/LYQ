@@ -22,7 +22,7 @@
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
 #import "ProductDetailShareByMyself.h"
-
+#import "SelectCustomerController.h"
 
 @interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate, notiPopUpBox>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
@@ -48,9 +48,10 @@
 //FromProductSearch,
 //FromFindProduct,
 //FromHotProduct
-@property (nonatomic, strong)NSArray *photoArr;
+@property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
 @property (nonatomic, strong) ProductDetailShareByMyself *defineV;
+
 @end
 
 @implementation ProduceDetailViewController
@@ -58,11 +59,34 @@
     [super viewDidLoad];
     [self blackView];
     
-  
+    if (self.shareInfo[@"IMProductMsgValue"]) {
+        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+                           ];
+    }else{
+        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
+                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
+                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
+                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
+                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
+                           ];
+        
+        
+    }
+    
+    
+    if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
+        self.title = @"我的店铺二维码";
+    }
     
     self.coverView.hidden = YES;
-
-    
     if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"FromFindProductAll" attributes:dict];
@@ -720,21 +744,22 @@
    
     self.defineV.delegate = self;
     self.defineV.eventArray = self.eventArray;
+    self.defineV.photosArr = self.photosArr;
     self.defineV.URL = self.webView.request.URL.absoluteString;
     self.defineV.publishContent = publishContent;
     self.defineV.shareInfo = self.shareInfo;
     _defineV.fromType = [NSString stringWithFormat:@"%d", self.fromType];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView)];
     [self.blackView addGestureRecognizer:tap];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(closeBlackView:) name:@"closeBlackView" object:nil];
-}
-- (void)closeBlackView:(NSNotification *)noti{
-    self.blackView.hidden = YES;
-    self.defineV.hidden = YES;
+   
 }
 
+- (void)closeBlackView{
+    self.blackView.hidden = YES;
+    self.defineV.hidden = YES;
+
+}
 
 - (void)notiPopUpBoxView{
     [self.blackView removeFromSuperview];
@@ -760,6 +785,15 @@
     newExclusiveVC.pushFrom = FromProductDetail;
     [self.navigationController pushViewController:newExclusiveVC animated:YES];
   
+}
+
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
+    [self closeBlackView];
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
+    selectVC.FromWhere = FromeProDetail;
+    
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type
 {
@@ -796,7 +830,12 @@
     }
     return _defineV;
 }
-
+- (NSArray *)photosArr{
+    if (!_photosArr) {
+        self.photosArr = [NSArray array];
+    }
+    return _photosArr;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

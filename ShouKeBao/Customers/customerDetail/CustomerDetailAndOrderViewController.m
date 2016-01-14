@@ -31,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    detailC
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"userNS"]forBarMetrics:UIBarMetricsDefault];
+    
     [self setNavSegementView];
     [self customerRightBarItem];
     [self setNavBack];
@@ -148,6 +151,8 @@
         ZhiVisitorDynamicController *customerDynamicVC = [[ZhiVisitorDynamicController alloc]init];
         NSLog(@"%@", self.appUserID);
         customerDynamicVC.AppSkbUserId =self.AppSkbUserId;
+        customerDynamicVC.NaV = self.navigationController;
+        customerDynamicVC.model = self.model;
         customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;

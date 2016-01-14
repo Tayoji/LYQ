@@ -11,6 +11,11 @@
 #import "CustomModel.h"
 #import "IWHttpTool.h"
 #import "MBProgressHUD.h"
+#import "EaseMob.h"
+#import "ChatSendHelper.h"
+#import "NewMessageCenterController.h"
+#import "RuleWebViewController.h"
+#import "APNSHelper.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
@@ -32,6 +37,8 @@
     self.InlandTextView.keyboardType = UIKeyboardTypeNumberPad;
     self.RimtextView.keyboardType = UIKeyboardTypeNumberPad;
     self.ScrollView.contentSize = CGSizeMake(kScreenSize.width, kScreenSize.height);
+    self.SendRedPacketBtn.enabled = NO;
+    self.SendRedPacketBtn.alpha = 0.5;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -41,6 +48,7 @@
     [self.ExitCountryTextView resignFirstResponder];
     [self.InlandTextView resignFirstResponder];
     [self.RimtextView resignFirstResponder];
+//    [self computeMoney];
 }
 
 -(void)creatNavOfRight{
@@ -58,6 +66,10 @@
 -(void)BtnClick:(UIButton *)button{
     if (button.tag == 106) {//问好
         NSLog(@"点击问号");
+        RuleWebViewController *cont = [[RuleWebViewController alloc] init];
+        cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyProduceNote";
+        cont.webTitle = @"红包生成说明";
+        [self.navigationController pushViewController:cont animated:YES];
     }else if(button.tag == 105){//叉号
         [self removeWowView];
     }else if(button.tag == 107){//取消
@@ -74,12 +86,15 @@
     switch (textView.tag) {
         case 101:
             self.ExitCountryTextView.text = @"";
+            self.ExitCountryTextView.textColor = [UIColor blackColor];
             break;
         case 102:
             self.InlandTextView.text = @"";
+            self.InlandTextView.textColor = [UIColor blackColor];
             break;
         case 103:
             self.RimtextView.text = @"";
+            self.RimtextView.textColor = [UIColor blackColor];
             break;
         case 104:
             
@@ -138,6 +153,13 @@
     CGFloat sum = self.ExitCountryN+self.InlandN+self.RimN;
     self.FinalMoney = sum*self.NumOfPeopleArr.count;
     self.FinalMoneyLabel.text = [NSString stringWithFormat:@"%.2f",self.FinalMoney];
+    if (self.FinalMoney !=  0) {
+        self.SendRedPacketBtn.enabled = YES;
+        self.SendRedPacketBtn.alpha = 1;
+    }else{
+        self.SendRedPacketBtn.enabled = NO;
+        self.SendRedPacketBtn.alpha = 0.5;
+    }
 }
 -(NSMutableArray *)NumOfPeopleArr{
     if (!_NumOfPeopleArr) {
@@ -203,11 +225,12 @@
     [dic setValue:[NSString stringWithFormat:@"%f",self.InlandN] forKey:@"InsideTotalPrice"];
     [dic setValue:[NSString stringWithFormat:@"%f",self.RimN] forKey:@"NearbyTotalPrice"];
     [dic setValue:self.NumOfPeopleArr forKey:@"AppSkbUserList"];
+    NSLog(@"%@",dic);
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [IWHttpTool WMpostWithURL:@"/Customer/HairRedEnvelope" params:dic success:^(id json) {
         NSLog(@"----------红包返回列表%@---------",json);
         self.IDsdataArr = json[@"AppRedEnvelopeIdList"];//服务器返回的发红包数据
-        
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self performSelectorInBackground:@selector(sendRedPacket) withObject:nil];
         
     } failure:^(NSError *error) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -228,17 +251,41 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark --此处发红包
+- (void)sendRedPacket{
+    
+    for (NSDictionary * postDic in self.IDsdataArr) {
+        NSString * AppRedEnvelopeId = postDic[@"AppRedEnvelopeId"];
+        NSString * AppSkbUserId = postDic[@"AppSkbUserId"];
+        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
+        [ChatSendHelper sendTextMessageWithString:@"红包"
+                                                                toUsername:AppSkbUserId
+                                                               messageType:eMessageTypeChat
+                                                         requireEncryption:NO
+                                                                       ext:ext];
+    }
+    if (self.sendRedPacketType == sendRedPacketTypeChatVC) {
+        [self performSelectorOnMainThread:@selector(backToChat) withObject:nil waitUntilDone:YES];
+        return;
+    }
+    if (self.IDsdataArr.count == 1) {
+        [APNSHelper defaultAPNSHelper].isJumpChat = YES;
+        [APNSHelper defaultAPNSHelper].chatName = self.IDsdataArr[0][@"AppSkbUserId"];
+    }else if(self.IDsdataArr.count > 1){
+        [APNSHelper defaultAPNSHelper].isJumpChatList = YES;
+    }
+    [self performSelectorOnMainThread:@selector(pushInMainTheard) withObject:nil waitUntilDone:YES];
 }
-*/
 
+- (void)backToChat{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)pushInMainTheard{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:NO];
+
+}
 - (IBAction)GrantRPBtn:(UIButton *)sender {
     [self.view.window addSubview:self.backGroundView];
     [self.view.window addSubview:self.WarningView];

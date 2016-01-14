@@ -26,7 +26,7 @@
     [self addSubview:backgroundView];
     
     UIImageView * iconView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 54, 60)];
-    iconView.image = [UIImage imageNamed:@"holdplaceImage"];
+    iconView.image = [UIImage imageNamed:@"SendRedPacketIcon"];
     [backgroundView addSubview:iconView];
     
     UILabel * upLab = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(iconView.frame)+10, CGRectGetMinY(iconView.frame)+3, frame.size.width - CGRectGetMaxX(iconView.frame)-15, 20)];
@@ -49,7 +49,7 @@
     [self addSubview:bottomLab];
     
     UIImageView * littleIconImage = [[UIImageView alloc]initWithFrame:CGRectMake(frame.size.width - 23, CGRectGetMaxY(backgroundView.frame)+5, 20, 20)];
-    littleIconImage.image= [UIImage imageNamed:@"holdplaceImage"];
+    littleIconImage.image= [UIImage imageNamed:@"test_icon"];
     littleIconImage.layer.cornerRadius = 3;
     littleIconImage.layer.masksToBounds = YES;
     [self addSubview:littleIconImage];

@@ -17,4 +17,7 @@
 @property (nonatomic, copy)NSString *appUserID;
 @property (nonatomic, copy)NSString *AppSkbUserId;
 @property (nonatomic, copy)NSString *name;
+@property (nonatomic, copy)NSString *IsOpenIM;
+@property (nonatomic, strong)CustomModel *model;
+@property (nonatomic, copy)NSString *InvitationInfo;
 @end

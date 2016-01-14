@@ -15,6 +15,7 @@
     if (self = [super init]) {
       self.CreateDate = dic[@"CreateDate"];
       self.ProductThemeName = dic[@"ProductThemeName"];
+        
     }
     return self;
 }

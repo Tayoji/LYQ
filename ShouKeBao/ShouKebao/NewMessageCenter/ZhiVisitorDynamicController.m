@@ -19,7 +19,10 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "VisitorDynamicNullView.h"
-
+#import "RedPacketMainController.h"
+#import <MessageUI/MessageUI.h>
+#import "SetRedPacketController.h"
+#import "CustomModel.h"
 #define pageSize @"10"
 //
 #define kScreenSize [UIScreen mainScreen].bounds.size
@@ -52,7 +55,6 @@
     [self.view addSubview:self.nullView];
     [self.view addSubview:self.backToTopBtn];
     self.backToTopBtn.hidden = NO;
-//    [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
     [self initPull];
 }
 -(NSMutableArray *)customDyamicArray{
@@ -100,6 +102,21 @@
             }
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self.tableView reloadData];
+
+            
+            //当从管客户进入客户动态里面，根据是否开通IM客户展示发红包或者邀请开通旅游顾问
+            if (self.customDyamicArray.count==0) {
+                if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
+                    if ([self.model.IsOpenIM isEqualToString:@"1"]) {
+                        [self.nullView showNullViewToView:self.view Type:nullTypeSendRedPacket];
+                    }else{
+                        [self.nullView showNullViewToView:self.view Type:nullTyeInviteVisitor];
+                    }
+                }
+            }else{
+                [self.nullView hideNullViewFromView:self.view];
+            }
+
         }
     } failure:^(NSError * eror) {
     }];
@@ -234,11 +251,24 @@
 //空界面邀请按钮点击
 - (void)ClickInviteVisitor{
     NSLog(@"邀请");
-}
+        if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+            MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+            MFMessageVC.body = self.InvitationInfo;
+            MFMessageVC.recipients = @[self.model.Mobile];
+            [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
+    }
 
 //空界面发红包点击
 - (void)ClickSendRedPacket{
     NSLog(@"发红包");
+    SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.sendRedPacketType = sendRedPacketTypeCustom;
+    setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.AppSkbUserId, nil];
+    [self.NaV pushViewController:setRPacket animated:YES];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

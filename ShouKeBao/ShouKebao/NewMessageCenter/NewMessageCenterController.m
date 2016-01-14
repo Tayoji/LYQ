@@ -25,7 +25,7 @@
 #import "MobClick.h"
 #import "ServiceNotifiViewController.h"
 #import "ChoseListViewController.h"
-
+#import "MBProgressHUD+MJ.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
@@ -69,9 +69,11 @@
         return;
     }
     NSMutableDictionary * params = nil;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
         NSLog(@".... %@", json);
         if ([json[@"IsSuccess"]integerValue]) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             MessageCenterModel * platformModel =[[MessageCenterModel alloc]init];
             MessageCenterModel * customDynamic =[[MessageCenterModel alloc]init];
             MessageCenterModel *serviceNotiDynamic =[[MessageCenterModel alloc]init];
@@ -88,9 +90,9 @@
             serviceNotiDynamic.messageCount = json[@"NewAppMessageCount"];
             serviceNotiDynamic.dateStr = json[@"LastAppMessageDate"];
             
-            choseNotiDynamic.messageTitle = @"大傻瓜"/*json[@""]*/;
-            choseNotiDynamic.messageCount = @"5";
-            choseNotiDynamic.dateStr = @"01月04日 10:11";
+            choseNotiDynamic.messageTitle = json[@"LastEveryRecommendTitile"];
+            choseNotiDynamic.messageCount = json[@"NewEveryRecommendCount"];
+            choseNotiDynamic.dateStr = json[@"LastEveryRecommendDate"];
             
             [self.dynamicArray removeAllObjects];
             [self.dynamicArray addObject:platformModel];
@@ -100,6 +102,7 @@
             [self.tableView reloadData];
         }
         } failure:^(NSError *eror) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }];
 }
 -(void)refreshDataSource
@@ -136,7 +139,7 @@
 #pragma mark - UITableViewDelegate&DataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView.tag == 2011) {
-        return 4;
+        return 2;
     }
     return 1;
 }
@@ -191,7 +194,7 @@
             }else if (indexPath.row == 1){
                 cell.imageView.image = [UIImage imageNamed:@"SNotification"];
             }else if (indexPath.row == 3){
-                cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
+                cell.imageView.image = [UIImage imageNamed:@"iconfont-choseToday"];
             }else{
                 cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
             }

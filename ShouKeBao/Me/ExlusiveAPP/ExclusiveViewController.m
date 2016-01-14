@@ -22,6 +22,7 @@
 #import "NewOpenExclusiveViewController.h"
 //#import "WhatIsExclusiveViewController.h"
 #import "CircleHotNewsViewController.h"
+#import "ProduceDetailViewController.h"
 
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
@@ -475,9 +476,11 @@
 //    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
 //    [MobClick event:@"Me_exclusiveAppDataQR" attributes:dict];
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"QRredDot_QRCode"];
-    CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
-    WRCodeVC.CircleUrl = self.QRCodeAddress;
-    WRCodeVC.formType = @"QRCodeAddress";
+//    CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
+    ProduceDetailViewController *WRCodeVC = [[ProduceDetailViewController alloc]init];
+
+    WRCodeVC.produceUrl = self.QRCodeAddress;
+    WRCodeVC.formTypeExclusive = @"QRCodeAddress";
     if (self.QRCodeAddress) {
         [self.navigationController pushViewController:WRCodeVC animated:YES];
     }

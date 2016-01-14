@@ -25,7 +25,9 @@
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
 @property (nonatomic, assign) BOOL isRefresh;
-
+@property (nonatomic, copy)NSString *Copies;
+@property (nonatomic, copy)NSString *PushDate;
+@property (nonatomic, strong)ProductModal *model;
 
 @end
 
@@ -36,9 +38,10 @@
     // Do any additional setup after loading the view from its nib.
     
     [self choseTableView];
-     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, /*self.choseTableView.frame.size.height*/1200 + 50);
-    _choseTableView.frame = CGRectMake(10, 50, self.view.frame.size.width-20, _scrollView.contentSize.height-50);
-    _choseTableView.scrollEnabled = NO;
+//     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, /*self.choseTableView.frame.size.height*/1200 + 50);
+//    _choseTableView.frame = CGRectMake(10, 50, self.view.frame.size.width-20, _scrollView.contentSize.height-50);
+//    _choseTableView.scrollEnabled = NO;
+    
     _choseTableView.tableHeaderView = _choseView;
     [self initPull];
     
@@ -52,7 +55,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ProductCell *cell = [ProductCell cellWithTableView:tableView];
-   // ProductModal *model = _dataArr[indexPath.row];
+   // self.model = _dataArr[indexPath.row];
    // cell.modal = model;
     cell.delegate = self;
     cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
@@ -64,6 +67,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
+//    produceDetailVC.productId = self.model.productId;
     [self.navigationController pushViewController:produceDetailVC animated:YES];
      [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
 }
@@ -80,8 +84,15 @@
         if (self.isRefresh == 1) {
             [self.dataArr removeAllObjects];
         }
-        NSArray *arr = json[@"AppEveryRecommendProductList"];
-//        self.totalNumber = [json[@"TotalCount"] integerValue];
+        
+//        self.Copies = json[@"AppEveryRecommendProductList"][@"Copies"];
+//        self.PushDate = json[@"AppEveryRecommendProductList"][@"PushDate"];
+//        self.timeTip.text = self.PushDate;
+//        self.choseTextL.text = self.Copies;
+        
+        NSArray *arr = json[@"AppEveryRecommendProductList"]/*[@"Productdetail"]*/;
+        self.totalNumber = [json[@"TotalCount"] integerValue];
+        
         for (NSDictionary *dic in arr) {
             ProductModal *model = [ProductModal modalWithDict:dic];
             [self.dataArr addObject:model];
@@ -191,5 +202,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)setBackGroundView:(UIView *)backGroundView{
+    _backGroundView = backGroundView;
+//    _backGroundView.backgroundColor = [UIColor colorWithRed:235.0/225.0f green:235.0/225.0f blue:235.0/225.0f alpha:1];
+}
 @end

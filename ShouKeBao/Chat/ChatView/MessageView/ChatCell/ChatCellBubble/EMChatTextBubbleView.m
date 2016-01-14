@@ -14,7 +14,6 @@
 #import "EMChatTextBubbleView.h"
 #import "RobotManager.h"
 #import "NSString+FKTools.h"
-#import "FKProductViewInTextBubbleView.h"
 NSString *const kRouterEventMenuTapEventName = @"kRouterEventMenuTapEventName";
 NSString *const kRouterEventTextURLTapEventName = @"kRouterEventTextURLTapEventName";
 NSString *const kRouterEventProductEventName = @"kRouterEventProductEventName";
@@ -62,20 +61,6 @@ NSString *const kRouterEventProductListEventName = @"kRouterEventProductListEven
     frame.origin.y = BUBBLE_VIEW_PADDING;
     [self.textLabel setFrame:frame];
     
-//    //产品推送 对产品进行布局  将视图放在textLable上
-//    if ([self.model.content myContainsString:@"$$"]) {
-//        FKProductModel * model = [[FKProductModel alloc]init];
-//        model.productName = @"这是一条死数据 模型";
-//        model.productImageUrl = @"http://r.lvyouquan.cn/ppkImageCombo.aspx?w=480&f=http%3a%2f%2fr.lvyouquan.cn%2flyqpic%2fhold%2f2015-09-09%2fimage%2f20150909%2f20150909105307_6942.jpg";
-//        FKProductViewInTextBubbleView * FKV = [FKProductViewInTextBubbleView FKProductViewWithModel:model andFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-//        [_textLabel addSubview:FKV];
-//    }else{
-//        for (UIView * view in _textLabel.subviews) {
-//            [view removeFromSuperview];
-//        }
-//    }
-    
-    
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -101,10 +86,6 @@ NSString *const kRouterEventProductListEventName = @"kRouterEventProductListEven
         height = 2*BUBBLE_VIEW_PADDING + retSize.height;
     }
     
-    //产品推送 气泡的高度
-    if ([self.model.content myContainsString:@"$$"]) {
-        return CGSizeMake([UIScreen mainScreen].bounds.size.width - 120 + BUBBLE_VIEW_PADDING*2 + BUBBLE_VIEW_PADDING, 285);
-    }
     
     return CGSizeMake(retSize.width + BUBBLE_VIEW_PADDING*2 + BUBBLE_VIEW_PADDING, height);
 }
@@ -354,10 +335,6 @@ NSString *const kRouterEventProductListEventName = @"kRouterEventProductListEven
         size = [content sizeWithFont:[self textLabelFont]
                    constrainedToSize:textBlockMinSize
                        lineBreakMode:[self textLabelLineBreakModel]];
-    }
-    //产品推送  行高 非气泡高度
-    if ([content myContainsString:@"$$"]) {
-        return 2 * BUBBLE_VIEW_PADDING + 285;
     }
     return 2 * BUBBLE_VIEW_PADDING + size.height;
 }

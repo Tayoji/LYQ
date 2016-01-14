@@ -44,19 +44,17 @@
 
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
-    self.customerIcon.backgroundColor = [UIColor orangeColor];
     
-    
-    if ([[NSString stringWithFormat:@"%@", model.HearUrl] isEqualToString:@""]) {
-        
+    if (model.HearUrl.length != 0) {
+          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+    }else{
+        self.customerIcon.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
         NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:a];
         [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20] range:NSMakeRange(0, 1)];
         [aa addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 1)];
         [self.customerIcon1 setAttributedTitle:aa forState:UIControlStateNormal];
-    }else{
-        
-        [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+            
     }
     self.nameL.text = model.Name;
 
@@ -110,8 +108,11 @@
 }
 
 - (IBAction)clickIconToCustomerDetail:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:AppSkbUserId: name:)]) {
-        [_delegate pushCustomerDetailVC:self.model.ID AppSkbUserId:self.model.AppSkbUserId name:self.model.Name];
+//    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:AppSkbUserId: name: IsOpenIM:)]) {
+//        [_delegate pushCustomerDetailVC:self.model.ID AppSkbUserId:self.model.AppSkbUserId name:self.model.Name IsOpenIM:self.model.IsOpenIM];
+//    }
+    if (_delegate && [_delegate respondsToSelector:@selector(pushCustomerDetailVC:)]) {
+        [_delegate pushCustomerDetailVC:self.model];
     }
 }
 

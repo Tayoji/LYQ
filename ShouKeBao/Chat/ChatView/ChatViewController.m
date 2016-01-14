@@ -39,15 +39,17 @@
 #define KHintAdjustY    50
 #import "EaseMob.h"
 #import "IEMChatFile.h"
-#import "UserInfoEditTableVC.h"
-#import "ProductDetailWebView.h"
-#import "ProductListWebView.h"
 #import "IWHttpTool.h"
 #import "CustomHeaderAndNickName.h"
 #import "LocationSeting.h"
 #import "UserInfo.h"
 #import "CustomerDetailAndOrderViewController.h"
 #import "EMChatCustomBubbleView.h"
+#import "FKRedPacketStateCell.h"
+#import "SetRedPacketController.h"
+#import "ProduceDetailViewController.h"
+#import "ProductModal.h"
+#import "MyRedPDetailController.h"
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
 {
     UIMenuController *_menuController;
@@ -252,16 +254,16 @@
     [self setRightBarButton];
     
     
-   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
+//   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
 
     
     
 }
 - (void)AAAAA{
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1; i++) {
         NSString * AppRedEnvelopeId = @"";
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@""
+        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
                                                                 toUsername:_conversation.chatter
                                                                messageType:[self messageType]
                                                          requireEncryption:NO
@@ -601,8 +603,27 @@
             
             return timeCell;
         }
-        else{
+        else if([obj isKindOfClass:[MessageModel class]]){
+
             MessageModel *model = (MessageModel *)obj;
+            if (model.message.ext) {
+                if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {//红包状态显示
+                    FKRedPacketStateCell *redPacketCell = (FKRedPacketStateCell *)[tableView dequeueReusableCellWithIdentifier:@"MessageredPacketCell"];
+                    if (redPacketCell == nil) {
+                        redPacketCell = [[FKRedPacketStateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MessageredPacketCell"];
+                        redPacketCell.backgroundColor = [UIColor clearColor];
+                        redPacketCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    NSString * stateMsga = [NSString stringWithFormat:@"%@领取了你的红包", self.title];
+                    redPacketCell.stateMsg= stateMsga;
+                    return redPacketCell;
+                    
+                }
+            }
+
+            
+            
+            
             if (!model.isSender) {
                 NSString * nickName = [[LocationSeting defaultLocationSeting]getCustomInfoWithID:self.chatter][@"nickName"];
                 NSString * headerUrl = [[LocationSeting defaultLocationSeting]getCustomInfoWithID:self.chatter][@"headerUrl"];
@@ -622,8 +643,13 @@
             }
             cell.messageModel = model;
             
+            
+            
             return cell;
+        }else if([obj isKindOfClass:[NSDictionary class]]){
         }
+        
+        
     }
     
     return nil;
@@ -637,9 +663,16 @@
     if ([obj isKindOfClass:[NSString class]]) {
         return 40;
     }
-    else{
+    else if([obj isKindOfClass:[MessageModel class]]){
+        MessageModel * model = (MessageModel *)obj;
+        if (model.message.ext) {//红包状态显示
+            if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {
+                return 25;
+            }
+        }
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];
     }
+    return 0;
 }
 
 #pragma mark - scrollView delegate
@@ -758,35 +791,31 @@
     }else if ([eventName isEqualToString:kRouterEventChatHeadImageTapEventName]){
         [self chatHeaderIconPressed:model];
     }else if ([eventName isEqualToString:kRouterEventProductEventName]){//产品详情点击
-        [self productDetailClickWithUserInfo:userInfo];
+//        [self productDetailClickWithUserInfo:userInfo];
     }else if ([eventName isEqualToString:kRouterEventProductListEventName]){//更多产品
-        [self productListClickWithUserInfo:userInfo];
+//        [self productListClickWithUserInfo:userInfo];
     }else if ([eventName isEqualToString:kRouterEventSendProductEventName]){//点击产品链接
-        [self SendProductClickWithUrlStr:userInfo[@"URL"]];
+        [self SendProductClickWithUrlStr:userInfo[@"model"]];
     }else if ([eventName isEqualToString:kRouterEventOpenRedPacketEventName]){//点击查看红包
-        [self OpenRedpacketClickWURL:@""];
+        [self OpenRedpacketClickWURL:userInfo[@"URL"]];
     }
 }
 
-//TextCell中产品被点击
-- (void)productDetailClickWithUserInfo:(NSDictionary *)userInfo{
-    ProductDetailWebView * PDWV = [[ProductDetailWebView alloc]init];
-    PDWV.linkUrl = @"http://www.lvyouquan.cn/Product/SearchResult?key=%E4%BA%91%E5%8D%97&source=login";
-    [self.navigationController pushViewController:PDWV animated:YES];
-}
 
-//TextCell更多产品被点击
-- (void)productListClickWithUserInfo:(NSDictionary *)userInfo{
-    ProductListWebView * PLWV = [[ProductListWebView alloc]init];
-    PLWV.linkUrl = @"http://www.lvyouquan.cn";
-    [self.navigationController pushViewController:PLWV animated:YES];
-}
 //向顾问分享的产品被点击跳转页面
-- (void)SendProductClickWithUrlStr:(NSString *)ProductLinkUrl{
+- (void)SendProductClickWithUrlStr:(ProductModal *)model{
+    ProduceDetailViewController * ProductView = [[ProduceDetailViewController alloc]init];
+    ProductView.produceUrl = model.LinkUrlLyq;
+    ProductView.shareInfo = model.ShareInfo;
+    [self.navigationController pushViewController:ProductView animated:YES];
     NSLog(@"点击产品");
 }
 //红包点击事件
-- (void)OpenRedpacketClickWURL:(NSString *)URL{
+- (void)OpenRedpacketClickWURL:(MessageModel *)model{
+    NSString * redPacketID = model.message.ext[@"MsgValue"];
+    MyRedPDetailController * MyRedDetaile = [[MyRedPDetailController alloc]init];
+//    MyRedDetaile.alloc = redPacketID;
+    [self.navigationController pushViewController:MyRedDetaile animated:YES];
     NSLog(@"点击查看红包");
 }
 
@@ -795,11 +824,9 @@
     if (!model.isSender) {
         CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
         VC.customerID = @"";
-        VC.appUserID = self.chatter;
+        VC.AppSkbUserId = self.chatter;
         [self.navigationController pushViewController:VC animated:YES];
     }
-//    UserInfoEditTableVC * UIETVC = [[UserInfoEditTableVC alloc]init];
-//    [self.navigationController pushViewController:UIETVC animated:YES];
 }
 - (void)jumpCustomDetail{
     CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
@@ -1268,6 +1295,15 @@
     // 隐藏键盘
     [self keyBoardHidden];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:@{@"chatter":self.chatter, @"type":[NSNumber numberWithInt:eCallSessionTypeVideo]}];
+}
+//发红包
+-(void)moreViewRedPacketAction:(DXChatBarMoreView *)moreView{
+    // 隐藏键盘
+    [self keyBoardHidden];
+    SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.sendRedPacketType = sendRedPacketTypeChatVC;
+    setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.chatter, nil];
+    [self.navigationController pushViewController:setRPacket animated:YES];
 }
 
 #pragma mark - LocationViewDelegate

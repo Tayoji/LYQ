@@ -172,7 +172,12 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
         [_hasRead sizeToFit];
         [_activityView addSubview:_hasRead];
     }
-    
+    for (UIView * view in self.contentView.subviews) {
+        if ([view isKindOfClass:[EMChatBaseBubbleView
+                                 class]]) {
+            [view removeFromSuperview];
+        }
+    }
     _bubbleView = [self bubbleViewForMessageModel:messageModel];
     [self.contentView addSubview:_bubbleView];
 }
@@ -182,6 +187,7 @@ NSString *const kShouldResendCell = @"kShouldResendCell";
     
     if (messageModel.message.ext) {
         // MsgType = 1 推送产品；
+        NSLog(@"%@", messageModel.message.ext[@"MsgType"]);
         if ([messageModel.message.ext[@"MsgType"]isEqualToString:@"1"]||[messageModel.message.ext[@"MsgType"]isEqualToString:@"3"]||[messageModel.message.ext[@"MsgType"]isEqualToString:@"4"]) {
             return [[EMChatCustomBubbleView alloc]init];
         }

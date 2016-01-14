@@ -8,6 +8,12 @@
 
 #import "SKViewController.h"
 
+typedef enum{
+    sendRedPacketTypeList,
+    sendRedPacketTypeChatVC,
+    sendRedPacketTypeCustom
+}SendRedPacketType;
+
 @interface SetRedPacketController : SKViewController
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 @property (weak, nonatomic) IBOutlet UITextView *RedPDescribeTextView;
@@ -22,5 +28,8 @@
 - (IBAction)GrantRPBtn:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UILabel *NumOfRedPLabel;
 @property (weak, nonatomic) IBOutlet UILabel *FinalMoneyLabel;
+@property (weak, nonatomic) IBOutlet UIButton *SendRedPacketBtn;
+@property (nonatomic, assign)SendRedPacketType sendRedPacketType;
+
 
 @end

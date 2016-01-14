@@ -7,12 +7,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChoseListViewController">
             <connections>
+                <outlet property="backGroundView" destination="RKL-s9-VRQ" id="eqT-ru-y9g"/>
                 <outlet property="choseL" destination="m2b-Et-XTP" id="uzN-N0-jI3"/>
                 <outlet property="choseTableView" destination="6U5-LI-xry" id="UMJ-4C-zTF"/>
                 <outlet property="choseTextL" destination="ZHL-8k-jvk" id="Xfj-7g-WhV"/>
                 <outlet property="choseView" destination="l2i-fU-Cyu" id="xfq-sW-ODj"/>
                 <outlet property="icon" destination="DL6-Xf-uS3" id="SBz-Li-4Mk"/>
-                <outlet property="scrollView" destination="SNj-0D-R8S" id="Ajo-sz-lb3"/>
                 <outlet property="timeTip" destination="hTp-8H-UU1" id="nef-ZL-oxh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,59 +22,60 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="SNj-0D-R8S">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6U5-LI-xry">
+                    <rect key="frame" x="10" y="0.0" width="300" height="480"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="snR-Sn-f1d"/>
+                        <outlet property="delegate" destination="-1" id="uVC-DJ-7jG"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.89800347219999999" green="0.89800347219999999" blue="0.89800347219999999" alpha="1" colorSpace="calibratedRGB"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="127" y="226"/>
+        </view>
+        <view contentMode="scaleToFill" id="l2i-fU-Cyu" userLabel="choseView">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="120"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="RKL-s9-VRQ">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下午 13:50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hTp-8H-UU1">
-                            <rect key="frame" x="110" y="15" width="100" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                            <rect key="frame" x="100" y="10" width="100" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.83712121210000001" green="0.83712121210000001" blue="0.83712121210000001" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6U5-LI-xry">
-                            <rect key="frame" x="10" y="50" width="300" height="430"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="dataSource" destination="-1" id="snR-Sn-f1d"/>
-                                <outlet property="delegate" destination="-1" id="uVC-DJ-7jG"/>
-                            </connections>
-                        </tableView>
                     </subviews>
-                </scrollView>
-            </subviews>
-            <color key="backgroundColor" red="0.92060425609999996" green="0.92060425609999996" blue="0.92060425609999996" alpha="1" colorSpace="calibratedRGB"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="127" y="226"/>
-        </view>
-        <view contentMode="scaleToFill" id="l2i-fU-Cyu" userLabel="choseView">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-            <subviews>
+                    <color key="backgroundColor" red="0.89800347218484855" green="0.89800347218484855" blue="0.89800347218484855" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="4start" id="DL6-Xf-uS3">
-                    <rect key="frame" x="15" y="10" width="30" height="30"/>
+                    <rect key="frame" x="15" y="50" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每日精选" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m2b-Et-XTP">
-                    <rect key="frame" x="55" y="10" width="200" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每日精选" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m2b-Et-XTP">
+                    <rect key="frame" x="55" y="50" width="200" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" id="uUs-Py-eiA">
-                    <rect key="frame" x="10" y="45" width="280" height="1"/>
+                    <rect key="frame" x="10" y="85" width="280" height="1"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.89667469399999999" green="0.91037326389999995" blue="0.88733523889999999" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每日精选文案推送" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZHL-8k-jvk">
-                    <rect key="frame" x="15" y="51" width="280" height="29"/>
+                    <rect key="frame" x="15" y="88" width="280" height="30"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

@@ -7,6 +7,7 @@
 //
 
 #import "SKViewController.h"
+@class CustomModel;
 typedef enum{
     VisitorDynamicTypeFromMessageCenter,
     VisitorDynamicTypeFromCustom,
@@ -15,8 +16,8 @@ typedef enum{
 
 @property (assign, nonatomic) TheFromType visitorDynamicFromType;
 @property (strong, nonatomic) UITableView *tableView;
-
-@property (nonatomic, strong) NSString * AppSkbUserId;
-
-
+@property (nonatomic, strong)UINavigationController *NaV;
+@property (nonatomic, copy) NSString * AppSkbUserId;
+@property (nonatomic, copy) NSString * InvitationInfo;
+@property (nonatomic, strong)CustomModel * model;
 @end

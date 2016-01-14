@@ -84,6 +84,7 @@
 #import "APNSHelper.h"
 #import "ZhiVisitorDynamicController.h"
 #import "EaseMob.h"
+#import "ChatViewController.h"
 #import "CartoonView.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
@@ -155,6 +156,7 @@
 @property (nonatomic, strong)HotLaButton *hotLableButton;
 @property (nonatomic, strong)NSMutableArray *circleArr;
 @property (nonatomic, copy)NSString *CircleUrl;
+@property (nonatomic, copy)NSString *CircleIcon;
 @property (nonatomic,strong)UIImageView *SmallGuidance;
 
 @property (nonatomic,strong) AVAudioPlayer *player;
@@ -267,9 +269,10 @@
     
 }
 - (void)ClickCarouselSCAction:(NSInteger)pageNum{
-    CircleHotNewsViewController *circleHotVC = [[CircleHotNewsViewController alloc]init];
+//    CircleHotNewsViewController *circleHotVC = [[CircleHotNewsViewController alloc]init];
+    ProduceDetailViewController *circleHotVC = [[ProduceDetailViewController alloc]init];
     circleHotVC.title = @"圈热点";
-    circleHotVC.CircleUrl = self.CircleUrl;
+    circleHotVC.produceUrl = self.CircleUrl;
     circleHotVC.m = 1;
     if (self.CircleUrl) {
         [self.navigationController pushViewController:circleHotVC animated:YES];
@@ -364,8 +367,8 @@
 
     [WMAnimations WMAnimationMakeBoarderWithLayer:self.searchBtn.layer andBorderColor:[UIColor lightGrayColor] andBorderWidth:0.5 andNeedShadow:NO];
     
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thirdTouchPushScan:) name:@"3dTouchPushScan" object:nil];//3D Touch通知跳转二维码界面
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thirdTouchPushScan:) name:@"3dTouchPushScan" object:nil];//3D Touch通知跳转二维码界面
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpToMessageCenterOrChatVC:) name:@"jumpToMessageCenterOrChatVC" object:nil];
 //    [self.view addSubview:self.tableView];
     
     // 取出隐藏的数据 看下有没有过期的 有就去掉
@@ -511,6 +514,17 @@
     
         [self.navigationController pushViewController:scan animated:YES];
     }
+}
+- (void)jumpToChatList{//跳转至消息中心
+    NewMessageCenterController * NewVC2 = [[NewMessageCenterController alloc]init];
+    [self.navigationController pushViewController:NewVC2 animated:YES];
+}
+- (void)jumpToChat{//跳转至聊天界面
+    NewMessageCenterController * NewVC = [[NewMessageCenterController alloc]init];
+    [self.navigationController pushViewController:NewVC animated:NO];
+    
+    ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:[APNSHelper defaultAPNSHelper].chatName  conversationType:eConversationTypeChat];
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 //设置头部搜索与分站按钮
@@ -1091,6 +1105,14 @@
     if (self.isFromDowmload && self.isMustUpdate) {
         [self checkNewVerSion];
     }
+    
+    if ([APNSHelper defaultAPNSHelper].isJumpChat) {
+        [APNSHelper defaultAPNSHelper].isJumpChat = NO;
+        [self jumpToChat];
+    }else if([APNSHelper defaultAPNSHelper].isJumpChatList){
+        [APNSHelper defaultAPNSHelper].isJumpChatList = NO;
+        [self jumpToChatList];
+    }
 }
 
 
@@ -1192,6 +1214,7 @@
             CircleModel *model = [[CircleModel alloc]initWithDict:dic];
             [self.circleArr addObject:model];
         }
+        self.CircleIcon = json[@"CircleIcon"];
          NSLog(@"轮播  %@", self.circleArr);
         [self estimateCircleArrData:json[@"IsVisible"]];
         
@@ -1200,8 +1223,11 @@
     }];
 }
 
+- (void)setHotView:(UIImageView *)hotView{
+    _hotView = hotView;
+    [self.hotView sd_setImageWithURL:[NSURL URLWithString:self.CircleIcon] placeholderImage:[UIImage imageNamed:@"Hhot"]];
+}
 - (void)estimateCircleArrData:(NSString *)IsVisible{
-//     NSLog(@"轮播  %@", IsVisible);
     if (self.circleArr.count == 0 || [IsVisible isEqualToString:@"0"] || IsVisible.length == 0) {
         self.CarouselView.hidden = YES;
         self.tableView.frame = CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 164);

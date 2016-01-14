@@ -126,6 +126,18 @@ NSString *const kRouterEventChatHeadImageTapEventName = @"kRouterEventChatHeadIm
     else{
         identifier = [identifier stringByAppendingString:@"Receiver"];
     }
+    if (model.message.ext) {
+        if ([model.message.ext[@"MsgType"]isEqualToString:@"1"]) {
+            return [identifier stringByAppendingString:@"TuiSongProduct"];
+        }
+        
+        if ([model.message.ext[@"MsgType"]isEqualToString:@"3"]) {
+            return [identifier stringByAppendingString:@"SendProduct"];
+        }
+        if ([model.message.ext[@"MsgType"]isEqualToString:@"4"]) {
+            return [identifier stringByAppendingString:@"ReceiveRedPacket"];
+        }
+    }
     
     switch (model.type) {
         case eMessageBodyType_Text:
