@@ -65,7 +65,6 @@
 -(void)headRefresh
 {
     if (self.isRefresh) {
-        [self.DataArr removeAllObjects];
         self.isRefresh = NO;
         self.pageIndex = 1;
         [self  loadDataSource];
@@ -74,14 +73,8 @@
 }
 -(void)footRefresh
 {
-    if (self.isRefresh) {
         self.pageIndex ++;
-        self.isRefresh = NO;
         [self loadDataSource];
-        
-    }
-   
-    
 }
 -(void)loadDataSource{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -93,6 +86,7 @@
         NSLog(@"-------------------我的红包信息:%@------------------",json);
         if (!self.isRefresh) {
             self.isRefresh = YES;
+            [self.DataArr removeAllObjects];
         }
         if (![json[@"GetTotalPrice"]  isEqual: @""]) {
             self.GetTotalPriceLabel.text = json[@"GetTotalPrice"];
@@ -149,7 +143,7 @@
     cell.DataTimeLabel.text = [dic objectForKey:@"DateTime"];
     cell.PriceLabel.text = [dic objectForKey:@"PriceTotal"];
     cell.LuckContent.text = [dic objectForKey:@"LuckContent"];
-    cell.mixLabel.text = [NSString stringWithFormat:@"%@/%@个",[dic objectForKey:@"UnGetCount"],[dic objectForKey:@"GetCount"]];
+    cell.mixLabel.text = [NSString stringWithFormat:@"%@/%@个",[dic objectForKey:@"GetCount"],[dic objectForKey:@"UnGetCount"]];
     
     return cell;
     
