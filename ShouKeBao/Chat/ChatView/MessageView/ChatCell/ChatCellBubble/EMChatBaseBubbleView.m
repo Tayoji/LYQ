@@ -59,6 +59,11 @@ NSString *const kRouterEventChatCellBubbleTapEventName = @"kRouterEventChatCellB
     }
     NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger topCapHeight =  isReceiver?BUBBLE_LEFT_TOP_CAP_HEIGHT:BUBBLE_RIGHT_TOP_CAP_HEIGHT;
+//    UIImage * bgimage = [UIImage imageNamed:@"loginbg"];
+//    UIEdgeInsets insets = UIEdgeInsetsMake(10, 10, 10, 10);
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    bgimage = [bgimage resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    self.backImageView.image = bgimage;
     self.backImageView.image = [[UIImage imageNamed:imageName] stretchableImageWithLeftCapWidth:leftCapWidth topCapHeight:topCapHeight];
 }
 

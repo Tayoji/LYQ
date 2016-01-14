@@ -49,7 +49,7 @@
 #import "CustomerDetailAndOrderViewController.h"
 #import "EMChatCustomBubbleView.h"
 #import "FKRedPacketStateCell.h"
-
+#import "SetRedPacketController.h"
 
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
 {
@@ -261,7 +261,7 @@
     
 }
 - (void)AAAAA{
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
         NSString * AppRedEnvelopeId = @"";
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
         EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
@@ -1302,6 +1302,15 @@
     // 隐藏键盘
     [self keyBoardHidden];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:@{@"chatter":self.chatter, @"type":[NSNumber numberWithInt:eCallSessionTypeVideo]}];
+}
+//发红包
+-(void)moreViewRedPacketAction:(DXChatBarMoreView *)moreView{
+    // 隐藏键盘
+    [self keyBoardHidden];
+    SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.sendRedPacketType = sendRedPacketTypeChatVC;
+    setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.chatter, nil];
+    [self.navigationController pushViewController:setRPacket animated:YES];
 }
 
 #pragma mark - LocationViewDelegate

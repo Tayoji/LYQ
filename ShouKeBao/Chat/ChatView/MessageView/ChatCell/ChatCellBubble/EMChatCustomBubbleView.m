@@ -66,6 +66,8 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"3"]){//MsgType = 3 发送产品链接
             
             NSDictionary * json = [self parseJSONStringToNSDictionary:self.model.message.ext[@"MsgValue"]];
+            NSLog(@"%@---%@", json, self.model.message.ext[@"MsgValue"]);
+
             self.FKProductModel = [ProductModal modalWithDict:json];
             FKReceiveProductLinkView  * FKV = [FKReceiveProductLinkView FKProductViewWithModel:self.FKProductModel andFrame:frame];
             [self addSubview:FKV];
