@@ -15,18 +15,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="fQj-Kd-HlP">
-                        <rect key="frame" x="8" y="12" width="40" height="40"/>
+                        <rect key="frame" x="10" y="12" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Toz-M5-5tQ">
-                        <rect key="frame" x="8" y="12" width="40" height="40"/>
+                        <rect key="frame" x="10" y="12" width="40" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         <connections>
                             <action selector="clickIconToCustomerDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8R6-FC-ncc"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" id="Gk1-yP-Dce">
-                        <rect key="frame" x="60" y="0.0" width="190" height="64"/>
+                        <rect key="frame" x="70" y="0.0" width="190" height="64"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大大" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aku-nj-kUA">
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电话：13478644835" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lFR-I3-cpz">
-                                <rect key="frame" x="0.0" y="35" width="120" height="21"/>
+                                <rect key="frame" x="0.0" y="35" width="110" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.2668678977272726" green="0.2668678977272726" blue="0.2668678977272726" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,7 +54,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ylC-mK-4BB">
-                        <rect key="frame" x="60" y="0.0" width="190" height="64"/>
+                        <rect key="frame" x="60" y="0.0" width="180" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
                         <connections>
                             <action selector="takePhoneAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cmy-kY-UPf"/>

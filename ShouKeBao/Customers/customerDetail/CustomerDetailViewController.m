@@ -282,28 +282,43 @@
 }
 
 - (void)setCustomerIconActin{
-    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(230*Width, 30*Height, 60, 60)];
-    [self.tableView addSubview:customerIm];
-    self.customerIcon = customerIm;
     
-    self.customerIcon.layer.masksToBounds = YES;
-    self.customerIcon.layer.cornerRadius = 30;
+    UIButton *customerIm = [UIButton buttonWithType:UIButtonTypeCustom];
+    customerIm.frame = CGRectMake(230*Width, 30*Height, 60, 60);
+    [self.tableView addSubview:customerIm];
+    self.customerIconB = customerIm;
+    UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    [self.customerIconB addSubview:nameLable];
+    
+    self.customerIconB.layer.masksToBounds = YES;
+    self.customerIconB.layer.cornerRadius = 30;
     if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
-        self.customerIcon.image = [UIImage imageNamed:@"userB"];        
-        UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
-        [self.customerIcon.image drawAtPoint:CGPointZero];
+        
+        self.customerIconB.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
          NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
-        NSDictionary *dict = @{
-                               NSFontAttributeName:[UIFont systemFontOfSize:70.0f],
-                               NSForegroundColorAttributeName:[UIColor whiteColor]
-                               };
-        NSLog(@"text =  %@", text);
-        [text drawAtPoint:CGPointMake(35, 30) withAttributes:dict];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        self.customerIcon.image = newImage;
+        NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:text];
+        [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:25] range:NSMakeRange(0, 1)];
+        [aa addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 1)];
+        [self.customerIconB setAttributedTitle:aa forState:UIControlStateNormal];
+
+        
+        
+#warning 以下水印方式 坐标不好确定
+//        self.customerIcon.image = [UIImage imageNamed:@"userB"];        
+//        UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
+//        [self.customerIcon.image drawAtPoint:CGPointZero];
+//         NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
+//        NSDictionary *dict = @{
+//                               NSFontAttributeName:[UIFont systemFontOfSize:70.0f],
+//                               NSForegroundColorAttributeName:[UIColor whiteColor]
+//                               };
+//        NSLog(@"text =  %@", text);
+//        [text drawAtPoint:CGPointMake(35, 30) withAttributes:dict];
+//        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        self.customerIcon.image = newImage;
     }else{
-       [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HearUrl]]];
+        [self.customerIconB.imageView sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HearUrl]]];
     }
     
     
