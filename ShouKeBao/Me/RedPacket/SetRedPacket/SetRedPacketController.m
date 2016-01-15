@@ -17,6 +17,7 @@
 #import "RuleWebViewController.h"
 #import "APNSHelper.h"
 #import "EMMessage.h"
+#import "StrToDic.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
@@ -258,8 +259,11 @@
     
     for (NSDictionary * postDic in self.IDsdataArr) {
         NSString * AppRedEnvelopeId = postDic[@"AppRedEnvelopeId"];
+        NSString * AppRedEnvelopeNoId = postDic[@"AppRedEnvelopeNoId"];
         NSString * AppSkbUserId = postDic[@"AppSkbUserId"];
-        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
+        NSDictionary * sendDic = @{@"AppRedEnvelopeId":AppRedEnvelopeId,@"AppRedEnvelopeNoId": AppRedEnvelopeNoId};
+        NSString * jsonStr = [StrToDic jsonStringWithDicL:sendDic];
+        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":jsonStr};
        self.tempMeesage = [ChatSendHelper sendTextMessageWithString:@"红包"
                                                                 toUsername:AppSkbUserId
                                                                messageType:eMessageTypeChat

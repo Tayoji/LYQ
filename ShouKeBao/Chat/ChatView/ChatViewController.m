@@ -50,6 +50,7 @@
 #import "ProduceDetailViewController.h"
 #import "ProductModal.h"
 #import "MyRedPDetailController.h"
+#import "StrToDic.h"
 @interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate, SendRedPacketDelegate>
 {
     UIMenuController *_menuController;
@@ -801,10 +802,11 @@
 #pragma - mark - 查看界面红包事件
 //红包点击事件
 - (void)OpenRedpacketClickWURL:(MessageModel *)model{
-    NSString * redPacketID = model.message.ext[@"MsgValue"];
+    NSString * redPacketStr = model.message.ext[@"MsgValue"];
+    NSDictionary * extDic = [StrToDic dictionaryWithJsonString:redPacketStr];
     MyRedPDetailController * MyRedDetaile = [[MyRedPDetailController alloc]init];
-    NSLog(@"%@", redPacketID);
-    MyRedDetaile.MainIDsStr = redPacketID;
+    NSLog(@"%@", redPacketStr);
+    MyRedDetaile.MainIDsStr = extDic[@"AppRedEnvelopeNoId"];
     [self.navigationController pushViewController:MyRedDetaile animated:YES];
     NSLog(@"点击查看红包");
 }
