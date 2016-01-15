@@ -415,6 +415,8 @@
     self.moreBtn = moreB;
     if (_model.buttonList.count == 1) {
        self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-50, 0, 40, 40);
+    }else if(_model.buttonList.count == 2){
+       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width*2/3-50, 0, 40, 40);
     }else{
       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
 
