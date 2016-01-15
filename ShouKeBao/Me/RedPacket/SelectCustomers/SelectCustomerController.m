@@ -14,7 +14,9 @@
 #import "SetRedPacketController.h"
 #import "UIImageView+WebCache.h"
 #import "EaseMob.h"
+#import "APNSHelper.h"
 #import "ChatSendHelper.h"
+#import "MBProgressHUD+MJ.h"
 #define pageSize 10
 #define kScreenSize [UIScreen mainScreen].bounds.size
 #define UserDefault [NSUserDefaults standardUserDefaults]
@@ -299,17 +301,8 @@
                 setRPacket.sendRedPacketType = sendRedPacketTypeList;
                 setRPacket.NumOfPeopleArr = self.SELCustomerArr;
                 [self.navigationController pushViewController:setRPacket animated:YES];
-            }else{//来自产品详情
-                for (NSString * chatter in self.SELCustomerArr) {
-                    NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.self.productJsonString};
-                    [ChatSendHelper sendTextMessageWithString:@""
-                                                   toUsername:chatter
-                                                  messageType:eMessageTypeChat
-                                            requireEncryption:NO
-                                                          ext:ext];
-                }
-
-
+            }else{//来自产品详情. 后台执行分享事件
+                [self performSelectorInBackground:@selector(cilckEnsureFromProductShare) withObject:nil];
             }
         }
         
@@ -347,6 +340,38 @@
         [UserDefault setObject:self.guideHistoryArr forKey:@"GuideHistoryRP"];
     }
 }
+
+#pragma - mark -  从分享页面进入点击确定按钮， 子线程执行
+
+- (void)cilckEnsureFromProductShare{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    for (NSString * chatter in self.SELCustomerArr) {
+        NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.self.productJsonString};
+        [ChatSendHelper sendTextMessageWithString:@""
+                                       toUsername:chatter
+                                      messageType:eMessageTypeChat
+                                requireEncryption:NO
+                                              ext:ext];
+    }
+    if (self.SELCustomerArr.count == 1) {
+        [APNSHelper defaultAPNSHelper].isJumpChat = YES;
+        [APNSHelper defaultAPNSHelper].chatName = self.SELCustomerArr[0];
+    }else if(self.SELCustomerArr.count > 1){
+        [APNSHelper defaultAPNSHelper].isJumpChatList = YES;
+    }
+    [self performSelectorOnMainThread:@selector(pushInMainTheard) withObject:nil waitUntilDone:YES];
+}
+
+
+
+#pragma - mark -  跳转到首页聊天界面
+- (void)pushInMainTheard{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+
+
 -(UISearchBar *)searchBar{
     if (!_searchBar) {
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0,kScreenSize.width , 50)];

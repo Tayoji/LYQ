@@ -32,7 +32,7 @@
     
     
     self.iconImage = [[UIImageView alloc]init];
-    self.iconImage.image = [UIImage imageNamed:@"aa"];
+    self.iconImage.image = [UIImage imageNamed:@"SendRedPacketIcon"];
     [self addSubview:self.iconImage];
     
     

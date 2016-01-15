@@ -16,11 +16,13 @@
 #import "NewMessageCenterController.h"
 #import "RuleWebViewController.h"
 #import "APNSHelper.h"
+#import "EMMessage.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
 @property (nonatomic,strong) UIView *WarningView;
 @property (nonatomic,strong) UIView *backGroundView;
 @property (nonatomic,strong) NSMutableArray *IDsdataArr;
+@property (nonatomic, strong)EMMessage * tempMeesage;
 @end
 
 @implementation SetRedPacketController
@@ -258,7 +260,7 @@
         NSString * AppRedEnvelopeId = postDic[@"AppRedEnvelopeId"];
         NSString * AppSkbUserId = postDic[@"AppSkbUserId"];
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        [ChatSendHelper sendTextMessageWithString:@"红包"
+       self.tempMeesage = [ChatSendHelper sendTextMessageWithString:@"红包"
                                                                 toUsername:AppSkbUserId
                                                                messageType:eMessageTypeChat
                                                          requireEncryption:NO
@@ -278,6 +280,9 @@
 }
 
 - (void)backToChat{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didSendRedPacket:)]) {
+        [self.delegate didSendRedPacket:self.tempMeesage];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)pushInMainTheard{

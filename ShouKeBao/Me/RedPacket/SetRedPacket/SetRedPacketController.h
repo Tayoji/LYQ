@@ -7,14 +7,21 @@
 //
 
 #import "SKViewController.h"
-
+@class EMMessage;
 typedef enum{
     sendRedPacketTypeList,
     sendRedPacketTypeChatVC,
     sendRedPacketTypeCustom
 }SendRedPacketType;
+@protocol SendRedPacketDelegate <NSObject>
+
+- (void)didSendRedPacket:(EMMessage *)tempMessage;
+
+@end
 
 @interface SetRedPacketController : SKViewController
+@property id<SendRedPacketDelegate>delegate;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 @property (weak, nonatomic) IBOutlet UITextView *RedPDescribeTextView;
 @property (weak, nonatomic) IBOutlet UITextView *ExitCountryTextView;

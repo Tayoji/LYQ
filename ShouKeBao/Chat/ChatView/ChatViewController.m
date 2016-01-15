@@ -50,7 +50,7 @@
 #import "ProduceDetailViewController.h"
 #import "ProductModal.h"
 #import "MyRedPDetailController.h"
-@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
+@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate, SendRedPacketDelegate>
 {
     UIMenuController *_menuController;
     UIMenuItem *_copyMenuItem;
@@ -257,20 +257,6 @@
 //   [self performSelectorInBackground:@selector(AAAAA) withObject:nil];
 
     
-    
-}
-- (void)AAAAA{
-    for (int i = 0; i < 1; i++) {
-        NSString * AppRedEnvelopeId = @"";
-        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
-                                                                toUsername:_conversation.chatter
-                                                               messageType:[self messageType]
-                                                         requireEncryption:NO
-                                                                       ext:ext];
-        [self addMessage:tempMessage];
-        
-    }
     
 }
 - (void)setRightBarButton{
@@ -667,7 +653,7 @@
         MessageModel * model = (MessageModel *)obj;
         if (model.message.ext) {//红包状态显示
             if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {
-                return 25;
+                return 40;
             }
         }
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];
@@ -810,6 +796,8 @@
     [self.navigationController pushViewController:ProductView animated:YES];
     NSLog(@"点击产品");
 }
+
+#pragma - mark - 查看界面红包事件
 //红包点击事件
 - (void)OpenRedpacketClickWURL:(MessageModel *)model{
     NSString * redPacketID = model.message.ext[@"MsgValue"];
@@ -1296,14 +1284,21 @@
     [self keyBoardHidden];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:@{@"chatter":self.chatter, @"type":[NSNumber numberWithInt:eCallSessionTypeVideo]}];
 }
+
+#pragma - mark - 发红包点击事件
 //发红包
 -(void)moreViewRedPacketAction:(DXChatBarMoreView *)moreView{
     // 隐藏键盘
     [self keyBoardHidden];
     SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.delegate = self;
     setRPacket.sendRedPacketType = sendRedPacketTypeChatVC;
     setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.chatter, nil];
     [self.navigationController pushViewController:setRPacket animated:YES];
+}
+
+-(void)didSendRedPacket:(EMMessage *)tempMessage{
+    [self addMessage:tempMessage];
 }
 
 #pragma mark - LocationViewDelegate
