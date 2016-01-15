@@ -16,7 +16,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    self.headImageView.backgroundColor = [UIColor colorWithRed:47/255.0 green:188/255.0 blue:250/255.0 alpha:1];
     // Configure the view for the selected state
 }
 

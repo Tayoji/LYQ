@@ -120,9 +120,11 @@
         if (!self.isRefresh) {
             [self.dataArr removeAllObjects];
             self.isRefresh = YES;
-            [self.SELCustomerArr removeAllObjects];
-            [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+//            [self.SELCustomerArr removeAllObjects];
         }
+        [self.SELCustomerArr removeAllObjects];
+        [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
+        
         if (arrs.count == 0 && self.dataArr.count == 0){
             self.nullView.alpha = 1;
         }else{
@@ -209,6 +211,7 @@
 //        _isAll = YES;
 //    }
 }
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
@@ -345,7 +348,7 @@
 - (void)cilckEnsureFromProductShare{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     for (NSString * chatter in self.SELCustomerArr) {
-        NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.self.productJsonString};
+        NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.productJsonString};
         [ChatSendHelper sendTextMessageWithString:@""
                                        toUsername:chatter
                                       messageType:eMessageTypeChat
@@ -405,15 +408,16 @@
 -(UIView *)lowView{
     if (!_lowView) {
         _lowView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height-60-50, kScreenSize.width, 50)];
-        _lowView.backgroundColor = [UIColor colorWithRed:241.0/255.0 green:242.0/255.0 blue:243.0/255.0 alpha:1];
+        _lowView.backgroundColor = [UIColor colorWithRed:33.0/255.0 green:171.0/255.0 blue:252.0/255.0 alpha:1];
     }
     return _lowView;
 }
 -(UIButton *)determineBtn{
     if (!_determineBtn) {
-        _determineBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width-80, 2, 80, 40)];
+        _determineBtn = [[UIButton alloc] initWithFrame:CGRectMake(kScreenSize.width/2-40, 2, 80, 40)];
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
-        [_determineBtn setTitleColor:[UIColor colorWithRed:65.0/255.0 green:121.0/255.0 blue:253.0/255.0 alpha:1] forState:UIControlStateNormal];
+//        [_determineBtn setTitleColor:[UIColor colorWithRed:33.0/255.0 green:171.0/255.0 blue:252.0/255.0 alpha:1] forState:UIControlStateNormal];
+        [_determineBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _determineBtn.tag = 101;
         [_determineBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
 
