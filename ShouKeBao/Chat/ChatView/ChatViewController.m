@@ -803,7 +803,8 @@
 - (void)OpenRedpacketClickWURL:(MessageModel *)model{
     NSString * redPacketID = model.message.ext[@"MsgValue"];
     MyRedPDetailController * MyRedDetaile = [[MyRedPDetailController alloc]init];
-//    MyRedDetaile.alloc = redPacketID;
+    NSLog(@"%@", redPacketID);
+    MyRedDetaile.MainIDsStr = redPacketID;
     [self.navigationController pushViewController:MyRedDetaile animated:YES];
     NSLog(@"点击查看红包");
 }
