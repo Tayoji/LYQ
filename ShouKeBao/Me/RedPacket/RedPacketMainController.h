@@ -14,5 +14,5 @@
 - (IBAction)MyRedPacketBtn:(UIButton *)sender;
 - (IBAction)AppointRPacketBtn:(UIButton *)sender;
 - (IBAction)RPacketRuleBtn:(UIButton *)sender;
-
+@property (nonatomic,copy) NSString *TelGuide;
 @end
