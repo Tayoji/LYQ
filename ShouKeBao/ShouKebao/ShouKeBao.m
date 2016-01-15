@@ -345,7 +345,7 @@
     [super viewDidLoad];
 //    [self prepAudio];
    
-    [self circleCartoon];
+//    [self circleCartoon];
     
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];

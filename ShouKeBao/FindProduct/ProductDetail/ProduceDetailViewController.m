@@ -23,6 +23,9 @@
 #import "NSString+FKTools.h"
 #import "ProductDetailShareByMyself.h"
 #import "SelectCustomerController.h"
+#import "ShareHelper.h"
+#import "QRCodeViewController.h"
+#import "ZhiVisitorDynamicController.h"
 
 @interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate, notiPopUpBox>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
@@ -42,15 +45,10 @@
 @property (nonatomic,strong) UIButton * rightButton;
 @property (nonatomic,assign) BOOL isSave;
 @property (nonatomic, strong) UIView *blackView;
-//FromQRcode,
-//FromRecommend,
-//FromStore,
-//FromProductSearch,
-//FromFindProduct,
-//FromHotProduct
 @property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
 @property (nonatomic, strong) ProductDetailShareByMyself *defineV;
+@property (nonatomic, strong)ShareHelper *shareHelperView;
 
 @end
 
@@ -63,7 +61,7 @@
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
                            @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
                            @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"collectP", @"title":@"微信收藏"},
                            @{@"pic":@"iconfont-qq", @"title":@"QQ"},
                            @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
                            @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
@@ -72,7 +70,7 @@
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
                            @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
                            @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
+                           @{@"pic":@"collectP", @"title":@"微信收藏"},
                            @{@"pic":@"iconfont-qq", @"title":@"QQ"},
                            @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
                            @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
@@ -579,16 +577,42 @@
     if (self.fromType == FromQRcode) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"ppkLYQAPP_ShareSuccess()"];
     }
-    NSLog(@"%@", self.shareInfo);
+        NSLog(@"%@", self.shareInfo);
+        NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+        [postDic setObject:@"0" forKey:@"ShareType"];
+        if (self.shareInfo[@"Url"]) {
+            [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+        }
+        [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+        NSLog(@"%@", postDic);
+ 
+//     ShareFrom shareFromTpye;
+//    
+//    if ([self isKindOfClass:[QRCodeViewController class]]) {
+//        shareFromTpye = FromQRcode1;
+////    }else if ([self isKindOfClass:[FindProduct class]]){
+////        shareFromTpye = FromRecommend;
+////    }else if ([self isKindOfClass:[Discover class]]){
+////        shareFromTpye = FromStore;
+////    }else if ([self isKindOfClass:[SpecialSales class]]){
+////        shareFromTpye = FromProductSearch;
+////    }else if ([self isKindOfClass:[Me class]]){
+////        shareFromTpye = FromHotProduct;
+////    }else if ([self isKindOfClass:[]]){
+////        shareFromTpye = FromScanHistory;
+//        
+//    }else if ([self isKindOfClass: [ZhiVisitorDynamicController class]]){
+//         shareFromTpye = FromZhiVisitorDynamic1;
+//    }
+//    
+////    [self shareHelperView];
+//    
+//    [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
+//    
     
-    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-    [postDic setObject:@"0" forKey:@"ShareType"];
-    if (self.shareInfo[@"Url"]) {
-        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
-    }
-    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
-    NSLog(@"%@", postDic);
     
+    
+#warning 简单封装自定义分享实现
         //构造分享内容
         id<ISSContent>publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
                                           defaultContent:self.shareInfo[@"Desc"]
@@ -829,6 +853,13 @@
         self.defineV.hidden = NO;
     }
     return _defineV;
+}
+- (ShareHelper *)shareHelperView{
+    if (!_shareHelperView) {
+        self.shareHelperView = [[ShareHelper alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
+        self.shareHelperView.hidden = NO;
+    }
+    return _shareHelperView;
 }
 - (NSArray *)photosArr{
     if (!_photosArr) {

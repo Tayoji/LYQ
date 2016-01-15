@@ -29,30 +29,6 @@ static NSString * cellid = @"reuseaa";
     if (self) {
         [self setLayout];
         self.photosArr = [NSArray array];
-     
-        
-//        if (self.shareInfo[@"ProductId"]) {
-//        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-//                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-//                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
-//                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
-//                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-////                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-//                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-//                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-//                           ];
-//        }else{
-//            self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-//                               @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-//                               @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-//                               @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
-//                               @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-//                               @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-//                               @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-//                               ];
-//   
-//            
-//        }
 
     }
     return self;

@@ -114,7 +114,7 @@
     }else if (control.selectedSegmentIndex == 2){
         self.button.hidden = NO;
         [self.view addSubview:self.customerDynamicVC.view];
-        [self.button setImage:[UIImage imageNamed:@"grayxiaoxi"] forState:UIControlStateNormal];
+        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
         [self.button setTitle:@"" forState:UIControlStateNormal];
         if (self.detailVC || self.orderVC) {
             [self.detailVC.view removeFromSuperview];
