@@ -345,7 +345,7 @@
 - (void)cilckEnsureFromProductShare{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     for (NSString * chatter in self.SELCustomerArr) {
-        NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.self.productJsonString};
+        NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.productJsonString};
         [ChatSendHelper sendTextMessageWithString:@""
                                        toUsername:chatter
                                       messageType:eMessageTypeChat

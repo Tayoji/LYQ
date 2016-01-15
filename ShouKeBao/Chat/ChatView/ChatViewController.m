@@ -792,6 +792,7 @@
 - (void)SendProductClickWithUrlStr:(ProductModal *)model{
     ProduceDetailViewController * ProductView = [[ProduceDetailViewController alloc]init];
     ProductView.produceUrl = model.LinkUrlLyq;
+    NSLog(@"---%@", model.ShareInfo);
     ProductView.shareInfo = model.ShareInfo;
     [self.navigationController pushViewController:ProductView animated:YES];
     NSLog(@"点击产品");
