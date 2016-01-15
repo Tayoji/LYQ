@@ -199,8 +199,7 @@
         [self.SELCustomerArr addObject:model.AppSkbUserId];
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
     }else{
-        UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-        cell.selected = NO;
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
     }
     
 //    if (self.SELCustomerArr.count == self.dataArr.count) {
@@ -316,26 +315,26 @@
     }else if(button.tag == 102){//全选
         if (_isAll) {
 //            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceAllBtn"] forState:UIControlStateNormal];
-            [self.SELCustomerArr removeAllObjects];
-            for (NSInteger i = 0; i<self.dataArr.count; i++) {
-                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
-                [self.tableView  deselectRowAtIndexPath:indexPath animated:NO];
-            }
-            
-            NSLog(@"---%ld",self.SELCustomerArr.count);
-            _isAll = NO;
+//            [self.SELCustomerArr removeAllObjects];
+//            for (NSInteger i = 0; i<self.dataArr.count; i++) {
+//                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
+//                [self.tableView  deselectRowAtIndexPath:indexPath animated:NO];
+//            }
+//            
+//            NSLog(@"---%ld",self.SELCustomerArr.count);
+//            _isAll = NO;
         }else{
 //            [_AllSelectedBtn setImage:[UIImage imageNamed:@"InvoiceClickAll"] forState:UIControlStateNormal];
-            [self.SELCustomerArr removeAllObjects];
-            for (NSInteger i = 0; i<self.dataArr.count; i++) {
-                CustomModel *model = self.dataArr[i];
-                [self.SELCustomerArr addObject:model.AppSkbUserId];
-                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
-            
-            NSLog(@"---%ld",self.SELCustomerArr.count);
-            _isAll = YES;
+//            [self.SELCustomerArr removeAllObjects];
+//            for (NSInteger i = 0; i<self.dataArr.count; i++) {
+//                CustomModel *model = self.dataArr[i];
+//                [self.SELCustomerArr addObject:model.AppSkbUserId];
+//                NSIndexPath *indexPath =[NSIndexPath indexPathForRow:i inSection:0];
+//                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+//            }
+//            
+//            NSLog(@"---%ld",self.SELCustomerArr.count);
+//            _isAll = YES;
 
         }
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];

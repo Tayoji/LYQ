@@ -152,7 +152,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MyRedPDetailController *detail = [[MyRedPDetailController alloc] init];
 //    detail.MainString = self.MainIDArr[indexPath.row];
-    detail.lastData = self.DataArr[indexPath.row];
+//    detail.lastData = self.DataArr[indexPath.row];
+    detail.MainIDsStr =[self.DataArr[indexPath.row] objectForKey:@"AppLuckMoneyMainId"];
     [self.navigationController pushViewController:detail animated:YES];
 }
 -(UITableView *)tableView{

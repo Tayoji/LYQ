@@ -11,5 +11,6 @@
 @interface MyRedPDetailController : SKViewController
 
 //@property (nonatomic, copy) NSString *MainString;
-@property (nonatomic,strong) NSDictionary *lastData;
+//@property (nonatomic,strong) NSDictionary *lastData;
+@property (nonatomic,copy) NSString *MainIDsStr;
 @end

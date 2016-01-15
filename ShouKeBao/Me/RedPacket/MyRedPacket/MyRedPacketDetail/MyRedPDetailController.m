@@ -50,12 +50,12 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
         self.title = @"我的红包";
     //填充头区域数据
-    NSLog(@"--%@",self.lastData);
-    self.TitleLabel.text = self.lastData[@"Title"];
-    self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",self.lastData[@"PriceTotal"]];
-    self.LuckContentLabel.text = self.lastData[@"LuckContent"];
-    self.DateTimeLabel.text = self.lastData[@"DateTime"];
-    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"GetCount"],self.lastData[@"UnGetCount"]];
+//    NSLog(@"--%@",self.lastData);
+//    self.TitleLabel.text = self.lastData[@"Title"];
+//    self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",self.lastData[@"PriceTotal"]];
+//    self.LuckContentLabel.text = self.lastData[@"LuckContent"];
+//    self.DateTimeLabel.text = self.lastData[@"DateTime"];
+//    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"GetCount"],self.lastData[@"UnGetCount"]];
     [self loadDataSource];
     [self.view addSubview:self.tableView];
     [self iniHeader];
@@ -89,10 +89,10 @@
 }
 
 -(void)loadDataSource{
-    NSString *IDsStr = self.lastData[@"AppLuckMoneyMainId"];
-    NSLog(@"---%@",IDsStr);
+//    NSString *IDsStr = self.lastData[@"AppLuckMoneyMainId"];
+    NSLog(@"---%@",self.MainIDsStr);
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:IDsStr forKey:@"AppLuckMoneyMainIds"];
+    [dic setValue:self.MainIDsStr forKey:@"AppLuckMoneyMainIds"];
     [dic setValue:[NSString stringWithFormat:@"%d",self.pageIndex] forKey:@"PageIndex"];
     [dic setValue:@"10" forKey:@"PageSize"];
     NSLog(@"---%@",dic);
@@ -104,6 +104,15 @@
             [self.cellDataArr removeAllObjects];
 
         }
+        NSDictionary *HeadDic = json[@"AppLuckMoneyDetail"];
+        NSLog(@"%@",HeadDic);
+        //头部数据
+        self.TitleLabel.text = HeadDic[@"Title"];
+        self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",HeadDic[@"PriceTotal"]];
+        self.LuckContentLabel.text = HeadDic[@"LuckContent"];
+        self.DateTimeLabel.text = HeadDic[@"DateTime"];
+        self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",HeadDic[@"GetCount"],HeadDic[@"UnGetCount"]];
+        //数据区域
         self.DescribeLabel.text = json[@"Title"];//红包描述
         self.OutLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutLuckMoneyCount"] ];//出境游
         self.OutTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutTotalPrice"]];
@@ -138,7 +147,7 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dataDic = self.cellDataArr[indexPath.row];
-    NSLog(@"--%@",dataDic[@"LuckMoneyType"]);
+    NSLog(@"%@",dataDic);
     if ([dataDic[@"LuckMoneyType"]  isEqual: @"0"]) {//待领取
         tableView.rowHeight = 80;
         NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
@@ -385,7 +394,7 @@
 }
 -(UILabel *)DescribeLabel{
     if (!_DescribeLabel) {
-        _DescribeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 78, kScreenSize.width/3, 30)];
+        _DescribeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 78, kScreenSize.width-20, 30)];
         _DescribeLabel.textColor = [UIColor lightGrayColor];
     }
     return _DescribeLabel;
