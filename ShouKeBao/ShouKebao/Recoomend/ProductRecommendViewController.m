@@ -214,12 +214,13 @@
                 NSLog(@"%@%@", dataArray, detail.PersonAlternateCash);
             }
             //根据id判断在前一页面点击进入的时候的产品 对应 这个界面数组里面的具体哪一个。来置顶
-            for (NSInteger i = 0; i < dataArray.count; i++) {
-                if ([((DayDetail *)dataArray[i]).PushId isEqualToString: self.pushId]) {
-                    [currentTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)i]];
-                    self.pushIdNum = i;
-                }
-            }
+#warning 改版后不需要再去确定
+//            for (NSInteger i = 0; i < dataArray.count; i++) {
+//                if ([((DayDetail *)dataArray[i]).PushId isEqualToString: self.pushId]) {
+//                    [currentTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)i]];
+//                    self.pushIdNum = i;
+//                }
+//            }
             [tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -563,16 +564,17 @@
         cell.descripBtn.tag = indexPath.row;
         cell.detail = detail;
         NSLog(@".... %@   %@", self.pushId, detail.PushId);
-        if ([self.pushId isEqualToString:detail.PushId]) {
+        if (/*[self.pushId isEqualToString:detail.PushId]*/ indexPath.row == 0 && [self.title isEqualToString:@"今日推荐"]) {
             cell.isPlain = YES;
             [cell.descripBtn setTitle:@"收起" forState:UIControlStateNormal];
             [self.todayTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
             [WMAnimations WMAnimationMakeBoarderNoCornerRadiosWithLayer:cell.contentView.layer andBorderColor:[UIColor colorWithRed:41/255.f green:147/255.f blue:250/255.f alpha:1] andBorderWidth:1 andNeedShadow:YES];
         }
-        if (self.justDoOnce) {
-            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.pushIdNum inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            self.justDoOnce = NO;
-        }
+#warning 因为默认是第一个 所以不需要滚动置顶
+//        if (self.justDoOnce) {
+//            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.pushIdNum inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+//            self.justDoOnce = NO;
+//        }
         return cell;
     }else{
         YesterDayCell *cell = [YesterDayCell cellWithTableView:tableView];

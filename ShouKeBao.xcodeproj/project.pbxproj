@@ -780,6 +780,7 @@
 		B3E983C91C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E983C71C3E774A00BA84CE /* DefineShareViewCollectionViewCell.m */; };
 		B3E983CA1C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */; };
 		B3E983CD1C3E778500BA84CE /* DefineShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E983CC1C3E778500BA84CE /* DefineShareModel.m */; };
+		B3ECA9B71C48CD2100C49E46 /* ShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ECA9B61C48CD2100C49E46 /* ShareHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2127,6 +2128,8 @@
 		B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefineShareViewCollectionViewCell.xib; sourceTree = "<group>"; };
 		B3E983CB1C3E778500BA84CE /* DefineShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineShareModel.h; sourceTree = "<group>"; };
 		B3E983CC1C3E778500BA84CE /* DefineShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefineShareModel.m; sourceTree = "<group>"; };
+		B3ECA9B51C48CD2100C49E46 /* ShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareHelper.h; sourceTree = "<group>"; };
+		B3ECA9B61C48CD2100C49E46 /* ShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5079,6 +5082,8 @@
 				B3E983CC1C3E778500BA84CE /* DefineShareModel.m */,
 				B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */,
 				B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */,
+				B3ECA9B51C48CD2100C49E46 /* ShareHelper.h */,
+				B3ECA9B61C48CD2100C49E46 /* ShareHelper.m */,
 			);
 			path = DefineShare;
 			sourceTree = "<group>";
@@ -5573,6 +5578,7 @@
 				5A52FC631ACEBF220076DAE6 /* Login.m in Sources */,
 				B3B7A6701BA6A25F0043DF7C /* attachmentViewController.m in Sources */,
 				796EFC001BF5C5DE00799120 /* LocationViewController.m in Sources */,
+				B3ECA9B71C48CD2100C49E46 /* ShareHelper.m in Sources */,
 				79A963021BCC937100CCAB2B /* AppDelegate+Extend.m in Sources */,
 				B3BC21631BDF14A70017247D /* ButtonAndImageView.m in Sources */,
 				527E3B7F1BEC7EE200AAA6F6 /* NewMessageCenterController.m in Sources */,

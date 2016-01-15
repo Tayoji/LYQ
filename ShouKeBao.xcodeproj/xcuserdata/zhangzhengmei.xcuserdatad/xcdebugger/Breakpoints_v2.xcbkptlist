@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/ShouKebao/Recoomend/ProductRecommendViewController.m"
-            timestampString = "474513754.591257"
+            filePath = "ShouKeBao/ShouKebao/HomeView/DayDetailCell.m"
+            timestampString = "474523550.738352"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
-            landmarkName = "-loadMoreData"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
+            landmarkName = "-shareIt"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
