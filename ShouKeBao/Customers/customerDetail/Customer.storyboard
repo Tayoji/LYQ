@@ -52,8 +52,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detailC1" id="gi8-lW-rMO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userNS" id="gi8-lW-rMO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大大大大" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ko-UI-egP">
@@ -1746,7 +1746,6 @@
         <image name="bornDay" width="20" height="20"/>
         <image name="country" width="20" height="20"/>
         <image name="customTel" width="19" height="19"/>
-        <image name="detailC1" width="639" height="145"/>
         <image name="dianhua" width="18" height="18"/>
         <image name="fujian" width="20" height="20"/>
         <image name="lygw" width="20" height="20"/>
@@ -1758,6 +1757,7 @@
         <image name="qq" width="18" height="18"/>
         <image name="remindIcon" width="18" height="18"/>
         <image name="userAddress" width="20" height="20"/>
+        <image name="userNS" width="640" height="246"/>
         <image name="weixin" width="18" height="18"/>
         <image name="zhuanhuan" width="20" height="20"/>
     </resources>

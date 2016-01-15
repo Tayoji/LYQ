@@ -131,12 +131,13 @@ NSInteger theNumbe;
 
     
 //    传productId
-    NSString *markProductId = [self.photosArr objectAtIndex:indexPath.row][@"productId"];
+    NSString *markProductId = [self.photosArr objectAtIndex:indexPath.row][@"ProductId"];
     
     
     UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
     ProductRecommendViewController * PRVC = (ProductRecommendViewController *)[SB instantiateViewControllerWithIdentifier:@"eeee"];
     PRVC.pushId = markStr;
+     NSLog(@"markProductId=  %@ %@", markProductId, self.photosArr);
     PRVC.markProductId = markProductId;
     [self.ShouKeBaoNav pushViewController:PRVC animated:YES];
 

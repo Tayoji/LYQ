@@ -71,7 +71,7 @@
 }
 
 #pragma -mark 编辑用户资料后通知更新
-- (void)refreshCustomerInfoWithName:(NSString *)name andQQ:(NSString *)qq andWeChat:(NSString *)weChat andPhone:(NSString *)phone andCardID:(NSString *)cardID andBirthDate:(NSString *)birthdate andNationablity:(NSString *)nationablity andNation:(NSString *)nation andPassportStart:(NSString *)passPortStart andPassPortAddress:(NSString *)passPortAddress andPassPortEnd:(NSString *)passPortEnd andAddress:(NSString *)address andPassport:(NSString *)passPort andNote:(NSString *)note{
+- (void)refreshCustomerInfoWithName:(NSString *)name andQQ:(NSString *)qq andWeChat:(NSString *)weChat andPhone:(NSString *)phone andCardID:(NSString *)cardID andBirthDate:(NSString *)birthdate andNationablity:(NSString *)nationablity andNation:(NSString *)nation andPassportStart:(NSString *)passPortStart andPassPortAddress:(NSString *)passPortAddress andPassPortEnd:(NSString *)passPortEnd andAddress:(NSString *)address andPassport:(NSString *)passPort andNote:(NSString *)note nickName:(NSString *)nickName{
     self.QQ.text = qq;
     self.weChat.text = weChat;
     self.tele.text = phone;
@@ -87,6 +87,7 @@
     self.pasportInUseDay.text = passPortEnd;
     self.passPortId.text = passPort;
     self.livingAddress.text = address;
+    self.nickNameF.text = nickName;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -315,7 +316,7 @@
     self.tele.text = [self.dataArr[0]Mobile];/*self.teleStr;*/
     self.note.text = [self.dataArr[0]Remark];/*self.noteStr;*/
     self.customerNameLa.text = [self.dataArr[0]Name];/*self.userNameStr;*/
-    
+    self.nickNameF.text = [self.dataArr[0]NickName];
     self.passPortId.text = [self.dataArr[0]PassportNum];
     self.userMessageID.text = [self.dataArr[0]CardNum];
     self.bornDay.text = [self.dataArr[0]BirthDay];

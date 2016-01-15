@@ -24,6 +24,7 @@
 - (IBAction)clickIconToCustomerDetail:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *viewAboveOfCalling;
 @property (weak, nonatomic) IBOutlet UILabel *nameL;
+
 @property (weak, nonatomic) IBOutlet UILabel *telL;
 @property (weak, nonatomic) IBOutlet UILabel *orderL;
 @property (weak, nonatomic) IBOutlet UIButton *IMBtn;

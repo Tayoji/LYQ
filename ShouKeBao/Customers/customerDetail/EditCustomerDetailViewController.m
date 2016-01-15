@@ -302,8 +302,8 @@
             }
             
 //            [self.delegate refreshCustomerInfoWithName:self.name.text andQQ:self.QQ.text andWeChat:self.wechat.text andPhone:self.tele.text andNote:self.note.text];
-            
-            [self.delegate refreshCustomerInfoWithName:self.name.text andQQ:self.QQ.text andWeChat:self.wechat.text andPhone:self.tele.text andCardID:self.personCardID.text andBirthDate:self.birthdate.text andNationablity:self.nationality.text andNation:self.nation.text andPassportStart:self.passportData.text andPassPortAddress:self.passportAddress.text andPassPortEnd:self.passportValidity.text andAddress:self.address.text andPassport:self.passport.text andNote:self.note.text];
+//            
+//            [self.delegate refreshCustomerInfoWithName:self.name.text andQQ:self.QQ.text andWeChat:self.wechat.text andPhone:self.tele.text andCardID:self.personCardID.text andBirthDate:self.birthdate.text andNationablity:self.nationality.text andNation:self.nation.text andPassportStart:self.passportData.text andPassPortAddress:self.passportAddress.text andPassPortEnd:self.passportValidity.text andAddress:self.address.text andPassport:self.passport.text andNote:self.note.text];
   
 //             [self.initDelegate reloadMethod];
         

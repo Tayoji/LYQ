@@ -75,6 +75,7 @@
     self.LineWeith.constant = K_TableWidth / 3;
     self.scrollHeight.constant = K_TableHeight;
     [self loadNewData];
+    NSLog(@" mar= %@", self.markProductId);
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -177,6 +178,7 @@
                                 @"DateRangeType":@"1",
                   @"ProductId":[NSString stringWithFormat:@"%@", self.markProductId]
                   };
+        NSLog(@"markProductId %@", self.markProductId);
         currentTagDic = self.todayTagDic;
     }else if([tableView isEqual:self.yestdayTableView]){
         param = @{@"PageSize":pageSize,
@@ -560,6 +562,7 @@
         [cell.descripBtn addTarget:self action:@selector(changeHeight:) forControlEvents:UIControlEventTouchUpInside];
         cell.descripBtn.tag = indexPath.row;
         cell.detail = detail;
+        NSLog(@".... %@   %@", self.pushId, detail.PushId);
         if ([self.pushId isEqualToString:detail.PushId]) {
             cell.isPlain = YES;
             [cell.descripBtn setTitle:@"收起" forState:UIControlStateNormal];

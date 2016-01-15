@@ -224,6 +224,7 @@
         [dic setObject:self.detailVC.pasportInUseDay.text forKey:@"ValidEndDate"];
         [dic setObject:self.detailVC.livingAddress.text forKey:@"Address"];
         [dic setObject:self.detailVC.passPortId.text forKey:@"PassportNum"];
+        [dic setObject:self.detailVC.nickNameF.text forKey:@"NickName"];
     
         NSMutableDictionary *secondDic = [NSMutableDictionary dictionary];
         [secondDic setObject:dic forKey:@"Customer"];
