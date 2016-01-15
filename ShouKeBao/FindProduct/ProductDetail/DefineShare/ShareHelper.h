@@ -12,7 +12,7 @@
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
 -(void)pushChoseCustomerView:(NSString *)productJsonStr;
--(void)closeBlackView;
+//-(void)closeBlackView;
 @end
 
 typedef enum{
@@ -27,6 +27,14 @@ typedef enum{
 }ShareFrom;
 
 @interface ShareHelper : UIView
+@property (nonatomic, strong)UIView *shareView;
+@property (nonatomic, strong)UILabel *titleLabel;
+@property (nonatomic, strong)UIButton *cancleBtn;
+@property (nonatomic, strong)UILabel *contentLabel;
+@property (nonatomic, strong)UICollectionView *collectionView;
+@property (nonatomic, strong)UIView *blackView;
+@property (nonatomic, strong)id<notiPopUpBox>delegate;
+
 //将分享内容和分享类型传进来， SharePushFrom 用于区分不同页面的不同分享
 - (void)shareWithshareInfo:(NSDictionary *)shareInfo
                    andType:(ShareFrom)shareFrom
@@ -34,23 +42,4 @@ typedef enum{
 
 //分享单例
 + (ShareHelper *)shareHelper;
-//- (instancetype)initWithFrame:(CGRect)frame;
-@property (nonatomic, strong)UIView *shareView;
-@property (nonatomic, strong)UILabel *titleLabel;
-@property (nonatomic, strong)UIButton *cancleBtn;
-@property (nonatomic, strong)UILabel *contentLabel;
-@property (nonatomic, strong)UICollectionView *collectionView;
-
-
-@property (nonatomic, strong)NSDictionary *shareInfo;
-@property (nonatomic, copy)NSString *URL;
-@property (nonatomic, assign)ShareFrom fromType;
-//@property (nonatomic, strong)NSArray *eventArray;
-@property (nonatomic,strong) NSArray *photosArr;
-@property (nonatomic, strong)id publishContent;
-//@property (nonatomic, strong)UIView *blackView;
-@property (nonatomic, strong)id<notiPopUpBox>delegate;
-//@property (nonatomic, copy)NSString *ProductId;
-
-
 @end

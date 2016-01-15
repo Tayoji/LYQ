@@ -72,9 +72,9 @@
 - (IBAction)jumpWeChat:(UIButton *)sender;
 - (IBAction)jumpQQ:(UIButton *)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *customerIcon;
-@property (weak, nonatomic) IBOutlet UILabel *customerNameLa;
 @property (weak, nonatomic) IBOutlet UITextField *nickNameF;
+@property (weak, nonatomic) IBOutlet UITextField *customerNameLa;
+@property (weak, nonatomic) IBOutlet UIButton *customerIconB;
 
 
 

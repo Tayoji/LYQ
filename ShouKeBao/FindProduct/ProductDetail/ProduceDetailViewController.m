@@ -48,7 +48,6 @@
 @property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
 @property (nonatomic, strong) ProductDetailShareByMyself *defineV;
-@property (nonatomic, strong)ShareHelper *shareHelperView;
 
 @end
 
@@ -56,31 +55,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self blackView];
-    
-    if (self.shareInfo[@"IMProductMsgValue"]) {
-        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
-                           @{@"pic":@"collectP", @"title":@"微信收藏"},
-                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-                           ];
-    }else{
-        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-                           @{@"pic":@"collectP", @"title":@"微信收藏"},
-                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-                           ];
-        
-        
-    }
-    
-    
-    if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
+     if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
         self.title = @"我的店铺二维码";
     }
     
@@ -586,46 +561,30 @@
         [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
         NSLog(@"%@", postDic);
  
-//     ShareFrom shareFromTpye;
-//    
-//    if ([self isKindOfClass:[QRCodeViewController class]]) {
-//        shareFromTpye = FromQRcode1;
-////    }else if ([self isKindOfClass:[FindProduct class]]){
-////        shareFromTpye = FromRecommend;
-////    }else if ([self isKindOfClass:[Discover class]]){
-////        shareFromTpye = FromStore;
-////    }else if ([self isKindOfClass:[SpecialSales class]]){
-////        shareFromTpye = FromProductSearch;
-////    }else if ([self isKindOfClass:[Me class]]){
-////        shareFromTpye = FromHotProduct;
-////    }else if ([self isKindOfClass:[]]){
-////        shareFromTpye = FromScanHistory;
-//        
-//    }else if ([self isKindOfClass: [ZhiVisitorDynamicController class]]){
-//         shareFromTpye = FromZhiVisitorDynamic1;
-//    }
-//    
-////    [self shareHelperView];
-//    
-//    [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
-//    
+     ShareFrom shareFromTpye;
     
-    
-    
-#warning 简单封装自定义分享实现
-        //构造分享内容
-        id<ISSContent>publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
-                                          defaultContent:self.shareInfo[@"Desc"]
-                                                   image:[ShareSDK imageWithUrl:self.shareInfo[@"Pic"]]
-                                                   title:self.shareInfo[@"Title"]
-                                                     url:self.shareInfo[@"Url"]                                             description:self.shareInfo[@"Desc"]
-                                               mediaType:SSPublishContentMediaTypeNews];
+    if ([self isKindOfClass:[QRCodeViewController class]]) {
+        shareFromTpye = FromQRcode1;
+//    }else if ([self isKindOfClass:[FindProduct class]]){
+//        shareFromTpye = FromRecommend;
+//    }else if ([self isKindOfClass:[Discover class]]){
+//        shareFromTpye = FromStore;
+//    }else if ([self isKindOfClass:[SpecialSales class]]){
+//        shareFromTpye = FromProductSearch;
+//    }else if ([self isKindOfClass:[Me class]]){
+//        shareFromTpye = FromHotProduct;
+//    }else if ([self isKindOfClass:[]]){
+//        shareFromTpye = FromScanHistory;
         
-        [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.shareInfo[@"Url"]] image:nil];
-        NSLog(@"%@444", self.shareInfo);
-        [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.shareInfo[@"Url"]]];
+    }else if ([self isKindOfClass: [ZhiVisitorDynamicController class]]){
+         shareFromTpye = FromZhiVisitorDynamic1;
+    }
+
+    [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
+    [ShareHelper shareHelper].delegate = self;
     
-    [self showDefineView:publishContent];
+
+    
 
 #pragma mark - 系统自带分享先不管
 //    //每次分享的时候调用此方法，让后台知道当前页面分享的产品
@@ -760,50 +719,22 @@
     
 }
 
-- (void)showDefineView:(id)publishContent{
-    self.blackView.hidden = NO;
-    self.defineV.hidden = NO;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
-   
-    self.defineV.delegate = self;
-    self.defineV.eventArray = self.eventArray;
-    self.defineV.photosArr = self.photosArr;
-    self.defineV.URL = self.webView.request.URL.absoluteString;
-    self.defineV.publishContent = publishContent;
-    self.defineV.shareInfo = self.shareInfo;
-    _defineV.fromType = [NSString stringWithFormat:@"%d", self.fromType];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView)];
-    [self.blackView addGestureRecognizer:tap];
-    
-   
-}
 
-- (void)closeBlackView{
-    self.blackView.hidden = YES;
-    self.defineV.hidden = YES;
-
-}
 
 - (void)notiPopUpBoxView{
-    [self.blackView removeFromSuperview];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
     self.defineBox.hidden = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.defineBox];
 
 }
+
 - (IBAction)cancleDefineBox:(id)sender {
     self.defineBox.hidden = YES;
-    [self.blackView removeFromSuperview];
-    [self.defineV removeFromSuperview];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
+    [ShareHelper shareHelper].blackView.hidden = YES;
 }
 
 - (IBAction)applyForOpenVip:(id)sender {
     self.defineBox.hidden = YES;
-    [self.blackView removeFromSuperview];
-    [self.defineV removeFromSuperview];
+    [ShareHelper shareHelper].blackView.hidden = YES;
     NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
     newExclusiveVC.naVC = self.navigationController;
     newExclusiveVC.pushFrom = FromProductDetail;
@@ -812,11 +743,9 @@
 }
 
 - (void)pushChoseCustomerView:(NSString *)productJsonStr{
-    [self closeBlackView];
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
     selectVC.productJsonString = productJsonStr;
     selectVC.FromWhere = FromeProDetail;
-    
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 -(void)reloadStateWithType:(ShareType)type
@@ -854,13 +783,7 @@
     }
     return _defineV;
 }
-- (ShareHelper *)shareHelperView{
-    if (!_shareHelperView) {
-        self.shareHelperView = [[ShareHelper alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
-        self.shareHelperView.hidden = NO;
-    }
-    return _shareHelperView;
-}
+
 - (NSArray *)photosArr{
     if (!_photosArr) {
         self.photosArr = [NSArray array];

@@ -56,17 +56,17 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="74.5"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大大大大" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ko-UI-egP">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="daada" minimumFontSize="17" id="w3p-Vl-E2n">
                                                     <rect key="frame" x="20" y="40" width="150" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <color key="textColor" red="0.92060425609999996" green="0.92060425609999996" blue="0.92060425609999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bQt-4B-XpS">
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dMc-GT-VsY">
                                                     <rect key="frame" x="200" y="10" width="60" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -591,8 +591,8 @@
                         <outlet property="QQ" destination="mEX-Wn-cTB" id="aeZ-C8-4HP"/>
                         <outlet property="bornDay" destination="WMO-Yt-17I" id="bah-re-hdr"/>
                         <outlet property="countryID" destination="gB3-g0-0sr" id="7m7-25-RtV"/>
-                        <outlet property="customerIcon" destination="bQt-4B-XpS" id="Wd9-Yy-ZqU"/>
-                        <outlet property="customerNameLa" destination="9Ko-UI-egP" id="RIm-hx-B49"/>
+                        <outlet property="customerIconB" destination="dMc-GT-VsY" id="rvf-r3-jeO"/>
+                        <outlet property="customerNameLa" destination="w3p-Vl-E2n" id="xvG-Wt-m7X"/>
                         <outlet property="livingAddress" destination="ZVQ-OY-D9P" id="Xb8-cv-5M5"/>
                         <outlet property="nationalID" destination="OWj-w3-1Qy" id="bDS-tn-w9g"/>
                         <outlet property="nickNameF" destination="kJf-u4-5yn" id="efh-dW-kT3"/>

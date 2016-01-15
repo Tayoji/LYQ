@@ -21,6 +21,13 @@
 static NSString * cellid = @"reuseaa";
 
 @interface ShareHelper()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@property (nonatomic, strong)NSDictionary *shareInfo;
+@property (nonatomic, copy)NSString *URL;
+@property (nonatomic, assign)ShareFrom fromType;
+//@property (nonatomic, strong)NSArray *eventArray;
+@property (nonatomic,strong) NSArray *photosArr;
+@property (nonatomic, strong)id publishContent;
+
 @end
 
 
@@ -30,8 +37,7 @@ static NSString * cellid = @"reuseaa";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shareH = [[ShareHelper alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
-      
-    });
+        });
     return shareH;
 }
 
@@ -43,6 +49,7 @@ static NSString * cellid = @"reuseaa";
     _shareInfo = shareInfo;
     _URL = pageUrl;
     [self setLayout];
+    self.hidden = NO;
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareInfo[@"Desc"]
                                        defaultContent:shareInfo[@"Desc"]
@@ -55,7 +62,7 @@ static NSString * cellid = @"reuseaa";
     NSLog(@"%@444", shareInfo);
     [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", shareInfo[@"Url"]]];
     _publishContent = publishContent;
-    [[[UIApplication sharedApplication].delegate window] addSubview:self];
+   
     
 }
 - (void)setLayout{
@@ -80,7 +87,15 @@ static NSString * cellid = @"reuseaa";
         
         
     }
-    
+    //阴影
+    UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    blackView.hidden = NO;
+    [[UIApplication sharedApplication].keyWindow addSubview:blackView];
+    self.blackView = blackView;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleBtnClickAction)];
+    [self.blackView addGestureRecognizer:tap];
+
     
     UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     shareView.backgroundColor = [UIColor whiteColor];
@@ -125,7 +140,7 @@ static NSString * cellid = @"reuseaa";
     [shareView addSubview:collectionView];
     self.collectionView = collectionView;
     
-    
+    [[[UIApplication sharedApplication].delegate window] addSubview:self];
 }
 
 
@@ -135,8 +150,6 @@ static NSString * cellid = @"reuseaa";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.photosArr.count;
 }
-
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DefineShareViewCollectionViewCell *defineCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
     DefineShareModel *defineShareModel = self.photosArr[indexPath.row];
@@ -144,10 +157,8 @@ static NSString * cellid = @"reuseaa";
     return defineCell;
     
 }
-
 //item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
     CGFloat screenW = collectionView.bounds.size.width;
     CGFloat superiMGW = screenW-2*gap;
     CGFloat imgW = superiMGW/3;
@@ -156,11 +167,8 @@ static NSString * cellid = @"reuseaa";
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
 }
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
     NSLog(@"....self.publishContent = %@............", self.publishContent);
-    
     int shareType = 0;
     id publishContent = self.publishContent;
     switch (indexPath.row) {
@@ -173,14 +181,16 @@ static NSString * cellid = @"reuseaa";
         }
             break;
         case 2:{
+             shareType = ShareTypeOther;
             if (self.shareInfo[@"ProductId"]) {
-                shareType = ShareTypeOther;
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
                     if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
+                        self.hidden = YES;
                         [_delegate notiPopUpBoxView];
                     }
                 }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
                     if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView:)]) {
+                        [self cancleBtnClickAction];
                         [_delegate pushChoseCustomerView:self.shareInfo[@"IMProductMsgValue"]];
                     }
                 }
@@ -208,16 +218,10 @@ static NSString * cellid = @"reuseaa";
             break;
         default:
             break;
-            
     }
-    
-    
     [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
-        NSLog(@"..... %@", publishContent);
-        
         if (state == SSResponseStateSuccess){
-            
             BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
             [MobClick event:@"ShareSuccessAll" attributes:dict];
             [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
@@ -286,10 +290,8 @@ static NSString * cellid = @"reuseaa";
 }
 
 - (void)cancleBtnClickAction{
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(closeBlackView)]) {
-        [_delegate closeBlackView];
-    }
+    self.blackView.hidden = YES;
+    self.hidden = YES;
 }
 
 - (NSArray *)photosArr{
