@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"指定送红包";
+    self.title = @"抵用券红包";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
     self.NumOfRedPLabel.text = [NSString stringWithFormat:@"%ld",self.NumOfPeopleArr.count];
     [self creatNavOfRight];

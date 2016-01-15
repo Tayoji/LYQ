@@ -40,7 +40,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"我的红包";
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
+  
     //填充用户信息
     [self.imageview sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWHeaderPic]]];
     self.UserInfoName.text = [NSString stringWithFormat:@"%@共发出",[[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyLYGWName]];
@@ -48,6 +48,9 @@
 //    [self creatNavOfRight];
     [self loadDataSource];
     [self iniHeader];
+}
+-(void)viewWillAppear:(BOOL)animated{
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
 }
 #pragma mark - 刷新
 -(void)iniHeader
@@ -268,6 +271,9 @@
         _MainIDArr = [[NSMutableArray alloc]init];
     }
     return _MainIDArr;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"jianbian"] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
