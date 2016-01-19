@@ -1425,14 +1425,14 @@
 //        [self.guideView removeFromSuperview];
 //        [self.guideImageView removeFromSuperview];
         
-        self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
-        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-            self.SmallGuidance.image = [UIImage imageNamed:@"KeepNotApp"];
-        }else{
-            self.SmallGuidance.image = [UIImage imageNamed:@"KeepApp"];
-        }
-        
-        [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
+//        self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
+//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+//            self.SmallGuidance.image = [UIImage imageNamed:@"KeepNotApp"];
+//        }else{
+//            self.SmallGuidance.image = [UIImage imageNamed:@"KeepApp"];
+//        }
+//        
+//        [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
        
         [UIView animateWithDuration:1 animations:^{
             self.guideView.frame = CGRectMake(kScreenSize.width, kScreenSize.height, 0, 0);
@@ -1443,8 +1443,8 @@
             [self.guideImageView removeFromSuperview];
 
         }];
-        NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
-        [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
+//        NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
+//        [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
         
     }else if (btn.tag == 1210){
         

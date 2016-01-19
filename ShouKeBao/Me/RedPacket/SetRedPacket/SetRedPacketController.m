@@ -107,7 +107,7 @@
             break;
     }
 }
--(void)textViewDidEndEditing:(UITextView *)textView{
+-(void)textViewDidChange:(UITextView *)textView{
     NSLog(@"----%@",textView.text);
     switch (textView.tag) {
         case 101:
@@ -142,6 +142,9 @@
             break;
     }
 }
+//-(void)textViewDidEndEditing:(UITextView *)textView{
+//    
+//}
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if (textView.tag ==101 || textView.tag ==102 || textView.tag == 103) {
         int textNum = (textView.text).intValue;
@@ -264,7 +267,7 @@
         NSDictionary * sendDic = @{@"AppRedEnvelopeId":AppRedEnvelopeId,@"AppRedEnvelopeNoId": AppRedEnvelopeNoId};
         NSString * jsonStr = [StrToDic jsonStringWithDicL:sendDic];
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":jsonStr};
-       self.tempMeesage = [ChatSendHelper sendTextMessageWithString:@"红包"
+       self.tempMeesage = [ChatSendHelper sendTextMessageWithString:@"[红包]"
                                                                 toUsername:AppSkbUserId
                                                                messageType:eMessageTypeChat
                                                          requireEncryption:NO

@@ -29,7 +29,8 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.layer.cornerRadius = 3;
+        self.layer.masksToBounds = YES;
         
     }
     return self;
@@ -57,7 +58,9 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
         frame.origin.y = BUBBLE_VIEW_PADDING;
 
         for (UIView * view in self.subviews) {
-            [view removeFromSuperview];
+            if (![view isKindOfClass:[UIImageView class]]) {
+                [view removeFromSuperview];
+            }
         }
 
         // MsgType = 1 推送产品；
@@ -76,7 +79,7 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"4"]){
             CGRect aframe = self.bounds;
-            aframe.size.width -= 9 ;
+            aframe.size.width -= 4 ;
             aframe = CGRectInset(aframe, 0, 0);
             if (self.model.isSender) {
                 aframe.origin.x = 0;

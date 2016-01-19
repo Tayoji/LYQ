@@ -104,10 +104,11 @@
             [self.cellDataArr removeAllObjects];
 
         }
+        NSLog(@"---%@",json[@"AppLuckMoneyDetail"]);
         NSDictionary *HeadDic = json[@"AppLuckMoneyDetail"];
         NSLog(@"%@",HeadDic);
         //头部数据
-        self.TitleLabel.text = HeadDic[@"Title"];
+        self.TitleLabel.text = json[@"Title"];
         self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",HeadDic[@"PriceTotal"]];
         self.LuckContentLabel.text = HeadDic[@"LuckContent"];
         self.DateTimeLabel.text = HeadDic[@"DateTime"];
@@ -116,14 +117,16 @@
         self.DescribeLabel.text = json[@"Title"];//红包描述
         self.OutLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutLuckMoneyCount"] ];//出境游
         self.OutTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutTotalPrice"]];
-        
+            
         self.InsideuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideuckMoneyCount"]];//国内游
         self.InsideTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideTotalPrice"]];
         
         self.NearbyLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyLuckMoneyCount"]];//周边游
         self.NearbyTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyTotalPrice"]];
-
+            
         self.LuckMoneyGetCountLabael.text = [NSString stringWithFormat:@"%@人已领取",[json[@"AppLuckMoneyThreeList"] objectForKey:@"LuckMoneyGetCount"]];
+
+    
         
         for (NSDictionary *dic in json[@"AppLuckMoneyDetailModelList"]) {
             [self.cellDataArr addObject:dic];
@@ -139,6 +142,10 @@
     }];
 }
 #pragma mark -UITableViewDataSource && UITableViewDelegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"正在点击");
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -356,7 +363,7 @@
 }
 -(UILabel *)TitleLabel{
     if (!_TitleLabel) {
-        _TitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, 100, 30)];
+        _TitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, 200, 30)];
     }
     return _TitleLabel;
 }

@@ -346,6 +346,8 @@
 		7964F4F11B437D6500F56EB2 /* BaseClickAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 7964F4F01B437D6500F56EB2 /* BaseClickAttribute.m */; };
 		796C4D4D1B60CEF6008EBAFE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796C4D4C1B60CEF6008EBAFE /* WebKit.framework */; };
 		796C4D511B60E90C008EBAFE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C4D501B60E90C008EBAFE /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		796C67F61C4CC31D00D67DD9 /* chat_sendproduct_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 796C67F41C4CC31D00D67DD9 /* chat_sendproduct_bg.png */; };
+		796C67F71C4CC31D00D67DD9 /* chat_sendproduct_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 796C67F51C4CC31D00D67DD9 /* chat_sendproduct_bg@2x.png */; };
 		796EFAF71BF4D99E00799120 /* UIViewController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFAF61BF4D99E00799120 /* UIViewController+DismissKeyboard.m */; };
 		796EFAFA1BF4D9A800799120 /* UIResponder+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFAF91BF4D9A800799120 /* UIResponder+Router.m */; };
 		796EFAFD1BF4D9B400799120 /* NSString+Valid.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EFAFC1BF4D9B400799120 /* NSString+Valid.m */; };
@@ -1437,6 +1439,8 @@
 		796C4D4C1B60CEF6008EBAFE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		796C4D4F1B60E90C008EBAFE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		796C4D501B60E90C008EBAFE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		796C67F41C4CC31D00D67DD9 /* chat_sendproduct_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_sendproduct_bg.png; sourceTree = "<group>"; };
+		796C67F51C4CC31D00D67DD9 /* chat_sendproduct_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_sendproduct_bg@2x.png"; sourceTree = "<group>"; };
 		796EFAF51BF4D99E00799120 /* UIViewController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DismissKeyboard.h"; sourceTree = "<group>"; };
 		796EFAF61BF4D99E00799120 /* UIViewController+DismissKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DismissKeyboard.m"; sourceTree = "<group>"; };
 		796EFAF81BF4D9A800799120 /* UIResponder+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+Router.h"; sourceTree = "<group>"; };
@@ -4197,6 +4201,8 @@
 				793917411C17CD550020372E /* chat_sender_bg@2x.png */,
 				799BBA971C464AD60040E8AB /* SendRedPacket@2x.png */,
 				799BBA981C464AD60040E8AB /* SendRedPacket@3x.png */,
+				796C67F41C4CC31D00D67DD9 /* chat_sendproduct_bg.png */,
+				796C67F51C4CC31D00D67DD9 /* chat_sendproduct_bg@2x.png */,
 			);
 			path = sender_bubble;
 			sourceTree = "<group>";
@@ -5303,6 +5309,7 @@
 				B3CFF61E1BFAEE0E002065AA /* ExclusiveViewController.xib in Resources */,
 				796EFCE81BF5C67D00799120 /* VoiceSearchFeedback014.png in Resources */,
 				5A52FC5C1ACEBF220076DAE6 /* SearchProductViewController.xib in Resources */,
+				796C67F61C4CC31D00D67DD9 /* chat_sendproduct_bg.png in Resources */,
 				793917431C17CD550020372E /* chat_sender_audio_playing_000@2x.png in Resources */,
 				7939172C1C17CD3D0020372E /* chat_receiver_audio_playing_002@2x.png in Resources */,
 				B34007771C3A85180094028C /* ServiceNotifiViewController.xib in Resources */,
@@ -5366,6 +5373,7 @@
 				796EFCE01BF5C67D00799120 /* VoiceSearchFeedback010.png in Resources */,
 				796EFD401BF5C67D00799120 /* chatBar_more_photoSelected.png in Resources */,
 				79D38B151C46799D00A90DFA /* sendhongbao@3x.png in Resources */,
+				796C67F71C4CC31D00D67DD9 /* chat_sendproduct_bg@2x.png in Resources */,
 				796EFD301BF5C67D00799120 /* chatBar_colorMore_photo@2x.png in Resources */,
 				5A076EA81ACD8B270077611C /* StoreViewController.xib in Resources */,
 				796EFD111BF5C67D00799120 /* chat_location_preview@2x.png in Resources */,
