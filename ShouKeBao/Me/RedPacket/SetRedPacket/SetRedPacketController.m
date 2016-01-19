@@ -107,7 +107,7 @@
             break;
     }
 }
--(void)textViewDidEndEditing:(UITextView *)textView{
+-(void)textViewDidChange:(UITextView *)textView{
     NSLog(@"----%@",textView.text);
     switch (textView.tag) {
         case 101:
@@ -142,6 +142,9 @@
             break;
     }
 }
+//-(void)textViewDidEndEditing:(UITextView *)textView{
+//    
+//}
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if (textView.tag ==101 || textView.tag ==102 || textView.tag == 103) {
         int textNum = (textView.text).intValue;

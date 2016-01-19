@@ -100,8 +100,8 @@
         if (![json[@"GetTotalCount"]  isEqual: @""]) {
             self.GetTotalCountLabel.text = json[@"GetTotalCount"];
         }
-        if (![json[@"GetTotalPrice"]  isEqual: @""]) {
-            self.UseTotalCount.text = json[@"GetTotalPrice"];
+        if (![json[@"UseTotalCount"]  isEqual: @""]) {
+            self.UseTotalCount.text = json[@"UseTotalCount"];
         }
         NSArray *listArr = json[@"AppLuckMoneyDetailList"];
         for (NSDictionary *dic in listArr) {
