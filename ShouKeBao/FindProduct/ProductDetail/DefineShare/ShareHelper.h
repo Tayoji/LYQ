@@ -12,9 +12,6 @@
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
 -(void)pushChoseCustomerView:(NSString *)productJsonStr;
-
-
-
 @end
 
 @interface ShareHelper : UIView
