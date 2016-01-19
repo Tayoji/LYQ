@@ -17,7 +17,10 @@
 #import "WMAnimations.h"
 #import "MobClick.h"
 #import "BaseClickAttribute.h"
-@interface StoreViewController ()<UIWebViewDelegate,UIGestureRecognizerDelegate>
+#import "ShareHelper.h"
+#import "SelectCustomerController.h"
+#import "NewExclusiveAppIntroduceViewController.h"
+@interface StoreViewController ()<UIWebViewDelegate,UIGestureRecognizerDelegate, notiPopUpBox>
 @property (nonatomic,copy) NSMutableString *shareUrl;
 @property (weak, nonatomic) IBOutlet UIButton *checkCheapBtnOutlet;
 - (IBAction)checkCheapPrice;
@@ -48,6 +51,9 @@
 @property(nonatomic,copy) NSString *urlSuffix2;
 @property (nonatomic, copy)NSString * telString;
 @property (nonatomic, strong)NSTimer * timerr;
+
+
+@property (nonatomic, copy)NSString *productId;
 @end
 
 @implementation StoreViewController
@@ -460,87 +466,111 @@
  //@"http://r.lvyouquan.cn/KEPicFolder/default/attached/image/20150329/20150329162426_7341.jpg"
     //http://r.lvyouquan.cn/KEPicFolder/default/attached/skbhead/2015-07-10/5a1c7a31-0dca-47a7-9188-a9f12a89243f.jpg
     NSLog(@"shareDic is %@",shareDic);
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:shareDic[@"Desc"]
-                                       defaultContent:shareDic[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:shareDic[@"Pic"] ]
-                                                title: shareDic[@"Title"]
-                                                  url:shareDic[@"Url"]                                          description:shareDic[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
-   
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@   ,  %@,%@",shareDic[@"Tile"],shareDic[@"Desc"],shareDic[@"Url"]] image:nil];
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", shareDic[@"Url"]]];
-
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
     
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                [self.warningLab removeFromSuperview];
-                                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                [MobClick event:@"ShouKeBaoStoreShareSuccess" attributes:dict];
-                                [MobClick event:@"ShouKeBaoStoreShareSuccessJS" attributes:dict counter:3];
-                                [MobClick event:@"ShareSuccessAll" attributes:dict];
-                                [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
-
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    [self.warningLab removeFromSuperview];
-                                    
-                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                    [postDic setObject:@"0" forKey:@"ShareType"];
-                                    if (shareDic[@"Url"]) {
-                                        [postDic setObject:shareDic[@"Url"]  forKey:@"ShareUrl"];
-                                    }
-                                    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
-                                    if (type ==ShareTypeWeixiSession) {
-                                        [postDic setObject:@"1" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQ){
-                                        [postDic setObject:@"2" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQSpace){
-                                        [postDic setObject:@"3" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeWeixiTimeline){
-                                        [postDic setObject:@"4" forKey:@"ShareWay"];
-                                    }
-                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-                                    } failure:^(NSError *error) {
-                                        
-                                    }];
-
-                                    //店铺详情
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                        [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                    [MBProgressHUD hideHUD];
-                                    });
-                                    
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    [self.warningLab removeFromSuperview];
-                                    NSLog( @"shareDic is %@分享失败,错误码:%ld,错误描述:%@",shareDic,(long)[error errorCode], [error errorDescription]);
-                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                        [MobClick event:@"ShareFailAll" attributes:dict];
-                                }else if (state == SSResponseStateCancel){
-                                    [self.warningLab removeFromSuperview];
-                                }
-                            }];
+    NSString *shareType = @"ShouKeBaoStoreShareSuccess";
+    [[ShareHelper shareHelper]shareWithshareInfo:shareDic andType:shareType andPageUrl:self.webView.request.URL.absoluteString];
+    [ShareHelper shareHelper].delegate = self;
     
-    NSLog(@"--------------分享出去的url is %@--------------",shareDic[@"Url"]);
     
-    [self addAlert];
+    
+//    //构造分享内容
+//    id<ISSContent> publishContent = [ShareSDK content:shareDic[@"Desc"]
+//                                       defaultContent:shareDic[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:shareDic[@"Pic"] ]
+//                                                title: shareDic[@"Title"]
+//                                                  url:shareDic[@"Url"]                                          description:shareDic[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//   
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@   ,  %@,%@",shareDic[@"Tile"],shareDic[@"Desc"],shareDic[@"Url"]] image:nil];
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", shareDic[@"Url"]]];
+
+//    
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                [self.warningLab removeFromSuperview];
+//                                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                [MobClick event:@"ShouKeBaoStoreShareSuccess" attributes:dict];
+//                                [MobClick event:@"ShouKeBaoStoreShareSuccessJS" attributes:dict counter:3];
+//                                [MobClick event:@"ShareSuccessAll" attributes:dict];
+//                                [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+//
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    [self.warningLab removeFromSuperview];
+//                                    
+//                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                    [postDic setObject:@"0" forKey:@"ShareType"];
+//                                    if (shareDic[@"Url"]) {
+//                                        [postDic setObject:shareDic[@"Url"]  forKey:@"ShareUrl"];
+//                                    }
+//                                    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+//                                    if (type ==ShareTypeWeixiSession) {
+//                                        [postDic setObject:@"1" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQ){
+//                                        [postDic setObject:@"2" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQSpace){
+//                                        [postDic setObject:@"3" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeWeixiTimeline){
+//                                        [postDic setObject:@"4" forKey:@"ShareWay"];
+//                                    }
+//                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+//                                    } failure:^(NSError *error) {
+//                                        
+//                                    }];
+//
+//                                    //店铺详情
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                        [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                    [MBProgressHUD hideHUD];
+//                                    });
+//                                    
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    [self.warningLab removeFromSuperview];
+//                                    NSLog( @"shareDic is %@分享失败,错误码:%ld,错误描述:%@",shareDic,(long)[error errorCode], [error errorDescription]);
+//                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                        [MobClick event:@"ShareFailAll" attributes:dict];
+//                                }else if (state == SSResponseStateCancel){
+//                                    [self.warningLab removeFromSuperview];
+//                                }
+//                            }];
+//    
+//    NSLog(@"--------------分享出去的url is %@--------------",shareDic[@"Url"]);
+//    
+//    [self addAlert];
     
 }
+
+
+- (void)notiPopUpBoxView{
+    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+    newExclusiveVC.naVC = self.navigationController;
+    newExclusiveVC.pushFrom = FromProductDetail;
+    [self.navigationController pushViewController:newExclusiveVC animated:YES];
+}
+
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
+    selectVC.FromWhere = FromeStore;
+    [self.navigationController pushViewController:selectVC animated:YES];
+}
+
 
 
 -(void)reloadStateWithType:(ShareType)type

@@ -22,11 +22,13 @@
 #import "DayDetailCell.h"
 #import "YesterDayCell.h"
 #import "RecentlyCell.h"
+#import "ShareHelper.h"
+#import "SelectCustomerController.h"
 #define pageSize @"11"
 #define  K_TableWidth [UIScreen mainScreen].bounds.size.width
 //整个屏幕的高度减去导航栏和按钮的高度
 #define K_TableHeight [UIScreen mainScreen].bounds.size.height - 107
-@interface ProductRecommendViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,notifi>
+@interface ProductRecommendViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,notifi, notiPopUpBox>
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *LineWeith;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *scrollHeight;
 @property (strong, nonatomic) IBOutlet UIView *topLine;
@@ -79,6 +81,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"ShouKeBaoRecomView"];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     self.stationName = [def objectForKey:@"SubstationName"];
@@ -546,6 +549,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+     [ShareHelper shareHelper].delegate = self;
+    
     if (tableView.tag == 2013 || tableView.tag == 2014) {
         DayDetailCell *cell = [DayDetailCell cellWithTableView:tableView withTag:indexPath.row];
         DayDetail * detail;
@@ -614,4 +620,22 @@
     self.moreBtnShowView.alpha = 0;
     self.moreBtnShowView.hidden = YES;
 }
+
+#pragma mark - 跳转到选择客人界面的delegate
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
+    selectVC.FromWhere = FromRecomment;
+    [self.navigationController pushViewController:selectVC animated:YES];
+}
+
+- (void)notiPopUpBoxView{
+    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+    newExclusiveVC.naVC = self.navigationController;
+    newExclusiveVC.pushFrom = FromProductDetail;
+    [self.navigationController pushViewController:newExclusiveVC animated:YES];
+    
+}
+
+
 @end

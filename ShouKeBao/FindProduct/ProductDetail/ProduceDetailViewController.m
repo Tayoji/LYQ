@@ -21,7 +21,6 @@
 #import "yesterDayModel.h"
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
-#import "ProductDetailShareByMyself.h"
 #import "SelectCustomerController.h"
 #import "ShareHelper.h"
 #import "QRCodeViewController.h"
@@ -45,9 +44,7 @@
 @property (nonatomic,strong) UIButton * rightButton;
 @property (nonatomic,assign) BOOL isSave;
 @property (nonatomic, strong) UIView *blackView;
-@property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
-@property (nonatomic, strong) ProductDetailShareByMyself *defineV;
 
 @end
 
@@ -55,9 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self blackView];
-     if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
-        self.title = @"我的店铺二维码";
-    }
+    
     
     self.coverView.hidden = YES;
     if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
@@ -95,6 +90,10 @@
     [self.view addSubview:_indicator];
     if (!self.titleName) {
         self.title = @"产品详情";
+    }else if ([self.titleName isEqualToString:@"圈热点"]){
+        self.title = @"圈热点";
+    }else if ([self.titleName isEqualToString:@"QRCodeAddress"]){
+        self.title = @"我的店铺二维码";
     }else{
         self.title = self.titleName;
     }
@@ -398,8 +397,7 @@
     //    [self.webView goBack];
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView
-{
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
     
     NSLog(@"%@",webView.request.URL.absoluteString);
     //判断是否显示关闭按钮
@@ -433,30 +431,11 @@
     }
     self.isSave = NO;
     // [MBProgressHUD showSuccess:@"加载完成"];
+    
+    NSLog(@"%@99999", self.shareInfo);
 
-
-
-//    NSLog(@"right Str is %@",rightUrl);
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    
-//    [dic setObject:rightUrl forKey:@"PageUrl"];
-//     [self.shareInfo removeAllObjects];
-//
-//    [IWHttpTool WMpostWithURL:@"/Common/GetPageType" params:dic success:^(id json) {
-//        
-//        NSLog(@"-----分享返回数据json is %@------",json);
-//      NSString *str =  json[@"ShareInfo"][@"Desc"];
-//        if(str.length>1){
-//          // [self.shareInfo removeAllObjects];
-//            self.shareInfo = json[@"ShareInfo"];
-//            NSLog(@"%@99999", self.shareInfo);
-//        }
-//    } failure:^(NSError *error) {
-//        
-//        NSLog(@"分享请求数据失败，原因：%@",error);
-//    }];
     //如果没有shareInfo，请求接口
-    if (self.noShareInfo) {
+    if (/*self.noShareInfo*/!self.shareInfo) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:webView.request.URL.absoluteString forKey:@"PageUrl"];
         [IWHttpTool WMpostWithURL:@"/Common/GetPageType" params:dic success:^(id json) {
@@ -497,10 +476,7 @@
     }
 //        [_indicator stopAnimationWithLoadText:@"加载失败" withType:YES];
 }
--(void)addAlert
-{
-    
-    
+-(void)addAlert{
     // 获取到现在应用中存在几个window，ios是可以多窗口的
     
     NSArray *windowArray = [UIApplication sharedApplication].windows;
@@ -561,25 +537,28 @@
         [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
         NSLog(@"%@", postDic);
  
-     ShareFrom shareFromTpye;
+//     ShareFrom shareFromTpye;
+    NSString *shareFromTpye;
     
-    if ([self isKindOfClass:[QRCodeViewController class]]) {
-        shareFromTpye = FromQRcode1;
-//    }else if ([self isKindOfClass:[FindProduct class]]){
-//        shareFromTpye = FromRecommend;
-//    }else if ([self isKindOfClass:[Discover class]]){
-//        shareFromTpye = FromStore;
-//    }else if ([self isKindOfClass:[SpecialSales class]]){
-//        shareFromTpye = FromProductSearch;
-//    }else if ([self isKindOfClass:[Me class]]){
-//        shareFromTpye = FromHotProduct;
-//    }else if ([self isKindOfClass:[]]){
-//        shareFromTpye = FromScanHistory;
-        
-    }else if ([self isKindOfClass: [ZhiVisitorDynamicController class]]){
-         shareFromTpye = FromZhiVisitorDynamic1;
+    if (/*[self isKindOfClass:[QRCodeViewController class]]*/self.fromType == FromQRcode) {
+        shareFromTpye = @"FromQRcode";
+    }else if (self.fromType == FromRecommend){
+        shareFromTpye = @"FromRecommend";
+    }else if (self.fromType == FromStore){
+        shareFromTpye = @"FromStore";
+    }else if (self.fromType == FromFindProduct){
+        shareFromTpye = @"FromFindProduct";
+    }else if (self.fromType == FromProductSearch){
+        shareFromTpye = @"FromProductSearch";
+    }else if (self.fromType == FromHotProduct){
+        shareFromTpye = @"FromHotProduct";
+    }else if (self.fromType == FromScanHistory){
+        shareFromTpye = @"FromScanHistory";
+    }else if (self.fromType == FromZhiVisitorDynamic){
+         shareFromTpye = @"FromZhiVisitorDynamic1";
     }
-
+    
+    NSLog(@"..shareInfo = %@   %@", self.shareInfo, self.webView.request.URL.absoluteString);
     [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
     [ShareHelper shareHelper].delegate = self;
     
@@ -720,34 +699,22 @@
 }
 
 
-
+#warning - 代理方式
+//申请专属App
 - (void)notiPopUpBoxView{
-    self.defineBox.hidden = NO;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineBox];
-
-}
-
-- (IBAction)cancleDefineBox:(id)sender {
-    self.defineBox.hidden = YES;
-    [ShareHelper shareHelper].blackView.hidden = YES;
-}
-
-- (IBAction)applyForOpenVip:(id)sender {
-    self.defineBox.hidden = YES;
-    [ShareHelper shareHelper].blackView.hidden = YES;
     NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
     newExclusiveVC.naVC = self.navigationController;
     newExclusiveVC.pushFrom = FromProductDetail;
     [self.navigationController pushViewController:newExclusiveVC animated:YES];
-  
 }
-
+//选择客人
 - (void)pushChoseCustomerView:(NSString *)productJsonStr{
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
     selectVC.productJsonString = productJsonStr;
     selectVC.FromWhere = FromeProDetail;
     [self.navigationController pushViewController:selectVC animated:YES];
 }
+
 -(void)reloadStateWithType:(ShareType)type
 {
     //现实授权信息，包括授权ID、授权有效期等。
@@ -756,40 +723,17 @@
     NSLog(@"uid :%@ , token :%@ , secret:%@ , expirend:%@ , exInfo:%@",[credential uid],[credential token],[credential secret],[credential expired],[credential extInfo]);
 }
 
-- (void)setApplyOpenVip:(UIButton *)applyOpenVip{
-    _applyOpenVip = applyOpenVip;
-    _applyOpenVip.layer.borderColor = [UIColor orangeColor].CGColor;
-    _applyOpenVip.layer.borderWidth = 1.0f;
-    _applyOpenVip.layer.masksToBounds = YES;
-    _applyOpenVip.layer.cornerRadius = 20.0f;
-}
-- (void)setDefineBox:(UIView *)defineBox{
-    _defineBox = defineBox;
-    _defineBox.layer.masksToBounds = YES;
-    _defineBox.layer.cornerRadius = 10;
-}
-- (UIView *)blackView{
-    if (!_blackView) {
-        self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-        self.blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-        self.blackView.hidden = NO;
-    }
-    return _blackView;
-}
-- (ProductDetailShareByMyself *)defineV{
-    if (!_defineV) {
-        self.defineV = [[ProductDetailShareByMyself alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
-        self.defineV.hidden = NO;
-    }
-    return _defineV;
-}
+//- (UIView *)blackView{
+//    if (!_blackView) {
+//        self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+//        self.blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+//        self.blackView.hidden = NO;
+//    }
+//    return _blackView;
+//}
 
-- (NSArray *)photosArr{
-    if (!_photosArr) {
-        self.photosArr = [NSArray array];
-    }
-    return _photosArr;
-}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

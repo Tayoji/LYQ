@@ -108,9 +108,7 @@ typedef void (^ChangeFrameBlock)();
 @property (nonatomic) NSInteger FirstOpenNav;
 
 @property (nonatomic,strong) NSArray *stateArr;
-@property (nonatomic, assign)CGFloat currentY;
 @property (nonatomic, assign) CGRect ff;
-@property (nonatomic, assign)CGFloat cellFrom;
 @end
 
 @implementation Orders
@@ -878,14 +876,7 @@ typedef void (^ChangeFrameBlock)();
  
  */
 - (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList{
-    NSLog(@"down = %f %f", self.currentY, CGRectGetMaxY(downBtn.frame));
-    
-//    cell.frame.origin.y - self.tableView.contentOffset.y;
-    
-//    CGRect frame = CGRectMake(/*downBtn.frame.size.width*/ CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202,90, 40*btnList.count);
-    
-    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202+20,90, 40*btnList.count);
-    
+    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, self.ff.origin.y-self.tableView.contentOffset.y+89+CGRectGetMaxY(downBtn.frame)+10,90, 40*btnList.count);
     [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100"];
     
 }
@@ -989,12 +980,9 @@ typedef void (^ChangeFrameBlock)();
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
-    cell.indexPath = indexPath;
-    NSLog(@"cell%f",cell.frame.size.height);
-    self.ff = [tableView rectForRowAtIndexPath:indexPath];
-    self.cellFrom = cell.frame.size.height;
-    self.currentY = cell.frame.origin.y - self.tableView.contentOffset.y;
    
+    cell.indexPath = indexPath;
+    self.ff = [tableView rectForRowAtIndexPath:indexPath];
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];
@@ -1011,8 +999,7 @@ typedef void (^ChangeFrameBlock)();
     
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    UIButton *invoicebu = (UIButton *)[self.view viewWithTag:1200];
 //    [invoicebu setImage:[UIImage imageNamed:@"hongdian"] forState:UIControlStateNormal];
 //    invoicebu.imageEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);

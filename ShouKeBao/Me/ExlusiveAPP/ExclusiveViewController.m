@@ -23,7 +23,8 @@
 //#import "WhatIsExclusiveViewController.h"
 #import "CircleHotNewsViewController.h"
 #import "ProduceDetailViewController.h"
-
+#import "ShareHelper.h"
+#import "SelectCustomerController.h"
 #define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
 #define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
 #define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
@@ -31,7 +32,7 @@
 #define fiveHight self.view.frame.size.height/480
 #define kScreenSize [UIScreen mainScreen].bounds.size
 #define gap 5
-@interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ExclusiveViewController ()<UITableViewDataSource, UITableViewDelegate, notiPopUpBox>
 //头部
 @property (weak, nonatomic) IBOutlet UIImageView *HeadImageViewSet;
 @property (weak, nonatomic) IBOutlet UILabel *builtLable;
@@ -295,102 +296,118 @@
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_exclusiveAppShareBtnClick" attributes:dict];
     
-    NSLog(@"____nnn  self.shareInfo = %@", self.ConsultanShareInfo);
-    id<ISSContent> publishContent = [ShareSDK content:self.ConsultanShareInfo[@"Desc"]
-                                       defaultContent:self.ConsultanShareInfo[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:self.ConsultanShareInfo[@"Pic"]]
-                                                title:self.ConsultanShareInfo[@"Title"]
-                                                  url:self.ConsultanShareInfo[@"Url"]                                  description:self.ConsultanShareInfo[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
+    NSLog(@"... %@", self.ConsultanShareInfo);
+    [[ShareHelper shareHelper]shareWithshareInfo:self.ConsultanShareInfo andType:@"Me_exclusiveAppShareScccessCount" andPageUrl:self.ConsultanShareInfo[@"Url"]];
+    [ShareHelper shareHelper].delegate = self;
     
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.ConsultanShareInfo[@"Url"]] image:nil];
-    NSLog(@"%@444", self.ConsultanShareInfo);
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.ConsultanShareInfo[@"Url"]]];
     
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    [container setIPadContainerWithView:button arrowDirect:UIPopoverArrowDirectionUp];
     
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                         [self.warningLab removeFromSuperview];
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                    [MobClick event:@"Me_exclusiveAppShareScccessCount" attributes:dict];
-
-                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                    [postDic setObject:@"0" forKey:@"ShareType"];
-                                    if (self.ConsultanShareInfo[@"Url"]) {
-                                        [postDic setObject:self.ConsultanShareInfo[@"Url"]  forKey:@"ShareUrl"];
-                                    }
-                                    if (type ==ShareTypeWeixiSession) {
-                                        
-                                    }else if(type == ShareTypeQQ){
-                                        
-                                    }else if(type == ShareTypeQQSpace){
-                                        
-                                    }else if(type == ShareTypeWeixiTimeline){
-                                    }
-
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                        [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                        [MBProgressHUD hideHUD];
-                                    });
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                }else if (state == SSResponseStateCancel){
-                                    
-                                }
-                            }];
-    [self addAlert];
-    
+//    NSLog(@"____nnn  self.shareInfo = %@", self.ConsultanShareInfo);
+//    id<ISSContent> publishContent = [ShareSDK content:self.ConsultanShareInfo[@"Desc"]
+//                                       defaultContent:self.ConsultanShareInfo[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:self.ConsultanShareInfo[@"Pic"]]
+//                                                title:self.ConsultanShareInfo[@"Title"]
+//                                                  url:self.ConsultanShareInfo[@"Url"]                                  description:self.ConsultanShareInfo[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.ConsultanShareInfo[@"Url"]] image:nil];
+//    NSLog(@"%@444", self.ConsultanShareInfo);
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.ConsultanShareInfo[@"Url"]]];
+//    
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    [container setIPadContainerWithView:button arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                         [self.warningLab removeFromSuperview];
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                    [MobClick event:@"Me_exclusiveAppShareScccessCount" attributes:dict];
+//
+//                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                    [postDic setObject:@"0" forKey:@"ShareType"];
+//                                    if (self.ConsultanShareInfo[@"Url"]) {
+//                                        [postDic setObject:self.ConsultanShareInfo[@"Url"]  forKey:@"ShareUrl"];
+//                                    }
+//                                    if (type ==ShareTypeWeixiSession) {
+//                                        
+//                                    }else if(type == ShareTypeQQ){
+//                                        
+//                                    }else if(type == ShareTypeQQSpace){
+//                                        
+//                                    }else if(type == ShareTypeWeixiTimeline){
+//                                    }
+//
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                        [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                        [MBProgressHUD hideHUD];
+//                                    });
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+//                                }else if (state == SSResponseStateCancel){
+//                                    
+//                                }
+//                            }];
+//    [self addAlert];
+//    
 }
 
--(void)addAlert{
-    NSArray *windowArray = [UIApplication sharedApplication].windows;
-    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
-    // 以下就是不停的寻找子视图，修改要修改的
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
-    CGFloat labY = 180;
-    if (screenH == 667) {
-        labY = 260;
-    }else if (screenH == 568){
-        labY = 160;
-    }else if (screenH == 480){
-        labY = 180;
-    }else if (screenH == 736){
-        labY = 440;
-    }
-    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
-    lab.text = @"分享您的专属APP";
-    lab.textColor = [UIColor blackColor];
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.font = [UIFont systemFontOfSize:12];
-    [actionWindow addSubview:lab];
-    [UIView animateWithDuration:0.38 animations:^{
-        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.17 animations:^{
-            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
-        }];
-    }];
-        self.warningLab = lab;
-    
+//选择客人
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
+    selectVC.FromWhere = FromeExclusive;
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
+
+
+//
+//-(void)addAlert{
+//    NSArray *windowArray = [UIApplication sharedApplication].windows;
+//    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
+//    // 以下就是不停的寻找子视图，修改要修改的
+//    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+//    CGFloat labY = 180;
+//    if (screenH == 667) {
+//        labY = 260;
+//    }else if (screenH == 568){
+//        labY = 160;
+//    }else if (screenH == 480){
+//        labY = 180;
+//    }else if (screenH == 736){
+//        labY = 440;
+//    }
+//    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
+//    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
+//    lab.text = @"分享您的专属APP";
+//    lab.textColor = [UIColor blackColor];
+//    lab.textAlignment = NSTextAlignmentCenter;
+//    lab.font = [UIFont systemFontOfSize:12];
+//    [actionWindow addSubview:lab];
+//    [UIView animateWithDuration:0.38 animations:^{
+//        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:0.17 animations:^{
+//            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
+//        }];
+//    }];
+//        self.warningLab = lab;
+//    
+//}
 
 #pragma mark - 初始化
 -(UIView *)redDot{
@@ -478,9 +495,10 @@
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"QRredDot_QRCode"];
 //    CircleHotNewsViewController *WRCodeVC = [[CircleHotNewsViewController alloc]init];
     ProduceDetailViewController *WRCodeVC = [[ProduceDetailViewController alloc]init];
-
+    WRCodeVC.m = 1;
     WRCodeVC.produceUrl = self.QRCodeAddress;
-    WRCodeVC.formTypeExclusive = @"QRCodeAddress";
+//    WRCodeVC.formTypeExclusive = @"QRCodeAddress";
+    WRCodeVC.titleName = @"QRCodeAddress";
     if (self.QRCodeAddress) {
         [self.navigationController pushViewController:WRCodeVC animated:YES];
     }

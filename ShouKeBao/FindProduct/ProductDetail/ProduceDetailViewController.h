@@ -62,4 +62,6 @@ typedef enum{
 @property (nonatomic, strong)UINavigationController *naV;
 //专属App二维码
 @property (nonatomic, copy)NSString *formTypeExclusive;
+
+- (void)notiPopUpBoxView;
 @end

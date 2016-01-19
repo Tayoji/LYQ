@@ -20,7 +20,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import <AGCommon/ICMErrorInfo.h>
-
+#import "ShareHelper.h"
 #import "NSString+FKTools.h"
 #define gap 10
 //此处三点要注意：1，通过点击button 确定是哪个cell需要改变高度，用dic记录并[_tableView beginUpdates];
@@ -663,99 +663,102 @@
     }
     [postDic setObject:_detail.ShareInfo[@"Url"] forKey:@"PageUrl"];
         [postDic setObject:@"1" forKey:@"ShareWay"];
-    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-        //                                        [[[UIAlertView alloc]initWithTitle:_detail.ShareInfo[@"Url"] message:nil delegate:nil cancelButtonTitle:@"aa" otherButtonTitles:nil, nil]show];
-    } failure:^(NSError *error) {
-        
-    }];
-
     
     
+    NSString *shareType = @"RecommendShareSuccessAndAllJS";
+    [[ShareHelper shareHelper]shareWithshareInfo:tmp andType:shareType andPageUrl:_detail.ShareInfo[@"Url"]];
+   
     
     
-    id<ISSContent>publishContent = [ShareSDK content:tmp[@"Desc"]
-                                       defaultContent:tmp[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
-                                                title:tmp[@"Title"]
-                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@   ,  %@ ,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
-
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
-    
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                 [self.warningLab removeFromSuperview];
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    
-                                    
-                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
-                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-
-                                    
-                                    [self.warningLab removeFromSuperview];
-                                
-                                        NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                        [postDic setObject:@"0" forKey:@"ShareType"];
-                                        if (_detail.ShareInfo[@"Url"]) {
-                                            [postDic setObject:_detail.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
-                                        }
-                                        [postDic setObject:@"" forKey:@"PageUrl"];
-                                        if (type ==ShareTypeWeixiSession) {
-                                            [postDic setObject:@"1" forKey:@"ShareWay"];
-                                        }else if(type == ShareTypeQQ){
-                                            [postDic setObject:@"2" forKey:@"ShareWay"];
-                                        }else if(type == ShareTypeQQSpace){
-                                            [postDic setObject:@"3" forKey:@"ShareWay"];
-                                        }else if(type == ShareTypeWeixiTimeline){
-                                            [postDic setObject:@"4" forKey:@"ShareWay"];
-                                        }
-                                    NSLog(@"%@", postDic);
-                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-//                                        [[[UIAlertView alloc]initWithTitle:_detail.ShareInfo[@"Url"] message:nil delegate:nil cancelButtonTitle:@"aa" otherButtonTitles:nil, nil]show];
-                                    } failure:^(NSError *error) {
-                                        
-                                    }];
-                                    
-                                    //今日推荐
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                    [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                        [MBProgressHUD hideHUD];
-                                    });
-                                    
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    [self.warningLab removeFromSuperview];
-                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                        [MobClick event:@"ShareFailAll" attributes:dict];
-
-                                    //NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-                                   // NSLog(@"分享失败%ld,%@",(long)[error errorCode],[error errorDescription]);
-                                }else if (state == SSResponseStateCancel){
-                                    [self.warningLab removeFromSuperview];
-                                }
-                            }];
-    
-    [self addAlert];
-
+#warning 以下是系统分享
+//    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+//    } failure:^(NSError *error) {
+//        
+//    }];
+//
+//    id<ISSContent>publishContent = [ShareSDK content:tmp[@"Desc"]
+//                                       defaultContent:tmp[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
+//                                                title:tmp[@"Title"]
+//                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@   ,  %@ ,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
+//
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                 [self.warningLab removeFromSuperview];
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    
+//                                    
+//                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+//                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+//
+//                                    
+//                                    [self.warningLab removeFromSuperview];
+//                                
+//                                        NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                        [postDic setObject:@"0" forKey:@"ShareType"];
+//                                        if (_detail.ShareInfo[@"Url"]) {
+//                                            [postDic setObject:_detail.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
+//                                        }
+//                                        [postDic setObject:@"" forKey:@"PageUrl"];
+//                                        if (type ==ShareTypeWeixiSession) {
+//                                            [postDic setObject:@"1" forKey:@"ShareWay"];
+//                                        }else if(type == ShareTypeQQ){
+//                                            [postDic setObject:@"2" forKey:@"ShareWay"];
+//                                        }else if(type == ShareTypeQQSpace){
+//                                            [postDic setObject:@"3" forKey:@"ShareWay"];
+//                                        }else if(type == ShareTypeWeixiTimeline){
+//                                            [postDic setObject:@"4" forKey:@"ShareWay"];
+//                                        }
+//                                    NSLog(@"%@", postDic);
+//                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+////                                        [[[UIAlertView alloc]initWithTitle:_detail.ShareInfo[@"Url"] message:nil delegate:nil cancelButtonTitle:@"aa" otherButtonTitles:nil, nil]show];
+//                                    } failure:^(NSError *error) {
+//                                        
+//                                    }];
+//                                    
+//                                    //今日推荐
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                    [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                        [MBProgressHUD hideHUD];
+//                                    });
+//                                    
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    [self.warningLab removeFromSuperview];
+//                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                        [MobClick event:@"ShareFailAll" attributes:dict];
+//
+//                                    //NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+//                                   // NSLog(@"分享失败%ld,%@",(long)[error errorCode],[error errorDescription]);
+//                                }else if (state == SSResponseStateCancel){
+//                                    [self.warningLab removeFromSuperview];
+//                                }
+//                            }];
+//    
+//    [self addAlert];
+//
 }
 - (void)setDetail:(DayDetail *)modal
 {

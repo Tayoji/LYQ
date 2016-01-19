@@ -146,6 +146,7 @@
 }
 
 - (IBAction)acceptServiceNotiSwitch:(UISwitch *)sender{
+    NSLog(@"接受业务");
     if (sender.on) {
         sender.on = YES;
     }else{
