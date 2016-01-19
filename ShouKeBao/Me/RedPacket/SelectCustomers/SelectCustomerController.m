@@ -349,7 +349,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     for (NSString * chatter in self.SELCustomerArr) {
         NSDictionary *ext = @{@"MsgType":@"3",@"MsgValue":self.productJsonString};
-        [ChatSendHelper sendTextMessageWithString:@""
+        [ChatSendHelper sendTextMessageWithString:@"[产品分享]"
                                        toUsername:chatter
                                       messageType:eMessageTypeChat
                                 requireEncryption:NO

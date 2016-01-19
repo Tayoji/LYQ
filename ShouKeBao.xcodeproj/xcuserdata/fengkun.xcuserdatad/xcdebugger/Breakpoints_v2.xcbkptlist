@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/MessageView/ChatCell/ChatCellBubble/EMChatBaseBubbleView.m"
-            timestampString = "474368901.203387"
+            timestampString = "474792759.704239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "-setModel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -436,11 +436,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/MessageView/ChatCell/ChatCellBubble/EMChatCustomBubbleView.m"
-            timestampString = "474533643.651118"
+            timestampString = "474793971.604511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "-setModel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -452,11 +452,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/MessageView/ChatCell/ChatCellBubble/EMChatCustomBubbleView.m"
-            timestampString = "474461417.819543"
+            timestampString = "474793971.604511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-setModel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -542,11 +542,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Chat/ChatView/MessageView/ChatCell/ChatCellBubble/EMChatCustomBubbleView.m"
-            timestampString = "474523246.093761"
+            timestampString = "474793971.604511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "-setModel:"
             landmarkType = "5">
          </BreakpointContent>
