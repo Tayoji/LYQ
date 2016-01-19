@@ -673,7 +673,6 @@
 		B39A1B381C0C3A7E000B7267 /* DoubleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B39A1B371C0C3A7E000B7267 /* DoubleModel.m */; };
 		B39A1B3B1C0C46B2000B7267 /* HotLaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */; };
 		B3A2B6091BF4A715002AB105 /* CircleHotNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */; };
-		B3ABEF2E1C3CC54E0024566D /* ProductDetailShareByMyself.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */; };
 		B3ABEF321C3CE6D50024566D /* CustomerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */; };
 		B3ABEF331C3CE6D50024566D /* CustomerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */; };
 		B3B56BE11B8C47CB002E01B6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B56BE01B8C47CB002E01B6 /* CoreLocation.framework */; };
@@ -1944,8 +1943,6 @@
 		B39A1B3A1C0C46B2000B7267 /* HotLaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotLaButton.m; sourceTree = "<group>"; };
 		B3A2B6071BF4A715002AB105 /* CircleHotNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleHotNewsViewController.h; sourceTree = "<group>"; };
 		B3A2B6081BF4A715002AB105 /* CircleHotNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleHotNewsViewController.m; sourceTree = "<group>"; };
-		B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductDetailShareByMyself.h; path = ../ProductDetailShareByMyself.h; sourceTree = "<group>"; };
-		B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductDetailShareByMyself.m; path = ../ProductDetailShareByMyself.m; sourceTree = "<group>"; };
 		B3ABEF2F1C3CE6D50024566D /* CustomerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerTableViewCell.h; sourceTree = "<group>"; };
 		B3ABEF301C3CE6D50024566D /* CustomerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerTableViewCell.m; sourceTree = "<group>"; };
 		B3ABEF311C3CE6D50024566D /* CustomerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerTableViewCell.xib; sourceTree = "<group>"; };
@@ -5086,8 +5083,6 @@
 				B3E983C81C3E774A00BA84CE /* DefineShareViewCollectionViewCell.xib */,
 				B3E983CB1C3E778500BA84CE /* DefineShareModel.h */,
 				B3E983CC1C3E778500BA84CE /* DefineShareModel.m */,
-				B3ABEF2C1C3CC54E0024566D /* ProductDetailShareByMyself.h */,
-				B3ABEF2D1C3CC54E0024566D /* ProductDetailShareByMyself.m */,
 				B3ECA9B51C48CD2100C49E46 /* ShareHelper.h */,
 				B3ECA9B61C48CD2100C49E46 /* ShareHelper.m */,
 			);
@@ -5865,7 +5860,6 @@
 				796EFB191BF5BCF100799120 /* EMCDDeviceManager+Media.m in Sources */,
 				527D07C01BD5F39A00CA6C39 /* OrderinformationCell.m in Sources */,
 				B3E983CD1C3E778500BA84CE /* DefineShareModel.m in Sources */,
-				B3ABEF2E1C3CC54E0024566D /* ProductDetailShareByMyself.m in Sources */,
 				6364A9B01B098CA00099705B /* YYAnimationIndicator.m in Sources */,
 				634469861B342AF7009F7ADF /* messageCellSKBTableViewCell.m in Sources */,
 				6326131D1AB1C175003AC2DA /* MJRefreshFooterView.m in Sources */,

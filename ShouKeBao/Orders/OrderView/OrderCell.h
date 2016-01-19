@@ -25,9 +25,7 @@
 @interface OrderCell : MGSwipeTableCell
 
 @property (nonatomic,strong) OrderModel *model;
-
 @property (nonatomic,strong) NSIndexPath *indexPath;
-
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
 @property (nonatomic,strong) OrderTmpView *orderTmpView;

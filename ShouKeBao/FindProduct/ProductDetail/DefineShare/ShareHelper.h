@@ -12,19 +12,10 @@
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
 -(void)pushChoseCustomerView:(NSString *)productJsonStr;
-//-(void)closeBlackView;
-@end
 
-typedef enum{
-    FromQRcode1,
-    FromRecommend1,
-    FromStore1,
-    FromProductSearch1,
-    FromFindProduct1,
-    FromHotProduct1,
-    FromScanHistory1,
-    FromZhiVisitorDynamic1
-}ShareFrom;
+
+
+@end
 
 @interface ShareHelper : UIView
 @property (nonatomic, strong)UIView *shareView;
@@ -35,11 +26,8 @@ typedef enum{
 @property (nonatomic, strong)UIView *blackView;
 @property (nonatomic, strong)id<notiPopUpBox>delegate;
 
-//将分享内容和分享类型传进来， SharePushFrom 用于区分不同页面的不同分享
 - (void)shareWithshareInfo:(NSDictionary *)shareInfo
-                   andType:(ShareFrom)shareFrom
+                   andType:(/*ShareFrom*/NSString *)shareFrom
                 andPageUrl:(NSString *)pageUrl;
-
-//分享单例
 + (ShareHelper *)shareHelper;
 @end

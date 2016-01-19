@@ -9,7 +9,10 @@
 #import "SKViewController.h"
 typedef enum {
     FromeRedPacket,
-    FromeProDetail
+    FromeProDetail,
+    FromRecomment,
+    FromeExclusive,
+    FromeStore
 }From;
 @interface SelectCustomerController : SKViewController
 @property (nonatomic,assign) From FromWhere;

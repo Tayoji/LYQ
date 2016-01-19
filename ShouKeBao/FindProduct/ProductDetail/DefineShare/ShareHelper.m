@@ -23,11 +23,10 @@ static NSString * cellid = @"reuseaa";
 @interface ShareHelper()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong)NSDictionary *shareInfo;
 @property (nonatomic, copy)NSString *URL;
-@property (nonatomic, assign)ShareFrom fromType;
-//@property (nonatomic, strong)NSArray *eventArray;
-@property (nonatomic,strong) NSArray *photosArr;
+@property (nonatomic, copy)NSString *fromType;
+@property (nonatomic, strong) NSArray *photosArr;
 @property (nonatomic, strong)id publishContent;
-
+@property (nonatomic, strong)UIView *exclusiveV;
 @end
 
 
@@ -43,12 +42,14 @@ static NSString * cellid = @"reuseaa";
 
 
 - (void)shareWithshareInfo:(NSDictionary *)shareInfo
-                   andType:(ShareFrom)shareFrom
+                   andType:(/*ShareFrom*/NSString *)shareFrom
                 andPageUrl:(NSString *)pageUrl{
-//    布局
     _shareInfo = shareInfo;
     _URL = pageUrl;
+    _fromType = shareFrom;
+//    布局
     [self setLayout];
+    [self setExclusiveBox];
     self.hidden = NO;
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareInfo[@"Desc"]
@@ -62,11 +63,11 @@ static NSString * cellid = @"reuseaa";
     NSLog(@"%@444", shareInfo);
     [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", shareInfo[@"Url"]]];
     _publishContent = publishContent;
-   
-    
 }
 - (void)setLayout{
-    if (self.shareInfo[@"IMProductMsgValue"]) {
+//    NSLog(@"...%@ ,,, %@", self.shareInfo[@"IMProductMsgValue"], self.shareInfo);
+    NSString *IMProductMsgValue = [NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]];
+    if (IMProductMsgValue.length) {
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
                            @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
                            @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
@@ -84,8 +85,6 @@ static NSString * cellid = @"reuseaa";
                            @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
                            @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
                            ];
-        
-        
     }
     //阴影
     UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -139,12 +138,8 @@ static NSString * cellid = @"reuseaa";
     [collectionView registerClass:[DefineShareViewCollectionViewCell class] forCellWithReuseIdentifier:cellid];
     [shareView addSubview:collectionView];
     self.collectionView = collectionView;
-    
     [[[UIApplication sharedApplication].delegate window] addSubview:self];
 }
-
-
-
 
 #pragma mark -UICollectionView 代理方法
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -157,7 +152,6 @@ static NSString * cellid = @"reuseaa";
     return defineCell;
     
 }
-//item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat screenW = collectionView.bounds.size.width;
     CGFloat superiMGW = screenW-2*gap;
@@ -168,7 +162,6 @@ static NSString * cellid = @"reuseaa";
     return YES;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"....self.publishContent = %@............", self.publishContent);
     int shareType = 0;
     id publishContent = self.publishContent;
     switch (indexPath.row) {
@@ -181,21 +174,22 @@ static NSString * cellid = @"reuseaa";
         }
             break;
         case 2:{
-             shareType = ShareTypeOther;
-            if (self.shareInfo[@"ProductId"]) {
+            if ([NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]].length) {
+                 shareType = ShareTypeOther;
+                
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
-                    if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
-                        self.hidden = YES;
-                        [_delegate notiPopUpBoxView];
-                    }
+                    self.hidden = YES;
+                    self.blackView.hidden = NO;
+                    self.exclusiveV.hidden = NO;
+                    
                 }else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"1"]){
                     if (_delegate && [_delegate respondsToSelector:@selector(pushChoseCustomerView:)]) {
                         [self cancleBtnClickAction];
                         [_delegate pushChoseCustomerView:self.shareInfo[@"IMProductMsgValue"]];
                     }
                 }
-                
             }else{
+//                NSLog(@",, %@", self.shareInfo);
                 shareType = ShareTypeQQSpace;
             }
         }
@@ -222,22 +216,44 @@ static NSString * cellid = @"reuseaa";
     [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
         if (state == SSResponseStateSuccess){
+            
+            
             BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
             [MobClick event:@"ShareSuccessAll" attributes:dict];
             [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
             [MobClick event:@"ProductDetailShareSuccessClickAll" attributes:dict];
             
-//            if ([self.fromType isEqualToString:@"FromFindProduct"] || [self.fromType isEqualToString:@"FromHotProduct"] || [self.fromType isEqualToString:@"FromProductSearch"] || [self.fromType isEqualToString:@"FromZhiVisitorDynamic"]) {
-//                
-//                [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
-//            }
-//            if ([self.fromType isEqualToString:@"FromRecommend"]) {
-//                [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-//                
-//            }
+            if ([self.fromType isEqualToString:@"FromFindProduct"] || [self.fromType isEqualToString:@"FromHotProduct"] || [self.fromType isEqualToString:@"FromProductSearch"] || [self.fromType isEqualToString:@"FromZhiVisitorDynamic"]) {
+                [MobClick event:@"FromFindProductAllShareSuccess" attributes:dict];
+            }
+            if ([self.fromType isEqualToString:@"FromRecommend"]) {
+                [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+                
+            }
 //            [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:[self.fromType integerValue]]] attributes:dict];
+            [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", self.fromType] attributes:dict];
             
-            //精品推荐填1
+//          今日推荐
+            if ([self.fromType isEqualToString:@"RecommendShareSuccessAndAllJS"]) {
+                [MobClick event:@"RecommendShareSuccess" attributes:dict];
+                [MobClick event:@"ShareSuccessAll" attributes:dict];
+                [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+                [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+
+            }
+            
+//          店铺详情
+            if ([self.fromType isEqualToString:@"ShouKeBaoStoreShareSuccess"]) {
+                [MobClick event:@"ShouKeBaoStoreShareSuccess" attributes:dict];
+                [MobClick event:@"ShouKeBaoStoreShareSuccessJS" attributes:dict counter:3];
+                [MobClick event:@"ShareSuccessAll" attributes:dict];
+                [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+            }
+//            专属App数据分享
+            if ([self.fromType isEqualToString:@"Me_exclusiveAppShareScccessCount"]) {
+                [MobClick event:@"Me_exclusiveAppShareScccessCount" attributes:dict];
+            }
+            
             NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
             [postDic setObject:@"0" forKey:@"ShareType"];
             if (self.shareInfo[@"Url"]) {
@@ -255,14 +271,12 @@ static NSString * cellid = @"reuseaa";
                 [postDic setObject:@"4" forKey:@"ShareWay"];
             }
             
-            
             [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
                 NSDictionary * dci = json;
                 NSMutableString * string = [NSMutableString string];
                 for (id str in dci.allValues) {
                     [string appendString:str];
                 }
-                
             } failure:^(NSError *error) {
                 
             }];
@@ -278,9 +292,7 @@ static NSString * cellid = @"reuseaa";
         }else if (state == SSResponseStateFail){
             BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
             [MobClick event:@"ShareFailAll" attributes:dict];
-            
             NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
-            
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error errorDescription] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }else if (state == SSResponseStateCancel){
@@ -289,8 +301,64 @@ static NSString * cellid = @"reuseaa";
 
 }
 
+//自定义弹出框走开通专属app界面
+- (void)setExclusiveBox{
+    if ([UIScreen mainScreen].bounds.size.height>568) {
+        self.exclusiveV = [[UIView alloc]initWithFrame:CGRectMake(30, 200, [UIScreen mainScreen].bounds.size.width-60, 200)];
+    }else{
+        self.exclusiveV = [[UIView alloc]initWithFrame:CGRectMake(10, 200, [UIScreen mainScreen].bounds.size.width-20, 200)];
+    }
+    self.exclusiveV.backgroundColor = [UIColor whiteColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.exclusiveV];
+     self.exclusiveV.layer.masksToBounds = YES;
+    self.exclusiveV.hidden = YES;
+     self.exclusiveV.layer.cornerRadius = 10;
+    
+    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.exclusiveV.frame.size.width, 50)];
+    imageV.userInteractionEnabled = YES;
+    imageV.image = [UIImage imageNamed:@"boxBackg1"];
+    [self.exclusiveV addSubview:imageV];
+    
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(imageV.frame.size.width-50, 0, 50, 50);
+    [button setImage:[UIImage imageNamed:@"iconfont-cancle"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(cancleBtnClickAction) forControlEvents:UIControlEventTouchUpInside];
+    [imageV addSubview:button];
+    
+    UILabel *tipL = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageV.frame), self.exclusiveV.frame.size.width, 80)];
+    tipL.text = @"开通专属APP，才能使用此功能!";
+    tipL.textAlignment = NSTextAlignmentCenter;
+    tipL.font = [UIFont systemFontOfSize:19.0f];
+    [self.exclusiveV addSubview:tipL];
+    
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    if ([UIScreen mainScreen].bounds.size.height>568) {
+        button1.frame = CGRectMake(80, CGRectGetMaxY(tipL.frame)+10, self.exclusiveV.frame.size.width-160, 40);
+    }else{
+        button1.frame = CGRectMake(70, CGRectGetMaxY(tipL.frame)+10, self.exclusiveV.frame.size.width-140, 40);
+    }
+    
+    [button1 setTitle:@"立即申请开通" forState:UIControlStateNormal];
+    [button1 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    button1.layer.borderColor = [UIColor orangeColor].CGColor;
+    button1.layer.borderWidth = 1.0f;
+    button1.layer.masksToBounds = YES;
+    button1.layer.cornerRadius = 20.0f;
+    [button1 addTarget:self action:@selector(pushApplyForOpenVip) forControlEvents:UIControlEventTouchUpInside];
+    [self.exclusiveV addSubview:button1];
+}
+
+- (void)pushApplyForOpenVip{
+    if (_delegate && [_delegate respondsToSelector:@selector(notiPopUpBoxView)]) {
+        [self cancleBtnClickAction];
+        [_delegate notiPopUpBoxView];
+    }
+
+}
 - (void)cancleBtnClickAction{
     self.blackView.hidden = YES;
+    self.exclusiveV.hidden = YES;
     self.hidden = YES;
 }
 
