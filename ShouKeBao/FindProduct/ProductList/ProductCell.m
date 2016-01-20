@@ -256,6 +256,8 @@
     CGFloat lineYS = CGRectGetMaxY(self.normalPrice.frame)+5;
     self.line.frame = CGRectMake(titleStart, lineYS, titleW, 0.5);
     
+    
+    
     /**
      四个label 产品编号 抵 送 利 闪电
      */

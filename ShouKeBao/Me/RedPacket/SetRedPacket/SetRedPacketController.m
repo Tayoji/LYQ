@@ -267,6 +267,7 @@
         NSDictionary * sendDic = @{@"AppRedEnvelopeId":AppRedEnvelopeId,@"AppRedEnvelopeNoId": AppRedEnvelopeNoId};
         NSString * jsonStr = [StrToDic jsonStringWithDicL:sendDic];
         NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":jsonStr};
+        NSLog(@"%@", jsonStr);
        self.tempMeesage = [ChatSendHelper sendTextMessageWithString:@"[红包]"
                                                                 toUsername:AppSkbUserId
                                                                messageType:eMessageTypeChat
