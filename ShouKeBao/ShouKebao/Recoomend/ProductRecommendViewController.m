@@ -532,7 +532,7 @@
         }
         height = [self heihtofContensStr:model.AdvertText sysFont:13];
     }else{
-        return 160;
+        return 170;
     }
     if ([tag isEqualToString:@"1"]) {
         return 200 + height;
@@ -628,6 +628,7 @@
     selectVC.FromWhere = FromRecomment;
     [self.navigationController pushViewController:selectVC animated:YES];
 }
+
 
 - (void)notiPopUpBoxView{
     NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];

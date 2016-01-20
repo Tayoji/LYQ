@@ -401,7 +401,7 @@
         //        return self.view.frame.size.height/4;
         return 160;
     }else{
-        return 120;
+        return 130;
     }
 }
 

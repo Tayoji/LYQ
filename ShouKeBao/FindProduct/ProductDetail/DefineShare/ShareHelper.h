@@ -12,15 +12,13 @@
 @protocol notiPopUpBox<NSObject>
 -(void)notiPopUpBoxView;
 -(void)pushChoseCustomerView:(NSString *)productJsonStr;
+
+-(void)shareSuccessWithType:(ShareType)type
+               andShareInfo:(NSDictionary *)shareInfo;
+
 @end
 
 @interface ShareHelper : UIView
-@property (nonatomic, strong)UIView *shareView;
-@property (nonatomic, strong)UILabel *titleLabel;
-@property (nonatomic, strong)UIButton *cancleBtn;
-@property (nonatomic, strong)UILabel *contentLabel;
-@property (nonatomic, strong)UICollectionView *collectionView;
-@property (nonatomic, strong)UIView *blackView;
 @property (nonatomic, strong)id<notiPopUpBox>delegate;
 
 - (void)shareWithshareInfo:(NSDictionary *)shareInfo

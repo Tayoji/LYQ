@@ -32,4 +32,5 @@
 
 @property (nonatomic,weak) id<OrderCellDelegate> orderDelegate;
 @property (nonatomic,weak) id<upAndDownBtnDelegate>upAndDownDelegate;
+@property (weak, nonatomic)UIButton *moreBtn;
 @end

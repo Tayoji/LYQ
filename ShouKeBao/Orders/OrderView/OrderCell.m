@@ -53,7 +53,7 @@
 @property (nonatomic,strong) NSMutableArray *buttonArr;
 
 @property (weak, nonatomic)UIButton *buttonIcon;
-@property (weak, nonatomic)UIButton *moreBtn;
+
 @end
 
 @implementation OrderCell
@@ -421,7 +421,7 @@
       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
 
     }
-        [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
     [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [self.bottomView addSubview:self.moreBtn];

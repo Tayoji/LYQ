@@ -1040,7 +1040,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 1) {
-        return 120;
+        return 130;
     }else if (tableView.tag == 7){
         CGFloat listViewH = self.listTableView.frame.size.height;
         return listViewH/self.listArray.count;

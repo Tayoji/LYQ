@@ -38,11 +38,6 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] init];
         _tableView.separatorInset = UIEdgeInsetsMake(0, -67, 0, 0);
-//        if (self.tip.length) {
-//           _tableView.rowHeight = 40;
-//        }else{
-//           _tableView.rowHeight = 45;
-//        }
         _tableView.dataSource = self;
         _tableView.delegate = self;
     }
@@ -50,10 +45,8 @@
 }
 
 #pragma mark - private
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
     [super layoutSubviews];
-    
     self.tableView.frame = CGRectMake(0, 5, self.frame.size.width, self.frame.size.height - 5);
 }
 
@@ -96,13 +89,6 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.tintColor = [UIColor colorWithRed:249/255.0 green:132/255.0 blue:12/255.0 alpha:1];
     }
-    
-//    cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
-    
-
-
-    NSLog(@"text = %@", self.dataSource);
-    
     if (!self.tip.length) {
         if (_currentIndex == indexPath.row) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -112,8 +98,14 @@
         cell.textLabel.text = self.dataSource[indexPath.row][@"Text"];
         
     }else{
+        tableView.layer.masksToBounds = YES;
+        tableView.layer.cornerRadius = 3;
         ButtonList *bb = self.dataSource[indexPath.row];
-        cell.textLabel.text = bb.text;
+        UILabel *l = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, tableView.frame.size.width-10, 40)];
+        l.font = [UIFont systemFontOfSize:12.0f];
+        [cell.contentView addSubview:l];
+        l.text = bb.text;
+//        cell.textLabel.text = bb.text;
         
     }
     
@@ -127,63 +119,64 @@
     }
 }
 #pragma mark - UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // 取消前一个选中的，就是单选啦
-    NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
-    UITableViewCell *lastCell = [tableView cellForRowAtIndexPath:lastIndex];
-    lastCell.accessoryType = UITableViewCellAccessoryNone;
-    // 选中操作
-    UITableViewCell *cell = [tableView  cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    // 保存选中的
-    _currentIndex = indexPath.row;
-    switch (indexPath.row) {
-        case 0:{
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderAllSX" attributes:dict];
-        }
-            break;
-        case 1:
-        {
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderTodaySX" attributes:dict];
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (!self.tip.length) {
+        // 取消前一个选中的，就是单选啦
+        NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:_currentIndex inSection:0];
+        UITableViewCell *lastCell = [tableView cellForRowAtIndexPath:lastIndex];
+        lastCell.accessoryType = UITableViewCellAccessoryNone;
+        // 选中操作
+        UITableViewCell *cell = [tableView  cellForRowAtIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
         
+        // 保存选中的
+        _currentIndex = indexPath.row;
+        switch (indexPath.row) {
+            case 0:{
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderAllSX" attributes:dict];
+            }
+                break;
+            case 1:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderTodaySX" attributes:dict];
+                
+                
+            }
+                break;
+            case 2:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderYesterdaySX" attributes:dict];
+                
+            }
+                break;
+            case 3:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderLastWeekSX" attributes:dict];
+                
+            }
+                break;
+            case 4:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderLastTwoWeekSX" attributes:dict];
+                
+            }
+                break;
+            case 5:
+            {
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"OrderLastMonthSX" attributes:dict];
+                
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case 2:
-        {
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderYesterdaySX" attributes:dict];
-
-        }
-            break;
-        case 3:
-        {
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderLastWeekSX" attributes:dict];
-
-        }
-            break;
-        case 4:
-        {
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderLastTwoWeekSX" attributes:dict];
-
-        }
-            break;
-        case 5:
-        {
-            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-            [MobClick event:@"OrderLastMonthSX" attributes:dict];
-
-        }
-            break;
-
-        default:
-            break;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

@@ -28,104 +28,12 @@
 //3,列表下拉会导致展开的cell的按钮title还是展开，这里在cell初始化时根据cell的高度进行判断给button标题
 //4,此乃原创，切勿抄袭
 @interface DayDetailCell()
-
-//@property (weak, nonatomic) UIImageView *iconView;
-//
-//@property (weak, nonatomic) UILabel *titleLab;
-//
-//@property (weak, nonatomic) UILabel *aPriceLab;
-//
-//@property (weak, nonatomic) UILabel *bPriceLab;
-@property(nonatomic,weak) UILabel *warningLab;
+@property (nonatomic, weak) UILabel *warningLab;
+@property (nonatomic, weak)UILabel *lastDateL;
 @end
 
 @implementation DayDetailCell
 
-//+ (instancetype)cellWithTableView:(UITableView *)tableView
-//{
-//    static NSString *ID = @"daydetailcell";
-//    DayDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-//    if (!cell) {
-//        cell = [[DayDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//    }
-//    return cell;
-//}
-//
-//- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-//{
-//    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-//    if (self) {
-//        [self setup];
-//    }
-//    return self;
-//}
-//
-//- (void)setup
-//{
-//    UIImageView *iconView = [[UIImageView alloc] init];
-//    [self.contentView addSubview:iconView];
-//    self.iconView = iconView;
-//    
-//    UILabel *titleLab = [[UILabel alloc] init];
-//    titleLab.font = [UIFont systemFontOfSize:14];
-//    titleLab.numberOfLines = 0;
-//    [self.contentView addSubview:titleLab];
-//    self.titleLab = titleLab;
-//    
-//    UILabel *aPriceLab = [[UILabel alloc] init];
-//    aPriceLab.font = [UIFont systemFontOfSize:12];
-//    [self.contentView addSubview:aPriceLab];
-//    self.aPriceLab = aPriceLab;
-//    
-//    UILabel *bPriceLab = [[UILabel alloc] init];
-//    bPriceLab.font = [UIFont systemFontOfSize:12];
-//    [self.contentView addSubview:bPriceLab];
-//    self.bPriceLab = bPriceLab;
-//}
-//
-//- (void)setDetail:(DayDetail *)detail
-//{
-//    _detail = detail;
-//    
-//    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-//    
-//    CGFloat iconW = 75;
-//    self.iconView.frame = CGRectMake(gap, gap, 75, 60);
-//    
-//    CGFloat maxTitleW = screenW - iconW - gap * 3;
-//    CGSize titleMax = CGSizeMake(maxTitleW, 40);
-//    CGSize titleSize = [NSString textSizeWithText:detail.title font:[UIFont systemFontOfSize:14] maxSize:titleMax];
-//    CGFloat titleX = CGRectGetMaxX(self.iconView.frame) + gap;
-//    self.titleLab.frame = CGRectMake(titleX, gap, titleSize.width, titleSize.height);
-//    
-//    // 设置数据
-//    [self.iconView sd_setImageWithURL:[NSURL URLWithString:detail.icon] placeholderImage:nil];
-//    
-//    self.titleLab.text = detail.title;
-//    
-//    self.aPriceLab.text = [NSString stringWithFormat:@"门市价￥%@",detail.aPrice];
-//    
-//    NSString *tmp = [NSString stringWithFormat:@"￥%@起",detail.bPrice];
-//    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:tmp];
-//    NSMutableDictionary *mutaDic = [NSMutableDictionary dictionary];
-//    [mutaDic setObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-//    [mutaDic setObject:[UIFont systemFontOfSize:17] forKey:NSFontAttributeName];
-//    [attr addAttributes:mutaDic range:NSMakeRange(0, detail.bPrice.length + 1)];
-//    
-//    [self.bPriceLab setAttributedText:attr];
-//    
-//    // 因为要知道文字大小 所有放后面算
-//    CGFloat priceY = 80 - 20 - gap;
-//    CGSize bMax = CGSizeMake(screenW * 0.5, 20);
-//    CGSize bSize = [NSString textSizeWithText:[attr string] font:[UIFont systemFontOfSize:12] maxSize:bMax];
-//    CGFloat bX = screenW - (bSize.width + 20 + gap);
-//    self.bPriceLab.frame = CGRectMake(bX, priceY, bSize.width + 20, 20);
-//    
-//    CGSize aMax = CGSizeMake(screenW * 0.5, 20);
-//    CGSize aSize = [NSString textSizeWithText:[NSString stringWithFormat:@"门市价￥%@",detail.aPrice] font:[UIFont systemFontOfSize:12] maxSize:aMax];
-//    CGFloat aX = bX - (aSize.width + gap);
-//    self.aPriceLab.frame = CGRectMake(aX, priceY, aSize.width, 20);
-//}
 
 + (instancetype)cellWithTableView:(UITableView *)tableView withTag:(NSInteger)tag
 {
@@ -146,8 +54,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-      
-
         self.isHistory = NO;
         self.isPlain = NO;//是否展开
                 [self setup];
@@ -155,110 +61,8 @@
     return self;
 }
 
-- (void)setup
-{
-    // 历史浏览的内容
-    //    UILabel *time = [[UILabel alloc] init];
-    //    time.textAlignment = NSTextAlignmentRight;
-    //    time.font = [UIFont systemFontOfSize:12];
-    //    [self.contentView addSubview:time];
-    //    self.time = time;
-    
-    //    UIView *sep = [[UIView alloc] init];
-    //    sep.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
-    //    [self.contentView addSubview:sep];
-    //    self.sep = sep;
-    
-    // 与历史浏览无关的
-    //    UILabel *title = [[UILabel alloc] init];
-    //    title.numberOfLines = 0;
-    //    title.font = [UIFont systemFontOfSize:15];
-    //    [self.contentView addSubview:title];
-    //    self.title = title;
-    //    self.title.numberOfLines = 0;
-    //    self.title.tintColor = [UIColor lightGrayColor];
-    //    UIImageView *icon = [[UIImageView alloc] init];
-    //    [self.contentView addSubview:icon];
-    //    self.icon = icon;
-    //
-    //    /**
-    //     四个label
-    //     */
-    //    UILabel *productNum = [[UILabel alloc] init];
-    //    productNum.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:productNum];
-    //    self.productNum = productNum;
-    //
-    //    UILabel *normalPrice = [[UILabel alloc] init];
-    //    normalPrice.font = [UIFont systemFontOfSize:11];
-    //    //    normalPrice.textAlignment = NSTextAlignmentRight;
-    //    [self.contentView addSubview:normalPrice];
-    //    self.normalPrice = normalPrice;
-    //
-    //    UILabel *cheapPrice = [[UILabel alloc] init];
-    //    cheapPrice.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:cheapPrice];
-    //    self.cheapPrice = cheapPrice;
-    //
-    //    UILabel *profits = [[UILabel alloc] init];
-    //    //    profits.textAlignment = NSTextAlignmentRight;
-    //    profits.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:profits];
-    //    self.profits = profits;
-    //
-    //    /**
-    //     底下的三个按钮
-    //     */
-    //    UIButton *jiafanBtn = [[UIButton alloc] init];
-    //    [jiafanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [jiafanBtn setBackgroundImage:[UIImage imageNamed:@"dihesong"] forState:UIControlStateNormal];
-    //    jiafanBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    jiafanBtn.userInteractionEnabled = NO;
-    //    [self.contentView addSubview:jiafanBtn];
-    //    self.jiafanBtn = jiafanBtn;
-    //    UILabel * diLab = [[UILabel alloc]initWithFrame:CGRectMake(4, 0, 15, 15)];
-    //    diLab.text = @"抵";
-    //    diLab.font = [UIFont systemFontOfSize:13.0];
-    //    diLab.textColor = [UIColor redColor];
-    //    [jiafanBtn  addSubview:diLab];
-    //
-    //
-    //
-    //
-    //    UIButton *quanBtn = [[UIButton alloc] init];
-    //    [quanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [quanBtn setBackgroundImage:[UIImage imageNamed:@"songhedi"] forState:UIControlStateNormal];
-    //    quanBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    quanBtn.userInteractionEnabled = NO;
-    //    [self.contentView addSubview:quanBtn];
-    //    self.quanBtn = quanBtn;
-    //    UILabel * songLab = [[UILabel alloc]initWithFrame:CGRectMake(4, 0, 15, 15)];
-    //    songLab.text = @"送";
-    //    songLab.font = [UIFont systemFontOfSize:13.0];
-    //    songLab.textColor = [UIColor colorWithRed:253/255.0 green:134/255.0 blue:39/255.0 alpha:1.0];
-    //    [quanBtn addSubview:songLab];
-    //
-    //
-    //
-    //
-    //    UIButton *ShanDianBtn = [[UIButton alloc] init];
-    //    [ShanDianBtn setTitleColor:[UIColor colorWithRed:0 green:91/255.0 blue:1 alpha:1] forState:UIControlStateNormal];
-    //    ShanDianBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    [ShanDianBtn setBackgroundImage:[UIImage resizedImageWithName:@"chufa"] forState:UIControlStateNormal];
-    //    ShanDianBtn.userInteractionEnabled = NO;
-    //    ShanDianBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    //    ShanDianBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    //    [self.contentView addSubview:ShanDianBtn];
-    //    self.ShanDianBtn = ShanDianBtn;
-    //
-    //    // 闪电
-    //    UIImageView *flash = [[UIImageView alloc] init];
-    //    flash.image = [UIImage imageNamed:@"sandian"];
-    //    [self.contentView addSubview:flash];
-    //    self.flash = flash;
-    //
-    /*
-     历史浏览的内容
+- (void)setup{
+  /*     历史浏览的内容
      */
     UILabel *time = [[UILabel alloc] init];
     time.textAlignment = NSTextAlignmentRight;
@@ -320,6 +124,13 @@
     cheapPrice.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:cheapPrice];
     self.cheapPrice = cheapPrice;
+    
+    UILabel *lastDateL = [[UILabel alloc]init];
+    lastDateL.textColor = [UIColor lightGrayColor];
+    lastDateL.font = [UIFont systemFontOfSize:12.0f];
+    lastDateL.textAlignment = NSTextAlignmentLeft;
+    [self.contentView addSubview:lastDateL];
+    self.lastDateL = lastDateL;
     
     /**
      底下的4/5个按钮 编号 抵 送 利 闪电 细线
@@ -418,8 +229,7 @@
 - (void)layoutSubviews 
 {
     [super layoutSubviews];
-    //    CGFloat iconWid = 60;
-    CGFloat height = 120;
+    CGFloat height = 130;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat iconWidth = screenW/5;
     /**
@@ -451,7 +261,7 @@
      门市价 同行价
      */
     //门市价
-    CGFloat priceYStart = CGRectGetMaxY(self.title.frame);
+    CGFloat priceYStart = CGRectGetMidY(self.title.frame)+2*gap;
     CGFloat normalWidth = screenW/3;
     CGFloat priceHeight = CGRectGetMaxY(self.icon.frame)/3;
     self.normalPrice.frame = CGRectMake(titleStart, priceYStart, normalWidth, priceHeight);
@@ -459,8 +269,11 @@
     CGFloat samePriceWStart = screenW*3/5;
     CGFloat priceWidth = screenW*2/5-gap;
     self.cheapPrice.frame = CGRectMake(samePriceWStart, priceYStart, priceWidth, priceHeight);
+    //最近班期
+    self.lastDateL.frame = CGRectMake(titleStart, CGRectGetMidY(self.normalPrice.frame)+5, screenW-titleStart-gap, priceHeight);
+    
     //   细分界线
-    CGFloat lineYS = CGRectGetMaxY(self.normalPrice.frame)+5;
+    CGFloat lineYS = CGRectGetMaxY(self.lastDateL.frame);
     self.line.frame = CGRectMake(titleStart, lineYS, titleW, 0.5);
     
     /**
@@ -760,11 +573,8 @@
 //    [self addAlert];
 //
 }
-- (void)setDetail:(DayDetail *)modal
-{
-    
+- (void)setDetail:(DayDetail *)modal{
     _detail = modal;
-    
     if (!self.isHistory) {
         self.time.hidden = YES;
         self.sep.hidden = YES;
@@ -801,6 +611,7 @@
     [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(0, modal.PersonPeerPrice.length+1)];
     self.cheapPrice.attributedText = str1;
     
+    self.lastDateL.text = [NSString stringWithFormat:@"最近班期：%@", modal.LastScheduleDate];
     
     NSString *codeStr = [NSString stringWithFormat:@"编号: %@",modal.Code];
     self.productNum.text = codeStr;
