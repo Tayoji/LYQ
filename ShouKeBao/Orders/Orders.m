@@ -109,6 +109,7 @@ typedef void (^ChangeFrameBlock)();
 
 @property (nonatomic,strong) NSArray *stateArr;
 @property (nonatomic, assign) CGRect ff;
+@property (nonatomic, assign)CGFloat g;
 @end
 
 @implementation Orders
@@ -876,9 +877,9 @@ typedef void (^ChangeFrameBlock)();
  
  */
 - (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList{
-    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, self.ff.origin.y-self.tableView.contentOffset.y+89+CGRectGetMaxY(downBtn.frame)+10,90, 40*btnList.count);
+    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, self.ff.origin.y-self.tableView.contentOffset.y+89+CGRectGetMaxY(downBtn.frame)+10,100, 40*btnList.count);
+    NSLog(@"downBtn = %f ", CGRectGetMaxY(downBtn.frame));
     [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100"];
-    
 }
 
 - (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip{
@@ -980,9 +981,11 @@ typedef void (^ChangeFrameBlock)();
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
-   
     cell.indexPath = indexPath;
     self.ff = [tableView rectForRowAtIndexPath:indexPath];
+   
+//    self.g = cell.moreBtn.frame.origin.y - tableView.contentOffset.y;
+    
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];

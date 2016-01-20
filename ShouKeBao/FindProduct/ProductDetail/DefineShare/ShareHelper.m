@@ -27,6 +27,15 @@ static NSString * cellid = @"reuseaa";
 @property (nonatomic, strong) NSArray *photosArr;
 @property (nonatomic, strong)id publishContent;
 @property (nonatomic, strong)UIView *exclusiveV;
+
+
+@property (nonatomic, strong)UIView *shareView;
+@property (nonatomic, strong)UILabel *titleLabel;
+@property (nonatomic, strong)UIButton *cancleBtn;
+@property (nonatomic, strong)UILabel *contentLabel;
+@property (nonatomic, strong)UICollectionView *collectionView;
+@property (nonatomic, strong)UIView *blackView;
+
 @end
 
 
@@ -189,7 +198,6 @@ static NSString * cellid = @"reuseaa";
                     }
                 }
             }else{
-//                NSLog(@",, %@", self.shareInfo);
                 shareType = ShareTypeQQSpace;
             }
         }
@@ -215,9 +223,12 @@ static NSString * cellid = @"reuseaa";
     }
     [ShareSDK showShareViewWithType:shareType container:[ShareSDK container] content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
         
+
         if (state == SSResponseStateSuccess){
             
-            
+            if (_delegate&&[_delegate respondsToSelector:@selector(shareSuccessWithType:andShareInfo:)]) {
+                [_delegate shareSuccessWithType:shareType andShareInfo:self.shareInfo];
+            }
             BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
             [MobClick event:@"ShareSuccessAll" attributes:dict];
             [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
@@ -230,7 +241,6 @@ static NSString * cellid = @"reuseaa";
                 [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
                 
             }
-//            [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", [self.eventArray objectAtIndex:[self.fromType integerValue]]] attributes:dict];
             [MobClick event:[NSString stringWithFormat:@"%@ShareSuccess", self.fromType] attributes:dict];
             
 //          今日推荐
@@ -296,6 +306,7 @@ static NSString * cellid = @"reuseaa";
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error errorDescription] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }else if (state == SSResponseStateCancel){
+            
         }
     }];
 

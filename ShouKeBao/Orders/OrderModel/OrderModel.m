@@ -66,9 +66,7 @@
 //            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
 //            [self.buttonList addObject:btn];
 //        }
-        
-        
-        
+  
         for (NSDictionary *dic2 in dic[@"ButtonList"]) {
             ButtonList *btn = [ButtonList buttonListWithDict:dic2];
             
@@ -82,13 +80,6 @@
         if (self.btnList.count) {
              [self.buttonList addObject:self.btnList];//将二级现实放在数组里作为一个元素
         }
-        
-        NSLog(@"... %@ ...%@", self.buttonList, self.btnList);
-        
-        
-        
-        
-        
     }
     return self;
 }

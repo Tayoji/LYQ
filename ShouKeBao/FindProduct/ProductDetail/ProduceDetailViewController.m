@@ -699,14 +699,15 @@
 }
 
 
-#warning - 代理方式
-//申请专属App
+#pragma mark - 分享代理方法
 - (void)notiPopUpBoxView{
     NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
     newExclusiveVC.naVC = self.navigationController;
     newExclusiveVC.pushFrom = FromProductDetail;
     [self.navigationController pushViewController:newExclusiveVC animated:YES];
 }
+
+
 //选择客人
 - (void)pushChoseCustomerView:(NSString *)productJsonStr{
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
