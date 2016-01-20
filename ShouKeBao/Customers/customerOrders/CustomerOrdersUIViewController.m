@@ -50,7 +50,7 @@
 -(void)sex:(id)sender
 {
     UISegmentedControl *control = (UISegmentedControl *)sender;
-    if (control.selectedSegmentIndex == 0) {
+    if (control.selectedSegmentIndex == 2) {
         NSLog(@"aaaa" );
 //    [self.navigationController popViewControllerAnimated:NO];
     }

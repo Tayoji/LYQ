@@ -14,6 +14,8 @@
 //#import "addCustomerViewController.h"
 #import "AddViewController.h"
 
+#define kScreenSize [UIScreen mainScreen].bounds.size
+
 #import "BatchAddViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "WMAnimations.h"
@@ -105,7 +107,9 @@
 - (IBAction)inviteCancleBtn:(id)sender;
 - (IBAction)inviteCustomerBtn:(id)sender;
 @property (nonatomic, copy)NSString *telStr;
-
+//下边声明的是新手引导
+@property (nonatomic,strong) UIView *backgroundIV;
+@property (nonatomic,strong) UIImageView *guideView;
 @end
 
 @implementation Customers
@@ -135,7 +139,8 @@
     self.navigationItem.leftBarButtonItem = nil;
     [self.addNew setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
     [self.importUser setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
-   
+
+    
     [self.timeBtn setSelected:YES];
     [self customerRightBarItem];
     [self setTable];
@@ -149,8 +154,6 @@
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
-
-
 //代理实现邀请弹窗
 - (void)tipInviteViewShow:(NSString *)telStr{
     self.Tip_InviteView.layer.masksToBounds = YES;
@@ -513,6 +516,15 @@
        
         if (arrs.count == 0){
         }else{
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if (![[defaults objectForKey:@"GuideCustormRadP"]  isEqual: @"1"]) {
+                [defaults setObject:@"1" forKey:@"GuideCustormRadP"];
+                [defaults setObject:@"1" forKey:@"GuideCustdongtaiRAD"];
+                [[[UIApplication sharedApplication].delegate window] addSubview:self.backgroundIV];
+                [[[UIApplication sharedApplication] .delegate window] addSubview:self.guideView];
+                
+            }
+            
             [self.Array addObjectsFromArray:arrs];
            
             for (NSDictionary *dic in json[@"CustomerList"]) {
@@ -602,6 +614,7 @@
 
 #pragma mark - tableView－delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
     if (self.table == tableView) {
        
     }else if (self.popTableview == tableView){
@@ -1146,5 +1159,61 @@
     } else {
         NSLog(@"发送失败");
     }
+}
+-(UIView *)backgroundIV{
+    if (!_backgroundIV) {
+        _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+        //        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+        _backgroundIV.userInteractionEnabled = YES;
+        _backgroundIV.backgroundColor = [UIColor blackColor];
+        _backgroundIV.alpha = 0.4;
+    }
+    return _backgroundIV;
+}
+-(UIImageView *)guideView{
+    if (!_guideView) {
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 200)];
+        _guideView.userInteractionEnabled = YES;
+        [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
+       UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
+        GuideTitImageV.image = [UIImage imageNamed:@"NewCoustormRadP"];
+        
+        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 30)];
+        GuideconLabel.text = @"客户动态一手掌握，知己知彼主动出击。";
+        GuideconLabel.textAlignment = NSTextAlignmentCenter;
+        GuideconLabel.font = [UIFont systemFontOfSize:16];
+        GuideconLabel.textColor = [UIColor lightGrayColor];
+        
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 40)];
+        [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        GuideIKnowBtn.tag = 101;
+        [GuideIKnowBtn addTarget:self action:@selector(guideClick) forControlEvents:UIControlEventTouchUpInside];
+        [GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_guideView addSubview:GuideTitImageV];
+        [_guideView addSubview:GuideconLabel];
+        [_guideView addSubview:GuideIKnowBtn];
+    }
+    return _guideView;
+}
+-(void)guideClick{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    NSLog(@"---%@",self.dataArr[0][0]);
+    CustomModel *model = self.dataArr[0][0];
+    CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
+    VC.customVC = self;
+    VC.keyWords = self.searchK;
+    VC.customerID = model.ID;
+    VC.appUserID = @"";
+    VC.AppSkbUserId = model.AppSkbUserId;
+    VC.IsOpenIM = model.IsOpenIM;
+    VC.name = model.Name;
+    VC.model = model;
+    VC.InvitationInfo = self.InvitationInfo;
+    //    NSLog(@"appSkbUserId = %@, %@", appSkbUserId, name);
+    [self.navigationController pushViewController:VC animated:YES];
+
 }
 @end

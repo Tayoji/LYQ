@@ -65,7 +65,14 @@
     [segment setTintColor:[UIColor whiteColor]];
     segment.frame = CGRectMake(0, 0, 200, 28);
     [segment setSelected:YES];
-    [segment setSelectedSegmentIndex:0];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[defaults objectForKey:@"GuideCustdongtaiRAD"]  isEqual: @"1"]) {
+        [segment setSelectedSegmentIndex:2];
+        [defaults removeObjectForKey:@"GuideCustdongtaiRAD"];
+    }else{
+        [segment setSelectedSegmentIndex:0];
+
+    }
     [titleView addSubview:segment];
     self.segmentControl = segment;
     self.navigationItem.titleView = titleView;

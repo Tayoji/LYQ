@@ -40,6 +40,13 @@
 @property (nonatomic,strong) NSMutableArray *searchDataArr;//服务器返回的数据
 @property (nonatomic,strong) UITableView *SearTableView;
 @property (nonatomic,strong) UIButton *cancalBtn;//自定义的取消button
+//下边声明的都是新手引导1.5.0.0
+@property (nonatomic,strong) UIView *backgroundIV;
+@property (nonatomic,strong) UIImageView *guideView;
+@property (nonatomic,strong) UIImageView *GuideTitImageV;
+@property (nonatomic) UILabel *GuideconLabel;
+@property (nonatomic,strong) UIButton *GuideIKnowBtn;
+@property (nonatomic,strong) UIImageView *samllGuideImageV;
 @end
 
 @implementation NewMessageCenterController
@@ -52,7 +59,16 @@
     _tableView.tableFooterView = [[UIView alloc] init];
     
     [self registerNotifications];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+        NSLog(@"此处要显示引导页");
+        [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
+        [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
+        [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
+        //引导页下边的小图标
+        [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
+    }
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
 }
@@ -61,7 +77,6 @@
     [super viewWillAppear:animated];
     [self refreshDataSource];
 }
-
 - (void)loadMessageDataSource{
     
     //如果是来自管客户的界面，只显示IM聊天
@@ -559,5 +574,83 @@
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+-(UIView *)backgroundIV{
+    if (!_backgroundIV) {
+        _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+//        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+        _backgroundIV.userInteractionEnabled = YES;
+        _backgroundIV.backgroundColor = [UIColor blackColor];
+        _backgroundIV.alpha = 0.4;
+    }
+    return _backgroundIV;
+}
+-(void)click{
+    NSLog(@"点击了");
+}
+-(UIImageView *)guideView{
+    if (!_guideView) {
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 200)];
+        _guideView.userInteractionEnabled = YES;
+        [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
+        
+       [_guideView addSubview:self.GuideIKnowBtn];
+        [_guideView addSubview:self.GuideconLabel];
+        [_guideView addSubview:self.GuideTitImageV];
+    }
+    return _guideView;
+}
+-(UIButton *)GuideIKnowBtn{
+    if (!_GuideIKnowBtn) {
+        _GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 40)];
+        [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
+        _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        _GuideIKnowBtn.tag = 101;
+        [_GuideIKnowBtn addTarget:self action:@selector(guideClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    return _GuideIKnowBtn;
+}
 
+-(UILabel *)GuideconLabel{
+    if (!_GuideconLabel) {
+        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 30)];
+        _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
+        _GuideconLabel.textAlignment = NSTextAlignmentCenter;
+        _GuideconLabel.font = [UIFont systemFontOfSize:16];
+        _GuideconLabel.textColor = [UIColor lightGrayColor];
+    }
+    return _GuideconLabel;
+}
+-(UIImageView *)GuideTitImageV{
+    if (!_GuideTitImageV) {
+        _GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
+        _GuideTitImageV.image = [UIImage imageNamed:@"NewBusiness"];
+    }
+    return _GuideTitImageV;
+}
+-(UIImageView *)samllGuideImageV{
+    if (!_samllGuideImageV) {
+        _samllGuideImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-30, kScreenSize.height/4+225, 60, 60)];
+        [_samllGuideImageV setImage:[UIImage imageNamed:@"NewBusinesSamll"]];
+    }
+    return _samllGuideImageV;
+}
+-(void)guideClick:(UIButton *)button{
+    if (button.tag == 101) {
+        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
+        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+        self.GuideIKnowBtn.tag = 102;
+        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
+    }else if(button.tag == 102){
+        [self.backgroundIV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.samllGuideImageV removeFromSuperview];
+        ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+        choseListVC.title = @"每日精选";
+        [self.navigationController pushViewController:choseListVC animated:YES];
+
+    }
+}
 @end
