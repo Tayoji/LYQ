@@ -21,7 +21,7 @@
 #import "DayDetail.h"
 #import "NSString+FKTools.h"
 #define gap 10
-
+#import "ShareHelper.h"
 @interface YesterDayCell()
 @property (nonatomic, weak)UILabel *lastDateL;
 @end
@@ -325,93 +325,100 @@
 }
 
 
--(void)shareIt
-{
+-(void)shareIt{
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ClickShareAll" attributes:dict];
     NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:_modal.ShareInfo];
     NSLog(@"-------------tmp is %@----------",tmp);
 
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:tmp[@"Desc"]
-                                       defaultContent:tmp[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
-                                                title:tmp[@"Title"]
-                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
+    if (!tmp.count) {
+        return;
+    }
     
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@,%@,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
-
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+    [[ShareHelper shareHelper]shareWithshareInfo:tmp andType:@"RecommendShareSuccess" andPageUrl:nil];
+   
     
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                [self.warningLab removeFromSuperview];
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
-                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-
-                                    [self.warningLab removeFromSuperview];
-                                    
-                                    
-                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                    [postDic setObject:@"0" forKey:@"ShareType"];
-                                    if (_modal.ShareInfo[@"Url"]) {
-                                        [postDic setObject:_modal.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
-                                    }
-                                    [postDic setObject:_modal.ShareInfo[@"Url"] forKey:@"PageUrl"];
-                                    if (type ==ShareTypeWeixiSession) {
-                                        [postDic setObject:@"1" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQ){
-                                        [postDic setObject:@"2" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQSpace){
-                                        [postDic setObject:@"3" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeWeixiTimeline){
-                                        [postDic setObject:@"4" forKey:@"ShareWay"];
-                                    }
-
-                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-                                    } failure:^(NSError *error) {
-                                        
-                                    }];
-                                    //昨日推荐
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                        [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                        [MBProgressHUD hideHUD];
-                                    });
-                                    
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    [self.warningLab removeFromSuperview];
-                                    NSLog(@"TEXT_ShARE_FAI, 分享失败,错误码:%ld,错误描述:%@",(long)[error errorCode], [error errorDescription]) ;
-                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                        [MobClick event:@"ShareFailAll" attributes:dict];
-
-                                }else if (state == SSResponseStateCancel){
-                                    [self.warningLab removeFromSuperview];
-                                }
-                            }];
     
-    [self addAlert];
+//    //构造分享内容
+//    id<ISSContent> publishContent = [ShareSDK content:tmp[@"Desc"]
+//                                       defaultContent:tmp[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
+//                                                title:tmp[@"Title"]
+//                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@,%@,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
+//
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                [self.warningLab removeFromSuperview];
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+//                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+//
+//                                    [self.warningLab removeFromSuperview];
+//                                    
+//                                    
+//                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                    [postDic setObject:@"0" forKey:@"ShareType"];
+//                                    if (_modal.ShareInfo[@"Url"]) {
+//                                        [postDic setObject:_modal.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
+//                                    }
+//                                    [postDic setObject:_modal.ShareInfo[@"Url"] forKey:@"PageUrl"];
+//                                    if (type ==ShareTypeWeixiSession) {
+//                                        [postDic setObject:@"1" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQ){
+//                                        [postDic setObject:@"2" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQSpace){
+//                                        [postDic setObject:@"3" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeWeixiTimeline){
+//                                        [postDic setObject:@"4" forKey:@"ShareWay"];
+//                                    }
+//
+//                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+//                                    } failure:^(NSError *error) {
+//                                        
+//                                    }];
+//                                    //昨日推荐
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                        [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                        [MBProgressHUD hideHUD];
+//                                    });
+//                                    
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    [self.warningLab removeFromSuperview];
+//                                    NSLog(@"TEXT_ShARE_FAI, 分享失败,错误码:%ld,错误描述:%@",(long)[error errorCode], [error errorDescription]) ;
+//                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                        [MobClick event:@"ShareFailAll" attributes:dict];
+//
+//                                }else if (state == SSResponseStateCancel){
+//                                    [self.warningLab removeFromSuperview];
+//                                }
+//                            }];
+//    
+//    [self addAlert];
     
 }
 

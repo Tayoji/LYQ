@@ -27,8 +27,6 @@ static NSString * cellid = @"reuseaa";
 @property (nonatomic, strong) NSArray *photosArr;
 @property (nonatomic, strong)id publishContent;
 @property (nonatomic, strong)UIView *exclusiveV;
-
-
 @property (nonatomic, strong)UIView *shareView;
 @property (nonatomic, strong)UILabel *titleLabel;
 @property (nonatomic, strong)UIButton *cancleBtn;
@@ -44,7 +42,13 @@ static NSString * cellid = @"reuseaa";
     static ShareHelper * shareH = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        shareH = [[ShareHelper alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
+        shareH = [[ShareHelper alloc] init];
+        if ([UIScreen mainScreen].bounds.size.height == 480) {
+             shareH.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height/4, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*3/4);
+        }else{
+           shareH.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3);
+        }
+        
         });
     return shareH;
 }
@@ -74,7 +78,6 @@ static NSString * cellid = @"reuseaa";
     _publishContent = publishContent;
 }
 - (void)setLayout{
-//    NSLog(@"...%@ ,,, %@", self.shareInfo[@"IMProductMsgValue"], self.shareInfo);
     NSString *IMProductMsgValue = [NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]];
     if (IMProductMsgValue.length) {
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
@@ -103,13 +106,11 @@ static NSString * cellid = @"reuseaa";
     self.blackView = blackView;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleBtnClickAction)];
     [self.blackView addGestureRecognizer:tap];
-
     
     UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     shareView.backgroundColor = [UIColor whiteColor];
     [self addSubview:shareView];
     self.shareView = shareView;
-    
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 45)];
     titleLabel.text = @"分享";
     titleLabel.backgroundColor = [UIColor whiteColor];
@@ -139,7 +140,7 @@ static NSString * cellid = @"reuseaa";
     
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(contentLabel.frame)+gap, kScreenWidth-40, self.frame.size.height-(CGRectGetMaxY(contentLabel.frame)+gap)-gap) collectionViewLayout:flowLayout];
+    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(contentLabel.frame)+gap, kScreenWidth-60, self.frame.size.height-(CGRectGetMaxY(contentLabel.frame)+gap)-gap) collectionViewLayout:flowLayout];
     collectionView.backgroundColor = [UIColor whiteColor];
     collectionView.delegate = self;
     collectionView.dataSource = self;
@@ -162,7 +163,7 @@ static NSString * cellid = @"reuseaa";
     
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat screenW = collectionView.bounds.size.width;
+     CGFloat screenW = collectionView.bounds.size.width;
     CGFloat superiMGW = screenW-2*gap;
     CGFloat imgW = superiMGW/3;
     return CGSizeMake(imgW, imgW);
@@ -365,7 +366,6 @@ static NSString * cellid = @"reuseaa";
         [self cancleBtnClickAction];
         [_delegate notiPopUpBoxView];
     }
-
 }
 - (void)cancleBtnClickAction{
     self.blackView.hidden = YES;

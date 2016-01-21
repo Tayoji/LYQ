@@ -265,7 +265,6 @@
     if (self.pageNum < self.circleArr.count) {
         [self.CarouselSC setContentOffset:CGPointMake(0, 50*(++self.pageNum)) animated:YES];
     }if (self.pageNum >= self.circleArr.count) {
-        
         [self.CarouselSC setContentOffset:CGPointMake(0, self.CarouselSC.contentOffset.y-50 *(self.pageNum))];
         self.pageNum = 0;
         
@@ -389,7 +388,7 @@
 //    [self prepAudio];
    
 //    [self circleCartoon];
-    
+
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.cartoonBtn];
