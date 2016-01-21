@@ -122,7 +122,7 @@
             self.isRefresh = YES;
 //            [self.SELCustomerArr removeAllObjects];
         }
-        [self.SELCustomerArr removeAllObjects];
+//        [self.SELCustomerArr removeAllObjects];
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         
         if (arrs.count == 0 && self.dataArr.count == 0){
@@ -177,7 +177,9 @@
         [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HearUrl]];
         cell.NameFirstlabel.alpha = 0;
     }
-    
+    if ([self.SELCustomerArr containsObject:model.AppSkbUserId]) {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
     return cell;
 }
 

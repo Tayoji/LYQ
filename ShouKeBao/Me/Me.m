@@ -1220,7 +1220,7 @@
         GuideconLabel.text = @"发红包，张订单，不信来试试？";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
         GuideconLabel.font = [UIFont systemFontOfSize:16];
-        GuideconLabel.textColor = [UIColor lightGrayColor];
+        GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
         UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 125, 120, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];

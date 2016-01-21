@@ -156,8 +156,8 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dataDic = self.cellDataArr[indexPath.row];
-    NSLog(@"%@",dataDic[@"LuckMoneyType"]);
-    if ([dataDic[@"GetDate"] isEqual:@""] && [dataDic[@"LuckMoneyType"]  isEqual: @"0"]) {//未领取并且已过期
+    NSLog(@"%@--%@",dataDic[@"GetDate"],dataDic[@"LuckMoneyType"]);
+    if ([dataDic[@"GetDate"] isEqual:@""] && [dataDic[@"LuckMoneyType"]  isEqual: @"1"]) {//未领取并且已过期
         NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
         NSLog(@"%@",cell.HeadtitLabel.text);
