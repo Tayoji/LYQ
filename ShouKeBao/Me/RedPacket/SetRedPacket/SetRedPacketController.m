@@ -19,7 +19,7 @@
 #import "EMMessage.h"
 #import "StrToDic.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
-@interface SetRedPacketController ()<UIScrollViewDelegate,UITextViewDelegate>
+@interface SetRedPacketController ()<UIScrollViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) UIView *WarningView;
 @property (nonatomic,strong) UIView *backGroundView;
 @property (nonatomic,strong) NSMutableArray *IDsdataArr;
@@ -36,9 +36,9 @@
     self.NumOfRedPLabel.text = [NSString stringWithFormat:@"%ld",self.NumOfPeopleArr.count];
     [self creatNavOfRight];
     NSLog(@"%@",self.NumOfPeopleArr);
-    self.ExitCountryTextView.keyboardType = UIKeyboardTypeNumberPad;
-    self.InlandTextView.keyboardType = UIKeyboardTypeNumberPad;
-    self.RimtextView.keyboardType = UIKeyboardTypeNumberPad;
+    self.ExitCountryTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.InlandTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.RimTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.ScrollView.contentSize = CGSizeMake(kScreenSize.width, kScreenSize.height);
     self.SendRedPacketBtn.enabled = NO;
     self.SendRedPacketBtn.alpha = 0.5;
@@ -48,9 +48,9 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     [self.RedPDescribeTextView resignFirstResponder];
-    [self.ExitCountryTextView resignFirstResponder];
-    [self.InlandTextView resignFirstResponder];
-    [self.RimtextView resignFirstResponder];
+    [self.ExitCountryTextField resignFirstResponder];
+    [self.InlandTextField resignFirstResponder];
+    [self.RimTextField resignFirstResponder];
 //    [self computeMoney];
 }
 
@@ -67,6 +67,12 @@
     [_backGroundView removeFromSuperview];
 }
 -(void)BtnClick:(UIButton *)button{
+    
+    [self.RedPDescribeTextView resignFirstResponder];
+    [self.ExitCountryTextField resignFirstResponder];
+    [self.InlandTextField resignFirstResponder];
+    [self.RimTextField resignFirstResponder];
+    
     if (button.tag == 106) {//问好
         NSLog(@"点击问号");
         RuleWebViewController *cont = [[RuleWebViewController alloc] init];
@@ -78,87 +84,51 @@
     }else if(button.tag == 107){//取消
         [self removeWowView];
     }else if(button.tag == 108){//确定
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
+        
         [self removeWowView];
+        [self computeMoney];
         [self loadRedPacketRequest];
     }
     
     
 }
-#pragma mark - UITextViewDelegate
--(void)textViewDidBeginEditing:(UITextView *)textView{
-    switch (textView.tag) {
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([toBeString length] > 4) { //如果输入框内容大于20则弹出警告
+        textField.text = [toBeString substringToIndex:4];
+        
+        return NO;
+    }
+    return YES;
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    NSLog(@"=====%f",textField.text.floatValue);
+    switch (textField.tag) {
         case 101:
-            self.ExitCountryTextView.text = @"";
-            self.ExitCountryTextView.textColor = [UIColor blackColor];
+            self.ExitCountryN = textField.text.floatValue;
             break;
         case 102:
-            self.InlandTextView.text = @"";
-            self.InlandTextView.textColor = [UIColor blackColor];
+            self.InlandN = textField.text.floatValue;
             break;
         case 103:
-            self.RimtextView.text = @"";
-            self.RimtextView.textColor = [UIColor blackColor];
-            break;
-        case 104:
-            
+            self.RimN = textField.text.floatValue;
             break;
             
         default:
             break;
     }
-}
--(void)textViewDidChange:(UITextView *)textView{
-    NSLog(@"----%@",textView.text);
-    switch (textView.tag) {
-        case 101:
-            if([textView.text isEqualToString:@""]){
-                textView.text = @"0";
-            }
-            self.ExitCountryN = (textView.text).floatValue;
-            [self computeMoney];
-            NSLog(@"--%f",self.ExitCountryN);
-            break;
-        case 102:
-            if([textView.text isEqualToString:@""]){
-                textView.text = @"0";
-            }
-            self.InlandN = (textView.text).floatValue;
-            [self computeMoney];
-            NSLog(@"--%f",self.InlandN);
-            break;
-        case 103:
-            if([textView.text isEqualToString:@""]){
-                textView.text = @"0";
-            }
-            self.RimN = (textView.text).floatValue;
-            [self computeMoney];
-            NSLog(@"--%f",self.RimN);
-            break;
-        case 104:
-            
-            break;
-            
-        default:
-            break;
-    }
-}
-//-(void)textViewDidEndEditing:(UITextView *)textView{
-//    
-//}
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if (textView.tag ==101 || textView.tag ==102 || textView.tag == 103) {
-        int textNum = (textView.text).intValue;
-        if (textNum > 999) {
-            return NO;
-        }
-    }
+    [self computeMoney];
     return YES;
 }
 //红包总价计算方法
 -(void)computeMoney{
     CGFloat sum = self.ExitCountryN+self.InlandN+self.RimN;
     self.FinalMoney = sum*self.NumOfPeopleArr.count;
-    self.FinalMoneyLabel.text = [NSString stringWithFormat:@"%.2f",self.FinalMoney];
+    self.FinalMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",self.FinalMoney];
     if (self.FinalMoney !=  0) {
         self.SendRedPacketBtn.enabled = YES;
         self.SendRedPacketBtn.alpha = 1;

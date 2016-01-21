@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *NumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *DataLabel;
 @property (weak, nonatomic) IBOutlet UILabel *PriceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *CardIdLabel;
+- (IBAction)CardIdButton:(UIButton *)sender;
+@property (nonatomic,copy) NSString *UrlStr;
+@property (weak, nonatomic) IBOutlet UIButton *CardIdButton;
+@property (nonatomic,strong) UINavigationController *nav;
 
 @end

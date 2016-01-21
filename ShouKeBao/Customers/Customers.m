@@ -1163,16 +1163,21 @@
 -(UIView *)backgroundIV{
     if (!_backgroundIV) {
         _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
-        //        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+       [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         _backgroundIV.userInteractionEnabled = YES;
         _backgroundIV.backgroundColor = [UIColor blackColor];
         _backgroundIV.alpha = 0.4;
     }
     return _backgroundIV;
 }
+-(void)click1{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    
+}
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 200)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
@@ -1184,7 +1189,7 @@
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor lightGrayColor];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 40)];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];

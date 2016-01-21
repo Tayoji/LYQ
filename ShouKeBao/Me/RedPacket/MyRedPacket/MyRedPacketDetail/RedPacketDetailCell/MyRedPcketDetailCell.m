@@ -7,7 +7,7 @@
 //
 
 #import "MyRedPcketDetailCell.h"
-
+#import "OrderDetailViewController.h"
 @implementation MyRedPcketDetailCell
 
 - (void)awakeFromNib {
@@ -20,4 +20,11 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)CardIdButton:(UIButton *)sender {
+    
+    OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        detail.url = self.UrlStr;
+    detail.title = @"订单详情";
+    [self.nav pushViewController:detail animated:YES];
+}
 @end

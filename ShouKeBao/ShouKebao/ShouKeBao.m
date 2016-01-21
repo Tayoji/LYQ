@@ -90,6 +90,12 @@
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
 #define kScreenSize [UIScreen mainScreen].bounds.size
+
+#define fourSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
 @interface ShouKeBao ()<UITableViewDataSource,UITableViewDelegate,notifiSKBToReferesh,remindDetailDelegate, CLLocationManagerDelegate /*定位代理*/>
 //定位使用
 @property (nonatomic, retain)CLLocationManager *locationManager;
@@ -158,6 +164,10 @@
 @property (nonatomic, copy)NSString *CircleUrl;
 @property (nonatomic, copy)NSString *CircleIcon;
 @property (nonatomic,strong)UIImageView *SmallGuidance;
+
+@property (nonatomic,strong) UIButton *Guidebtn;//新手引导
+@property (nonatomic,strong) UIButton *cleanBtn;//新手引导
+@property (nonatomic,strong) UIImageView *newsImageV;//新手引导
 
 @property (nonatomic,strong) AVAudioPlayer *player;
 
@@ -304,6 +314,38 @@
         [guiDefault removeObjectForKey:@"ThreeDTouch"];
         [self.navigationController pushViewController:scan animated:YES];
     }
+    //此处用于新手引导
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[defaults objectForKey:@"GuideRPFifrst"] integerValue] ==1) {
+        [defaults setObject:@"0" forKey:@"GuideRPFifrst"];
+        [[[UIAlertView alloc]initWithTitle:@"此处有个警告" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+        self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+        self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
+        CGRect frame = _Guidebtn.frame;
+        frame =CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+        _Guidebtn.frame = frame;
+        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        _Guidebtn.tag = 1211;
+        [self.guideImageView addSubview:_Guidebtn];
+        UIImageView *vvimage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-105, 40, 150, 20)];
+        [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
+        [self.guideImageView addSubview:vvimage];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 80, self.guideImageView.frame.size.width-60, 40)];
+        label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
+        label.textColor = [UIColor lightGrayColor];
+        label.font = [UIFont systemFontOfSize:15];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 2;
+        [self.guideImageView addSubview:label];
+        [self.cleanBtn removeFromSuperview];
+        _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
+        [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+        [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+        
+     }
 
 }
 /*
@@ -414,24 +456,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FromiMessage:) name:@"FromiMesseage" object:nil];
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
-    //判断是否开通App然后进入
-    if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-        //没有开通
-        
-        NSString *SKBGuide = [guiDefault objectForKey:@"SKBExclusiveaAppGuideNO"];
-        if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
-            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideNO"];
+    
+    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] !=1 ) {
+            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
             [self Guide];
-        }
-    }else{
-//        [guiDefault removeObjectForKey:@"NewMeGuide"];
-        [guiDefault removeObjectForKey:@"jumpToZSApp"];
-        NSString *SKBGuide = [guiDefault objectForKey:@"SKBExclusiveaAppGuide"];
-        if ([SKBGuide integerValue] != 1) {// 是否第一次打开app
-            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuide"];
-            [self Guide];
-        }
     }
+//        NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
+//    [self.navigationController pushViewController:messgeCenter animated:YES];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToRecommendList) name:@"notifiToPushToRecommed" object:nil];
 
@@ -1076,7 +1107,7 @@
 {
     [super viewWillAppear:animated];
     self.isEmpty = NO;
-
+    self.navigationController.navigationBarHidden = NO;
     
 
     //我界面更改头像和名字之后  首页的同步
@@ -1379,98 +1410,213 @@
 //第一次开机引导
 -(void)Guide
 {
-    NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
-    self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    _guideView.backgroundColor = [UIColor blackColor];
-    _guideView.alpha = 0.4;
-    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
-    self.guideImageView.userInteractionEnabled = YES;
+        NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
+        self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _guideView.backgroundColor = [UIColor blackColor];
+        _guideView.alpha = 0.4;
     
-   //立即查看按钮（立即申请开通）
-     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, /*self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3*/self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
-    
-    if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-//        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+    if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {//没有开通
+        self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
         self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
-         [button setTitle:@"立即申请开通" forState:UIControlStateNormal];
-    }else{
-//        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
-        self.guideImageView.image = [UIImage imageNamed:@"dredged"];
-        [button setTitle:@"立即查看领取" forState:UIControlStateNormal];
+        self.guideImageView.userInteractionEnabled = YES;
+        
+        //立即查看按钮（立即申请开通）
+        _Guidebtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5,self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
+        [_Guidebtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
+        _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
+        _Guidebtn.tag = 1210;
+        [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+        [_Guidebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_guideImageView addSubview:_Guidebtn];
+        //叉号按钮
+        _cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
+        _cleanBtn.tag = 1209;
+        [_cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+        [_cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
+        [_guideImageView addSubview:_cleanBtn];
+        
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+        
+    }else{//已经开通
+        self.guideImageView = [[UIImageView alloc] init];
+            _newsImageV = [[UIImageView alloc] init];
+        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        _Guidebtn = [[UIButton alloc] init];
+        UIImageView *vvimage = [[UIImageView alloc] init];
+        [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
+        UILabel *label = [[UILabel alloc] init];
+
+        if (fourSize) {
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/6, kScreenSize.width-20, 180);
+            _newsImageV.frame = CGRectMake(kScreenSize.width/2-30, kScreenSize.height/6+200, 60, 60);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 130,100, 30);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30, 150, 20);
+            label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
+            
+        }else if(fiveSize){
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 180);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 110,100, 30);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
+            label.frame = CGRectMake(30, 60, self.guideImageView.frame.size.width-60, 40);
+            
+        }else if(sixSize){
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 190);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-80, 130,100, 30);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
+            label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
+            
+        }else{
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
+            label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
+            
+        }
+        
+        
+        [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
+        self.guideImageView.userInteractionEnabled = YES;
+
+        self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
+        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        _Guidebtn.tag = 1211;
+        [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+        _Guidebtn.tag = 1211;
+        [self.guideImageView addSubview:_Guidebtn];
+        
+        [self.guideImageView addSubview:vvimage];
+        
+        label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
+        label.textColor = [UIColor lightGrayColor];
+        label.font = [UIFont systemFontOfSize:15];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 2;
+        
+        
+        [self.guideImageView addSubview:label];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+
     }
-    button.titleLabel.font = [UIFont systemFontOfSize:16];
-    [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
-//    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
-    button.tag = 1210;
-    [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_guideImageView addSubview:button];
-    
-    
-    //叉号按钮
-    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
-    cleanBtn.tag = 1209;
-    [cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-    [cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
-    [_guideImageView addSubview:cleanBtn];
-    [guideDefault setObject:@"1" forKey:@"SKBGuide"];
-     [guideDefault synchronize];
-    
-//    [self.guideView addSubview:_guideView];
-    [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
-    [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+
+//    NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
+//    self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    _guideView.backgroundColor = [UIColor blackColor];
+//    _guideView.alpha = 0.4;
+//    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+//    self.guideImageView.userInteractionEnabled = YES;
+//    
+//   //立即查看按钮（立即申请开通）
+//     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5, /*self.guideImageView.frame.size.width/3+self.guideImageView.frame.size.width/3*/self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
+//    
+//    if ([[guideDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+////        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+//        self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
+//         [button setTitle:@"立即申请开通" forState:UIControlStateNormal];
+//    }else{
+////        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+//        self.guideImageView.image = [UIImage imageNamed:@"dredged"];
+//        [button setTitle:@"立即查看领取" forState:UIControlStateNormal];
+//    }
+//    button.titleLabel.font = [UIFont systemFontOfSize:16];
+//    [button setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
+////    [button setTitle:@"立即查看特权" forState:UIControlStateNormal];
+//    button.tag = 1210;
+//    [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+//    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_guideImageView addSubview:button];
+//    
+//    
+//    //叉号按钮
+//    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
+//    cleanBtn.tag = 1209;
+//    [cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+//    [cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
+//    [_guideImageView addSubview:cleanBtn];
+//    [guideDefault setObject:@"1" forKey:@"SKBGuide"];
+//     [guideDefault synchronize];
+//    
+////    [self.guideView addSubview:_guideView];
+//    [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+//    [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+}
+-(void)click1{
+    [self.guideView removeFromSuperview];
+    [self.guideImageView removeFromSuperview];
+    [self.newsImageV removeFromSuperview];
 }
 -(void)Seeprivilege:(UIButton *)btn{
     if (btn.tag == 1209) {//点击XX 按钮
-//        [self.guideView removeFromSuperview];
-//        [self.guideImageView removeFromSuperview];
+        [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+         _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
         
-//        self.SmallGuidance = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenSize.width/2, kScreenSize.height-64-49, kScreenSize.width/2, 60)];
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-//            self.SmallGuidance.image = [UIImage imageNamed:@"KeepNotApp"];
-//        }else{
-//            self.SmallGuidance.image = [UIImage imageNamed:@"KeepApp"];
-//        }
-//        
-//        [[[UIApplication sharedApplication].delegate window] addSubview:self.SmallGuidance];
+        if (fourSize) {
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+60, kScreenSize.width-60, 200);
+            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120)];
+        }else if(fiveSize){
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+80, kScreenSize.width-60, 190);
+            _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120)];
+            
+        }else if(sixSize){
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 200);
+            _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
+        }else{
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+            _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
+        }
+        
+        self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
+        CGRect frame = _Guidebtn.frame;
+        frame =CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+        _Guidebtn.frame = frame;
+        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        _Guidebtn.tag = 1211;
+        [self.guideImageView addSubview:_Guidebtn];
+        UIImageView *vvimage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-105, 40, 150, 20)];
+        [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
+        [self.guideImageView addSubview:vvimage];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 80, self.guideImageView.frame.size.width-60, 40)];
+        label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
+        label.textColor = [UIColor lightGrayColor];
+        label.font = [UIFont systemFontOfSize:15];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 2;
+        
        
-        [UIView animateWithDuration:1 animations:^{
-            self.guideView.frame = CGRectMake(kScreenSize.width, kScreenSize.height, 0, 0);
-            self.guideImageView.frame =CGRectMake(kScreenSize.width, kScreenSize.height, 0, 0);
-        } completion:^(BOOL finished) {
-            NSLog(@"动画执行完毕");
-            [self.guideView removeFromSuperview];
-            [self.guideImageView removeFromSuperview];
-
-        }];
-//        NSTimer *LHtimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(reloop) userInfo:nil repeats:NO];
-//        [[NSRunLoop mainRunLoop]addTimer:LHtimer forMode:NSRunLoopCommonModes];
+        [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+        [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
+        
+        [self.guideImageView addSubview:label];
+        
+        [_cleanBtn removeFromSuperview];
+        //走1.5引导
         
     }else if (btn.tag == 1210){
-        
-          BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-            [MobClick event:@"ShouKeBao_applyForOpening" attributes:dict];
-        }else{
-            [MobClick event:@"ShouKeBao_getCashCouponClick" attributes:dict];
-        }
-      
-        NSLog(@"立即跳转");
-        //引导成功，我的界面不用引导
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"NewMeGuide"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"jumpToZSApp"];
+                [self.guideView removeFromSuperview];
+                [self.guideImageView removeFromSuperview];
+            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
+            newExc.naVC = self.navigationController;
+            [self.navigationController pushViewController:newExc animated:YES];
+        NSUserDefaults *defaults = [NSUserDefaults  standardUserDefaults];
+        [defaults setObject:@"1" forKey:@"GuideRPFifrst"];
+
+    }else if(btn.tag == 1211){
         [self.guideView removeFromSuperview];
         [self.guideImageView removeFromSuperview];
-        ((ViewController *)(self.view.window.rootViewController)).selectedViewController = [((ViewController*)self.view.window.rootViewController).viewControllers objectAtIndex:4];
-    }
-    
-}
--(void)reloop{
-    NSLog(@"已经过了3秒了");
-    if (self.SmallGuidance != nil) {
-        [self.SmallGuidance removeFromSuperview];
+        [self.newsImageV removeFromSuperview];
+        NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
+        [self.navigationController pushViewController:messgeCenter animated:YES];
     }
     
 }
