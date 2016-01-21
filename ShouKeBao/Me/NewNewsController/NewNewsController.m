@@ -15,6 +15,8 @@
 @property (nonatomic,strong) UISwitch *switch2;//32
 @property (nonatomic,strong) UISwitch *switch3;//33
 @property (nonatomic,strong) UISwitch *switch1;//31
+@property (weak, nonatomic) IBOutlet UISwitch *switch4;
+
 @end
 
 @implementation NewNewsController
@@ -68,6 +70,15 @@
     }else{
         _switch3.on = YES;
     }
+    
+    NSString *setSeviceNotiRemind = [[NSUserDefaults standardUserDefaults] objectForKey:@"setSeviceNotiRemind"];
+    if ([setSeviceNotiRemind integerValue] == 1) {//业务通知
+        self.switch4.on = NO;
+    }else{
+        self.switch4.on  = YES;
+    }
+    
+    
 }
 -(NSUserDefaults *)NewsRemind{
     if (!_NewsRemind) {
@@ -87,6 +98,15 @@
     }
     return _NewsShakeRemind;
 }
+
+- (NSUserDefaults *)setSeviceNotiRemind{
+    if (!_setSeviceNotiRemind) {
+        _setSeviceNotiRemind = [[NSUserDefaults alloc]init];
+    }
+    return _setSeviceNotiRemind;
+}
+
+
 /*
  [application enabledRemoteNotificationTypes] == UIRemoteNotificationTypeSound
  UIRemoteNotificationTypeAlert、 UIRemoteNotificationTypeBadge、UIRemoteNotificationTypeSound
@@ -149,8 +169,10 @@
     NSLog(@"接受业务");
     if (sender.on) {
         sender.on = YES;
+        [self.setSeviceNotiRemind setObject:@"2" forKey:@"setSeviceNotiRemind"];
     }else{
-        sender.on = NO; 
+        sender.on = NO;
+        [self.setSeviceNotiRemind setObject:@"1" forKey:@"setSeviceNotiRemind"];
     }
     
 }

@@ -12,8 +12,9 @@
 #import "ButtonList.h"
 #import "LinkButton.h"
 #import "NSString+QD.h"
-
+#import "QDMenu.h"
 #define gap 10
+#import "ButtonDetailViewController.h"
 
 @interface OrderCell()
 
@@ -47,13 +48,15 @@
 // 状态描述
 @property (weak, nonatomic) UILabel *statusDes;
 
-// 底部按钮
-@property (weak, nonatomic) UIView *bottomView;
 
+@property (weak, nonatomic)UIButton *moreBtn;
 @property (nonatomic,strong) NSMutableArray *buttonArr;
 
 @property (weak, nonatomic)UIButton *buttonIcon;
+@property (nonatomic, assign)CGFloat moreY;
+@end
 
+@interface OrderCell()<QDMenuDelegate>
 @end
 
 @implementation OrderCell
@@ -65,7 +68,6 @@
     if (!cell) {
         
         cell = [[OrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        
     }
     return cell;
 }
@@ -361,14 +363,10 @@
 //            [self.buttonArr addObject:b];
 //        }
 
-    NSLog(@"model.buttonList  %@", model.buttonList);
     if (model.buttonList.count) {
         for (int i = (int)model.buttonList.count-1;i > -1; i--) {
-            
             if (model.btnList.count != 0 && model.buttonList.count-1 == i) {
-        
                 [self setMoreBtnStyle];
-                
             }else{
                 ButtonList * btn = [model.buttonList objectAtIndex:i];
                 LinkButton *b = [[LinkButton alloc] init];
@@ -394,7 +392,7 @@
         
     }else{
   
-        NSLog(@"2 model.buttonList.count = %d", model.buttonList.count);
+        NSLog(@"2 model.buttonList.count = %lu", (unsigned long)model.buttonList.count);
 
         CGFloat x = [UIScreen mainScreen].bounds.size.width - 90 - gap;
         UILabel *doneLab = [[UILabel alloc] initWithFrame:CGRectMake(x, 5, 90, 25)];
@@ -409,39 +407,29 @@
    
 
 }
+#pragma mark - 实现弹出框－更多
 - (void)setMoreBtnStyle{
     UIButton *moreB = [[UIButton alloc]init];
     [self.bottomView addSubview:moreB];
     self.moreBtn = moreB;
-    if (_model.buttonList.count == 1) {
-       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, 0, 40, 40);
-    }else if(_model.buttonList.count == 2){
-       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width*2/3-50, 0, 40, 40);
-    }else{
-      self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
-
-    }
+    NSLog(@"%f %f", self.moreY, self.bottomView.frame.size.width);
+    self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width -(self.moreY-40), 0, 40, 40);
+    self.moreY = 0;
     [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
     [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [self.bottomView addSubview:self.moreBtn];
     [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
+
 - (void)meunmView:(UIButton *)down{
     NSLog(@"btnList... %@", _model.btnList);
-    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:)]) {
-        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList];
+    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:andCurrentCell:)]) {
+        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList andCurrentCell:self];
         
     }
-//    else if(_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(didMenumSelectUpBtn:)]){
-//            [_upAndDownDelegate didMenumSelectUpBtn:down];
-//        }
-    
-   
-   
-    
 }
-   
 
 #pragma mark - getter
 - (NSMutableArray *)buttonArr
@@ -466,8 +454,16 @@
         btnW += btnSize.width + 12 + gap;
         CGFloat btnX = screenW - btnW;
         btn.frame = CGRectMake(btnX, 5, btnSize.width + 12, btnSize.height + 12);
+    
+        if (i == 0 && self.model.btnList.count != 0) {
+             self.moreY = btnX;
+        }
+        NSLog(@"........btnX = %f", btnX);
     }
     
+   
+
+  
     
 }
 
