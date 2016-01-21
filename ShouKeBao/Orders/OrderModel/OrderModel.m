@@ -70,15 +70,14 @@
         for (NSDictionary *dic2 in dic[@"ButtonList"]) {
             ButtonList *btn = [ButtonList buttonListWithDict:dic2];
             
-            if (![btn.color isEqual:[UIColor configureColorWithNum:1]] || [btn.text isEqualToString:@"订单催办"]) {//将一级现实放在数组外里
-                [self.buttonList addObject:btn];
+            if ([btn.text isEqualToString:@"申请合同"]|| [btn.text isEqualToString:@"申请退款"] ||[btn.text isEqualToString:@"确认单"] ) {//将一级现实放在数组外里
+                [self.btnList addObject:btn];
             }else{
-                 [self.btnList addObject:btn];
+                [self.buttonList addObject:btn];
             }
         }
-        
         if (self.btnList.count) {
-             [self.buttonList addObject:self.btnList];//将二级现实放在数组里作为一个元素
+             [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
         }
     }
     return self;

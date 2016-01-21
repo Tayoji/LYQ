@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="NewsState" destination="Miw-gb-nzl" id="Kwi-xs-Emh"/>
                 <outlet property="setSeviceNotiView" destination="vmt-n1-r8q" id="rk9-Cf-bIL"/>
+                <outlet property="switch4" destination="qla-1i-9O9" id="dSG-bC-GJp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
