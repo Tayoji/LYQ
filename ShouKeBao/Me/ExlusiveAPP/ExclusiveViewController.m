@@ -297,6 +297,9 @@
     [MobClick event:@"Me_exclusiveAppShareBtnClick" attributes:dict];
     
     NSLog(@"... %@", self.ConsultanShareInfo);
+    if (!self.ConsultanShareInfo.count) {
+        return;
+    }
     [[ShareHelper shareHelper]shareWithshareInfo:self.ConsultanShareInfo andType:@"Me_exclusiveAppShareScccessCount" andPageUrl:self.ConsultanShareInfo[@"Url"]];
     [ShareHelper shareHelper].delegate = self;
     

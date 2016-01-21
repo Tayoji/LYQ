@@ -521,23 +521,23 @@
         tag = [self.todayTagDic objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         DayDetail * model = self.todayDataArray[indexPath.row];
         if ([model.AdvertText isEqualToString:@""]) {
-            return 160;
+            return 170;
         }
         height = [self heihtofContensStr:model.AdvertText sysFont:13];
     }else if(tableView.tag == 2014){
         tag = [self.yestdayTagDic objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         DayDetail * model = self.yestdayDataArray[indexPath.row];
         if ([model.AdvertText isEqualToString:@""]) {
-            return 160;
+            return 170;
         }
         height = [self heihtofContensStr:model.AdvertText sysFont:13];
     }else{
         return 170;
     }
     if ([tag isEqualToString:@"1"]) {
-        return 200 + height;
+        return 210 + height;
     }else{
-        return 220;
+        return 230;
     }
 }
 
@@ -638,5 +638,7 @@
     
 }
 
-
+- (void)shareSuccessWithType:(ShareType)type andShareInfo:(NSDictionary *)shareInfo{
+    NSLog(@".....分享");
+}
 @end

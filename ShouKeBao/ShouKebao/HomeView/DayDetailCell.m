@@ -461,8 +461,7 @@
         [self layoutSubviews];
     }
 }
--(void)shareIt
-{
+-(void)shareIt{
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ClickShareAll" attributes:dict];
     NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:_detail.ShareInfo];
@@ -477,12 +476,13 @@
     [postDic setObject:_detail.ShareInfo[@"Url"] forKey:@"PageUrl"];
         [postDic setObject:@"1" forKey:@"ShareWay"];
     
+    if (!tmp.count) {
+        return;
+    }
     
     NSString *shareType = @"RecommendShareSuccessAndAllJS";
     [[ShareHelper shareHelper]shareWithshareInfo:tmp andType:shareType andPageUrl:_detail.ShareInfo[@"Url"]];
    
-    
-    
 #warning 以下是系统分享
 //    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
 //    } failure:^(NSError *error) {

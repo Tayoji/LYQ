@@ -559,6 +559,11 @@
     }
     
     NSLog(@"..shareInfo = %@   %@", self.shareInfo, self.webView.request.URL.absoluteString);
+    
+    if (!self.shareInfo.count) {
+        return;
+    }
+    
     [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
     [ShareHelper shareHelper].delegate = self;
     

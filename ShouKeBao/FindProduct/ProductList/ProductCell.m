@@ -35,8 +35,7 @@
     return cell;
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.isHistory = NO;
@@ -45,8 +44,7 @@
     return self;
 }
 
-- (void)setup
-{
+- (void)setup{
     // 历史浏览的内容
     UILabel *time = [[UILabel alloc] init];
     time.textAlignment = NSTextAlignmentRight;
@@ -63,10 +61,6 @@
      图片 标题 出发
      */
     UILabel *title = [[UILabel alloc] init];
-    //    title.textAlignment = UIControlContentVerticalAlignmentTop;
-    //    title.textAlignment = UIControlContentVerticalAlignmentFill;
-    //    [title setVerticalAlignment:VerticalAlignmentTop];
-   
     title.numberOfLines = 0;
     title.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:title];
@@ -137,7 +131,6 @@
     [di setBackgroundImage:[UIImage imageNamed:@"red-2"] forState:(UIControlStateNormal)];
     di.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     [di setTitle:@"抵" forState:UIControlStateNormal];
-    //    di.contentHorizontalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.diLab addSubview:di];
     self.di = di;
     
@@ -212,8 +205,7 @@
     
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
     [super layoutSubviews];
     
     CGFloat height = self.contentView.bounds.size.height;
@@ -254,8 +246,6 @@
     //   细分界线
     CGFloat lineYS = CGRectGetMaxY(self.lastDateL.frame);
     self.line.frame = CGRectMake(titleStart, lineYS, titleW, 0.5);
-    
-    
     
     /**
      四个label 产品编号 抵 送 利 闪电

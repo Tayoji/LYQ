@@ -22,7 +22,7 @@
         
         UILabel *title = [[UILabel alloc]init];
         title.textAlignment = NSTextAlignmentCenter;
-        title.font = [UIFont systemFontOfSize:14.0];
+        title.font = [UIFont systemFontOfSize:13.0];
         
         self.title = title;
         [self.contentView addSubview:title];
@@ -38,9 +38,9 @@
    
     CGFloat width = layoutAttributes.bounds.size.width;
     CGFloat height = layoutAttributes.bounds.size.height;
-    
+    NSLog(@"... %f", height);
     self.pic.frame = CGRectMake((width - 50)/2, 10, 50, 50);
-    self.title.frame = CGRectMake(0, CGRectGetMaxY(self.pic.frame)+5, width, height-CGRectGetMaxY(self.pic.frame)-15);
+    self.title.frame = CGRectMake(0, CGRectGetMaxY(self.pic.frame), width, height-CGRectGetMaxY(self.pic.frame));
     
 }
 
