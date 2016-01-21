@@ -823,7 +823,7 @@
 - (void)jumpCustomDetail{
     CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
     VC.customerID = @"";
-    VC.appUserID = self.chatter;
+    VC.AppSkbUserId = self.chatter;
     [self.navigationController pushViewController:VC animated:YES];
 
 }
