@@ -110,16 +110,16 @@
 //    [self.view addSubview:pro];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
     
-//    NSString *SKBMeGuide = [def objectForKey:@"NewMeGuide"];
+    NSString *SKBMeGuide = [def objectForKey:@"NewMeGuideRP"];
 
     NSString *NeedGuide = [def objectForKey:@"ThreeDTouch"];
 
-//    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
+    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
        if (![NeedGuide isEqualToString:@"UITouchText.TodaySignIn"]) {
             [self Guide];
+            [def setObject:@"1" forKey:@"NewMeGuideRP"];
         }
-//
-//    }
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
 
     //获取版本信息
@@ -296,25 +296,25 @@
         [self.navigationController pushViewController:moneyTreeVC animated:YES];
     }
     //新手引导
-    if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
-        [def setObject:@"" forKey:@"jumpToZSApp"];
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
-
-        if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-            //跳往未开通界面
-            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
-            newExc.naVC = self.navigationController;
-            [self.navigationController pushViewController:newExc animated:YES];
-
-        }else{
-            //跳往已开通界面
-            NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
-            newExc.naVC = self.navigationController;
-            newExc.ConsultanShareInfo = self.ConsultanShareInfo;
-            NSLog(@".... %@", newExc.ConsultanShareInfo);
-            [self.navigationController pushViewController:newExc animated:YES];
-        }
-    }
+//    if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
+//        [def setObject:@"" forKey:@"jumpToZSApp"];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+//
+//        if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+//            //跳往未开通界面
+//            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
+//            newExc.naVC = self.navigationController;
+//            [self.navigationController pushViewController:newExc animated:YES];
+//
+//        }else{
+//            //跳往已开通界面
+//            NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
+//            newExc.naVC = self.navigationController;
+//            newExc.ConsultanShareInfo = self.ConsultanShareInfo;
+//            NSLog(@".... %@", newExc.ConsultanShareInfo);
+//            [self.navigationController pushViewController:newExc animated:YES];
+//        }
+//    }
 }
 -(void)thirdTouchPushYaoQianShu:(NSNotification *)notiP{
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
@@ -1195,16 +1195,22 @@
 -(UIView *)backgroundIV{
     if (!_backgroundIV) {
         _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
-        //        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         _backgroundIV.userInteractionEnabled = YES;
         _backgroundIV.backgroundColor = [UIColor blackColor];
         _backgroundIV.alpha = 0.4;
     }
     return _backgroundIV;
 }
+-(void)click1{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    [self.guideRadPacketsm removeFromSuperview];
+    
+}
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 200)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4-50, kScreenSize.width-60, 180)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
         UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
@@ -1216,7 +1222,7 @@
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor lightGrayColor];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 125, 120, 40)];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 125, 120, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即发放红包" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -1234,17 +1240,34 @@
 }
 -(UIImageView *)guideRadPacketsm{
     if (!_guideRadPacketsm) {
-        _guideRadPacketsm = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4+220, self.guideView.frame.size.width/2+40, 200)];
-        [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRadPacketSmall"]];
+        _guideRadPacketsm = [[UIImageView alloc] init];
+        if(foureSize){
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-40,  kScreenSize.height/4+170, 80, 80);
+            [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
+        
+        }else if(fiveSize){
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-40,  kScreenSize.height/4+170, 80, 80);
+            [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
+        }else{
+            _guideRadPacketsm.frame = CGRectMake(30, kScreenSize.height/4+170, self.guideView.frame.size.width/2+40, 200);
+             [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRadPacketSmall"]];
+        }
+        
+        
 
     }
     return _guideRadPacketsm;
 }
 -(void)guideClick{
-    NSLog(@"哈哈");
     [self.backgroundIV removeFromSuperview];
     [self.guideView removeFromSuperview];
     [self.guideRadPacketsm removeFromSuperview];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstOpenExclusiveRedP"];
+    RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
+    redPacket.TelGuide = self.clientMagagerTel;
+    [self.navigationController pushViewController:redPacket animated:YES];
+    
 }
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
     

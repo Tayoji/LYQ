@@ -26,6 +26,12 @@
 #import "ServiceNotifiViewController.h"
 #import "ChoseListViewController.h"
 #import "MBProgressHUD+MJ.h"
+
+#define fourSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
@@ -61,14 +67,20 @@
     [self registerNotifications];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
-        NSLog(@"此处要显示引导页");
+    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
+        
+            if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+                NSLog(@"此处要显示引导页");
         [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
         [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
         [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
         //引导页下边的小图标
         [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
+             }
+    }else{
+        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
     }
+
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
 }
@@ -577,19 +589,30 @@
 -(UIView *)backgroundIV{
     if (!_backgroundIV) {
         _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
-//        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         _backgroundIV.userInteractionEnabled = YES;
         _backgroundIV.backgroundColor = [UIColor blackColor];
         _backgroundIV.alpha = 0.4;
     }
     return _backgroundIV;
 }
--(void)click{
-    NSLog(@"点击了");
+-(void)click1{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    [self.samllGuideImageV removeFromSuperview];
+    
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 200)];
+        _guideView =[[UIImageView alloc] init];
+        if (fourSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 180);
+        }else if(fiveSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 180);
+        }else{
+            _guideView.frame = CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180);
+
+        }
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
         
@@ -601,7 +624,16 @@
 }
 -(UIButton *)GuideIKnowBtn{
     if (!_GuideIKnowBtn) {
-        _GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 40)];
+        _GuideIKnowBtn =[[UIButton alloc] init];
+//        if (fourSize) {
+//            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+//        }else if(fiveSize){
+//            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+//
+//        }else{
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+
+//        }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
         _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -614,8 +646,9 @@
 
 -(UILabel *)GuideconLabel{
     if (!_GuideconLabel) {
-        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 30)];
+        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 40)];
         _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
+        _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
         _GuideconLabel.font = [UIFont systemFontOfSize:16];
         _GuideconLabel.textColor = [UIColor lightGrayColor];
