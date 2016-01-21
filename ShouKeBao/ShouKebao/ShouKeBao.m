@@ -1496,7 +1496,7 @@
         [self.guideImageView addSubview:vvimage];
         
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
-        label.textColor = [UIColor lightGrayColor];
+        label.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         label.font = [UIFont systemFontOfSize:15];
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 2;
@@ -1587,7 +1587,7 @@
         [self.guideImageView addSubview:vvimage];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 80, self.guideImageView.frame.size.width-60, 40)];
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
-        label.textColor = [UIColor lightGrayColor];
+        label.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         label.font = [UIFont systemFontOfSize:15];
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 2;

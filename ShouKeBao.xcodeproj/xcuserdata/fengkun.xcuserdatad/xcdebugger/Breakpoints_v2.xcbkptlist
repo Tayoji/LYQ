@@ -347,6 +347,38 @@
             endingLineNumber = "246"
             landmarkName = "-IDsdataArr"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SetRedPacketController sendRedPacket]"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+                  timestampString = "475060943.325367"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "659">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SetRedPacketController sendRedPacket]"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+                  timestampString = "475060943.326424"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "712">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -612,6 +644,86 @@
             startingLineNumber = "234"
             endingLineNumber = "234"
             landmarkName = "-loadRedPacketRequest"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
+            timestampString = "475039403.933975"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
+            landmarkName = "-loadCustomerDetailData"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CustomerDetailViewController loadCustomerDetailData]"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
+                  timestampString = "475060944.777532"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "269"
+                  endingLineNumber = "269"
+                  offsetFromSymbolStart = "407">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[CustomerDetailViewController loadCustomerDetailData]_block_invoke"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
+                  timestampString = "475060944.778278"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "270"
+                  endingLineNumber = "270"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
+            timestampString = "475039614.100724"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "-loadCustomerDetailData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Me/QuanViewController.m"
+            timestampString = "475059431.460628"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-webView:shouldStartLoadWithRequest:navigationType:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

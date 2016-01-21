@@ -97,6 +97,7 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    NSLog(@"%ld",range.location);
      NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if ([toBeString length] > 4) { //如果输入框内容大于20则弹出警告
         textField.text = [toBeString substringToIndex:4];
@@ -146,7 +147,7 @@
 //自定义警告框
 -(UIView *)WarningView{
     if (!_WarningView) {
-        _WarningView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180)];
+        _WarningView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 180)];
         _WarningView.layer.masksToBounds = YES;
         _WarningView.layer.cornerRadius = 6.0;
         _WarningView.backgroundColor = [UIColor whiteColor];
@@ -161,6 +162,7 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, _WarningView.frame.size.height/4, _WarningView.frame.size.width-60, 70)];
         label.lineBreakMode = UILineBreakModeWordWrap;
         label.numberOfLines = 0;
+        label.textAlignment = NSTextAlignmentCenter;
         label.text = @"红包一旦生成，红包内的价格不可修改，请确定您发放的金额正确";
         label.font = [UIFont systemFontOfSize:18];
         UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width/2-120, _WarningView.frame.size.height/4+80, 100, 40)];
@@ -270,6 +272,7 @@
 
 }
 - (IBAction)GrantRPBtn:(UIButton *)sender {
+    [self computeMoney];
     [self.view.window addSubview:self.backGroundView];
     [self.view.window addSubview:self.WarningView];
     

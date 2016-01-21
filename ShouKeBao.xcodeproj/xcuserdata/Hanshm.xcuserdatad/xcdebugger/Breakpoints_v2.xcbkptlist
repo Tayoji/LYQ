@@ -500,23 +500,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-            timestampString = "474985429.505037"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "-loadRedPacketRequest"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-            timestampString = "474985429.505037"
+            timestampString = "475047579.804872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "199"
@@ -531,12 +515,28 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Me/RedPacket/SelectCustomers/SelectCustomerController.m"
-            timestampString = "474539430.46535"
+            filePath = "ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+            timestampString = "475047579.804872"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "-loadRedPacketRequest"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Me/RedPacket/SelectCustomers/SelectCustomerController.m"
+            timestampString = "475058310.481725"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
             landmarkName = "-BtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -576,22 +576,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-            timestampString = "474985429.505037"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "-loadRedPacketRequest"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -611,13 +595,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Customers/Customers.m"
-            timestampString = "474893972.163126"
+            filePath = "ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+            timestampString = "475049014.998144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "599"
-            endingLineNumber = "599"
-            landmarkName = "-pushCustomerDetailVC:"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "-loadRedPacketRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

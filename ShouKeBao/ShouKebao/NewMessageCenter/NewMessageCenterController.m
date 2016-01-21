@@ -651,7 +651,7 @@
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
         _GuideconLabel.font = [UIFont systemFontOfSize:16];
-        _GuideconLabel.textColor = [UIColor lightGrayColor];
+        _GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
     }
     return _GuideconLabel;
 }
