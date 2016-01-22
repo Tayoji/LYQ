@@ -36,6 +36,11 @@
 #import "CommendToNo.h"
 #import "LocationSeting.h"
 #import "APNSHelper.h"
+#import "JPEngine.h"
+#import "GTMBase64.h"
+#import <CommonCrypto/CommonCryptor.h>
+
+#define secret_key @"1JPEngine2"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 //#import "UncaughtExceptionHandler.h"
 ////aaaaa
@@ -52,7 +57,26 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [LocationSeting defaultLocationSeting].carouselPageNumber = @"";
+    //下面几行是热更新入口
+//    [JPEngine startEngine];
+//    //网络获取js脚本入口
+//    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://脚本链接网址.js"]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//        NSString *script = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        [JPEngine evaluateScript:script];
+//    }];
+    //本地获取js入口
+//    NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"ceshi" ofType:@"js"];
+//    NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+//    [JPEngine evaluateScript:script];
+    //加密
+//    NSString *encryptionStr = [self encryptUseDES:@"" key:@""];
+//    NSDictionary * postDic = @{@"postKey":encryptionStr};
+
+    //解密
+//    NSString *decodeStr = [self decryptUseDES:@"" key:@""]
+    ;
+    //以上是热更新入口
+    
     [[LocationSeting defaultLocationSeting] setCarouselPageNumber:@""];
     application.statusBarStyle = UIStatusBarStyleLightContent;
     
@@ -776,6 +800,61 @@ __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithE
     if ([[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyPassword]) {
         [self checkProductOrder];
     }
+}
+/*字符串加密
+ *参数
+ *plainText : 加密明文
+ *key        : 密钥 64位
+ */
+- (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
+{
+    NSString *ciphertext = nil;
+    const char * textBytes = [plainText UTF8String];
+    NSUInteger dataLength = [plainText length];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String], kCCKeySizeDES,
+                                          iv,
+                                          textBytes, dataLength,
+                                          buffer, 1024,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
+        
+        ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+    }
+    return ciphertext;
+}
+
+//解密
+- (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
+{
+    NSData* cipherData = [GTMBase64 decodeString:cipherText];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    size_t numBytesDecrypted = 0;
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                          kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String],
+                                          kCCKeySizeDES,
+                                          iv,
+                                          [cipherData bytes],
+                                          [cipherData length],
+                                          buffer,
+                                          1024,
+                                          &numBytesDecrypted);
+    NSString* plainText = nil;
+    if (cryptStatus == kCCSuccess) {
+        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+        plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    return plainText;
 }
 - (void)checkProductOrder{
     NSString * commandWords = [self getWordOfCommand];
