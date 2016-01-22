@@ -21,6 +21,16 @@
 #import "UpDateUserPictureViewController.h"
 #import "ChatViewController.h"
 #import "AttachmentCollectionView.h"
+
+
+#import "WXApiObject.h"
+#import "WXApi.h"
+#import <CommonCrypto/CommonCryptor.h>
+#import "GTMBase64.h"
+#import "NSString+FKTools.h"
+#define secret_key @"1LlYyQq2"
+
+
 @interface ButtonDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2>
 
 @property (nonatomic,strong) BeseWebView *webView;
@@ -168,6 +178,8 @@
     
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isQQReloadView"];
     
+    if (![rightUrl myContainsString:@"支付"]) {
+        
     if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[rightUrl stringByAppendingString:_urlSuffix]]]];
         NSLog(@"没有问号，没有问号后缀");
@@ -186,7 +198,9 @@
 
 //        return YES;
     }
-    
+        
+    }
+
     if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCardScanning"]) {
         [self codeAction];
         //        return NO;
@@ -198,6 +212,17 @@
     }else if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateVisitorCertificate"]){
 //        [_indicator stopAnimationWithLoadText:@"加载成功" withType:YES];
         [self LYQSKBAPP_UpdateVisitorCertificate:rightUrl];
+    }else if ([rightUrl rangeOfString:@"objectc:LYQSKBAPP_WeixinPay"].location != NSNotFound) {
+        //从url里面取出加密json串
+        NSString * DESString = [rightUrl componentsSeparatedByString:@"?"][1];
+        //将json串解密
+        NSString * jsonString = [self decryptUseDES:DESString key:secret_key];
+        //将解密后的json串转化成字典
+        NSDictionary * jsonDic = [self dictionaryWithJsonString:jsonString];
+        //用字典请求微信支付
+        NSLog(@"jsonDic = %@", jsonDic);
+        [self WXpaySendRequestWithDic:jsonDic];
+        return NO;
     }
 
 //    NSLog(@"----------right url is %@ ----------",rightUrl);
@@ -381,6 +406,96 @@
     NSLog(@"%@", dic);
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_GetVisitorCertificatePicFromApp_CallBack(%@, '%@')", @1, jsonStr]];
 }
+
+
+//微信支付
+
+- (void)WXpaySendRequestWithDic:(NSDictionary *)dic{
+    //此处请求接口；
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = dic[@"partnerid"];
+    request.prepayId= dic[@"prepayid"];
+    request.package = dic[@"package"];
+    request.nonceStr= dic[@"noncestr"];
+    request.timeStamp= [dic[@"timestamp"]intValue];
+    request.sign= dic[@"sign"];
+    [WXApi sendReq:request];
+}
+
+/*字符串加密
+ *参数
+ *plainText : 加密明文
+ *key        : 密钥 64位
+ */
+- (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
+{
+    NSString *ciphertext = nil;
+    const char * textBytes = [plainText UTF8String];
+    NSUInteger dataLength = [plainText length];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String], kCCKeySizeDES,
+                                          iv,
+                                          textBytes, dataLength,
+                                          buffer, 1024,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
+        
+        ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+    }
+    return ciphertext;
+}
+
+//解密
+- (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
+{
+    NSData* cipherData = [GTMBase64 decodeString:cipherText];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    size_t numBytesDecrypted = 0;
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                          kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String],
+                                          kCCKeySizeDES,
+                                          iv,
+                                          [cipherData bytes],
+                                          [cipherData length],
+                                          buffer,
+                                          1024,
+                                          &numBytesDecrypted);
+    NSString* plainText = nil;
+    if (cryptStatus == kCCSuccess) {
+        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+        plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    return plainText;
+}
+//根据json串得到dic
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+
 
 
 
