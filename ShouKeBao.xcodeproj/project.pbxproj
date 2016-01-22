@@ -51,6 +51,8 @@
 		52A4C1561BB1053200614BFF /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A4C1551BB1053200614BFF /* NMRangeSlider.m */; };
 		52AEE01A1C3BD691008FB583 /* SetRedPacketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AEE0181C3BD691008FB583 /* SetRedPacketController.m */; };
 		52AEE01B1C3BD691008FB583 /* SetRedPacketController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */; };
+		52B836DE1C50EFD000917A3E /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B836DC1C50EFD000917A3E /* JPEngine.m */; };
+		52B836DF1C50EFD000917A3E /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 52B836DD1C50EFD000917A3E /* JSPatch.js */; };
 		52B858491BC76D4C00B15483 /* CommandTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B858471BC76D4C00B15483 /* CommandTo.m */; };
 		52B8584A1BC76D4C00B15483 /* CommandTo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B858481BC76D4C00B15483 /* CommandTo.xib */; };
 		52BEDF9A1BEB413E003A04CA /* NewNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BEDF981BEB413E003A04CA /* NewNewsController.m */; };
@@ -947,6 +949,9 @@
 		52AEE0171C3BD691008FB583 /* SetRedPacketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetRedPacketController.h; sourceTree = "<group>"; };
 		52AEE0181C3BD691008FB583 /* SetRedPacketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetRedPacketController.m; sourceTree = "<group>"; };
 		52AEE0191C3BD691008FB583 /* SetRedPacketController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetRedPacketController.xib; sourceTree = "<group>"; };
+		52B836DB1C50EFD000917A3E /* JPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEngine.h; sourceTree = "<group>"; };
+		52B836DC1C50EFD000917A3E /* JPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEngine.m; sourceTree = "<group>"; };
+		52B836DD1C50EFD000917A3E /* JSPatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSPatch.js; sourceTree = "<group>"; };
 		52B858461BC76D4C00B15483 /* CommandTo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandTo.h; sourceTree = "<group>"; };
 		52B858471BC76D4C00B15483 /* CommandTo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandTo.m; sourceTree = "<group>"; };
 		52B858481BC76D4C00B15483 /* CommandTo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommandTo.xib; sourceTree = "<group>"; };
@@ -2595,6 +2600,16 @@
 			path = SetRedPacket;
 			sourceTree = "<group>";
 		};
+		52B836DA1C50EFD000917A3E /* JSPatch */ = {
+			isa = PBXGroup;
+			children = (
+				52B836DB1C50EFD000917A3E /* JPEngine.h */,
+				52B836DC1C50EFD000917A3E /* JPEngine.m */,
+				52B836DD1C50EFD000917A3E /* JSPatch.js */,
+			);
+			path = JSPatch;
+			sourceTree = "<group>";
+		};
 		52B858451BC76D4C00B15483 /* CommendToDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -3558,6 +3573,7 @@
 		63D31E401AB143D00043B3CA /* ShouKeBao */ = {
 			isa = PBXGroup;
 			children = (
+				52B836DA1C50EFD000917A3E /* JSPatch */,
 				52549B6F1C119349001DABD8 /* EaseMobSDK */,
 				B3C01DED1BAC10FC005E4BB5 /* Me */,
 				B3B7A6281BA6A25F0043DF7C /* Customers */,
@@ -5251,6 +5267,7 @@
 				5A076C9B1ACD1C0F0077611C /* area.plist in Resources */,
 				B3CFF6271BFB05D7002065AA /* ExclusiveTableViewCell.xib in Resources */,
 				793917311C17CD3D0020372E /* chat_receiver_audio_playing_full@3x.png in Resources */,
+				52B836DF1C50EFD000917A3E /* JSPatch.js in Resources */,
 				796EFCED1BF5C67D00799120 /* VoiceSearchFeedback016@2x.png in Resources */,
 				B3B810971BFEF9B100C27A9C /* OldcustomerTableViewCell.xib in Resources */,
 				796EFCD41BF5C67D00799120 /* VoiceSearchFeedback004.png in Resources */,
@@ -5878,6 +5895,7 @@
 				527D07B71BD5D56000CA6C39 /* OpenInvoiceViewController.m in Sources */,
 				5A52FC7F1ACEBF220076DAE6 /* AreaViewController.m in Sources */,
 				796EFB1D1BF5BCF100799120 /* EMCDDeviceManagerBase.m in Sources */,
+				52B836DE1C50EFD000917A3E /* JPEngine.m in Sources */,
 				633263D31AB851590021553B /* AFHTTPRequestOperationManager.m in Sources */,
 				633263DA1AB851590021553B /* AFURLSessionManager.m in Sources */,
 				5A52FC401ACEBF220076DAE6 /* ProduceDetailViewController.m in Sources */,
