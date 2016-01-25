@@ -34,7 +34,11 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"证件附件";
+    if (self.fromType == fromTypeUpdateContract) {
+        self.title = @"上传合同";
+    }else{
+        self.title = @"证件附件";
+    }
     [self loadData];
     [self baseSetUp];
     [self setUpRightButton];
@@ -79,6 +83,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     }
 }
 
+
+#pragma - mark - 加载数据
 -(void)loadData
 {
     MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
@@ -94,6 +100,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self loadDateFromCustom];
     }else if (self.fromType == fromTypeOrderDetail){
         [self loadDateFromOrderDetail];
+    }else if (self.fromType == fromTypeUpdateContract){
+        [self loadDateFromUpdateContract];
     }
 }
 -(void)loadDateFromCustom{
@@ -130,6 +138,13 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         
     }];
 }
+
+- (void)loadDateFromUpdateContract{
+    self.dataSource = [NSMutableArray arrayWithArray:self.pictureList];
+    self.bigPicUrlArray = [NSMutableArray arrayWithArray:self.pictureList];
+}
+#pragma - mark - －－－－－－－－－
+
 -(NSMutableArray *)dataSource
 {
     if (_dataSource == nil) {
@@ -186,6 +201,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
             [self upDateFromCustom];
         }else if (self.fromType == fromTypeOrderDetail){
             [self upDateFromOrderDetail];
+        }else if (self.fromType == fromTypeUpdateContract){
+            [self upDateContractPic];
         }
     }
 }
@@ -214,6 +231,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 //上传合同
 - (void)upDateContractPic{
 
+    [(OrderDetailViewController *)self.OrderVC postPicToServer:self.bigPicUrlArray];
+    [self.navigationController popViewControllerAnimated:YES];
 
 
 }

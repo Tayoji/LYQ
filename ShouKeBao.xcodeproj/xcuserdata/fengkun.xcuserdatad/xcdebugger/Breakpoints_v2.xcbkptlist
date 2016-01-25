@@ -347,38 +347,6 @@
             endingLineNumber = "246"
             landmarkName = "-IDsdataArr"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SetRedPacketController sendRedPacket]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475394142.117179"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "248"
-                  endingLineNumber = "248"
-                  offsetFromSymbolStart = "659">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SetRedPacketController sendRedPacket]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475394142.117381"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "248"
-                  endingLineNumber = "248"
-                  offsetFromSymbolStart = "712">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -629,38 +597,6 @@
             endingLineNumber = "234"
             landmarkName = "-loadRedPacketRequest"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SetRedPacketController sendRedPacket]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475394142.129987"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "235"
-                  endingLineNumber = "235"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SetRedPacketController sendRedPacket]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475394142.130133"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "235"
-                  endingLineNumber = "235"
-                  offsetFromSymbolStart = "72">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -686,7 +622,7 @@
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
-                  timestampString = "475394142.131056"
+                  timestampString = "475398644.698702"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "269"
@@ -701,7 +637,7 @@
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
-                  timestampString = "475394142.131292"
+                  timestampString = "475398644.698873"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "270"

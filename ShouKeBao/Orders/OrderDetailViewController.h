@@ -16,4 +16,6 @@
 @property (nonatomic, strong)NSDictionary * userInfoDic;
 - (void)postCustomerToServer:(NSArray * )customerIDs;
 - (void)postPicToServer:(NSArray *)PicArray;
+- (void)postContractPicToServer:(NSArray *)PicArray;
+
 @end

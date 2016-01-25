@@ -687,7 +687,9 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
 
 
 //提交回传合同
+- (void)postContractPicToServer:(NSArray *)PicArray{
 
+}
 
 //微信支付
 

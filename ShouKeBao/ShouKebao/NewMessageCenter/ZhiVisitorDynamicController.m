@@ -212,6 +212,7 @@
     if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2){
         
     }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+        
     }else{
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
