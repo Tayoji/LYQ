@@ -85,7 +85,7 @@
         params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize};
     }
     [IWHttpTool postWithURL:@"Customer/GetCustomerDynamicList" params:params success:^(id json) {
-        [self tableViewEndRefreshing];
+
         if ([json[@"IsSuccess"]integerValue]) {
             NSLog(@"%@", json);
             self.totalCount = json[@"TodayCount"];
@@ -100,10 +100,6 @@
                 CustomDynamicModel *model = [CustomDynamicModel modelWithDic:dic];
                 [self.customDyamicArray addObject:model];
             }
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [self.tableView reloadData];
-
-            
             //当从管客户进入客户动态里面，根据是否开通IM客户展示发红包或者邀请开通旅游顾问
             if (self.customDyamicArray.count==0) {
                 if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
@@ -118,6 +114,9 @@
             }
 
         }
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self.tableView reloadData];
+        [self tableViewEndRefreshing];
     } failure:^(NSError * eror) {
     }];
 }
@@ -127,6 +126,7 @@
     
     self.pageNum = 1;
     [self.tableView addHeaderWithTarget:self action:@selector(headRefish)dateKey:nil];
+    [self.tableView headerBeginRefreshing];
     [self.tableView addFooterWithTarget:self action:@selector(foodRefish)];
     self.tableView.alwaysBounceVertical = YES;
     self.tableView.headerPullToRefreshText = @"下拉刷新";
@@ -134,7 +134,7 @@
     self.tableView.footerPullToRefreshText = @"上拉刷新";
     self.tableView.footerRefreshingText = @"正在刷新";
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    [self loadDataSourceFrom:1];
+//    [self loadDataSourceFrom:1];
 }
 -(void)headRefish{
     self.pageNum = 1;

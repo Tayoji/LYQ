@@ -209,8 +209,7 @@
 - (void)saveCustomerDetail:(NSString *)seg{
     
     if ( self.segmentControl.selectedSegmentIndex==0) {
-  
-    MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
+      MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
     hudView.labelText = @"保存中...";
     [hudView show:YES];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];

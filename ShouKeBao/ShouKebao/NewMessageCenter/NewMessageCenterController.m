@@ -216,7 +216,7 @@
             cell.name = self.NameArr[indexPath.row];
             cell.unreadCount = [model.messageCount intValue];
             cell.detailMsg = model.messageTitle;
-            NSLog(@"...%@", model.messageTitle);
+            NSLog(@"...%@ %@", model.messageTitle, model.dateStr);
             cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来 
             if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
@@ -299,6 +299,8 @@
             }else{
                 ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
                 choseListVC.title = @"每日精选";
+                choseListVC.DateStr = [self.dynamicArray[indexPath.row]dateStr];
+                choseListVC.messageTitle = [self.dynamicArray[indexPath.row]messageTitle];
                 [self.navigationController pushViewController:choseListVC animated:YES];
             }
             

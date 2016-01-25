@@ -7,20 +7,20 @@
 //
 
 #import "ChoseListViewController.h"
-#import "ProductCell.h"
+#import "TimeTipTableViewCell.h"
+#import "choseSecondTableViewCell.h"
 #import "MGSwipeButton.h"
 #import "SwipeView.h"
 #import "ProduceDetailViewController.h"
 #import "IWHttpTool.h"
 #import "MJRefresh.h"
+#import "MBProgressHUD+MJ.h"
+#import "ChoseModel.h"
 #define pageSize 10
 
-@interface ChoseListViewController ()<UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
+@interface ChoseListViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)NSMutableArray *dataArr;
-@property (strong, nonatomic) IBOutlet UIView *choseView;
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
-@property (weak, nonatomic) IBOutlet UILabel *choseL;
-@property (weak, nonatomic) IBOutlet UILabel *choseTextL;
+@property (nonatomic, strong)NSMutableArray *array2;
 
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
@@ -38,63 +38,73 @@
     // Do any additional setup after loading the view from its nib.
     
     [self choseTableView];
-    
-    _choseTableView.tableHeaderView = _choseView;
+    self.choseTableView.delegate = self;
+    self.choseTableView.dataSource = self;
     [self initPull];
+ 
+   
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.array2.count;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row%2 == 0) {
+        return 50;
+    }
+    return 250;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ProductCell *cell = [ProductCell cellWithTableView:tableView];
-   // self.model = _dataArr[indexPath.row];
-   // cell.modal = model;
-    cell.delegate = self;
-    cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //cell.rightButtons = [self createRightButtons:model];
-    
+    ChoseModel *choseModel = self.array2[indexPath.row/2];
+    if (indexPath.row%2 == 0) {
+        TimeTipTableViewCell *timeTipCell =[[[NSBundle mainBundle]loadNibNamed:@"TimeTipTableViewCell" owner:nil options:nil]firstObject];
+        //[TimeTipTableViewCell cellWithTableView:tableView];
+        timeTipCell.modelC = choseModel;
+        return timeTipCell;
+    }
+    choseSecondTableViewCell *cell = [choseSecondTableViewCell cellWithTableView:tableView];
+    cell.model = choseModel;
+//    cell.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    cell.layer.masksToBounds = YES;
+//    cell.layer.cornerRadius = 5;
+//    cell.selectionStyle = UITableViewCellAccessoryNone;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
-//    produceDetailVC.productId = self.model.productId;
+    produceDetailVC.produceUrl = [self.dataArr[indexPath.row]LinkUrl];
+    produceDetailVC.shareInfo = [self.dataArr[indexPath.row]ShareInfo];
+    produceDetailVC.productName = [self.dataArr[indexPath.row]Name];
     [self.navigationController pushViewController:produceDetailVC animated:YES];
      [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
 }
 
 
+
 #pragma mark - 数据加载
 - (void)loadChoseListNotifiViewData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:[NSString stringWithFormat:@"%d", self.pageIndex] forKey:@"PageIndex"];
+    [dic setObject:[NSString stringWithFormat:@"%ld", self.pageIndex] forKey:@"PageIndex"];
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
     
     [IWHttpTool postWithURL:@"Customer/GetEveryRecommendProduct" params:dic success:^(id json) {
         NSLog(@",,,,, %@", json);
-        if (self.isRefresh == 1) {
+        if (self.isRefresh) {
             [self.dataArr removeAllObjects];
+            [self.array2 removeAllObjects];
         }
-        
-//        self.Copies = json[@"AppEveryRecommendProductList"][@"Copies"];
-//        self.PushDate = json[@"AppEveryRecommendProductList"][@"PushDate"];
-//        self.timeTip.text = self.PushDate;
-//        self.choseTextL.text = self.Copies;
-        
-        NSArray *arr = json[@"AppEveryRecommendProductList"]/*[@"Productdetail"]*/;
+      
+        NSArray *arr = json[@"AppEveryRecommendProductList"];
         self.totalNumber = [json[@"TotalCount"] integerValue];
         
         for (NSDictionary *dic in arr) {
-            ProductModal *model = [ProductModal modalWithDict:dic];
-            [self.dataArr addObject:model];
+            ChoseModel *model = [ChoseModel modalWithDict:dic];
+            [self.array2 addObject:model];
         }
-        NSLog(@",,,,, %@", self.dataArr);
+        NSLog(@"dataArr = %@",  self.array2);
         [self.choseTableView reloadData];
         [self.choseTableView headerEndRefreshing];
         [self.choseTableView footerEndRefreshing];
@@ -107,34 +117,7 @@
 
 
 
-- (NSArray *)createRightButtons:(ProductModal *)model{
-    NSMutableArray * result = [NSMutableArray array];
-    UIColor * colors[2] = {[UIColor clearColor], [UIColor colorWithRed:232/255.0 green:234/255.0 blue:235/255.0 alpha:1]};
-    for (int i = 0; i < 2; i ++){
-        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:nil backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
-            NSLog(@"Convenience callback received (right). %d",i);
-            return YES;
-        }];
-        if (i == 0){
-            NSString *img = [model.IsFavorites isEqualToString:@"1"] ? @"uncollection_icon" : @"collection_icon";
-            [button setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
-        }else{
-            button.enabled = NO;
-        }
-        button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-        [button setTitleColor:[UIColor colorWithRed:3/255.0 green:3/255.0 blue:3/255.0 alpha:1] forState:UIControlStateNormal];
-        CGRect frame = button.frame;
-        frame.size.height = 120;
-        frame.size.width = i == 1 ? 140 : 42;
-        button.frame = frame;
-        if (i == 1) {
-            SwipeView *swipe = [SwipeView addSubViewLable:button Model:model];
-            [button addSubview:swipe];
-        }
-        [result addObject:button];
-    }
-    return result;
-}
+#pragma mark - 刷新
 -(void)initPull{
     self.pageIndex = 1;
     [self.choseTableView addHeaderWithTarget:self action:@selector(headPull)dateKey:nil];
@@ -147,14 +130,15 @@
     self.choseTableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headPull{
-    
     [self loadChoseListNotifiViewData];
-    self.isRefresh = 1;
+    self.isRefresh = YES;
+    self.pageIndex = 1;
     
 }
 - (void)foodPull{
-    self.isRefresh = 0;
+    self.isRefresh = NO;
     self.pageIndex++;
+    NSLog(@",,%ld", self.pageIndex);
     if (self.pageIndex  > [self getTotalPage]) {
         [self.choseTableView footerEndRefreshing];
     }else{
@@ -181,19 +165,15 @@
     }
     return _dataArr;
 }
+- (NSMutableArray *)array2{
+    if (!_array2) {
+        _array2 = [NSMutableArray array];
+    }
+    return _array2;
+}
 
 
-- (void)setTimeTip:(UILabel *)timeTip{
-    _timeTip = timeTip;
-    _timeTip.layer.masksToBounds = YES;
-    _timeTip.layer.cornerRadius = 5;
-    
-}
-- (void)setIcon:(UIImageView *)icon{
-    _icon = icon;
-    _icon.layer.masksToBounds = YES;
-    _icon.layer.cornerRadius = 15;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

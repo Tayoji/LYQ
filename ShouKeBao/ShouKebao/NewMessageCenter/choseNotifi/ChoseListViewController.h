@@ -9,8 +9,7 @@
 #import "SKViewController.h"
 
 @interface ChoseListViewController : SKViewController
-@property (weak, nonatomic) IBOutlet UILabel *timeTip;
 @property (weak, nonatomic) IBOutlet UITableView *choseTableView;
-@property (weak, nonatomic) IBOutlet UIView *backGroundView;
-
+@property (nonatomic, copy)NSString *DateStr;
+@property (nonatomic, copy)NSString *messageTitle;
 @end
