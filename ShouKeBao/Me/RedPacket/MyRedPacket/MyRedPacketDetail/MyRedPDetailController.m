@@ -254,7 +254,7 @@
             return cell;
         }else if([dataDic[@"LuckMoneyType"]  isEqual: @"2"]){//已使用
             tableView.rowHeight = 100;
-            MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil]firstObject];
+            MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MyRedPcketDetailCell" owner:nil options:nil]firstObject];
             cell.selectionStyle =UITableViewCellSelectionStyleNone;
             NSLog(@"%@",cell.headtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {

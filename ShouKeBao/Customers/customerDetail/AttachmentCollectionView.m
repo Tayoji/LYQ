@@ -197,6 +197,9 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     } failure:^(NSError *error) {
     }];
 }
+
+
+//上传游客证件
 - (void)upDateFromOrderDetail{
     [IWHttpTool postWithURL:@"/Order/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
         [MBProgressHUD showSuccess:@"保存成功"];
@@ -207,6 +210,14 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     } failure:^(NSError *error) {
     }];
 }
+
+//上传合同
+- (void)upDateContractPic{
+
+
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
