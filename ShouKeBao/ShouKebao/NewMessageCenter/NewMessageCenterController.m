@@ -53,6 +53,8 @@
 @property (nonatomic) UILabel *GuideconLabel;
 @property (nonatomic,strong) UIButton *GuideIKnowBtn;
 @property (nonatomic,strong) UIImageView *samllGuideImageV;
+@property (nonatomic) NSInteger AddTapToGuide;//判断新手引导第几个界面
+
 @end
 
 @implementation NewMessageCenterController
@@ -597,9 +599,18 @@
     return _backgroundIV;
 }
 -(void)click1{
-    [self.backgroundIV removeFromSuperview];
-    [self.guideView removeFromSuperview];
-    [self.samllGuideImageV removeFromSuperview];
+    if (self.GuideIKnowBtn.tag == 101) {
+        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
+        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+        self.GuideIKnowBtn.tag = 102;
+        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
+    }else if (self.GuideIKnowBtn.tag == 102){
+        [self.backgroundIV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.samllGuideImageV removeFromSuperview];
+    }
+   
     
 }
 -(UIImageView *)guideView{

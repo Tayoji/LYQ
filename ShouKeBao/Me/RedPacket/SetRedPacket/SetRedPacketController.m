@@ -51,7 +51,6 @@
     [self.ExitCountryTextField resignFirstResponder];
     [self.InlandTextField resignFirstResponder];
     [self.RimTextField resignFirstResponder];
-//    [self computeMoney];
 }
 
 -(void)creatNavOfRight{
@@ -88,7 +87,7 @@
         [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
         
         [self removeWowView];
-        [self computeMoney];
+        [self computeMoney:1];
         [self loadRedPacketRequest];
     }
     
@@ -97,7 +96,7 @@
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSLog(@"%ld",range.location);
+    NSLog(@"%@",textField.text);
      NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if ([toBeString length] > 4) { //如果输入框内容大于20则弹出警告
         textField.text = [toBeString substringToIndex:4];
@@ -122,11 +121,11 @@
         default:
             break;
     }
-    [self computeMoney];
+    [self computeMoney:1];
     return YES;
 }
 //红包总价计算方法
--(void)computeMoney{
+-(void)computeMoney:(NSInteger )Num{
     CGFloat sum = self.ExitCountryN+self.InlandN+self.RimN;
     self.FinalMoney = sum*self.NumOfPeopleArr.count;
     self.FinalMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",self.FinalMoney];
@@ -136,6 +135,11 @@
     }else{
         self.SendRedPacketBtn.enabled = NO;
         self.SendRedPacketBtn.alpha = 0.5;
+    }
+    if (Num == 2) {
+        NSLog(@"===%f",self.FinalMoney);
+        [self.view.window addSubview:self.backGroundView];
+        [self.view.window addSubview:self.WarningView];
     }
 }
 -(NSMutableArray *)NumOfPeopleArr{
@@ -272,9 +276,11 @@
 
 }
 - (IBAction)GrantRPBtn:(UIButton *)sender {
-    [self computeMoney];
-    [self.view.window addSubview:self.backGroundView];
-    [self.view.window addSubview:self.WarningView];
+
+    [self.ExitCountryTextField endEditing:YES];
+    [self.InlandTextField endEditing:YES];
+    [self.RimTextField endEditing:YES];
+    [self computeMoney:2];
     
 //    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //    

@@ -101,7 +101,7 @@
 //performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 //  completionHandler:(void(^)(BOOL succeeded))completionHandler{
 //    
-//    
+//    r
 //    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 //    //    NSString *account = [def objectForKey:UserInfoKeyAccount];
 //    //    NSString *password = [def objectForKey:UserInfoKeyAccountPassword];
