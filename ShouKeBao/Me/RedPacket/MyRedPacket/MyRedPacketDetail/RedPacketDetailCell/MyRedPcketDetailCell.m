@@ -19,7 +19,6 @@
 
     // Configure the view for the selected state
 }
-
 - (IBAction)CardIdButton:(UIButton *)sender {
     
     OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];

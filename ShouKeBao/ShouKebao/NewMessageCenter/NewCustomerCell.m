@@ -14,6 +14,7 @@
 #import "VisitorDynamicProductView.h"
 #import "NSString+FKTools.h"
 #import "ProductModal.h"
+#import "CustomerDetailAndOrderViewController.h"
 @interface NewCustomerCell ()<UIWebViewDelegate>
 - (IBAction)MessageBtnClick:(UIButton *)sender;
 
@@ -23,10 +24,22 @@
 - (void)awakeFromNib {
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openIM)];
     [self.TitleImage addGestureRecognizer:tap];
+    UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openCustormDet)];
+    self.MessageLab.userInteractionEnabled = YES;
+    [self.MessageLab addGestureRecognizer:tap2];
     VisitorDynamicProductView * productView = [[[NSBundle mainBundle] loadNibNamed:@"VisitorDynamicProductView" owner:nil options:nil] lastObject];
     self.ProductView = productView;
     self.ProductView.hidden = YES;
     [self addSubview:self.ProductView];
+    
+    self.nameLabel.backgroundColor = [UIColor colorWithRed:61/255.0 green:156/255.0 blue:177/255.0 alpha:1];
+    self.nameLabel.textColor = [UIColor whiteColor];
+    self.nameLabel.textAlignment = NSTextAlignmentCenter;
+    self.nameLabel.layer.cornerRadius = 20;
+    self.nameLabel.layer.masksToBounds = YES;
+    self.nameLabel.font = [UIFont boldSystemFontOfSize:18];
+
+    
 }
 -(void)layoutSubviews{
     CGFloat Messagelabh = [self.model.DynamicTitleV2 heigthWithsysFont:14 withWidth:self.MessageLab.frame.size.width];
@@ -52,19 +65,16 @@
 //    }else {
 //        self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
 //    }
-    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
-    label.text = [model.NickName substringToIndex:1];
-    label.backgroundColor = [UIColor colorWithRed:61/255.0 green:156/255.0 blue:177/255.0 alpha:1];
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.layer.cornerRadius = 20;
-    label.layer.masksToBounds = YES;
-    label.font = [UIFont boldSystemFontOfSize:18];
+    self.nameLabel.text = [model.NickName substringToIndex:1];
+
     
-    if ([model.HeadUrl isEqualToString:@""]) {
-        [self.TitleImage addSubview:label];
+    
+    if ([NSString stringIsEmpty:model.HeadUrl]) {
+        self.nameLabel.hidden = NO;
+        [self.TitleImage sd_setImageWithURL:nil placeholderImage:nil];
+
     }else{
-        [label removeFromSuperview];
+        self.nameLabel.hidden = YES;
         [self.TitleImage sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl] placeholderImage:nil];
     }
     
@@ -86,16 +96,35 @@
     
 }
 
-//跳转IM界面
+//跳转客户资料界面
 -(void)openIM{
-    NSLog(@"%@", self.model.AppSkbUserId);
-    ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
-    [self.NAV pushViewController:charV animated:YES];
+//    VC.customerID = model.ID;
+//    VC.IsOpenIM = model.IsOpenIM;
+//    VC.InvitationInfo = self.InvitationInfo;
+
+    CustomerDetailAndOrderViewController *Customer = [[CustomerDetailAndOrderViewController alloc] init];
+    Customer.customerID = self.model.ProductdetailModel.ID;
+    Customer.AppSkbUserId = _model.AppSkbUserId;
+    Customer.appUserID = @"";
+    Customer.name = _model.ProductdetailModel.Name;
+    [self.NAV pushViewController:Customer animated:YES];
+   
+}
+-(void)openCustormDet{
+    NSLog(@"点击跳转");
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"CustormJumpToCustormDet"];
+    CustomerDetailAndOrderViewController *Customer = [[CustomerDetailAndOrderViewController alloc] init];
+    Customer.customerID = self.model.ProductdetailModel.ID;
+    Customer.AppSkbUserId = _model.AppSkbUserId;
+    Customer.appUserID = @"";
+    Customer.name = _model.ProductdetailModel.Name;
+    [self.NAV pushViewController:Customer animated:YES];
 }
 
 
-
 - (IBAction)MessageBtnClick:(UIButton *)sender {
-    [self openIM];
+        NSLog(@"%@", self.model.AppSkbUserId);
+        ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
+        [self.NAV pushViewController:charV animated:YES];
 }
 @end

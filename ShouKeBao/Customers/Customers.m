@@ -524,7 +524,7 @@
                 [[[UIApplication sharedApplication] .delegate window] addSubview:self.guideView];
                 
             }
-            
+        
             [self.Array addObjectsFromArray:arrs];
            
             for (NSDictionary *dic in json[@"CustomerList"]) {
