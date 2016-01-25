@@ -1083,9 +1083,11 @@
         if ([json[@"IsSuccess"]integerValue]) {
             NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
             NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];
+            NSInteger EveryRecommendCount = [json[@"NewEveryRecommendCount"]integerValue];
+            NSInteger AppMessageCount = [json[@"NewAppMessageCount"]integerValue];
             self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
             
-            NSInteger count = noticeCount + DynamicCount;
+            NSInteger count = noticeCount + DynamicCount + EveryRecommendCount + AppMessageCount;
             [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
             count += [self getUnreadMessageCount];
             self.barButton.badgeValue = [NSString stringWithFormat:@"%ld",count];

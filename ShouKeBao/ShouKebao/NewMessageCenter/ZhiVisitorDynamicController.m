@@ -207,7 +207,8 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
-    NSLog(@"%@----%@", model.DynamicType, model.DynamicContent);
+    NSLog(@"%@----%@----%@", model.DynamicType, model.DynamicContent,model.HeadUrl);
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2){
         

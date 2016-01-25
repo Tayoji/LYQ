@@ -472,7 +472,7 @@ typedef void (^ChangeFrameBlock)();
                 [self notgoAlert];
             }else{
                 if (self.invoiceBtn.selected == NO) {
-                    UIAlertView *alertvie = [[UIAlertView alloc] initWithTitle:nil message:@"可对已经付全款（台湾产品除外）的非单团订单提交开发票申请，并可多张订单合并开票。" delegate:self cancelButtonTitle:@"不再提醒" otherButtonTitles: @"好的", nil];
+                    UIAlertView *alertvie = [[UIAlertView alloc] initWithTitle:nil message:@"可对已经付全款（台湾产品除外）的非单团订单提交开发票申请，并可多张订单合并开票。" delegate:self cancelButtonTitle:nil otherButtonTitles: @"不再提醒",@"好的", nil];
                     alertvie.tag = 1001;
                     [alertvie show];
                 }else{
@@ -487,16 +487,17 @@ typedef void (^ChangeFrameBlock)();
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"调用了");
     if (alertView.tag == 1001) {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
+            NSLog(@"直接取消");
+            [self notgoAlert];
+            
+        }else{
             NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
             [guideDefault setObject:@"1" forKey:@"goAlertView"];
             [guideDefault synchronize];
             
             [self notgoAlert];
-            
-        }else{
-            NSLog(@"直接取消");
-            [self notgoAlert];
+
         }
 
     }

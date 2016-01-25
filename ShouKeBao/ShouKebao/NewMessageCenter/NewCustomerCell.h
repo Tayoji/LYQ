@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *TimeLabel;//消息时间
 @property (strong, nonatomic) IBOutlet UILabel *MessageLab;//消息的内容
 @property (strong, nonatomic) IBOutlet UIButton *MessageButton;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
 @property (nonatomic, strong)VisitorDynamicProductView * ProductView;//自定义的一个产品详情视图，根据类型判断是否展示
 

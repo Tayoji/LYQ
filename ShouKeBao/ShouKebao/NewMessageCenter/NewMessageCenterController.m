@@ -217,6 +217,7 @@
             cell.unreadCount = [model.messageCount intValue];
             cell.detailMsg = model.messageTitle;
             NSLog(@"...%@ %@", model.messageTitle, model.dateStr);
+            cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
             cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来 
             if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
@@ -243,7 +244,7 @@
         return cell;
     }
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 50)];
-    cell.textLabel.text = @"这是一个测试";
+    cell.textLabel.text = @"";
     return cell;
     
 }
