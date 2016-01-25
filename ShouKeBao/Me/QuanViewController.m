@@ -230,6 +230,9 @@
             [self.webView goBack];
         }
     }
+    [[[UIAlertView alloc]initWithTitle:@"233" message:@"sda" delegate:nil cancelButtonTitle:@"wa" otherButtonTitles:nil, nil]show];
+
+    
     [self loadWithUrl:self.linkUrl];
 //    [self.webView reload];
 }

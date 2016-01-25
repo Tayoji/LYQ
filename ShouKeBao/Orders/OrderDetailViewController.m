@@ -62,6 +62,9 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopIndictor) name:@"stopIndictor" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SuccessPayBack) name:@"SuccessPayBack" object:nil];
+
+    
     [self.view addSubview:self.webView];
 //    UIImage * image = [self createImageWithColor:[UIColor colorWithRed:15/255.0 green:155/255.0 blue:155/255.0 alpha:0.1]];
 //    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
@@ -254,8 +257,7 @@
     NSRange range3 = [rightUrl rangeOfString:@"?"];
 
         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isQQReloadView"];
-    
-    if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
+if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc:LYQSKBAPP_WeixinPay"]&&![rightUrl myContainsString:@"alipay"]&&![rightUrl myContainsString:@"Alipay"]&&![rightUrl myContainsString:@"QFB/SaveBalance"]) {    if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[rightUrl stringByAppendingString:_urlSuffix]]]];
          return YES;
     }else if (range3.location != NSNotFound && range2.location == NSNotFound ){//有问号没有后缀
@@ -266,6 +268,9 @@
         [_indicator startAnimation];
         
     }
+    
+}
+    
     NSLog(@"%@", rightUrl);
     if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCardScanning"]) {
 
@@ -672,7 +677,7 @@
 
     
 }
-
+//提交选择游客证件照片的
 - (void)postPicToServer:(NSArray *)PicArray{
     NSDictionary * dic = @{@"OrderVisitorPicArray":PicArray};
     NSString * jsonStr = [dic JSONString];
@@ -681,7 +686,7 @@
 }
 
 
-
+//提交回传合同
 
 
 //微信支付
@@ -773,6 +778,15 @@
 
 
 
+- (void)SuccessPayBack{
+    for (int i = 0; i < 5; i++) {
+        if ([self.webView canGoBack]) {
+            [self.webView goBack];
+        }
+    }
+//    [self loadWithUrl:self.linkUrl];
+    //    [self.webView reload];
+}
 
 @end
 

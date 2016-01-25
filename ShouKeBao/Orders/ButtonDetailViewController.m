@@ -52,6 +52,9 @@
     
     [self.view addSubview:self.webView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SuccessPayBack) name:@"SuccessPayBack" object:nil];
+
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkUrl]];
     NSLog(@"linkUrl = %@", self.linkUrl);
     [self.webView loadRequest:request];
@@ -178,7 +181,7 @@
     
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isQQReloadView"];
     
-    if (![rightUrl myContainsString:@"支付"]) {
+    if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc:LYQSKBAPP_WeixinPay"]&&![rightUrl myContainsString:@"alipay"]&&![rightUrl myContainsString:@"Alipay"]&&![rightUrl myContainsString:@"QFB/SaveBalance"]) {
         
     if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[rightUrl stringByAppendingString:_urlSuffix]]]];
@@ -304,6 +307,9 @@
     
     
 }
+
+//上传游客证件信息，JS调原生方法
+
 - (void)LYQSKBAPP_UpdateVisitorCertificate:(NSString *)urlStr{
     urlStr = [urlStr componentsSeparatedByString:@"?"][0];
     //创建正则表达式；pattern规则；
@@ -496,6 +502,16 @@
 }
 
 
+
+- (void)SuccessPayBack{
+    for (int i = 0; i < 5; i++) {
+        if ([self.webView canGoBack]) {
+            [self.webView goBack];
+        }
+    }
+    //    [self loadWithUrl:self.linkUrl];
+    //    [self.webView reload];
+}
 
 
 

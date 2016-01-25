@@ -39,7 +39,7 @@
 #import "JPEngine.h"
 #import "GTMBase64.h"
 #import <CommonCrypto/CommonCryptor.h>
-
+#import "WXApi.h"
 #define secret_key @"1JPEngine2"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 //#import "UncaughtExceptionHandler.h"
@@ -398,6 +398,8 @@ void UncaughtExceptionHandler(NSException *exception) {
     NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
                   stringByReplacingOccurrencesOfString: @">" withString: @""]
                  stringByReplacingOccurrencesOfString: @" " withString: @""]);
+    [[[UIAlertView alloc]initWithTitle:@"友盟" message:@"友盟" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
+
     [UMessage registerDeviceToken:deviceToken];
 }
 
@@ -502,11 +504,40 @@ void UncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url
 {
+
     [ShareSDK handleOpenURL:url
                  wxDelegate:self];
+
     return YES;
 }
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
+    NSString * urlString = url.absoluteString;
 
+    self.urlstring = urlString;
+    if ([urlString myContainsString:@"pipikou://url="]) {
+        [self performSelector:@selector(StartGoWebView) withObject:nil afterDelay:0.5];
+        //        [[[UIAlertView alloc]initWithTitle:@"aaaa" message:urlString delegate:nil cancelButtonTitle:@"bbbbb" otherButtonTitles:nil, nil]show];
+        
+        //        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        //        [MobClick event:@"OpenAppFromShortMessage" attributes:dict];
+    }else if([urlString myContainsString:@"pipikou://type="]){
+        NSLog(@"%@", self.urlstring);
+        [self performSelector:@selector(StartGoAppView) withObject:nil afterDelay:0.5];
+        
+        
+    }
+    
+    //    if ([urlString containsString:@"QQ41D9B706"]) {
+    //        NSString * webStr = [urlString componentsSeparatedByString:@"url="][1];
+    //        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    //        [defaultCenter postNotificationName:@"FromiMesseage" object:webStr];
+    //    }
+    
+    //    [[[UIAlertView alloc]initWithTitle:@"zhifu" message:url.absoluteString delegate:nil cancelButtonTitle:@"a" otherButtonTitles:nil, nil]show];
+    //    [WXApi handleOpenURL:url delegate:self];
+    [ShareSDK handleOpenURL:url wxDelegate:self];
+    return YES;
+}
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -535,8 +566,8 @@ void UncaughtExceptionHandler(NSException *exception) {
 //    }
     
 //    [[[UIAlertView alloc]initWithTitle:@"zhifu" message:url.absoluteString delegate:nil cancelButtonTitle:@"a" otherButtonTitles:nil, nil]show];
-//    [WXApi handleOpenURL:url delegate:self];
 
+//    [WXApi handleOpenURL:url delegate:self];
     [ShareSDK handleOpenURL:url
                  sourceApplication:sourceApplication
                         annotation:annotation
