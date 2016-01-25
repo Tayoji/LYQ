@@ -1549,7 +1549,6 @@
         ProductCell *cell = [ProductCell cellWithTableView:tableView];
         
         ProductModal *model = _dataArr[indexPath.row];
-        
         cell.modal = model;
         
         cell.delegate = self;
@@ -1687,8 +1686,7 @@
 
 
 #pragma mark - MGSwipeTableCellDelegate
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction
-{
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction{
     return YES;
 }
 

@@ -648,6 +648,8 @@
 		B340077B1C3A89900094028C /* ServiceNotifiTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B34007791C3A89900094028C /* ServiceNotifiTableViewCell.m */; };
 		B340077C1C3A89900094028C /* ServiceNotifiTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */; };
 		B3585A591BFC29960005448F /* noOpenExclusiveAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */; };
+		B35E49AD1C51DC1D00611E0B /* ChoseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B35E49AC1C51DC1D00611E0B /* ChoseModel.m */; };
+		B35E49B01C520B5D00611E0B /* ChoseEveryDayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B35E49AF1C520B5D00611E0B /* ChoseEveryDayTableViewCell.m */; };
 		B35FD5A31C3B950E00DE4F6C /* ServiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B35FD5A21C3B950E00DE4F6C /* ServiceModel.m */; };
 		B35FD5A81C3BAF5500DE4F6C /* ChoseListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B35FD5A61C3BAF5500DE4F6C /* ChoseListViewController.m */; };
 		B35FD5A91C3BAF5500DE4F6C /* ChoseListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B35FD5A71C3BAF5500DE4F6C /* ChoseListViewController.xib */; };
@@ -756,6 +758,10 @@
 		B3C2C1F81C507ED700A53DA3 /* DefineShareViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C2C1F31C507ED700A53DA3 /* DefineShareViewCollectionViewCell.m */; };
 		B3C2C1F91C507ED700A53DA3 /* DefineShareViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3C2C1F41C507ED700A53DA3 /* DefineShareViewCollectionViewCell.xib */; };
 		B3C2C1FA1C507ED700A53DA3 /* ShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C2C1F61C507ED700A53DA3 /* ShareHelper.m */; };
+		B3CCB1001C55AA3D0083F313 /* TimeTipTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CCB0FE1C55AA3D0083F313 /* TimeTipTableViewCell.m */; };
+		B3CCB1011C55AA3D0083F313 /* TimeTipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CCB0FF1C55AA3D0083F313 /* TimeTipTableViewCell.xib */; };
+		B3CCB1051C55B0490083F313 /* choseSecondTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CCB1031C55B0490083F313 /* choseSecondTableViewCell.m */; };
+		B3CCB1061C55B0490083F313 /* choseSecondTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CCB1041C55B0490083F313 /* choseSecondTableViewCell.xib */; };
 		B3CFF61D1BFAEE0E002065AA /* ExclusiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CFF61B1BFAEE0E002065AA /* ExclusiveViewController.m */; };
 		B3CFF61E1BFAEE0E002065AA /* ExclusiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CFF61C1BFAEE0E002065AA /* ExclusiveViewController.xib */; };
 		B3CFF6261BFB05D7002065AA /* ExclusiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CFF6241BFB05D7002065AA /* ExclusiveTableViewCell.m */; };
@@ -1903,6 +1909,10 @@
 		B340077A1C3A89900094028C /* ServiceNotifiTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceNotifiTableViewCell.xib; sourceTree = "<group>"; };
 		B3585A571BFC29960005448F /* noOpenExclusiveAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noOpenExclusiveAppView.h; sourceTree = "<group>"; };
 		B3585A581BFC29960005448F /* noOpenExclusiveAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noOpenExclusiveAppView.m; sourceTree = "<group>"; };
+		B35E49AB1C51DC1D00611E0B /* ChoseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseModel.h; sourceTree = "<group>"; };
+		B35E49AC1C51DC1D00611E0B /* ChoseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseModel.m; sourceTree = "<group>"; };
+		B35E49AE1C520B5D00611E0B /* ChoseEveryDayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseEveryDayTableViewCell.h; sourceTree = "<group>"; };
+		B35E49AF1C520B5D00611E0B /* ChoseEveryDayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoseEveryDayTableViewCell.m; sourceTree = "<group>"; };
 		B35FD5A11C3B950E00DE4F6C /* ServiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceModel.h; sourceTree = "<group>"; };
 		B35FD5A21C3B950E00DE4F6C /* ServiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceModel.m; sourceTree = "<group>"; };
 		B35FD5A51C3BAF5500DE4F6C /* ChoseListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoseListViewController.h; sourceTree = "<group>"; };
@@ -2089,6 +2099,12 @@
 		B3C2C1F41C507ED700A53DA3 /* DefineShareViewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefineShareViewCollectionViewCell.xib; sourceTree = "<group>"; };
 		B3C2C1F51C507ED700A53DA3 /* ShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareHelper.h; sourceTree = "<group>"; };
 		B3C2C1F61C507ED700A53DA3 /* ShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareHelper.m; sourceTree = "<group>"; };
+		B3CCB0FD1C55AA3D0083F313 /* TimeTipTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTipTableViewCell.h; sourceTree = "<group>"; };
+		B3CCB0FE1C55AA3D0083F313 /* TimeTipTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTipTableViewCell.m; sourceTree = "<group>"; };
+		B3CCB0FF1C55AA3D0083F313 /* TimeTipTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeTipTableViewCell.xib; sourceTree = "<group>"; };
+		B3CCB1021C55B0490083F313 /* choseSecondTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = choseSecondTableViewCell.h; sourceTree = "<group>"; };
+		B3CCB1031C55B0490083F313 /* choseSecondTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = choseSecondTableViewCell.m; sourceTree = "<group>"; };
+		B3CCB1041C55B0490083F313 /* choseSecondTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = choseSecondTableViewCell.xib; sourceTree = "<group>"; };
 		B3CFF61A1BFAEE0E002065AA /* ExclusiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExclusiveViewController.h; sourceTree = "<group>"; };
 		B3CFF61B1BFAEE0E002065AA /* ExclusiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExclusiveViewController.m; sourceTree = "<group>"; };
 		B3CFF61C1BFAEE0E002065AA /* ExclusiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExclusiveViewController.xib; sourceTree = "<group>"; };
@@ -4697,6 +4713,16 @@
 				B35FD5A51C3BAF5500DE4F6C /* ChoseListViewController.h */,
 				B35FD5A61C3BAF5500DE4F6C /* ChoseListViewController.m */,
 				B35FD5A71C3BAF5500DE4F6C /* ChoseListViewController.xib */,
+				B35E49AB1C51DC1D00611E0B /* ChoseModel.h */,
+				B35E49AC1C51DC1D00611E0B /* ChoseModel.m */,
+				B3CCB0FD1C55AA3D0083F313 /* TimeTipTableViewCell.h */,
+				B3CCB0FE1C55AA3D0083F313 /* TimeTipTableViewCell.m */,
+				B3CCB0FF1C55AA3D0083F313 /* TimeTipTableViewCell.xib */,
+				B3CCB1021C55B0490083F313 /* choseSecondTableViewCell.h */,
+				B3CCB1031C55B0490083F313 /* choseSecondTableViewCell.m */,
+				B3CCB1041C55B0490083F313 /* choseSecondTableViewCell.xib */,
+				B35E49AE1C520B5D00611E0B /* ChoseEveryDayTableViewCell.h */,
+				B35E49AF1C520B5D00611E0B /* ChoseEveryDayTableViewCell.m */,
 			);
 			path = choseNotifi;
 			sourceTree = "<group>";
@@ -5214,6 +5240,7 @@
 				79FB11601BD7324100819FB2 /* Orders.storyboard in Resources */,
 				796EFD3D1BF5C67D00799120 /* chatBar_more_locationSelected@2x.png in Resources */,
 				796EFCF01BF5C67D00799120 /* VoiceSearchFeedback018.png in Resources */,
+				B3CCB1011C55AA3D0083F313 /* TimeTipTableViewCell.xib in Resources */,
 				522E80691BD104A800DB48DA /* OrderPromptView.xib in Resources */,
 				796EFD101BF5C67D00799120 /* chat_location_preview.png in Resources */,
 				7939174A1C17CD550020372E /* chat_sender_audio_playing_full@2x.png in Resources */,
@@ -5286,6 +5313,7 @@
 				796EFD1A1BF5C67D00799120 /* chatBar_keyboard.png in Resources */,
 				632613291AB2AF04003AC2DA /* re_product_pan_b@2x.png in Resources */,
 				796EFCF81BF5C67D00799120 /* call_out_h.png in Resources */,
+				B3CCB1061C55B0490083F313 /* choseSecondTableViewCell.xib in Resources */,
 				B3D7B7C61BD76F700080E243 /* QR.storyboard in Resources */,
 				796EFD241BF5C67D00799120 /* chatBar_recordBg.png in Resources */,
 				796EFD231BF5C67D00799120 /* chatBar_record@2x.png in Resources */,
@@ -5608,6 +5636,7 @@
 				B3CFF62F1BFB49C5002065AA /* ExclusiveShareView.m in Sources */,
 				B3B7A67B1BA6A25F0043DF7C /* Customers.m in Sources */,
 				63F1A1781B134D5D00DE9867 /* RecomViewController.m in Sources */,
+				B3CCB1001C55AA3D0083F313 /* TimeTipTableViewCell.m in Sources */,
 				796EFE6F1BF5CCC800799120 /* UIImage+MLBrowserPhotoImageForBundle.m in Sources */,
 				796EFC131BF5C5DE00799120 /* MessageReadManager.m in Sources */,
 				B35FD5A31C3B950E00DE4F6C /* ServiceModel.m in Sources */,
@@ -5684,6 +5713,7 @@
 				63F1A1B31B14250E00DE9867 /* NSObject+MJCoding.m in Sources */,
 				63F1A1921B1424BC00DE9867 /* recentlyModel.m in Sources */,
 				79B951491BD0DAAC0027C1F7 /* AttachmentCollectionCell.m in Sources */,
+				B35E49B01C520B5D00611E0B /* ChoseEveryDayTableViewCell.m in Sources */,
 				5A52FC811ACEBF220076DAE6 /* CalendarViewController.m in Sources */,
 				796EFDC91BF5CA4E00799120 /* EMSDWebImagePrefetcher.m in Sources */,
 				796EFDC11BF5CA4E00799120 /* MWZoomingScrollView.m in Sources */,
@@ -5914,6 +5944,7 @@
 				632B00001AB92A3A003B15AD /* UIImageView+HighlightedWebCache.m in Sources */,
 				5A52FC5D1ACEBF220076DAE6 /* StationSelect.m in Sources */,
 				796F36E21B7864460089FEE8 /* HotProductCollectionCell.m in Sources */,
+				B35E49AD1C51DC1D00611E0B /* ChoseModel.m in Sources */,
 				796EFC151BF5C5DE00799120 /* XHMessageTextView.m in Sources */,
 				5A944D331B00BDAF0004DE89 /* DALabeledCircularProgressView.m in Sources */,
 				63B8C6F41ACE8D9900328C8C /* BBBadgeBarButtonItem.m in Sources */,
@@ -5923,6 +5954,7 @@
 				796EFC0A1BF5C5DE00799120 /* EMChatTextBubbleView.m in Sources */,
 				5A52FC621ACEBF220076DAE6 /* LoginTool.m in Sources */,
 				7971A77D1BF4D96700939E8B /* wav.mm in Sources */,
+				B3CCB1051C55B0490083F313 /* choseSecondTableViewCell.m in Sources */,
 				796F36D91B7859A00089FEE8 /* HeaderSectionView.m in Sources */,
 				527E3B841BEC7F8C00AAA6F6 /* NewMessageCell.m in Sources */,
 				796F36BE1B78380C0089FEE8 /* FindProductNew.m in Sources */,

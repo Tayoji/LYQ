@@ -52,10 +52,7 @@
 
 
 @property (nonatomic, strong)UILabel *lastScheduleDateLab;//最近班期
-
-
 +(instancetype)cellWithTableView:(UITableView *)tableView;
-
 
 
 
