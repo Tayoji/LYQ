@@ -24,6 +24,7 @@
     
     OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
         detail.url = self.UrlStr;
+    NSLog(@"--%@",self.UrlStr);
     detail.title = @"订单详情";
     [self.nav pushViewController:detail animated:YES];
 }
