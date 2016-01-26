@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *choseEveryDayL;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewDetail;
 @property (nonatomic, strong)ChoseModel *model;
-+ (instancetype)cellWithTableView:(UITableView *)tableView;
+@property (nonatomic, strong)NSMutableArray *arrData;
++ (instancetype)cellWithTableView:(UITableView *)tableView naV:(UINavigationController *)naV;
 
 @end

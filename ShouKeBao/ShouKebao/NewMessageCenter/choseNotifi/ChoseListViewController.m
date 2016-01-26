@@ -16,11 +16,18 @@
 #import "MJRefresh.h"
 #import "MBProgressHUD+MJ.h"
 #import "ChoseModel.h"
+
 #define pageSize 10
 
 @interface ChoseListViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, strong)NSMutableArray *array2;
+
+
+@property (nonatomic, strong)NSMutableArray *currentLittleArray;
+@property (nonatomic, strong)NSMutableArray *beforeLittleArray;
+
+
 
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
@@ -47,39 +54,37 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.array2.count;
+    return self.array2.count*2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableArray *array = self.array2[indexPath.row/2];
     if (indexPath.row%2 == 0) {
         return 50;
     }
-    return 250;
+    return 120*array.count+75;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ChoseModel *choseModel = self.array2[indexPath.row/2];
+    NSArray *choseArray = self.array2[indexPath.row/2];
     if (indexPath.row%2 == 0) {
-        TimeTipTableViewCell *timeTipCell =[[[NSBundle mainBundle]loadNibNamed:@"TimeTipTableViewCell" owner:nil options:nil]firstObject];
-        //[TimeTipTableViewCell cellWithTableView:tableView];
-        timeTipCell.modelC = choseModel;
+       TimeTipTableViewCell *timeTipCell =[TimeTipTableViewCell cellWithTableView:tableView];
+        timeTipCell.modelC = choseArray[0];
         return timeTipCell;
     }
-    choseSecondTableViewCell *cell = [choseSecondTableViewCell cellWithTableView:tableView];
-    cell.model = choseModel;
-//    cell.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    cell.layer.masksToBounds = YES;
-//    cell.layer.cornerRadius = 5;
-//    cell.selectionStyle = UITableViewCellAccessoryNone;
+    choseSecondTableViewCell *cell = [choseSecondTableViewCell cellWithTableView:tableView naV:self.navigationController];
+//    cell.model = choseModel;
+    cell.arrData =self.array2[indexPath.row/2];
+    NSLog(@"%@", self.array2);
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
-    produceDetailVC.produceUrl = [self.dataArr[indexPath.row]LinkUrl];
-    produceDetailVC.shareInfo = [self.dataArr[indexPath.row]ShareInfo];
-    produceDetailVC.productName = [self.dataArr[indexPath.row]Name];
-    [self.navigationController pushViewController:produceDetailVC animated:YES];
-     [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
+//    ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
+//    produceDetailVC.produceUrl = [self.dataArr[indexPath.row]LinkUrl];
+//    produceDetailVC.shareInfo = [self.dataArr[indexPath.row]ShareInfo];
+//    produceDetailVC.productName = [self.dataArr[indexPath.row]Name];
+//    [self.navigationController pushViewController:produceDetailVC animated:YES];
+//     [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
 }
 
 
@@ -99,12 +104,29 @@
       
         NSArray *arr = json[@"AppEveryRecommendProductList"];
         self.totalNumber = [json[@"TotalCount"] integerValue];
-        
-        for (NSDictionary *dic in arr) {
-            ChoseModel *model = [ChoseModel modalWithDict:dic];
-            [self.array2 addObject:model];
+        for (int i = 0; i<arr.count; i++) {
+            NSDictionary * currentDic = arr[i];
+            NSDictionary * beforeDic = @{};
+            if (i == 0) {
+                beforeDic = arr[i];
+            }else{
+                beforeDic = arr[i-1];
+            }
+            ChoseModel *currentModel = [ChoseModel modalWithDict:currentDic];
+            ChoseModel *beforeModel = [ChoseModel modalWithDict:beforeDic];
+
+            if (![currentModel.PushDate isEqualToString:beforeModel.PushDate]) {
+                [self.array2 addObject:[self.currentLittleArray mutableCopy]];
+                [self.currentLittleArray removeAllObjects];
+            }
+            [self.currentLittleArray addObject:currentModel];
+            if (i == arr.count-1) {
+                [self.array2 addObject:[self.currentLittleArray mutableCopy]];
+            }
+            NSLog(@"array2===%@", self.array2);
+//            [self.array2 addObject:model];
         }
-        NSLog(@"dataArr = %@",  self.array2);
+        
         [self.choseTableView reloadData];
         [self.choseTableView headerEndRefreshing];
         [self.choseTableView footerEndRefreshing];
@@ -172,7 +194,18 @@
     return _array2;
 }
 
-
+-(NSMutableArray *)currentLittleArray{
+    if (!_currentLittleArray) {
+        _currentLittleArray = [NSMutableArray array];
+    }
+    return _currentLittleArray;
+}
+-(NSMutableArray *)beforeLittleArray{
+    if (!_beforeLittleArray) {
+        _beforeLittleArray = [NSMutableArray array];
+    }
+    return _beforeLittleArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

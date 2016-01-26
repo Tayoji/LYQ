@@ -13,7 +13,8 @@
 #import "MGSwipeButton.h"
 #import "SwipeView.h"
 #import "ProductModal.h"
-
+#import "ProduceDetailViewController.h"
+static id _naV;
 @interface choseSecondTableViewCell()<UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, strong)ProductModal *modelP;
@@ -21,9 +22,10 @@
 
 @implementation choseSecondTableViewCell
 
-+ (instancetype)cellWithTableView:(UITableView *)tableView{
++ (instancetype)cellWithTableView:(UITableView *)tableView naV:(UINavigationController *)naV{
+    _naV = naV;
+    choseSecondTableViewCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"choseSecondTableViewCell" owner:nil options:nil]firstObject];
     static NSString *cellID = @"choseSecondTableViewCell";
-    choseSecondTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
         cell = [[choseSecondTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         cell.separatorInset = UIEdgeInsetsZero;
@@ -33,85 +35,62 @@
     return cell;
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-       // [self setup];
-    }
-    return self;
-}
-
-- (void)setup{
-    UIView *viewBackG = [[UIView alloc]init];
-    self.viewBackG = viewBackG
-    ;
-    [self.contentView addSubview:viewBackG];
-    
-    UIImageView *imageView = [[UIImageView alloc]init];
-    imageView = self.icon;
-    [self.viewBackG addSubview:imageView];
-    
-    UILabel *choseLSmal = [[UILabel alloc]init];
-    choseLSmal.textAlignment = NSTextAlignmentLeft;
-    choseLSmal.text = @"每日精选";
-    self.choseLSmal = choseLSmal;
-    [self.viewBackG addSubview:choseLSmal];
-    
-    UIView *lineV = [[UIView alloc]init];
-    self.lineV = lineV;
-    self.lineV.backgroundColor = [UIColor blackColor];
-    self.lineV.alpha = 0.2;
-    [self.viewBackG addSubview:lineV];
-    
-    UILabel *choseEveryDayL = [[UILabel alloc]init];
-    choseEveryDayL.textAlignment = NSTextAlignmentLeft;
-    self.choseEveryDayL = choseLSmal;
-    [self.viewBackG addSubview:choseEveryDayL];
-    
-    UITableView *tableView = [[UITableView alloc]init];
-//    tableView.tableHeaderView = self.viewBackG;
-    tableView = self.tableViewDetail;
-    [self.contentView addSubview:tableView];
-    self.tableViewDetail.delegate = self;
-    self.tableViewDetail.dataSource = self;
-    self.tableViewDetail.scrollEnabled = NO;
-    
-}
-
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    CGFloat width = self.contentView.frame.size.width;
-    CGFloat height = self.contentView.frame.size.height;
-    self.viewBackG.frame = CGRectMake(0, 0, width, 75);
-    self.icon.frame = CGRectMake(15, 0, 30, 30);
-    self.choseLSmal.frame = CGRectMake(CGRectGetMaxX(self.icon.frame)+10, 5, width-(CGRectGetMaxX(self.icon.frame)+10)-10, 30);
-    self.lineV.frame = CGRectMake(10, CGRectGetMaxY(self.icon.frame)+10, width-20, 1);
-    self.choseEveryDayL.frame = CGRectMake(15, CGRectGetMaxY(self.lineV.frame), width-30, 30);
-    self.tableViewDetail.frame = CGRectMake(0, 0, width, height);
-    
+- (void)setTableViewDetail:(UITableView *)tableViewDetail{
+    _tableViewDetail = tableViewDetail;
+    tableViewDetail.delegate = self;
+    tableViewDetail.dataSource = self;
+    tableViewDetail.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    tableViewDetail.layer.borderWidth = 0.7;
+    tableViewDetail.layer.masksToBounds = YES;
+    tableViewDetail.layer.cornerRadius = 10;
+    tableViewDetail.scrollEnabled = NO;
 }
 - (void)setModel:(ChoseModel *)model{
     _model = model;
-    _icon.image = [UIImage imageNamed:@"iconfont-choseToday"];
-    _choseEveryDayL.text = model.PushDateText;
-   self.modelP = [ProductModal modalWithDict:model.Productdetail];
-    NSLog(@"... %@  %@ %@  %@", self.modelP, model.PushDateText, model.Productdetail, self.modelP);
+    _choseEveryDayL.text = model.Copies;
+}
+- (void)setArrData:(NSMutableArray *)arrData{
+    _arrData = arrData;
+     NSLog(@"... %@", arrData);
+    for (int i = 0; i < arrData.count; i++) {
+        ProductModal *model = [ProductModal modalWithDict:[self.arrData[i]Productdetail]];
+        [self.dataArr addObject:model];
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
+    return self.viewBackG;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return self.arrData.count;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 120;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 75;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ChoseEveryDayTableViewCell *cell = [ChoseEveryDayTableViewCell cellWithTableView:tableView];
+    cell.modal = self.dataArr[indexPath.row];
     cell.selectionStyle = UITableViewCellAccessoryNone;
-    cell.modal = self.modelP;
-   
-//    cell.delegate = self;
-//    cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
-//    cell.rightButtons = [self createRightButtons:self.dataArr[indexPath.row]];
+    cell.delegate = self;
+    cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
+    cell.rightButtons = [self createRightButtons:self.dataArr[indexPath.row]];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
+    produceDetailVC.produceUrl = [self.dataArr[indexPath.row]LinkUrl];
+    produceDetailVC.shareInfo = [self.dataArr[indexPath.row]ShareInfo];
+    produceDetailVC.productName = [self.dataArr[indexPath.row]Name];
+    [_naV pushViewController:produceDetailVC animated:YES];
+    [self.tableViewDetail deselectRowAtIndexPath:[self.tableViewDetail indexPathForSelectedRow] animated:YES];
+}
+
 
 #pragma mark - MGSwipeTableCellDelegate
 - (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction{
