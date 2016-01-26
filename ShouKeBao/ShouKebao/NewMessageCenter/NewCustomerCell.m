@@ -103,9 +103,8 @@
 //    VC.InvitationInfo = self.InvitationInfo;
 
     CustomerDetailAndOrderViewController *Customer = [[CustomerDetailAndOrderViewController alloc] init];
-    Customer.customerID = self.model.ProductdetailModel.ID;
+    Customer.customerID = @"";
     Customer.AppSkbUserId = _model.AppSkbUserId;
-    Customer.appUserID = @"";
     Customer.name = _model.ProductdetailModel.Name;
     [self.NAV pushViewController:Customer animated:YES];
    

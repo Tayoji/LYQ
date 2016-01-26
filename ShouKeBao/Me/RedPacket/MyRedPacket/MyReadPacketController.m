@@ -175,7 +175,7 @@
         
         UILabel *DownLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(30, 260, 80, 35)];
         DownLabel1.textAlignment = NSTextAlignmentCenter;
-        DownLabel1.font = [UIFont systemFontOfSize:20];
+        DownLabel1.font = [UIFont systemFontOfSize:18];
         DownLabel1.textColor = [UIColor lightGrayColor];
         DownLabel1.text = @"发出红包";
         [view addSubview:DownLabel1];
@@ -183,7 +183,7 @@
         
         UILabel *DownLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-40, 260, 80, 35)];
         DownLabel2.textAlignment = NSTextAlignmentCenter;
-        DownLabel2.font = [UIFont systemFontOfSize:20];
+        DownLabel2.font = [UIFont systemFontOfSize:18];
         DownLabel2.textColor = [UIColor lightGrayColor];
         DownLabel2.text = @"被领红包";
         [view addSubview:DownLabel2];
@@ -191,7 +191,7 @@
         
         UILabel *DownLabel3 = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width-30-80, 260, 80, 35)];
         DownLabel3.textAlignment = NSTextAlignmentCenter;
-        DownLabel3.font = [UIFont systemFontOfSize:20];
+        DownLabel3.font = [UIFont systemFontOfSize:18];
         DownLabel3.textColor = [UIColor lightGrayColor];
         DownLabel3.text = @"被用红包";
         [view addSubview:DownLabel3];
@@ -223,7 +223,7 @@
 -(UILabel *)GetTotalPriceLabel{
     if (!_GetTotalPriceLabel) {
         _GetTotalPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-100, 170, 200, 30)];
-        _GetTotalPriceLabel.font = [UIFont systemFontOfSize:30];
+        _GetTotalPriceLabel.font = [UIFont systemFontOfSize:36];
         _GetTotalPriceLabel.textAlignment = NSTextAlignmentCenter;
         _GetTotalPriceLabel.textColor = [UIColor colorWithRed:223.0/255.0 green:67.0/255.0 blue:55.0/255.0 alpha:1];
         _GetTotalPriceLabel.text = @"0";
@@ -235,7 +235,7 @@
         _AllCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 220, 80, 35)];
         _AllCountLabel.textAlignment = NSTextAlignmentCenter;
         _AllCountLabel.textColor = [UIColor lightGrayColor];
-        _AllCountLabel.font = [UIFont systemFontOfSize:23];
+        _AllCountLabel.font = [UIFont systemFontOfSize:28];
         _AllCountLabel.text = @"0";
     }
     return _AllCountLabel;
@@ -245,7 +245,7 @@
         _GetTotalCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-40, 220, 80, 35)];
         _GetTotalCountLabel.textAlignment = NSTextAlignmentCenter;
         _GetTotalCountLabel.textColor = [UIColor lightGrayColor];
-        _GetTotalCountLabel.font = [UIFont systemFontOfSize:23];
+        _GetTotalCountLabel.font = [UIFont systemFontOfSize:28];
         _GetTotalCountLabel.text = @"0";
     }
     return _GetTotalCountLabel;
@@ -255,7 +255,7 @@
         _UseTotalCount = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width-30-80, 220, 80, 35)];
         _UseTotalCount.textAlignment = NSTextAlignmentCenter;
         _UseTotalCount.textColor = [UIColor lightGrayColor];
-        _UseTotalCount.font = [UIFont systemFontOfSize:23];
+        _UseTotalCount.font = [UIFont systemFontOfSize:28];
         _UseTotalCount.text = @"0";
     }
     return _UseTotalCount;

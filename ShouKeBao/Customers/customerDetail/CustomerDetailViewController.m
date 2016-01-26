@@ -262,18 +262,18 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     NSString *appSkbUserID = self.AppSkbUserID;
-    NSLog(@"%@", self.AppSkbUserID);
-
     [dic setObject:self.customerId forKey:@"CustomerID"];
     [dic setObject:appSkbUserID forKey:@"AppSkbUserID"];
+     NSLog(@"%@",dic);
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomer" params:dic success:^(id json){
         NSLog(@"------管客户详情json is %@",json);
-        
-         NSDictionary *dic = json[@"Customer"];
-        self.customerId = dic[@"ID"];
-        CustomModel *customerDetail = [CustomModel modalWithDict:dic];
-        [self.dataArr addObject:customerDetail];
-        [self setSubViews];        
+        if ([json[@"IsSuccess"]isEqualToString:@"1"]) {
+            NSDictionary *dic = json[@"Customer"];
+            self.customerId = dic[@"ID"];
+            CustomModel *customerDetail = [CustomModel modalWithDict:dic];
+            [self.dataArr addObject:customerDetail];
+            [self setSubViews];
+        }
         hudView.labelText = @"加载成功...";
         [hudView hide:YES afterDelay:0.4];
     } failure:^(NSError *error) {
@@ -292,6 +292,9 @@
     
     self.customerIconB.layer.masksToBounds = YES;
     self.customerIconB.layer.cornerRadius = 30;
+    [self.customerIconB.layer setBorderWidth:2.0];
+    [self.customerIconB.layer setBorderColor:[[UIColor whiteColor]CGColor]];
+    
     if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
         
         self.customerIconB.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];

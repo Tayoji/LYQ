@@ -620,9 +620,9 @@
     if (!_guideView) {
         _guideView =[[UIImageView alloc] init];
         if (fourSize) {
-            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 180);
+            _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
         }else if(fiveSize){
-            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 180);
+            _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
         }else{
             _guideView.frame = CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180);
 
@@ -645,7 +645,7 @@
 //            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
 //
 //        }else{
-            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
 
 //        }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
@@ -660,7 +660,7 @@
 
 -(UILabel *)GuideconLabel{
     if (!_GuideconLabel) {
-        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 40)];
+        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 40)];
         _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
@@ -678,7 +678,7 @@
 }
 -(UIImageView *)samllGuideImageV{
     if (!_samllGuideImageV) {
-        _samllGuideImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-30, kScreenSize.height/4+225, 60, 60)];
+        _samllGuideImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-30, kScreenSize.height/4+195, 60, 60)];
         [_samllGuideImageV setImage:[UIImage imageNamed:@"NewBusinesSamll"]];
     }
     return _samllGuideImageV;
