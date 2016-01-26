@@ -628,45 +628,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
-            timestampString = "475411371.710733"
+            timestampString = "475464213.906983"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "-sex:"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-setNavSegementView"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CustomerDetailAndOrderViewController sex:]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
-                  timestampString = "475414449.291503"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "141"
-                  endingLineNumber = "141"
-                  offsetFromSymbolStart = "1871">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CustomerDetailAndOrderViewController sex:]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
-                  timestampString = "475414449.291833"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "141"
-                  endingLineNumber = "141"
-                  offsetFromSymbolStart = "1876">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -675,13 +643,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Customers/Customers.m"
-            timestampString = "475412346.875448"
+            filePath = "ShouKeBao/Customers/customerOrders/CustomerOrdersUIViewController.m"
+            timestampString = "475464281.405396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "600"
-            endingLineNumber = "600"
-            landmarkName = "-pushCustomerDetailVC:"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-sex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
+            timestampString = "475464303.513195"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-sex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

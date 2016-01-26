@@ -80,15 +80,17 @@
 
     }else if([[defaults objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"]){//消息中心跳过来的，需要修改
         [segment setSelectedSegmentIndex:2];
-        [defaults removeObjectForKey:@"CustormJumpToCustormDet"];
-        [self.view addSubview:self.customerDynamicVC.view];
-        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
-        [self.button setTitle:@"" forState:UIControlStateNormal];
-        if (self.detailVC || self.orderVC) {
-            [self.detailVC.view removeFromSuperview];
-            [self.orderVC.view removeFromSuperview];
-            
-        }
+//        [defaults removeObjectForKey:@"CustormJumpToCustormDet"];
+//        [self.view addSubview:self.customerDynamicVC.view];
+//        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
+//        [self.button setTitle:@"" forState:UIControlStateNormal];
+//        if (self.detailVC || self.orderVC) {
+//            [self.detailVC.view removeFromSuperview];
+//            [self.orderVC.view removeFromSuperview];
+//            
+//        }
+//        self.segmentControl.selectedSegmentIndex = 2;
+//        [self sex:self.segmentControl];
     }else{
         [segment setSelectedSegmentIndex:0];
 
