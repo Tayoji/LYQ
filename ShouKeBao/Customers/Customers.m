@@ -108,6 +108,8 @@
 - (IBAction)inviteCustomerBtn:(id)sender;
 @property (nonatomic, copy)NSString *telStr;
 @property (nonatomic, strong)UIBarButtonItem *barItem;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+
 //下边声明的是新手引导
 @property (nonatomic,strong) UIView *backgroundIV;
 @property (nonatomic,strong) UIImageView *guideView;
@@ -259,7 +261,7 @@
     self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
     self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
     if (self.messageCount >0) {
-        [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
+        [self.bellButton setImage:[UIImage imageNamed:@"iconpingtai"] forState:UIControlStateNormal];
         UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
         redDot.backgroundColor = [UIColor redColor];
         redDot.layer.cornerRadius = 4.0;
@@ -317,6 +319,7 @@
 - (void)popCustomersAction:(UIButton *)button{
     if (self.popFlag == NO) {
         self.popTableview.hidden = NO;
+        self.barItem.enabled = NO;
         [self showShadeView];
         [self.view addSubview:self.popTableview];
         
@@ -324,6 +327,7 @@
         [self.shadeView addGestureRecognizer:tap];
 
     }else{
+        self.barItem.enabled = YES;
         self.popTableview.hidden = YES;
         [self.shadeView removeFromSuperview];
     }
@@ -339,6 +343,7 @@
 
 - (void)closePopTableView{
     self.popFlag = NO;
+    self.barItem.enabled = YES;
     [self.shadeView removeFromSuperview];
     self.popTableview.hidden = YES;
 }
@@ -349,6 +354,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.subView.hidden = YES;
+    self.backgroundView.hidden = YES;
+    self.titleBtn.enabled = YES;
     self.navigationController.navigationBarHidden = NO;
     if (self.isMe == 1) {
         [self setNav];
@@ -430,7 +437,10 @@
 
 -(void)setSubViewUp{
     if (self.subView.hidden == YES) {
+        self.backgroundView.hidden = NO;
+        [self.view addSubview:self.backgroundView];
         [self.view addSubview:self.subView];
+        self.titleBtn.enabled = NO;
         [UIView animateWithDuration:0.8 animations:^{
             self.subView.alpha = 0;
             self.subView.alpha = 1;
@@ -438,6 +448,10 @@
         }];
     }else if (self.subView.hidden == NO){
         [self subViewHidden];
+        
+
+      
+
     }
 }
 - (void)subViewHidden{
@@ -445,6 +459,9 @@
         self.subView.alpha = 1;
         self.subView.alpha = 0;
         self.subView.hidden = YES;
+        self.titleBtn.enabled = YES;
+        self.backgroundView.hidden = YES;
+
     }];
 }
 

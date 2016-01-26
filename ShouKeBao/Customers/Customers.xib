@@ -10,6 +10,7 @@
                 <outlet property="Tip_InviteView" destination="KQv-rV-WEX" id="YgG-9O-2FS"/>
                 <outlet property="addNew" destination="dHi-5W-Zvu" id="Nlb-DT-OAh"/>
                 <outlet property="alertLabel" destination="ATF-sL-fIy" id="Ik6-1r-zKL"/>
+                <outlet property="backgroundView" destination="9w5-PP-Qoy" id="y7t-6l-rLS"/>
                 <outlet property="batchCustomerBtn" destination="nhR-tZ-9Ut" id="XVW-q8-1eq"/>
                 <outlet property="bellButton" destination="Ksv-OJ-9ex" id="4sz-T7-byU"/>
                 <outlet property="cardCamer" destination="MxL-Y2-Z9B" id="D5X-r1-NK6"/>
@@ -31,6 +32,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view hidden="YES" contentMode="scaleToFill" id="9w5-PP-Qoy">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
                 <view contentMode="scaleToFill" id="JzP-XY-h4A">
                     <rect key="frame" x="0.0" y="45" width="320" height="45"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>

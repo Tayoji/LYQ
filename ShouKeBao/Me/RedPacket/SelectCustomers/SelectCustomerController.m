@@ -170,11 +170,11 @@
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
     NSLog(@"%@",model.Mobile);
-    if (!model.HearUrl) {
+    if (!model.HeadUrl) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
     }else{
-        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HearUrl]];
+        [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl]];
         cell.NameFirstlabel.alpha = 0;
     }
     if ([self.SELCustomerArr containsObject:model.AppSkbUserId]) {
