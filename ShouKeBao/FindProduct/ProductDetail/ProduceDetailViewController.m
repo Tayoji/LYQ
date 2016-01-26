@@ -476,45 +476,6 @@
     }
 //        [_indicator stopAnimationWithLoadText:@"加载失败" withType:YES];
 }
--(void)addAlert{
-    // 获取到现在应用中存在几个window，ios是可以多窗口的
-    
-    NSArray *windowArray = [UIApplication sharedApplication].windows;
-    
-    // 取出最后一个，因为你点击分享时这个actionsheet（其实是一个window）才会添加
-    
-    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
-    
-    // 以下就是不停的寻找子视图，修改要修改的
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
-    CGFloat labY = 180;
-    if (screenH == 667) {
-        labY = 260;
-    }else if (screenH == 568){
-        labY = 160;
-    }else if (screenH == 480){
-        labY = 180;
-    }else if (screenH == 736){
-        labY = 440;
-    }
-    
-    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
-    lab.text = @"您分享出去的内容对外只显示门市价";
-    lab.textColor = [UIColor blackColor];
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.font = [UIFont systemFontOfSize:12];
-    [actionWindow addSubview:lab];
-    [UIView animateWithDuration:0.38 animations:^{
-        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.17 animations:^{
-            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
-        }];
-    }];
-    self.warningLab = lab;
-
-}
 
 
 #pragma 筛选navitem
@@ -568,7 +529,7 @@
     [ShareHelper shareHelper].delegate = self;
     
 
-    
+}
 
 #pragma mark - 系统自带分享先不管
 //    //每次分享的时候调用此方法，让后台知道当前页面分享的产品
@@ -701,8 +662,47 @@
 //    NSLog(@"%@",self.shareInfo[@"Url"]);
 //    [self addAlert];
     
-}
+//}
 
+//-(void)addAlert{
+//    // 获取到现在应用中存在几个window，ios是可以多窗口的
+//    
+//    NSArray *windowArray = [UIApplication sharedApplication].windows;
+//    
+//    // 取出最后一个，因为你点击分享时这个actionsheet（其实是一个window）才会添加
+//    
+//    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
+//    
+//    // 以下就是不停的寻找子视图，修改要修改的
+//    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+//    CGFloat labY = 180;
+//    if (screenH == 667) {
+//        labY = 260;
+//    }else if (screenH == 568){
+//        labY = 160;
+//    }else if (screenH == 480){
+//        labY = 180;
+//    }else if (screenH == 736){
+//        labY = 440;
+//    }
+//    
+//    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
+//    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
+//    lab.text = @"您分享出去的内容对外只显示门市价";
+//    lab.textColor = [UIColor blackColor];
+//    lab.textAlignment = NSTextAlignmentCenter;
+//    lab.font = [UIFont systemFontOfSize:12];
+//    [actionWindow addSubview:lab];
+//    [UIView animateWithDuration:0.38 animations:^{
+//        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:0.17 animations:^{
+//            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
+//        }];
+//    }];
+//    self.warningLab = lab;
+//    
+//}
 
 #pragma mark - 分享代理方法
 - (void)notiPopUpBoxView{

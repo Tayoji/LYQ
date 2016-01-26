@@ -212,7 +212,8 @@
 -(void)back
 {
     self.isBack = YES;
-    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp();"];
+    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp()"];
+    
     if (isFade.length && [isFade integerValue] == 0){
         // 这个地方上面的js方法自动处理
     }else{
@@ -224,6 +225,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
+    
 }
 -(void)turnOff
 {

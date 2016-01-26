@@ -14,8 +14,9 @@
 #import "BaseClickAttribute.h"
 #import "IWHttpTool.h"
 #import "MBProgressHUD+MJ.h"
+#import "ShareHelper.h"
 #import "NSString+FKTools.h"
-@interface MoneyTreeViewController ()<UIWebViewDelegate>
+@interface MoneyTreeViewController ()<UIWebViewDelegate, notiPopUpBox>
 @property(nonatomic,weak) UILabel *warningLab;
 
 @end
@@ -57,6 +58,32 @@
     self.navigationItem.rightBarButtonItem = shareBarItem;
     }
 }
+
+
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    //创建正则表达式；pattern规则；
+    NSLog(@"%@", urlStr);
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", resultStr);
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+
+
 -(void)shareIt:(id)sender
 {
     
@@ -215,7 +242,15 @@
 //
 //    return YES;
 //}
-
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    NSString *rightUrl = request.URL.absoluteString;
+    if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
+        [self LYQSKBAPP_OpenShareGeneral:rightUrl];
+    }
+    
+    return YES;
+}
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     if ([self.webView canGoBack]) {
         self.navigationItem.leftBarButtonItem = nil;
