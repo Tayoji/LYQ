@@ -671,8 +671,7 @@ typedef void (^ChangeFrameBlock)();
 /**
  *  创建菜单
  */
-- (void)createMenuWithSelectedIndex:(NSInteger)SelectedIndex frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct
-{
+- (void)createMenuWithSelectedIndex:(NSInteger)SelectedIndex frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct{
     
     NSLog(@"fffff %@", dataSource);
     self.qdmenu = [[QDMenu alloc] init];

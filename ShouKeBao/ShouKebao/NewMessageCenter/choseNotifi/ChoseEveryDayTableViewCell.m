@@ -13,7 +13,7 @@
 #import "WMAnimations.h"
 #import "MyListViewController.h"
 #import "NSString+FKTools.h"
-#define type 0.8
+#define type 0.9
 @interface ChoseEveryDayTableViewCell()
 @property (weak, nonatomic) UILabel *title;
 @property (weak, nonatomic) UIImageView *icon;
@@ -107,7 +107,7 @@
     
     UILabel *lastDateL = [[UILabel alloc]init];
     lastDateL.textColor = [UIColor lightGrayColor];
-    lastDateL.font = [UIFont systemFontOfSize:12.0f*type];
+    lastDateL.font = [UIFont systemFontOfSize:13.0f*type];
     lastDateL.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:lastDateL];
     self.lastDateL = lastDateL;
@@ -124,7 +124,7 @@
      底部4个label 和 闪电图片
      */
     UILabel *productNum = [[UILabel alloc] init];
-    productNum.font = [UIFont systemFontOfSize:12*type];
+    productNum.font = [UIFont systemFontOfSize:13*type];
     productNum.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:productNum];
     self.productNum = productNum;

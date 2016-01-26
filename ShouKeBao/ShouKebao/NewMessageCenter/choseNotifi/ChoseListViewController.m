@@ -35,6 +35,7 @@
 @property (nonatomic, copy)NSString *Copies;
 @property (nonatomic, copy)NSString *PushDate;
 @property (nonatomic, strong)ProductModal *model;
+@property (weak, nonatomic) IBOutlet UIView *nullImage;
 
 @end
 
@@ -45,6 +46,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self choseTableView];
+    self.choseTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.choseTableView.delegate = self;
     self.choseTableView.dataSource = self;
     [self initPull];
@@ -72,38 +74,37 @@
         return timeTipCell;
     }
     choseSecondTableViewCell *cell = [choseSecondTableViewCell cellWithTableView:tableView naV:self.navigationController];
-//    cell.model = choseModel;
     cell.arrData =self.array2[indexPath.row/2];
     NSLog(@"%@", self.array2);
     return cell;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
-//    produceDetailVC.produceUrl = [self.dataArr[indexPath.row]LinkUrl];
-//    produceDetailVC.shareInfo = [self.dataArr[indexPath.row]ShareInfo];
-//    produceDetailVC.productName = [self.dataArr[indexPath.row]Name];
-//    [self.navigationController pushViewController:produceDetailVC animated:YES];
-//     [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
-}
-
-
 
 #pragma mark - 数据加载
 - (void)loadChoseListNotifiViewData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSString stringWithFormat:@"%ld", self.pageIndex] forKey:@"PageIndex"];
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
-    
+    NSLog(@"... %ld", self.pageIndex);
     [IWHttpTool postWithURL:@"Customer/GetEveryRecommendProduct" params:dic success:^(id json) {
         NSLog(@",,,,, %@", json);
         if (self.isRefresh) {
             [self.dataArr removeAllObjects];
             [self.array2 removeAllObjects];
+            [self.currentLittleArray removeAllObjects];
+            
         }
       
         NSArray *arr = json[@"AppEveryRecommendProductList"];
         self.totalNumber = [json[@"TotalCount"] integerValue];
+        
+        if (self.totalNumber == 0 || arr.count == 0) {
+            self.nullImage.hidden = NO;
+            [self.choseTableView headerEndRefreshing];
+            [self.choseTableView footerEndRefreshing];
+            return;
+        }
+
+        
         for (int i = 0; i<arr.count; i++) {
             NSDictionary * currentDic = arr[i];
             NSDictionary * beforeDic = @{};
@@ -123,9 +124,9 @@
             if (i == arr.count-1) {
                 [self.array2 addObject:[self.currentLittleArray mutableCopy]];
             }
-            NSLog(@"array2===%@", self.array2);
-//            [self.array2 addObject:model];
         }
+          NSLog(@"array2===%@ %@...  %@", self.array2, self.currentLittleArray, self.beforeLittleArray);
+
         
         [self.choseTableView reloadData];
         [self.choseTableView headerEndRefreshing];
@@ -141,7 +142,6 @@
 
 #pragma mark - 刷新
 -(void)initPull{
-    self.pageIndex = 1;
     [self.choseTableView addHeaderWithTarget:self action:@selector(headPull)dateKey:nil];
     [self.choseTableView headerBeginRefreshing];
     [self.choseTableView addFooterWithTarget:self action:@selector(foodPull)];

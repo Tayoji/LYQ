@@ -544,16 +544,6 @@
                 }
             }
         }
-//        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.newsBindingCustomArr];
-//        }
-//    
-//        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.hadBindingCustomArr];
-//        }
-//        if (self.otherCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.otherCustomArr];
-//        }
 
         [self.dataArr removeAllObjects];
         if (self.newsBindingCustomArr.count) {

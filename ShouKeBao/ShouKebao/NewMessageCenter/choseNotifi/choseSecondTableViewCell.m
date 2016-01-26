@@ -45,17 +45,17 @@ static id _naV;
     tableViewDetail.layer.cornerRadius = 10;
     tableViewDetail.scrollEnabled = NO;
 }
-- (void)setModel:(ChoseModel *)model{
-    _model = model;
-    _choseEveryDayL.text = model.Copies;
-}
+//- (void)setModel:(ChoseModel *)model{
+//    _model = model;
+//    _choseEveryDayL.text = model.Copies;
+//}
 - (void)setArrData:(NSMutableArray *)arrData{
     _arrData = arrData;
-     NSLog(@"... %@", arrData);
     for (int i = 0; i < arrData.count; i++) {
         ProductModal *model = [ProductModal modalWithDict:[self.arrData[i]Productdetail]];
         [self.dataArr addObject:model];
     }
+    _choseEveryDayL.text = [arrData[0] valueForKey:@"Copies"];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

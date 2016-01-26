@@ -47,7 +47,13 @@
 #pragma mark - private
 - (void)layoutSubviews{
     [super layoutSubviews];
-    self.tableView.frame = CGRectMake(0, 5, self.frame.size.width, self.frame.size.height - 5);
+    if (self.tip.length) {
+        self.tableView.frame = CGRectMake(5, 5, self.frame.size.width-10, self.frame.size.height-10);
+    }else{
+        self.tableView.frame = CGRectMake(0, 5, self.frame.size.width, self.frame.size.height-5);
+    }
+    
+    
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview

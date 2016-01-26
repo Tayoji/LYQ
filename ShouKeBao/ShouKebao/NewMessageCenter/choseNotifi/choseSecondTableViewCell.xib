@@ -21,6 +21,7 @@
                     </tableView>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.89800347219999999" green="0.89800347219999999" blue="0.89800347219999999" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="choseEveryDayL" destination="tZy-t4-b2E" id="DZP-gP-rDi"/>
                 <outlet property="choseLSmal" destination="AIG-vB-wXW" id="byh-xc-qyV"/>
