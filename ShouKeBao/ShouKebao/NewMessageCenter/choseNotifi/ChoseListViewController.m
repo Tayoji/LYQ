@@ -109,7 +109,11 @@
             NSDictionary * currentDic = arr[i];
             NSDictionary * beforeDic = @{};
             if (i == 0) {
-                beforeDic = arr[i];
+//                if (!self.isRefresh) {
+//                    beforeDic = self.array2.lastObject;
+//                }else{
+                    beforeDic = arr[i];
+//                }
             }else{
                 beforeDic = arr[i-1];
             }

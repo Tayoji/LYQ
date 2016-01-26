@@ -232,20 +232,21 @@
         gaps = 0;
         jW = self.fanIsZero ? 57*type : 0;
         qW = self.quanIsZero ? 57*type : 0;
-        liW = 57;
+        liW = 57*0.85;
+        
     }else{
         gapScreen = screenW/17;
         gaps = screenW/100;
         jW = self.fanIsZero ? 60*type : 0;
         qW = self.quanIsZero ? 60*type : 0;
-        liW = 60;
+        liW = 60*0.85;
     }
     
     NSString *li = @"利";
     CGFloat w = [li widthWithsysFont:14*type];
     CGFloat h = [li heigthWithsysFont:13*type withWidth:w];
     // 闪电
-    CGFloat fW = self.isFlash ? 15*type : 0;
+    CGFloat fW = self.isFlash ? 15*0.85 : 0;
     CGFloat fX = screenW-gap-fW;
     CGFloat fh;
     
@@ -254,7 +255,8 @@
     
     //利
     //  无论有没有闪电，利的横坐标都是确定的 而不能因为没有闪电就取代闪电的位置
-    CGFloat profitWS = screenW-gap-15-gaps-liW;
+//    CGFloat profitWS = screenW-gap-15-gaps-liW;
+    CGFloat profitWS = screenW-gap-15*0.85-gaps-liW;
     self.profits.frame = CGRectMake(profitWS, productNumHS, liW, productNumHeight);
     CGFloat hStart = (productNumHeight - h)/2;
     self.li.frame = CGRectMake(0, hStart, h, h);
