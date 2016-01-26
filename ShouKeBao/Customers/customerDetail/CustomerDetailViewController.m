@@ -35,11 +35,15 @@
     }
     return _dataArr;
 }
+- (void)setCustomerNameLa:(UITextField *)customerNameLa{
+    _customerNameLa = customerNameLa;
+     [[UITextField appearance] setTintColor:[UIColor blackColor]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"客户详情";
     self.tableView.delegate = self;
-   // [self.SetRemindBtnOutlet setHighlighted:NO];
     
     [self loadCustomerDetailData];
     if (self.note.text == nil) {
@@ -295,7 +299,7 @@
     [self.customerIconB.layer setBorderWidth:2.0];
     [self.customerIconB.layer setBorderColor:[[UIColor whiteColor]CGColor]];
     
-    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
+    if ([[self.dataArr[0]HeadUrl] isEqualToString:@""]|| [self.dataArr[0]HeadUrl].length == 0) {
         
         self.customerIconB.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
          NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
@@ -321,7 +325,9 @@
 //        UIGraphicsEndImageContext();
 //        self.customerIcon.image = newImage;
     }else{
-        [self.customerIconB.imageView sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HearUrl]]];
+        NSLog(@" %@", [self.dataArr[0]HeadUrl]);
+        [self.customerIconB.imageView sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HeadUrl]]];
+       [self.customerIconB.imageView sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HeadUrl]] placeholderImage:[UIImage imageNamed:@"iconfont-ren"]];
     }
     
     

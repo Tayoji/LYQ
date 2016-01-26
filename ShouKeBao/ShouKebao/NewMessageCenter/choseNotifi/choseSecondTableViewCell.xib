@@ -34,7 +34,7 @@
         </tableViewCell>
         <view contentMode="scaleToFill" id="d5o-Qs-kex">
             <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-choseToday" id="BBW-qF-Gid">
                     <rect key="frame" x="15" y="5" width="30" height="30"/>

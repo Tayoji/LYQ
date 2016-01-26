@@ -60,7 +60,17 @@ static id _naV;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    return self.viewBackG;
+    static NSString *headerSectionID = @"cityHeaderSectionID";
+    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerSectionID];
+    if (headerView == nil){
+        headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:headerSectionID];
+//        UILabel *titleLabel = [[UILabel alloc] init];
+//        titleLabel.frame = CGRectMake(5, 0, 200, 30);
+//        titleLabel.textColor = [UIColor purpleColor];
+//        titleLabel.tag = 100;
+        [headerView addSubview: self.viewBackG];
+    }
+    return headerView;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.arrData.count;
