@@ -296,6 +296,8 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
         NSLog(@"jsonDic = %@", jsonDic);
         [self WXpaySendRequestWithDic:jsonDic];
         return NO;
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateTheContractPic"]){
+        [self LYQSKBAPP_UpdateTheContractPic:rightUrl];
     }
 
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -305,6 +307,9 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
     return YES;
     
 }
+
+#pragma -mark-JS调用原生方法
+
 //js调用原生，调用IM入口；
 - (void)LYQSKBAPP_OpenCustomIM:(NSString *)urlStr{
     
@@ -346,6 +351,7 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
     }
 
 }
+
 
 //js调原生，并且用js传过来的customerIDs 跳转到上传证件附件页面
 -(void)LYQSKBAPP_UpDateUserPhotos:(NSString *)urlStr{
@@ -418,6 +424,46 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
         }
     }
 }
+
+
+- (void)LYQSKBAPP_UpdateTheContractPic:(NSString *)urlStr{
+    urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"ContractPic(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        NSArray * picArray = [resultStr componentsSeparatedByString:@","];
+        NSMutableArray * customerIDsArray = [NSMutableArray array];
+        for (NSString * str in picArray) {
+            NSString * tempStr = @"";
+            if ([str myContainsString:@"ContractPic("]) {
+                tempStr = [str stringByReplacingOccurrencesOfString:@"ContractPic(" withString:@""];
+                tempStr = [tempStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+                
+            }
+            if (![tempStr isEqualToString:@""]) {
+                [customerIDsArray addObject:tempStr];
+            }
+        }
+        
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
+        AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
+        NSLog(@"%@", customerIDsArray[0]);
+        if (customerIDsArray.count) {
+            AVC.customerId = customerIDsArray[0];
+            AVC.fromType = fromTypeOrderDetail;
+            AVC.OrderVC = self;
+            [self.navigationController pushViewController:AVC animated:YES];
+        }
+    }
+
+
+}
+#pragma -mark－－－－－－－－
 
 - (void)doIfInWebWithUrl:(NSString *)rightUrl{
     if ([rightUrl myContainsString:@"Product/ProductDetail"]) {
@@ -686,9 +732,9 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
 }
 
 
-//提交回传合同
+//提交回传合同 LYQSKBAPP_UpdateTheContractPic_CallBack
 - (void)postContractPicToServer:(NSArray *)PicArray{
-
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_UpdateTheContractPic_CallBack(%@, '%@')", @1, @""]];
 }
 
 //微信支付

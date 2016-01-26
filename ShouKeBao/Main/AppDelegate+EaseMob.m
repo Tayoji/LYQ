@@ -172,15 +172,15 @@
 }
 
 // 将得到的deviceToken传给SDK
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-    [[[UIAlertView alloc]initWithTitle:@"环信" message:@"" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
-    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-    
-    [UMessage registerDeviceToken:deviceToken];
-
-//    NSString * deviceStr = [NSString stringWithFormat:@"%@", deviceToken];
-//    [[[UIAlertView alloc]initWithTitle:@"aaa" message:deviceStr delegate:nil cancelButtonTitle:@"aa" otherButtonTitles:nil, nil]show];
-}
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+//    [[[UIAlertView alloc]initWithTitle:@"环信" message:@"" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
+//    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+//    
+//    [UMessage registerDeviceToken:deviceToken];
+//
+////    NSString * deviceStr = [NSString stringWithFormat:@"%@", deviceToken];
+////    [[[UIAlertView alloc]initWithTitle:@"aaa" message:deviceStr delegate:nil cancelButtonTitle:@"aa" otherButtonTitles:nil, nil]show];
+//}
 
 // 注册deviceToken失败，此处失败，与环信SDK无关，一般是您的环境配置或者证书配置有误
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{

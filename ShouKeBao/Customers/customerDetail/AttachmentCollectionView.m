@@ -231,7 +231,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 //上传合同
 - (void)upDateContractPic{
 
-    [(OrderDetailViewController *)self.OrderVC postPicToServer:self.bigPicUrlArray];
+    [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
     [self.navigationController popViewControllerAnimated:YES];
 
 

@@ -413,6 +413,10 @@
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_GetVisitorCertificatePicFromApp_CallBack(%@, '%@')", @1, jsonStr]];
 }
 
+//提交回传合同 LYQSKBAPP_UpdateTheContractPic_CallBack
+- (void)postContractPicToServer:(NSArray *)PicArray{
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_UpdateTheContractPic_CallBack(%@, '%@')", @1, @""]];
+}
 
 //微信支付
 
