@@ -321,7 +321,7 @@
         self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
         self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
         CGRect frame = _Guidebtn.frame;
-        frame =CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+        frame =CGRectMake(kScreenSize.width/2-90, 140,100, 30);
         _Guidebtn.frame = frame;
         [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
@@ -1458,8 +1458,8 @@
             label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
             
         }else if(fiveSize){
-            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 180);
-            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120);
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 160);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
             _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 110,100, 30);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
@@ -1578,7 +1578,7 @@
         
         self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
         CGRect frame = _Guidebtn.frame;
-        frame =CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+        frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
         _Guidebtn.frame = frame;
         [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];

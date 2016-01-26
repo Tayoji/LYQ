@@ -114,12 +114,12 @@
 
     NSString *NeedGuide = [def objectForKey:@"ThreeDTouch"];
 
-    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
+//    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
        if (![NeedGuide isEqualToString:@"UITouchText.TodaySignIn"]) {
             [self Guide];
             [def setObject:@"1" forKey:@"NewMeGuideRP"];
         }
-    }
+//    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
 
     //获取版本信息
@@ -1210,19 +1210,19 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4-50, kScreenSize.width-60, 180)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4-30, kScreenSize.width-10, 170)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
-        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
+        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 40, 120, 25)];
         GuideTitImageV.image = [UIImage imageNamed:@"NewAddRedPMe"];
         
-        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 30)];
+        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
         GuideconLabel.text = @"发红包，张订单，不信来试试？";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 125, 120, 30)];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即发放红包" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -1242,11 +1242,11 @@
     if (!_guideRadPacketsm) {
         _guideRadPacketsm = [[UIImageView alloc] init];
         if(foureSize){
-            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-40,  kScreenSize.height/4+170, 80, 80);
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-35,  kScreenSize.height/4+160, 70, 70);
             [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
         
         }else if(fiveSize){
-            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-40,  kScreenSize.height/4+170, 80, 80);
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-35,  kScreenSize.height/4+160, 70, 70);
             [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
         }else{
             _guideRadPacketsm.frame = CGRectMake(30, kScreenSize.height/4+170, self.guideView.frame.size.width/2+40, 200);

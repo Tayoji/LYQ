@@ -1177,19 +1177,19 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
-       UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
+       UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
         GuideTitImageV.image = [UIImage imageNamed:@"NewCoustormRadP"];
         
-        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, _guideView.frame.size.width-20, 30)];
+        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
         GuideconLabel.text = @"客户动态一手掌握，知己知彼主动出击。";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30)];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];

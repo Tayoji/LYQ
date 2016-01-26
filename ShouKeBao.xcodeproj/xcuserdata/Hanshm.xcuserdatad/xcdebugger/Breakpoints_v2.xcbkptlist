@@ -627,22 +627,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
-            timestampString = "475464213.906983"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-setNavSegementView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Customers/customerOrders/CustomerOrdersUIViewController.m"
             timestampString = "475464281.405396"
             startingColumnNumber = "9223372036854775807"
@@ -659,13 +643,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
-            timestampString = "475464303.513195"
+            filePath = "ShouKeBao/ShouKebao/NewMessageCenter/NewCustomerCell.m"
+            timestampString = "475471917.284323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "-sex:"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "-openCustormDet"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

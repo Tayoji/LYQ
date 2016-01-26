@@ -39,7 +39,14 @@
     [self setNavBack];
     self.button.hidden = NO;
     [self addGest];
-    [self.view addSubview:self.detailVC.view];
+    //消息中心跳过来的，做个判断
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:@"GuideCustdongtaiRAD"]isEqual: @"1"]){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"CustormJumpToCustormDet"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GuideCustdongtaiRAD"];
+    }else{
+        [self.view addSubview:self.detailVC.view];
+
+    }
     
 }
 - (void)addGest{
@@ -66,31 +73,15 @@
     segment.frame = CGRectMake(0, 0, 200, 28);
     [segment setSelected:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([[defaults objectForKey:@"GuideCustdongtaiRAD"]  isEqual: @"1"]) {
-        [segment setSelectedSegmentIndex:2];
-        [defaults removeObjectForKey:@"GuideCustdongtaiRAD"];
-        [self.view addSubview:self.customerDynamicVC.view];
-        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
-        [self.button setTitle:@"" forState:UIControlStateNormal];
-        if (self.detailVC || self.orderVC) {
-            [self.detailVC.view removeFromSuperview];
-            [self.orderVC.view removeFromSuperview];
-            
-        }
+    if ([[defaults objectForKey:@"GuideCustdongtaiRAD"]  isEqual: @"1"]) {//新手引导跳转修改
+        [segment setSelectedSegmentIndex: 2];
+        self.segmentControl.selectedSegmentIndex = 2;
+        [self sex:segment];
 
-    }else if([[defaults objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"]){//消息中心跳过来的，需要修改
-        [segment setSelectedSegmentIndex:2];
-//        [defaults removeObjectForKey:@"CustormJumpToCustormDet"];
-//        [self.view addSubview:self.customerDynamicVC.view];
-//        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
-//        [self.button setTitle:@"" forState:UIControlStateNormal];
-//        if (self.detailVC || self.orderVC) {
-//            [self.detailVC.view removeFromSuperview];
-//            [self.orderVC.view removeFromSuperview];
-//            
-//        }
-//        self.segmentControl.selectedSegmentIndex = 2;
-//        [self sex:self.segmentControl];
+    }else if([[defaults objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"]){//消息中心跳过来的，需要修改r
+        [segment setSelectedSegmentIndex: 2];
+        self.segmentControl.selectedSegmentIndex = 2;
+        [self sex:segment];
     }else{
         [segment setSelectedSegmentIndex:0];
 
@@ -117,7 +108,9 @@
 -(void)sex:(UISegmentedControl *)sender
 {
     UISegmentedControl *control = (UISegmentedControl *)sender;
+    NSLog(@"--%ld",control.selectedSegmentIndex);
     self.segmentControl.selectedSegmentIndex = control.selectedSegmentIndex;
+    
     NSLog(@"..%ld", self.segmentControl.selectedSegmentIndex);
     if (control.selectedSegmentIndex == 0) {
         self.button.hidden = NO;
@@ -192,6 +185,8 @@
     
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = CGRectMake(0,0,40,30);
+    self.button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, -5);
+    self.button.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, -5);
     [self.button setTitle:@"保存" forState:UIControlStateNormal];
     self.button.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.button addTarget:self action:@selector(saveCustomerDetail:)forControlEvents:UIControlEventTouchUpInside];
