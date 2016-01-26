@@ -235,6 +235,28 @@
 }
 
 /**
+ *设置接受业务通知
+ **/
++ (void)setAppSettingInfoSwitchWithParam:(NSDictionary *)param success:(void (^)(id json))success failure:(void (^)(NSError *error))failure
+{
+    [IWHttpTool postWithURL:@"/Business/SetAppSettingInfo" params:param success:^(id json) {
+        
+        if (success) {
+            success(json);
+            NSLog(@"%@",json);
+        }
+        
+    } failure:^(NSError *error) {
+        
+        if (failure) {
+            failure(error);
+        }
+        
+    }];
+}
+
+
+/**
  *设置勿扰模式开关
 **/
 + (void)setDisturbSwitchWithParam:(NSDictionary *)param success:(void (^)(id json))success failure:(void (^)(NSError *error))failure

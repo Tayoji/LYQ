@@ -27,6 +27,7 @@
 - (void)setModelC:(ChoseModel *)modelC{
     _modelC = modelC;
     _timeL.text = modelC.PushDateText;
+    NSLog(@"...%@ %@", modelC.PushDateText, modelC.PushDate);
 }
 
 - (void)setTimeL:(UILabel *)timeL{
