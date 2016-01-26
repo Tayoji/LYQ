@@ -398,7 +398,7 @@ void UncaughtExceptionHandler(NSException *exception) {
     NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
                   stringByReplacingOccurrencesOfString: @">" withString: @""]
                  stringByReplacingOccurrencesOfString: @" " withString: @""]);
-    [[[UIAlertView alloc]initWithTitle:@"友盟" message:@"友盟" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
+//    [[[UIAlertView alloc]initWithTitle:@"友盟" message:@"友盟" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
     [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 
     [UMessage registerDeviceToken:deviceToken];
