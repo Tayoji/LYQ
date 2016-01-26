@@ -307,11 +307,26 @@
 
 - (void)setupBarButtonItem
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    [self.navigationItem setLeftBarButtonItem:backItem];
+    
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,55,15)];
+    [backButton setImage:[UIImage imageNamed:@"fanhuian"] forState:UIControlStateNormal];
+    backButton.imageEdgeInsets = UIEdgeInsetsMake(-1, -10, 0, 50);
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    backButton.titleEdgeInsets = UIEdgeInsetsMake(0,-40, 0, 0);
+    backButton.titleLabel.font = [UIFont systemFontOfSize:15];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
+
+
     
     if (self.isChatGroup) {
 //        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];

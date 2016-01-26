@@ -20,8 +20,8 @@
 #import "StrToDic.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface SetRedPacketController ()<UIScrollViewDelegate,UITextFieldDelegate>
-@property (nonatomic,strong) UIView *WarningView;
-@property (nonatomic,strong) UIView *backGroundView;
+//@property (nonatomic,strong) UIView *WarningView;
+//@property (nonatomic,strong) UIView *backGroundView;
 @property (nonatomic,strong) NSMutableArray *IDsdataArr;
 @property (nonatomic, strong)EMMessage * tempMeesage;
 @end
@@ -61,10 +61,7 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:myBtn];
     self.navigationItem.rightBarButtonItem = item;
 }
--(void)removeWowView{
-    [_WarningView removeFromSuperview];
-    [_backGroundView removeFromSuperview];
-}
+
 -(void)BtnClick:(UIButton *)button{
     
     [self.RedPDescribeTextView resignFirstResponder];
@@ -78,18 +75,19 @@
         cont.linkUrl = @"http://m.lvyouquan.cn/App/AppLuckMoneyProduceNote";
         cont.webTitle = @"红包生成说明";
         [self.navigationController pushViewController:cont animated:YES];
-    }else if(button.tag == 105){//叉号
-        [self removeWowView];
-    }else if(button.tag == 107){//取消
-        [self removeWowView];
-    }else if(button.tag == 108){//确定
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
-        
-        [self removeWowView];
-        [self computeMoney:1];
-        [self loadRedPacketRequest];
     }
+//    else if(button.tag == 105){//叉号
+//        [self removeWowView];
+//    }else if(button.tag == 107){//取消
+//        [self removeWowView];
+//    }else if(button.tag == 108){//确定
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
+//        
+////        [self removeWowView];
+//        [self computeMoney];
+//        [self loadRedPacketRequest];
+//    }
     
     
 }
@@ -121,11 +119,11 @@
         default:
             break;
     }
-    [self computeMoney:1];
+    [self computeMoney];
     return YES;
 }
 //红包总价计算方法
--(void)computeMoney:(NSInteger )Num{
+-(void)computeMoney{
     CGFloat sum = self.ExitCountryN+self.InlandN+self.RimN;
     self.FinalMoney = sum*self.NumOfPeopleArr.count;
     self.FinalMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",self.FinalMoney];
@@ -136,11 +134,11 @@
         self.SendRedPacketBtn.enabled = NO;
         self.SendRedPacketBtn.alpha = 0.5;
     }
-    if (Num == 2) {
-        NSLog(@"===%f",self.FinalMoney);
-        [self.view.window addSubview:self.backGroundView];
-        [self.view.window addSubview:self.WarningView];
-    }
+//    if (Num == 2) {
+//        NSLog(@"===%f",self.FinalMoney);
+//        [self.view.window addSubview:self.backGroundView];
+//        [self.view.window addSubview:self.WarningView];
+//    }
 }
 -(NSMutableArray *)NumOfPeopleArr{
     if (!_NumOfPeopleArr) {
@@ -149,55 +147,55 @@
     return _NumOfPeopleArr;
 }
 //自定义警告框
--(UIView *)WarningView{
-    if (!_WarningView) {
-        _WarningView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 180)];
-        _WarningView.layer.masksToBounds = YES;
-        _WarningView.layer.cornerRadius = 6.0;
-        _WarningView.backgroundColor = [UIColor whiteColor];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _WarningView.frame.size.width, _WarningView.frame.size.height/4)];
-        imageView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wow2RedPacket"]];
-        imageView.userInteractionEnabled = YES;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width-35, 10, 20, 20)];
-        [btn setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketCanal"] forState:UIControlStateNormal];
-        btn.tag = 105;
-        [btn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [imageView addSubview:btn];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, _WarningView.frame.size.height/4, _WarningView.frame.size.width-60, 70)];
-        label.lineBreakMode = UILineBreakModeWordWrap;
-        label.numberOfLines = 0;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.text = @"红包一旦生成，红包内的价格不可修改，请确定您发放的金额正确";
-        label.font = [UIFont systemFontOfSize:18];
-        UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width/2-120, _WarningView.frame.size.height/4+80, 100, 40)];
-        [btn2 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
-        [btn2 setTitle:@"取消" forState:UIControlStateNormal];
-        [btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [btn2 addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 107;
-        UIButton *btn3 = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width/2+20, _WarningView.frame.size.height/4+80, 100, 40)];
-        [btn3 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
-        [btn3 setTitle:@"确定" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [btn3 addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn3.tag = 108;
-        [_WarningView addSubview:imageView];
-        [_WarningView addSubview:label];
-        [_WarningView addSubview:btn2];
-        [_WarningView addSubview:btn3];
-        
-    }
-    return _WarningView;
-}
+//-(UIView *)WarningView{
+//    if (!_WarningView) {
+//        _WarningView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 180)];
+//        _WarningView.layer.masksToBounds = YES;
+//        _WarningView.layer.cornerRadius = 6.0;
+//        _WarningView.backgroundColor = [UIColor whiteColor];
+//        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _WarningView.frame.size.width, _WarningView.frame.size.height/4)];
+//        imageView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Wow2RedPacket"]];
+//        imageView.userInteractionEnabled = YES;
+//        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width-35, 10, 20, 20)];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketCanal"] forState:UIControlStateNormal];
+//        btn.tag = 105;
+//        [btn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [imageView addSubview:btn];
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, _WarningView.frame.size.height/4, _WarningView.frame.size.width-60, 70)];
+//        label.lineBreakMode = UILineBreakModeWordWrap;
+//        label.numberOfLines = 0;
+//        label.textAlignment = NSTextAlignmentCenter;
+//        label.text = @"红包一旦生成，红包内的价格不可修改，请确定您发放的金额正确";
+//        label.font = [UIFont systemFontOfSize:18];
+//        UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width/2-120, _WarningView.frame.size.height/4+80, 100, 40)];
+//        [btn2 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
+//        [btn2 setTitle:@"取消" forState:UIControlStateNormal];
+//        [btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//        [btn2 addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        btn2.tag = 107;
+//        UIButton *btn3 = [[UIButton alloc] initWithFrame:CGRectMake(_WarningView.frame.size.width/2+20, _WarningView.frame.size.height/4+80, 100, 40)];
+//        [btn3 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
+//        [btn3 setTitle:@"确定" forState:UIControlStateNormal];
+//        [btn3 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//        [btn3 addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        btn3.tag = 108;
+//        [_WarningView addSubview:imageView];
+//        [_WarningView addSubview:label];
+//        [_WarningView addSubview:btn2];
+//        [_WarningView addSubview:btn3];
+//        
+//    }
+//    return _WarningView;
+//}
 //警告框背景蒙层
--(UIView *)backGroundView{
-    if (!_backGroundView) {
-        _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
-        _backGroundView.backgroundColor = [UIColor blackColor];
-        _backGroundView.alpha = 0.5;
-    }
-    return _backGroundView;
-}
+//-(UIView *)backGroundView{
+//    if (!_backGroundView) {
+//        _backGroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+//        _backGroundView.backgroundColor = [UIColor blackColor];
+//        _backGroundView.alpha = 0.5;
+//    }
+//    return _backGroundView;
+//}
 -(void)loadRedPacketRequest{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:@"2" forKey:@"LuckMoneyType"];
@@ -275,12 +273,27 @@
     [self.navigationController popToRootViewControllerAnimated:NO];
 
 }
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+    }else if(buttonIndex == 1){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
+        
+//        [self removeWowView];
+        [self computeMoney];
+        [self loadRedPacketRequest];
+    }
+    NSLog(@"clickButtonAtIndex:%ld",buttonIndex);
+}
 - (IBAction)GrantRPBtn:(UIButton *)sender {
-
     [self.ExitCountryTextField endEditing:YES];
     [self.InlandTextField endEditing:YES];
     [self.RimTextField endEditing:YES];
-    [self computeMoney:2];
+    [self computeMoney];
+
+    [[[UIAlertView alloc]initWithTitle:nil message:@"红包一旦生成，红包内的价格不可修改，请确定您发放的金额正确" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消", @"确定",nil]show];
     
 //    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //    

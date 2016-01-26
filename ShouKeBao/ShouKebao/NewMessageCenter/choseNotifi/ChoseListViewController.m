@@ -23,11 +23,11 @@
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, strong)NSMutableArray *array2;
 
-
+//当前的分区数组
 @property (nonatomic, strong)NSMutableArray *currentLittleArray;
 @property (nonatomic, strong)NSMutableArray *beforeLittleArray;
 
-
+@property (nonatomic, strong)NSDictionary *beforeDic;
 
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
@@ -109,18 +109,23 @@
             NSDictionary * currentDic = arr[i];
             NSDictionary * beforeDic = @{};
             if (i == 0) {
-//                if (!self.isRefresh) {
-//                    beforeDic = self.array2.lastObject;
-//                }else{
+                if (!self.isRefresh) {
+                    beforeDic = self.beforeDic;
+                }else{
                     beforeDic = arr[i];
-//                }
+                }
             }else{
                 beforeDic = arr[i-1];
+                self.beforeDic = currentDic;
             }
+            NSLog(@"%@---%@", currentDic, beforeDic);
             ChoseModel *currentModel = [ChoseModel modalWithDict:currentDic];
             ChoseModel *beforeModel = [ChoseModel modalWithDict:beforeDic];
 
             if (![currentModel.PushDate isEqualToString:beforeModel.PushDate]) {
+                if (!self.isRefresh) {
+                    [self.array2 removeObject:self.array2.lastObject];
+                }
                 [self.array2 addObject:[self.currentLittleArray mutableCopy]];
                 [self.currentLittleArray removeAllObjects];
             }
@@ -156,9 +161,9 @@
     self.choseTableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headPull{
-    [self loadChoseListNotifiViewData];
     self.isRefresh = YES;
     self.pageIndex = 1;
+    [self loadChoseListNotifiViewData];
     
 }
 - (void)foodPull{
