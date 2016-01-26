@@ -161,9 +161,9 @@
     self.choseTableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headPull{
-    [self loadChoseListNotifiViewData];
     self.isRefresh = YES;
     self.pageIndex = 1;
+    [self loadChoseListNotifiViewData];
     
 }
 - (void)foodPull{
