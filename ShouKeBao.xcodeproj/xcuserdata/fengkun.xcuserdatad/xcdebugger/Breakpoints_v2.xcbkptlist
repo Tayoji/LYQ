@@ -613,38 +613,6 @@
             endingLineNumber = "269"
             landmarkName = "-loadCustomerDetailData"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CustomerDetailViewController loadCustomerDetailData]"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
-                  timestampString = "475492111.26353"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "269"
-                  endingLineNumber = "269"
-                  offsetFromSymbolStart = "407">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__54-[CustomerDetailViewController loadCustomerDetailData]_block_invoke"
-                  moduleName = "ShouKeBao"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Customers/customerDetail/CustomerDetailViewController.m"
-                  timestampString = "475492111.263716"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270"
-                  offsetFromSymbolStart = "29">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
