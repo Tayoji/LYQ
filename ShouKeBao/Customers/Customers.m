@@ -107,6 +107,7 @@
 - (IBAction)inviteCancleBtn:(id)sender;
 - (IBAction)inviteCustomerBtn:(id)sender;
 @property (nonatomic, copy)NSString *telStr;
+@property (nonatomic, strong)UIBarButtonItem *barItem;
 //下边声明的是新手引导
 @property (nonatomic,strong) UIView *backgroundIV;
 @property (nonatomic,strong) UIImageView *guideView;
@@ -449,8 +450,8 @@
 
 #pragma mark - 右边导航栏的方法
 -(void)customerRightBarItem{
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(setSubViewUp)];
-    self.navigationItem.rightBarButtonItem= barItem;
+    self.barItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(setSubViewUp)];
+    self.navigationItem.rightBarButtonItem= self.barItem;
 }
 
 - (IBAction)addNewUser:(id)sender {
