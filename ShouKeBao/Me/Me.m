@@ -1210,7 +1210,7 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4-30, kScreenSize.width-10, 170)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4-30, kScreenSize.width-10, 180)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
         UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 40, 120, 25)];
@@ -1249,7 +1249,7 @@
             _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-35,  kScreenSize.height/4+160, 70, 70);
             [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
         }else{
-            _guideRadPacketsm.frame = CGRectMake(30, kScreenSize.height/4+170, self.guideView.frame.size.width/2+40, 200);
+            _guideRadPacketsm.frame = CGRectMake(30, kScreenSize.height/4+170, self.guideView.frame.size.width/2+20, 200);
              [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRadPacketSmall"]];
         }
         
