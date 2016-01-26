@@ -45,6 +45,11 @@
 @property (nonatomic, copy)NSString *PersonAlternateCash;//成人抵用券
 @property (nonatomic, copy)NSString *SendCashCoupon;//下单送券金额
 
+@property (nonatomic, copy)NSString *Copies;
+@property (nonatomic, strong)NSDictionary *Productdetail;
+@property (nonatomic, copy)NSString *PushDateText;
+
+
 + (instancetype)modalWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

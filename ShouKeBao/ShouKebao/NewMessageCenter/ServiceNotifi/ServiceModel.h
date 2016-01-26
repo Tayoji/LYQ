@@ -17,5 +17,7 @@
 @property (nonatomic, copy)NSString *BusinessId;
 @property (nonatomic, copy)NSString *LinkUrl;
 @property (nonatomic, copy)NSString *MessageTypeText;
+@property (nonatomic, copy)NSString *CreateTimeText;
+@property (nonatomic, copy)NSString *CreateTime;
 +(ServiceModel *)modelWithDic:(NSDictionary *)dic;
 @end

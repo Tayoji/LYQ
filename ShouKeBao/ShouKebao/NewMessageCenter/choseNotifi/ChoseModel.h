@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseModel.h"
-
 @interface ChoseModel : BaseModel
 @property (nonatomic, copy)NSString *Copies;
 @property (nonatomic, strong)NSDictionary *Productdetail;

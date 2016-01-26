@@ -16,8 +16,6 @@
 -(instancetype)initWithDict:(NSDictionary *)dict{
     
     if (self = [super init]) {
-//        NSMutableDictionary * dic = [NSMutableDictionary cleanNullResult:dict];
-
         self.Productdetail = dict[@"Productdetail"];
         [self setValuesForKeysWithDictionary:[NSMutableDictionary cleanNullResult:dict]];
     }

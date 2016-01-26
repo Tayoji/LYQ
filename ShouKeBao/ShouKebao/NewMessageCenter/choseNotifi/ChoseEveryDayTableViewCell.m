@@ -290,7 +290,7 @@
         self.time.hidden = YES;
         self.sep.hidden = YES;
     }
-    
+    NSLog(@".. %@ %@ %@", modal.ID, modal.PushDate, modal.Name);
     // 历史时间
     self.time.text = [NSString stringWithFormat:@"浏览时间: %@",modal.HistoryViewTime];
     self.fanIsZero = [modal.PersonAlternateCash integerValue];

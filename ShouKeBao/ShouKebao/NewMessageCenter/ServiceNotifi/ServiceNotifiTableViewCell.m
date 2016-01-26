@@ -23,9 +23,8 @@
 
 - (void)setServiceModel:(ServiceModel *)serviceModel{
     _serviceModel = serviceModel;
-    
+    self.timeL.text = [NSString stringWithFormat:@"%@", serviceModel.CreateTimeText];
     self.circlePayBao.text = [NSString stringWithFormat:@"%@", serviceModel.MessageTypeText];
-    NSLog(@" %@, %@", serviceModel.MessageTypeText, serviceModel.MessageTitle);
     self.ditailL.text = [NSString stringWithFormat:@"%@",serviceModel.MessageTitle];
 }
 

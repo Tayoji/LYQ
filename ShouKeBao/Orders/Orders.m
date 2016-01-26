@@ -886,17 +886,22 @@ typedef void (^ChangeFrameBlock)();
 - (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell{
     CGFloat Y = cell.frame.origin.y+cell.frame.size.height - self.tableView.contentOffset.y;
     CGRect frame;
+    UIImage *imageV;
     if (Y+20 > self.tableView.frame.size.height) {
         frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*btnList.count), 80, 40*btnList.count);
+        imageV = [UIImage imageNamed:@"downT"];
+       
     }else{
         frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*btnList.count);
+        imageV = [UIImage imageNamed:@"upT"];
+       
     }
-    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100"];
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100" image:imageV];
 }
 
-- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip{
+- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip image:(UIImage *)image{
     self.qdmenu = [[QDMenu alloc] init];
-    self.qdmenu.image = nil;
+    self.qdmenu.image = image;
     self.qdmenu.delegate = self;
     self.qdmenu.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
     self.qdmenu.tip = tip;
