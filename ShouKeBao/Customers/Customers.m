@@ -431,6 +431,11 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+- (void)setBackgroundView:(UIView *)backgroundView{
+    _backgroundView = backgroundView;
+    UITapGestureRecognizer *Tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subBackGroundView:)];
+    [self.backgroundView addGestureRecognizer:Tap];
+}
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self subViewHidden];
 }
@@ -453,6 +458,10 @@
       
 
     }
+}
+- (void)subBackGroundView:(UITapGestureRecognizer *)tap{
+
+    [self subViewHidden];
 }
 - (void)subViewHidden{
     [UIView animateWithDuration:0.8 animations:^{

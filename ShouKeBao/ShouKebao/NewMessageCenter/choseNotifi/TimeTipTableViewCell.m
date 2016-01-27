@@ -32,6 +32,8 @@
 
 - (void)setTimeL:(UILabel *)timeL{
     _timeL = timeL;
+//    _timeL.backgroundColor = [UIColor colorWithRed:204.0/225.0f green:204.0/225.0f blue:204.0/225.0f alpha:1];
+    
     timeL.layer.masksToBounds = YES;
     timeL.layer.cornerRadius = 5;
     
