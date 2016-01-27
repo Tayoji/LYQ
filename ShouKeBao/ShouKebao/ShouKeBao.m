@@ -317,7 +317,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([[defaults objectForKey:@"GuideRPFifrst"] integerValue] ==1) {
         [defaults setObject:@"0" forKey:@"GuideRPFifrst"];
-        [[[UIAlertView alloc]initWithTitle:@"此处有个警告" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
+//        [[[UIAlertView alloc]initWithTitle:@"此处有个警告" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
         self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
         self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
         CGRect frame = _Guidebtn.frame;
@@ -1559,35 +1559,46 @@
     if (btn.tag == 1209) {//点击XX 按钮
         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
         self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+        UIImageView *vvimage = [[UIImageView alloc] init];
          _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
-        
+        CGRect frame = _Guidebtn.frame;
         if (fourSize) {
-            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+60, kScreenSize.width-60, 200);
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+60, kScreenSize.width-20, 200);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
             _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120)];
+            frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
+
         }else if(fiveSize){
-            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+80, kScreenSize.width-60, 190);
-            _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120)];
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 190);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
+            _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120)];
+            frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
+
             
         }else if(sixSize){
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 200);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
+            frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
+
         }else{
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
+            frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
+
         }
         
         self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
-        CGRect frame = _Guidebtn.frame;
-        frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
+        
         _Guidebtn.frame = frame;
         [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
         _Guidebtn.tag = 1211;
         [self.guideImageView addSubview:_Guidebtn];
-        UIImageView *vvimage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-105, 40, 150, 20)];
         [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
         [self.guideImageView addSubview:vvimage];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 80, self.guideImageView.frame.size.width-60, 40)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40)];
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
         label.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         label.font = [UIFont systemFontOfSize:15];
