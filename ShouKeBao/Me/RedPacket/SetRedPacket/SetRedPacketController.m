@@ -42,12 +42,13 @@
     self.ScrollView.contentSize = CGSizeMake(kScreenSize.width, kScreenSize.height);
     self.SendRedPacketBtn.enabled = NO;
     self.SendRedPacketBtn.alpha = 0.5;
+    self.RedPDescribeTextView.userInteractionEnabled = NO;
 }
 
 #pragma mark - UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-    [self.RedPDescribeTextView resignFirstResponder];
+//    [self.RedPDescribeTextView resignFirstResponder];
     [self.ExitCountryTextField resignFirstResponder];
     [self.InlandTextField resignFirstResponder];
     [self.RimTextField resignFirstResponder];
@@ -64,7 +65,7 @@
 
 -(void)BtnClick:(UIButton *)button{
     
-    [self.RedPDescribeTextView resignFirstResponder];
+//    [self.RedPDescribeTextView resignFirstResponder];
     [self.ExitCountryTextField resignFirstResponder];
     [self.InlandTextField resignFirstResponder];
     [self.RimTextField resignFirstResponder];

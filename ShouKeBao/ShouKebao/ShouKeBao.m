@@ -318,32 +318,65 @@
     if ([[defaults objectForKey:@"GuideRPFifrst"] integerValue] ==1) {
         [defaults setObject:@"0" forKey:@"GuideRPFifrst"];
 //        [[[UIAlertView alloc]initWithTitle:@"此处有个警告" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
-        self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+        
         self.guideImageView.image = [UIImage imageNamed:@"RadPGuideBG"];
+        
+        _newsImageV = [[UIImageView alloc] init];
         CGRect frame = _Guidebtn.frame;
-        frame =CGRectMake(kScreenSize.width/2-90, 140,100, 30);
+        UILabel *label = [[UILabel alloc] init];
+        UIImageView *vvimage = [[UIImageView alloc] init];
+        if (fourSize) {
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/6, kScreenSize.width-20, 180);
+            _newsImageV.frame = CGRectMake(kScreenSize.width/2-30, kScreenSize.height/6+200, 60, 60);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
+            frame =CGRectMake(kScreenSize.width/2-60, 130,100, 30);
+            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30, 150, 20);
+label.font = [UIFont systemFontOfSize:15];
+        }else if (fiveSize){
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 160);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
+            label.font = [UIFont systemFontOfSize:15];
+        }else if(sixSize){
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+90, kScreenSize.width-20, 190);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+5, kScreenSize.height/2-150);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-80, 30, 150, 20);
+            label.font = [UIFont systemFontOfSize:15];
+        }else{
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 210);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            frame =CGRectMake(kScreenSize.width/2-80, 140,100, 40);;
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
+            label.font = [UIFont systemFontOfSize:17];
+        }
         _Guidebtn.frame = frame;
         [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_Guidebtn setTitle:@"立即查看" forState:UIControlStateNormal];
         _Guidebtn.tag = 1211;
         [self.guideImageView addSubview:_Guidebtn];
-        UIImageView *vvimage = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-105, 40, 150, 20)];
         [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
         [self.guideImageView addSubview:vvimage];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 80, self.guideImageView.frame.size.width-60, 40)];
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
         label.textColor = [UIColor lightGrayColor];
-        label.font = [UIFont systemFontOfSize:15];
+        
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 2;
         [self.guideImageView addSubview:label];
         [self.cleanBtn removeFromSuperview];
-        _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
-        [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
-        [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
-        [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
-        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
         
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_newsImageV];
      }
 
 }
@@ -1456,6 +1489,7 @@
             _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 130,100, 30);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30, 150, 20);
             label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
             
         }else if(fiveSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 160);
@@ -1464,6 +1498,7 @@
             _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 110,100, 30);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
             label.frame = CGRectMake(30, 60, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
             
         }else if(sixSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+90, kScreenSize.width-20, 190);
@@ -1472,15 +1507,17 @@
             _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 130,110, 30);
             vvimage.frame = CGRectMake(kScreenSize.width/2-80, 30, 150, 20);
             label.frame = CGRectMake(30, 62, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
             
         }else{
-            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 210);
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
-            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-80, 140,100, 30);
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-80, 140,100, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
             label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
-            
+            label.font = [UIFont systemFontOfSize:17];
+            _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
         }
         
         
@@ -1499,7 +1536,6 @@
         
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
         label.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        label.font = [UIFont systemFontOfSize:15];
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 2;
         
@@ -1561,12 +1597,16 @@
         self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
         UIImageView *vvimage = [[UIImageView alloc] init];
          _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
+        UILabel *label = [[UILabel alloc] init];
         CGRect frame = _Guidebtn.frame;
         if (fourSize) {
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+60, kScreenSize.width-20, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
-            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-120)];
+            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2 - 10, kScreenSize.height/2-120)];
             frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
+            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
 
         }else if(fiveSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 190);
@@ -1574,18 +1614,27 @@
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120)];
             frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
 
-            
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+
         }else if(sixSize){
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 200);
-            vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
-            frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
+            frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:15];
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
 
         }else{
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
-            frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
+            frame =CGRectMake(kScreenSize.width/2-90, 140,120, 40);
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
+            label.font = [UIFont systemFontOfSize:17];
+            [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
 
         }
         
@@ -1598,15 +1647,14 @@
         [self.guideImageView addSubview:_Guidebtn];
         [vvimage setImage:[UIImage imageNamed:@"GuideAddMyNewsRP"]];
         [self.guideImageView addSubview:vvimage];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40)];
+        
         label.text = @"消息中心时时查看,发现订单飞涨的秘密!";
         label.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        label.font = [UIFont systemFontOfSize:15];
+        
         label.textAlignment = NSTextAlignmentCenter;
         label.numberOfLines = 2;
         
        
-        [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
         [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
         
         [self.guideImageView addSubview:label];
@@ -1617,6 +1665,7 @@
     }else if (btn.tag == 1210){
                 [self.guideView removeFromSuperview];
                 [self.guideImageView removeFromSuperview];
+                [self.newsImageV removeFromSuperview];
             NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
             newExc.naVC = self.navigationController;
             [self.navigationController pushViewController:newExc animated:YES];

@@ -1213,20 +1213,39 @@
     if (!_guideView) {
         _guideView =[[UIImageView alloc] init];
         UIImageView *GuideTitImageV = [[UIImageView alloc] init];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] init];
+        UILabel * GuideconLabel = [[UILabel alloc] init];
         if (foureSize) {
             _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
             GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-55, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
         }else if(fiveSize){
             _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
             GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-50, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
         }else if(sixSize){
             _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
             GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
         }else{
-            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4-30, kScreenSize.width-50, 190);
             GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 40);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:17];
 
         }
         
@@ -1235,16 +1254,13 @@
         
         GuideTitImageV.image = [UIImage imageNamed:@"NewAddRedPMe"];
         
-        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
-        GuideconLabel.text = @"发红包，涨订单，不信来试试？";
+        GuideconLabel.text = @"发红包，张订单，不信来试试？";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
-        GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30)];
+        
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即发放红包" forState:UIControlStateNormal];
-        GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         GuideIKnowBtn.tag = 101;
         [GuideIKnowBtn addTarget:self action:@selector(guideClick) forControlEvents:UIControlEventTouchUpInside];
         [GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

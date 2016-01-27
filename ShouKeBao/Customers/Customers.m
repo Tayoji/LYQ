@@ -1207,23 +1207,29 @@
             _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
             GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
             GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
         }else if (fiveSize){
             _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
             GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
             GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
-
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
         }else if (sixSize) {
             _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
             GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
             GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 30);
-
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
         }else{
-            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4, kScreenSize.width-50, 190);
             GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
-            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 30);
-
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 40);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+            GuideconLabel.font = [UIFont systemFontOfSize:17];
 
         }
         _guideView.userInteractionEnabled = YES;
@@ -1234,13 +1240,11 @@
         
         GuideconLabel.text = @"客户动态一手掌握，知己知彼主动出击。";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
-        GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
         
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
-        GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         GuideIKnowBtn.tag = 101;
         [GuideIKnowBtn addTarget:self action:@selector(guideClick) forControlEvents:UIControlEventTouchUpInside];
         [GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
