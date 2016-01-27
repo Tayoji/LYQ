@@ -35,7 +35,7 @@ static id _naV;
     return cell;
 }
 
-
+#pragma mark - setter方法
 //- (void)setModel:(ChoseModel *)model{
 //    _model = model;
 //    _choseEveryDayL.text = model.Copies;
@@ -43,7 +43,6 @@ static id _naV;
 
 - (void)setViewBackG:(UIView *)viewBackG{
     _viewBackG = viewBackG;
-    
 }
 - (void)setArrData:(NSMutableArray *)arrData{
     _arrData = arrData;
@@ -55,6 +54,7 @@ static id _naV;
     _choseEveryDayL.text = [arrData[0] valueForKey:@"Copies"];
 }
 
+#pragma mark - tableView delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     self.viewBackG.hidden = NO;
     return self.viewBackG;    
@@ -66,7 +66,7 @@ static id _naV;
     return 120;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 75;
+    return 80;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

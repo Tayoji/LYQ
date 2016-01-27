@@ -32,17 +32,12 @@
 
 - (void)setTimeL:(UILabel *)timeL{
     _timeL = timeL;
-//    _timeL.backgroundColor = [UIColor colorWithRed:204.0/225.0f green:204.0/225.0f blue:204.0/225.0f alpha:1];
-    
     timeL.layer.masksToBounds = YES;
     timeL.layer.cornerRadius = 5;
     
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
-//    CGFloat width = self.contentView.frame.size.width;
-//    CGFloat height = self.contentView.frame.size.height;
-//    self.timeL.frame = CGRectMake((width-120)/2, 13, 120, 25);
 }
 
 

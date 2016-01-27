@@ -63,7 +63,7 @@
     if (indexPath.row%2 == 0) {
         return 50;
     }
-    return 120*array.count+75;
+    return 120*array.count+80;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -92,7 +92,6 @@
             [self.array2 removeAllObjects];
             [self.currentLittleArray removeAllObjects];
         }
-      
         NSArray *arr = json[@"AppEveryRecommendProductList"];
         self.totalNumber = [json[@"TotalCount"] integerValue];
         
@@ -192,7 +191,7 @@
 
 
 
-
+#pragma mark 初始化
 - (NSMutableArray *)dataArr{
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];

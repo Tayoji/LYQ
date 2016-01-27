@@ -1332,6 +1332,7 @@ label.font = [UIFont systemFontOfSize:15];
 //                    [HomeHttpTool getRecommendProductListWithParam:@{@"DateRangeType":@"1"} success:^(id recommendJson) {
                     
             NSLog(@"-------------今日推荐新接口数据是:%@--------------",json[@"RecommendProduct"]);
+                    
 //                    } failure:^(NSError *error) {
 //                        
 //                    }];

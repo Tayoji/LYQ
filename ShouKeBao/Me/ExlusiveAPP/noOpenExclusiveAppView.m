@@ -123,7 +123,6 @@ static id _shareView;
 
 
 + (void)callPhone{
-    
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_contactManagerImmediatelyClick" attributes:dict];
     
