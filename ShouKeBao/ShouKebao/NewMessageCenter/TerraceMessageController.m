@@ -37,6 +37,8 @@
     [_tableView registerNib:[UINib nibWithNibName:@"TerraceMessCell" bundle:nil] forCellReuseIdentifier:@"TerraceMessCell"];
     [_tableView registerNib:[UINib nibWithNibName:@"TimerCell" bundle:nil] forCellReuseIdentifier:@"TimerCell"];
     _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.showsVerticalScrollIndicator = NO;
+    
 }
 
 - (void)loadDataSource{

@@ -35,16 +35,7 @@ static id _naV;
     return cell;
 }
 
-- (void)setTableViewDetail:(UITableView *)tableViewDetail{
-    _tableViewDetail = tableViewDetail;
-    tableViewDetail.delegate = self;
-    tableViewDetail.dataSource = self;
-    tableViewDetail.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    tableViewDetail.layer.borderWidth = 0.7;
-    tableViewDetail.layer.masksToBounds = YES;
-    tableViewDetail.layer.cornerRadius = 10;
-    tableViewDetail.scrollEnabled = NO;
-}
+
 //- (void)setModel:(ChoseModel *)model{
 //    _model = model;
 //    _choseEveryDayL.text = model.Copies;
@@ -179,6 +170,14 @@ static id _naV;
 
 
 - (void)awakeFromNib {
+    self.tableViewDetail.delegate = self;
+    self.tableViewDetail.dataSource = self;
+    self.tableViewDetail.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.tableViewDetail.layer.borderWidth = 0.7;
+    self.tableViewDetail.layer.masksToBounds = YES;
+    self.tableViewDetail.layer.cornerRadius = 10;
+    self.tableViewDetail.scrollEnabled = NO;
+
     // Initialization code
 }
 
