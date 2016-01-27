@@ -15,10 +15,13 @@
 #define pageSize 10
 @interface ServiceNotifiViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *nullImageView;
+
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
 @property (nonatomic, assign) BOOL isRefresh;
+
 @end
 
 @implementation ServiceNotifiViewController
@@ -82,9 +85,13 @@
           }
           NSArray *arr = json[@"AppBusinessNoticeList"];
           self.totalNumber = [json[@"TotalCount"] integerValue];
-//          if (self.totalNumber == 0) {
-//              return ;
-//          }
+          
+          if (self.totalNumber == 0) {
+              self.nullImageView.hidden = NO;
+              [self.tableView headerEndRefreshing];
+              [self.tableView footerEndRefreshing];
+              return;
+          }
           
           for (NSDictionary *dic in arr) {
               ServiceModel *model = [ServiceModel modelWithDic:dic];
