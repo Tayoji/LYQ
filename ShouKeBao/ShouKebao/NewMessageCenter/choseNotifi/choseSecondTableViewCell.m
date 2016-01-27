@@ -40,8 +40,14 @@ static id _naV;
 //    _model = model;
 //    _choseEveryDayL.text = model.Copies;
 //}
+
+- (void)setViewBackG:(UIView *)viewBackG{
+    _viewBackG = viewBackG;
+    
+}
 - (void)setArrData:(NSMutableArray *)arrData{
     _arrData = arrData;
+     NSLog(@"... %@", arrData);
     for (int i = 0; i < arrData.count; i++) {
         ProductModal *model = [ProductModal modalWithDict:[self.arrData[i]Productdetail]];
         [self.dataArr addObject:model];
@@ -50,18 +56,8 @@ static id _naV;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    static NSString *headerSectionID = @"cityHeaderSectionID";
-    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerSectionID];
-    if (headerView == nil){
-        headerView = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:headerSectionID];
-//        UILabel *titleLabel = [[UILabel alloc] init];
-//        titleLabel.frame = CGRectMake(5, 0, 200, 30);
-//        titleLabel.textColor = [UIColor purpleColor];
-//        titleLabel.tag = 100;
-        [headerView addSubview: self.viewBackG];
-    }
-    return headerView;
+    self.viewBackG.hidden = NO;
+    return self.viewBackG;    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.arrData.count;
