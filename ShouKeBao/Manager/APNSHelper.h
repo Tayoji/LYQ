@@ -13,9 +13,14 @@
 @property (nonatomic, assign)BOOL hasNewMessage;
 @property (nonatomic, assign)BOOL isNeedOpenChat;
 @property (nonatomic, strong)NSString * dataStr;
+
 @property (nonatomic, assign)BOOL isHideCheckNewVertion;
 @property (nonatomic, assign)BOOL isJumpChatList;
 @property (nonatomic, assign)BOOL isJumpChat;
+
+
+@property (nonatomic, assign)BOOL isReceiveRemoteNotification;
+@property (nonatomic, strong)NSDictionary * userInfoDic;
 
 @property (nonatomic, assign)NSString * chatName;
 

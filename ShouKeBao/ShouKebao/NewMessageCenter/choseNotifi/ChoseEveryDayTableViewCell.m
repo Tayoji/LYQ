@@ -39,14 +39,14 @@
 @property (nonatomic, copy)NSString * productId;
 @property (nonatomic)UILabel *lastDateL;
 @end
+static NSString *cellID = @"theChoseEveryDayTableViewCell";
 
 @implementation ChoseEveryDayTableViewCell
 
 
 + (instancetype)cellWithTableView:(UITableView *)tableView{
-    static NSString *cellID = @"choseEveryDayTableViewCell";
     ChoseEveryDayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
+    if (!cell) {
         cell = [[ChoseEveryDayTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         cell.separatorInset = UIEdgeInsetsZero;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

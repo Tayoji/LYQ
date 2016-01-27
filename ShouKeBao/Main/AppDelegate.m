@@ -39,6 +39,7 @@
 #import "JPEngine.h"
 #import "GTMBase64.h"
 #import <CommonCrypto/CommonCryptor.h>
+#import "JSONKit.h"
 #import "WXApi.h"
 #define secret_key @"1JPEngine2"
 #define kScreenSize [UIScreen mainScreen].bounds.size
@@ -257,6 +258,15 @@ void UncaughtExceptionHandler(NSException *exception) {
 
     // 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
+#pragma --mark--进程杀死之后收到远程通知
+    if (launchOptions) {
+        NSDictionary*userInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        if(userInfo)
+        {
+            [self didReceiveRemoteNotification:userInfo];
+        }
+    }
+#pragma --mark--进程杀死之后收到远程通知 －－end
 
     [UMessage startWithAppkey:@"55895cfa67e58eb615000ad8" launchOptions:launchOptions];
     [MobClick startWithAppkey:@"55895cfa67e58eb615000ad8" reportPolicy:BATCH   channelId:@"Web"];
@@ -297,6 +307,11 @@ void UncaughtExceptionHandler(NSException *exception) {
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *isFirst = [def objectForKey:@"isFirst"];
+    
+    
+    
+    
+    
     
     // 是否第一次打开app
     if ([isFirst integerValue] != 1) {
@@ -734,18 +749,9 @@ void UncaughtExceptionHandler(NSException *exception) {
 }
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler NS_AVAILABLE_IOS(8_0){
 //    [[[UIAlertView alloc] initWithTitle:@"Opened!" message:@"This action only open the app... 😀" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-
-
-
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {//进入后台
-    
-//    UILocalNotification *notification = [[UILocalNotification alloc]init];
-//    notification.alertBody = @"本地推送测试";
-//    notification.fireDate  = [NSDate dateWithTimeIntervalSinceNow:5];
-//    notification.applicationIconBadgeNumber = 10;
-//    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     
     if ([[NSUserDefaults standardUserDefaults]boolForKey:@"isQQReloadView"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"stopIndictor" object:nil];
@@ -756,21 +762,10 @@ void UncaughtExceptionHandler(NSException *exception) {
      
      [appIsBack synchronize];
         
-//            UILocalNotification *localNotification = UILocalNotification.new;
-//            
-//            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-//            localNotification.alertBody = @"You've closed me?!? 😡";
-//            localNotification.alertAction = @"Open 😉";
-//            localNotification.category = @"default_category";
-//            
-//            [application scheduleLocalNotification:localNotification];
-
-        
 __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithExpirationHandler:^{
         [application endBackgroundTask:task];
     }];
     
-//    [self prepAudio];
    }
 }
 -(void)changeDef
@@ -1002,12 +997,29 @@ __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithE
     }
 }
 
+
+#pragma - mark- 收到消息远程和本地
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     if (_mainViewController) {
         [_mainViewController didReceiveLocalNotification:notification];
     }
 }
+
+-(void)didReceiveRemoteNotification:(NSDictionary *)userInfo
+{   //userInfo包含如下；
+    //aps f t m
+    //aps = {} f = fromID, t = toID, m = MessageID
+    //由于此处刚收到信息的时候，环信还没有将message写入到数据库，不能直接跳到聊天界面，在homePage页面viewdidload中会做判断，跳到相应的环信聊天界面
+    [APNSHelper defaultAPNSHelper].isNeedOpenChat = YES;
+    [APNSHelper defaultAPNSHelper].hasNewMessage = YES;
+    
+    [APNSHelper defaultAPNSHelper].isReceiveRemoteNotification = YES;
+    [APNSHelper defaultAPNSHelper].userInfoDic = [NSDictionary dictionaryWithDictionary:userInfo];
+    
+}
+
 
 
 @end

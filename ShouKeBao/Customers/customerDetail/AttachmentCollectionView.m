@@ -140,8 +140,11 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 }
 
 - (void)loadDateFromUpdateContract{
+    NSLog(@"%@", self.pictureList.class);
     self.dataSource = [NSMutableArray arrayWithArray:self.pictureList];
     self.bigPicUrlArray = [NSMutableArray arrayWithArray:self.pictureList];
+    [self.collectionView reloadData];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
 }
 #pragma - mark - －－－－－－－－－
 
@@ -231,8 +234,10 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 //上传合同
 - (void)upDateContractPic{
 
-    [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
-    [self.navigationController popViewControllerAnimated:YES];
+    @synchronized(self) {
+        [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 
 
 }

@@ -212,9 +212,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([model.DynamicType intValue] == 1||[model.DynamicType intValue] == 2){
         
-    }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+    }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9||[model.DynamicType intValue] == 11){
         
-    }else{
+    }else if([model.DynamicType intValue] == 4||[model.DynamicType intValue] == 5||[model.DynamicType intValue] == 6||[model.DynamicType intValue] == 7||[model.DynamicType intValue] == 8||[model.DynamicType intValue] == 10){
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
         
@@ -230,11 +230,11 @@
 }
 
 //动态类型
-//1直客绑定;2直客登录;3直客搜索产品;9直客验证留下电话号码-A
+//1直客绑定;2直客登录;3直客搜索产品;9直客验证留下电话号码-A;11绑定微信
 //
 //4直客浏览线路达二次;5直客浏览产品;6直客收藏产品;7直客分享产品;8点击在线预订未下单;10直客浏览产品留下手机号-C
 - (float)heightWithDynamicType:(CustomDynamicModel *)model{
-    if ([model.DynamicType intValue] == 1 || [model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9){
+    if ([model.DynamicType intValue] == 1 || [model.DynamicType intValue] == 2||[model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9||[model.DynamicType intValue]==11){
         return 72+[model.DynamicTitleV2 heigthWithsysFont:14 withWidth:self.tableView.frame.size.width - 20];
     }else{
         return 184+[model.DynamicTitleV2 heigthWithsysFont:14 withWidth:self.tableView.frame.size.width - 20];

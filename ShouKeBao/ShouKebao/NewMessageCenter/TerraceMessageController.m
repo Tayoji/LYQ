@@ -75,7 +75,7 @@
     if (indexPath.row%2 == 0) {
         return 50;
     }
-    return 250;
+    return 300;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TimerCell *cell;

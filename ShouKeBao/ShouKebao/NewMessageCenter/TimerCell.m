@@ -11,6 +11,9 @@
 @implementation TimerCell
 
 - (void)awakeFromNib {
+    
+    self.backView.layer.cornerRadius = 5;
+    self.backView.layer.masksToBounds = YES;
     // Initialization code
 }
 

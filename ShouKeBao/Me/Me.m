@@ -1236,7 +1236,7 @@
         GuideTitImageV.image = [UIImage imageNamed:@"NewAddRedPMe"];
         
         UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
-        GuideconLabel.text = @"发红包，张订单，不信来试试？";
+        GuideconLabel.text = @"发红包，涨订单，不信来试试？";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];

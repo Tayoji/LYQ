@@ -12,6 +12,7 @@
 #import "LeaveShare.h"
 #import "UIImageView+WebCache.h"
 #import "ProduceDetailViewController.h"
+#import "JSONKit.h"
 @implementation NSString (FKTools)
 - (BOOL)myContainsString:(NSString*)other{
     NSRange range = [self rangeOfString:other];

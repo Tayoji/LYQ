@@ -24,6 +24,11 @@
 #import "NewMessageCenterController.h"
 #import "APNSHelper.h"
 #import "LocationSeting.h"
+#import "NSString+FKTools.h"
+#import "UMessage.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 static NSString *kMessageType = @"MessageType";
@@ -32,6 +37,10 @@ static NSString *kConversationChatter = @"ConversationChatter";
 
 #define UserInfoKeyLYGWIsOpenVIP @"LVGWIsOpenVIP"//是否开通vip
 @interface ViewController ()<IChatManagerDelegate, EMCallManagerDelegate>
+
+@property (nonatomic,strong) AVAudioPlayer *player;
+
+
 @property (copy ,nonatomic) NSMutableString *skbValue;
 @property (copy ,nonatomic) NSMutableString *fdpValue;
 @property (copy ,nonatomic) NSMutableString *odsValue;
@@ -62,12 +71,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
     
     [self addChildVc:self.shoukebaoVC title:@"旅游圈" image:@"skb2" selectedImage:@"skb"];
     
-
-   // [[self.childViewControllers objectAtIndex:0] setBadgeValue:_skbValue];
-    
-    
-    
-    
     UIStoryboard * SB = [UIStoryboard storyboardWithName:@"FindProductNew" bundle:[NSBundle mainBundle]];
     FindProductNew * FPVC = (FindProductNew *)[SB instantiateViewControllerWithIdentifier:@"FindProductNewSB"];
     [self addChildVc:FPVC   title:@"找产品" image:@"fenlei2" selectedImage:@"fenlei"];
@@ -95,8 +98,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
     Me *me = [[Me alloc] initWithStyle:UITableViewStyleGrouped];
     [self addChildVc:me title:@"我" image:@"wo2" selectedImage:@"wo"];
     
-    NSLog(@"%@", self.selectedViewController);
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPushForeground:) name:@"pushWithForeground" object:nil];
     
     NSUserDefaults *appIsBack = [NSUserDefaults standardUserDefaults];
     
@@ -105,50 +106,13 @@ static NSString *kConversationChatter = @"ConversationChatter";
     [appIsBack synchronize];
 
 }
-#pragma  - mark程序在前台时远程推送处理函数
-//-(void)dealPushForeground:(NSNotification *)noti
-//{ //arr[0]是value arr[1]是key
-//    //orderId ,userId ,recommond ,productId ,messageId
-//       
-//    
-//    
-//     NSMutableArray *message = noti.object;
-//     NSLog(@"viewController 里取得值是 is %@",message);
-//    
-//    if ([message[0] isEqualToString:@"orderId"]) {
-//        
-//      self.odsValue = [NSMutableString stringWithFormat:@"%d",[self.odsValue intValue]+1];
-//       
-//    }
-//    
-//    else if ([message[0] isEqualToString:@"remind"]){
-//        
-//        
-//        [[self.tabBarController.childViewControllers objectAtIndex:0] setBadgeValue:@"1"];
-//    }
-//    
-//    else if ([message[0] isEqualToString:@"recommond"]){
-//        
-//        self.skbValue = [NSMutableString stringWithFormat:@"%d",[self.skbValue intValue]+1];
-//    }
-//    
-//    else if ([message[0] isEqualToString:@"productId"]){
-//        
-//        
-//          self.skbValue = [NSMutableString stringWithFormat:@"%d",[self.skbValue intValue]+1];
-//    }
-//    
-//    else if ([message[0] isEqualToString:@"messageId"]){
-//      self.skbValue = [NSMutableString stringWithFormat:@"%d",[self.skbValue intValue]+1];
-//    }
-//    
-//    else if ([message[0] isEqualToString:@"noticeType"]){
-//        
-//       self.skbValue = [NSMutableString stringWithFormat:@"%d",[self.skbValue intValue]+1];
-//        
-//    }
-//}
-//
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([APNSHelper defaultAPNSHelper].isReceiveRemoteNotification) {
+        [self didReceiveRemoteNotification:[APNSHelper defaultAPNSHelper].userInfoDic];
+    }
+}
 
 - (void)addChildVc:(UIViewController *)childVc title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectedImage
 {
@@ -375,7 +339,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
         application.applicationIconBadgeNumber += 1;
 }
 
-
+#pragma --mark- 收到通知（本地通知和远程通知）
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
@@ -386,6 +350,150 @@ static NSString *kConversationChatter = @"ConversationChatter";
     [chatVC hideImagePicker];
     [self.shoukebaoVC.navigationController pushViewController:chatVC animated:YES];
 }
+-(void)didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"%@", userInfo);
+    [UMessage setAutoAlert:NO];
+    [UMessage didReceiveRemoteNotification:userInfo];
+    //判断提醒震动
+    NSString *NewsShakeDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsShakeRemind"];
+    NSLog(@"%@", NewsShakeDefine);
+    if ([NewsShakeDefine integerValue] != 1) {//震动
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"NewsVoiceRemind"] integerValue] != 1) {
+        [self prepAudio];//声音
+    }
+    
+
+    for (NSString *key in userInfo.allKeys) {
+        if ([key isEqualToString:@"f"]) {
+            
+            [[[UIAlertView alloc]initWithTitle:@"消息" message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
+
+            
+            NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
+            [self.shoukebaoVC.navigationController pushViewController:messgeCenter animated:NO];
+            self.selectedViewController = ((ShouKeBao *)self.viewControllers[0]);
+            ChatViewController * chatVC = [[ChatViewController alloc]initWithChatter:userInfo[@"f"] conversationType:eConversationTypeChat];
+            [chatVC hideImagePicker];
+            [self.shoukebaoVC.navigationController pushViewController:chatVC animated:YES];
+            return;
+        }
+    }
+
+    [[[UIAlertView alloc]initWithTitle:@"shoudao " message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
+
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isReceveNoti"];
+    NSString *noticeType = [userInfo valueForKey:@"noticeType"];
+    NSString * objID = [userInfo valueForKey:@"objectId"];
+    NSString * objUri = [userInfo valueForKey:@"objectUri"];
+    NSString * objTitle = [userInfo valueForKey:@"noticeTitle"];
+    
+    if ([noticeType isEqualToString:@"SingleOrder"]) {
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"orderId"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else if([noticeType isEqualToString:@"PerfectProduct"]) {
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"recommond"];
+        [arr addObject:noticeType];
+        [arr addObject:@"123"];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else if ([noticeType isEqualToString:@"SingleProduct"]) {
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"productId"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else if ([noticeType isEqualToString:@"SingleArticle"]) {
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"messageId"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else if([noticeType isEqualToString:@"Other"]){
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"OtherId"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [arr addObject:objTitle];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else if([noticeType isEqualToString:@"SearchProduct"]){
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"SearchProduct"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [arr addObject:objTitle];
+        [defaultCenter postNotificationName:@"pushWithBackGroundFindProduct" object:arr];
+        // 直客动态
+    }else if([noticeType isEqualToString:@"CustomerDynamic"]){
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@"CustomerDynamic"];
+        [arr addObject:objID];
+        [arr addObject:objUri];
+        [arr addObject:objTitle];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        
+    }else {
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        NSArray * array = @[@"elseType", @"", @""];
+        [defaultCenter postNotificationName:@"pushWithBackGround" object:array];
+    }
+
+}
+
+
+//播放一段无声音乐，让苹果审核时认为后台有音乐而让程序不会被杀死
+- (BOOL) prepAudio
+
+{
+    
+    NSError *error;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"message" ofType:@"mp3"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
+    {
+        return NO;
+        
+    }
+    
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]error:&error];
+    
+    if (!_player)
+        
+    {
+        
+        NSLog(@"Error: %@", [error localizedDescription]);
+        
+        return NO;
+        
+    }
+    
+    [self.player prepareToPlay];
+    [self.player play];
+    //就是这行代码啦
+    
+    [self.player setNumberOfLoops:1];
+    
+    return YES;
+}
+
+
 
 #pragma mark - public
 

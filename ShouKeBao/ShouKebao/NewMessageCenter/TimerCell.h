@@ -10,5 +10,6 @@
 
 @interface TimerCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *TimerLabel;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 
 @end

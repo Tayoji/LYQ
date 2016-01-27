@@ -358,6 +358,9 @@
 - (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
     //创建正则表达式；pattern规则；
     NSLog(@"%@", urlStr);
+    if ([urlStr myContainsString:@"?"]) {
+        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    }
     NSString * pattern = @"ShareGeneral(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
@@ -379,6 +382,9 @@
 //回传合同
 - (void)LYQSKBAPP_UpdateTheContractPic:(NSString *)urlStr{
     NSLog(@"%@", urlStr);
+    if ([urlStr myContainsString:@"?"]) {
+        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    }
     //创建正则表达式；pattern规则；
     NSString * pattern = @"ContractPic(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
@@ -387,32 +393,22 @@
     if (result.count) {
         //获取筛选出来的字符串
         NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
-        NSArray * picArray = [resultStr componentsSeparatedByString:@","];
-        NSMutableArray * customerIDsArray = [NSMutableArray array];
-        for (NSString * str in picArray) {
-            NSString * tempStr = @"";
-            if ([str myContainsString:@"ContractPic("]) {
-                tempStr = [str stringByReplacingOccurrencesOfString:@"ContractPic(" withString:@""];
-                tempStr = [tempStr stringByReplacingOccurrencesOfString:@")" withString:@""];
-                
-            }
-            if (![tempStr isEqualToString:@""]) {
-                [customerIDsArray addObject:tempStr];
-            }
-        }
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ContractPic(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary * resultDic = [NSString parseJSONStringToNSDictionary:resultStr];
+        
         
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
         AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
-        NSLog(@"%@", customerIDsArray[0]);
-        if (customerIDsArray.count) {
-            AVC.customerId = customerIDsArray[0];
-            AVC.fromType = fromTypeOrderDetail;
-            AVC.OrderVC = self;
-            [self.navigationController pushViewController:AVC animated:YES];
-        }
+        NSDictionary * adddd = @{@"Urls":@[@"asd", @"asd"]};
+        NSLog(@"%@, %@, %@", resultStr, resultDic, adddd);
+    
+        AVC.pictureList = resultDic[@"Urls"];
+        AVC.fromType = fromTypeUpdateContract;
+        AVC.OrderVC = self;
+        [self.navigationController pushViewController:AVC animated:YES];
     }
-    
-    
 }
 
 
@@ -478,13 +474,15 @@
 - (void)postPicToServer:(NSArray *)PicArray{
     NSDictionary * dic = @{@"OrderVisitorPicArray":PicArray};
     NSString * jsonStr = [dic JSONString];
-    NSLog(@"%@", dic);
     [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_GetVisitorCertificatePicFromApp_CallBack(%@, '%@')", @1, jsonStr]];
 }
 
 //提交回传合同 LYQSKBAPP_UpdateTheContractPic_CallBack
 - (void)postContractPicToServer:(NSArray *)PicArray{
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_UpdateTheContractPic_CallBack(%@, '%@')", @1, @""]];
+    NSDictionary * dic = @{@"Urls":PicArray};
+    NSString * jsonStr = [dic JSONString];
+    NSLog(@"%@, %@", dic, jsonStr);
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_UpdateTheContractPic_CallBack(%@, '%@')", @1, jsonStr]];
 }
 
 //微信支付

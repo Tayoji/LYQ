@@ -46,7 +46,7 @@
     CGRect Messagelabf = CGRectMake(self.MessageLab.frame.origin.x, self.MessageLab.frame.origin.y, self.MessageLab.frame.size.width, Messagelabh);
     self.MessageLab.frame = Messagelabf;
     
-    if ([self.model.DynamicType intValue] == 1 || [self.model.DynamicType intValue] == 2||[self.model.DynamicType intValue] == 3||[self.model.DynamicType intValue] == 9){
+    if ([self.model.DynamicType intValue] == 1 || [self.model.DynamicType intValue] == 2||[self.model.DynamicType intValue] == 3||[self.model.DynamicType intValue] == 9||[self.model.DynamicType intValue] == 11){
         self.ProductView.hidden = YES;
     }else{
         self.ProductView.hidden = NO;

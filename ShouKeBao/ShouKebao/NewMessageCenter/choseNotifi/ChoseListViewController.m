@@ -89,10 +89,8 @@
     [IWHttpTool postWithURL:@"Customer/GetEveryRecommendProduct" params:dic success:^(id json) {
         NSLog(@",,,,, %@", json);
         if (self.isRefresh) {
-            [self.dataArr removeAllObjects];
             [self.array2 removeAllObjects];
             [self.currentLittleArray removeAllObjects];
-            
         }
       
         NSArray *arr = json[@"AppEveryRecommendProductList"];
