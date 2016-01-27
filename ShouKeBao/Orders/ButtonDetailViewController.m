@@ -28,10 +28,13 @@
 #import <CommonCrypto/CommonCryptor.h>
 #import "GTMBase64.h"
 #import "NSString+FKTools.h"
+#import "ShareHelper.h"
+
+
 #define secret_key @"1LlYyQq2"
 
 
-@interface ButtonDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2>
+@interface ButtonDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2, notiPopUpBox>
 
 @property (nonatomic,strong) BeseWebView *webView;
 @property (nonatomic,assign) int webLoadCount;
@@ -226,7 +229,12 @@
         NSLog(@"jsonDic = %@", jsonDic);
         [self WXpaySendRequestWithDic:jsonDic];
         return NO;
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
+        [self LYQSKBAPP_OpenShareGeneral:rightUrl];
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateTheContractPic"]){
+        [self LYQSKBAPP_UpdateTheContractPic:rightUrl];
     }
+
 
 //    NSLog(@"----------right url is %@ ----------",rightUrl);
     
@@ -345,6 +353,68 @@
         }
     }
 }
+
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    //创建正则表达式；pattern规则；
+    NSLog(@"%@", urlStr);
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", resultStr);
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+//回传合同
+- (void)LYQSKBAPP_UpdateTheContractPic:(NSString *)urlStr{
+    NSLog(@"%@", urlStr);
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"ContractPic(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        NSArray * picArray = [resultStr componentsSeparatedByString:@","];
+        NSMutableArray * customerIDsArray = [NSMutableArray array];
+        for (NSString * str in picArray) {
+            NSString * tempStr = @"";
+            if ([str myContainsString:@"ContractPic("]) {
+                tempStr = [str stringByReplacingOccurrencesOfString:@"ContractPic(" withString:@""];
+                tempStr = [tempStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+                
+            }
+            if (![tempStr isEqualToString:@""]) {
+                [customerIDsArray addObject:tempStr];
+            }
+        }
+        
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
+        AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
+        NSLog(@"%@", customerIDsArray[0]);
+        if (customerIDsArray.count) {
+            AVC.customerId = customerIDsArray[0];
+            AVC.fromType = fromTypeOrderDetail;
+            AVC.OrderVC = self;
+            [self.navigationController pushViewController:AVC animated:YES];
+        }
+    }
+    
+    
+}
+
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {

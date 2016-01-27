@@ -10,11 +10,15 @@
 #import <ShareSDK/ShareSDK.h>
 
 @protocol notiPopUpBox<NSObject>
+
+
+@optional
 -(void)notiPopUpBoxView;
 -(void)pushChoseCustomerView:(NSString *)productJsonStr;
-
 -(void)shareSuccessWithType:(ShareType)type
                andShareInfo:(NSDictionary *)shareInfo;
+
+
 
 @end
 

@@ -34,11 +34,14 @@
 #import <CommonCrypto/CommonCryptor.h>
 #import "GTMBase64.h"
 #import "NSString+FKTools.h"
+#import "ShareHelper.h"
+
+
 #define secret_key @"1LlYyQq2"
 
 
 //#define urlSuffix @"?isfromapp=1&apptype=1"
-@interface OrderDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2>
+@interface OrderDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2, notiPopUpBox>
 
 @property (nonatomic,strong) BeseWebView *webView;
 @property (nonatomic,strong) YYAnimationIndicator *indicator;
@@ -52,7 +55,6 @@
 @property(nonatomic,copy) NSString *urlSuffix;
 @property(nonatomic,copy) NSString *urlSuffix2;
 @property (nonatomic, strong)UIBarButtonItem * shareBtnItem;
-@property (nonatomic, strong)NSMutableDictionary *shareInfo;
 @property(nonatomic,assign)BOOL isBack;
 @end
 
@@ -300,6 +302,8 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
         return NO;
     }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateTheContractPic"]){
         [self LYQSKBAPP_UpdateTheContractPic:rightUrl];
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
+        [self LYQSKBAPP_OpenShareGeneral:rightUrl];
     }
 
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -465,6 +469,33 @@ if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc
 
 
 }
+
+
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    //创建正则表达式；pattern规则；
+    NSLog(@"%@", urlStr);
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", resultStr);
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+
+
+
 #pragma -mark－－－－－－－－
 
 - (void)doIfInWebWithUrl:(NSString *)rightUrl{

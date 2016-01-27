@@ -81,6 +81,7 @@
 
 #pragma mark - 数据加载
 - (void)loadChoseListNotifiViewData{
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSString stringWithFormat:@"%ld", self.pageIndex] forKey:@"PageIndex"];
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
@@ -131,6 +132,11 @@
             }
             [self.currentLittleArray addObject:currentModel];
             if (i == arr.count-1) {
+                ChoseModel* currentArrModel = self.currentLittleArray[0];
+                ChoseModel* beforeArrModel = self.array2.lastObject[0];
+                if ([currentArrModel.PushDate isEqualToString:beforeArrModel.PushDate]) {
+                    [self.array2 removeObject:self.array2.lastObject];
+                }
                 [self.array2 addObject:[self.currentLittleArray mutableCopy]];
             }
         }
@@ -169,7 +175,6 @@
 - (void)foodPull{
     self.isRefresh = NO;
     self.pageIndex++;
-    NSLog(@",,%ld", self.pageIndex);
     if (self.pageIndex  > [self getTotalPage]) {
         [self.choseTableView footerEndRefreshing];
     }else{

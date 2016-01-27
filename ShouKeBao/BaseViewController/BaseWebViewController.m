@@ -10,7 +10,9 @@
 #import "BeseWebView.h"
 #import "UINavigationController+SGProgress.h"
 #import "MeHttpTool.h"
-@interface BaseWebViewController ()<UIWebViewDelegate>
+#import "ShareHelper.h"
+#import "NSString+FKTools.h"
+@interface BaseWebViewController ()<UIWebViewDelegate, notiPopUpBox>
 @property (nonatomic, copy)NSString *urlSuffix;
 @property (nonatomic, copy)NSString *urlSuffix2;
 
@@ -106,6 +108,10 @@
         [_indicator startAnimation];
     }
     
+    if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
+        [self LYQSKBAPP_OpenShareGeneral:rightUrl];
+    }
+
     
     
     return YES;
@@ -129,5 +135,32 @@
 {
     [self.navigationController cancelSGProgress];
 }
+
+
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    //创建正则表达式；pattern规则；
+    NSLog(@"%@", urlStr);
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", resultStr);
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+
+
+
 
 @end

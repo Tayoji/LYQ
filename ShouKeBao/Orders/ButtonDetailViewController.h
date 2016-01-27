@@ -13,6 +13,9 @@
 @property (nonatomic,copy) NSString *linkUrl;
 @property (nonatomic, assign)BOOL isWriteVisitorsInfo;
 @property (nonatomic, strong)NSDictionary * userInfoDic;
+@property (nonatomic, strong)NSMutableDictionary * shareInfo;
+
+
 - (void)postCustomerToServer:(NSArray * )customerIDs;
 - (void)postPicToServer:(NSArray *)PicArray;
 - (void)postContractPicToServer:(NSArray *)PicArray;
