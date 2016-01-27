@@ -42,6 +42,12 @@
 #import "NSString+FKTools.h"
 #import "UserInfo.h"
 #import "NewExclusiveAppIntroduceViewController.h"
+
+#define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
 @interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh, MFMessageComposeViewControllerDelegate>
 
@@ -1194,19 +1200,44 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170)];
+        _guideView =[[UIImageView alloc] init];
+        UILabel * GuideconLabel = [[UILabel alloc] init];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] init];
+        if (foureSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+        }else if (fiveSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+
+
+        }else if (sixSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 30);
+
+
+        }else{
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 30);
+
+
+        }
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
         GuideTitImageV.image = [UIImage imageNamed:@"NewCoustormRadP"];
         
-        UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
+        
         GuideconLabel.text = @"客户动态一手掌握，知己知彼主动出击。";
         GuideconLabel.textAlignment = NSTextAlignmentCenter;
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30)];
+        
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];

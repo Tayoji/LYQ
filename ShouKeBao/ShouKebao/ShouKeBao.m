@@ -1466,12 +1466,12 @@
             label.frame = CGRectMake(30, 60, self.guideImageView.frame.size.width-60, 40);
             
         }else if(sixSize){
-            self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+90, kScreenSize.width-60, 190);
-            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
+            self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+90, kScreenSize.width-20, 190);
+            _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+5, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
-            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-80, 130,100, 30);
-            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
-            label.frame = CGRectMake(30, 70, self.guideImageView.frame.size.width-60, 40);
+            _Guidebtn.frame = CGRectMake(kScreenSize.width/2-60, 130,110, 30);
+            vvimage.frame = CGRectMake(kScreenSize.width/2-80, 30, 150, 20);
+            label.frame = CGRectMake(30, 62, self.guideImageView.frame.size.width-60, 40);
             
         }else{
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);

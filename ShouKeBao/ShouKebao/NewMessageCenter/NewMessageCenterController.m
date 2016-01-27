@@ -71,7 +71,7 @@
     
     if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
         
-            if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
                 NSLog(@"此处要显示引导页");
         [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
         [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
@@ -639,15 +639,18 @@
 -(UIButton *)GuideIKnowBtn{
     if (!_GuideIKnowBtn) {
         _GuideIKnowBtn =[[UIButton alloc] init];
-//        if (fourSize) {
-//            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
-//        }else if(fiveSize){
-//            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
-//
-//        }else{
-            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 115, 110, 30);
+        if (fourSize) {
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+        }else if(fiveSize){
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
 
-//        }
+        }else if(sixSize){
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 30);
+
+        }else{
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 30);
+
+        }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
         _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -660,7 +663,7 @@
 
 -(UILabel *)GuideconLabel{
     if (!_GuideconLabel) {
-        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 40)];
+        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, _guideView.frame.size.width-20, 40)];
         _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
@@ -671,7 +674,7 @@
 }
 -(UIImageView *)GuideTitImageV{
     if (!_GuideTitImageV) {
-        _GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 40, 120, 25)];
+        _GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
         _GuideTitImageV.image = [UIImage imageNamed:@"NewBusiness"];
     }
     return _GuideTitImageV;
