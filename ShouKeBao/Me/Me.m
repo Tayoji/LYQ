@@ -1211,20 +1211,28 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190)];
+        _guideView =[[UIImageView alloc] init];
+        UIImageView *GuideTitImageV = [[UIImageView alloc] init];
         if (foureSize) {
-            
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-55, 30, 120, 25);
         }else if(fiveSize){
-        
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-50, 30, 120, 25);
+
         }else if(sixSize){
-        
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+
         }else{
-        
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+
         }
         
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
-        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 40, 120, 25)];
+        
         GuideTitImageV.image = [UIImage imageNamed:@"NewAddRedPMe"];
         
         UILabel * GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, _guideView.frame.size.width-20, 30)];
@@ -1233,7 +1241,7 @@
         GuideconLabel.font = [UIFont systemFontOfSize:16];
         GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
         
-        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30)];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30)];
         [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [GuideIKnowBtn setTitle:@"立即发放红包" forState:UIControlStateNormal];
         GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
