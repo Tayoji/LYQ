@@ -37,7 +37,7 @@
 }
 - (void)setCustomerNameLa:(UITextField *)customerNameLa{
     _customerNameLa = customerNameLa;
-     [[UITextField appearance] setTintColor:[UIColor blackColor]];
+//     [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
 }
 
 - (void)viewDidLoad {

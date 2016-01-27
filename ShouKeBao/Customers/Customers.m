@@ -527,8 +527,8 @@
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
     [dic setObject:@7 forKey:@"SortType"];
     [dic setObject:self.searchK forKey:@"SearchKey"];
-    [dic setObject:[NSString stringWithFormat:@"%d", self.customerType]forKey:@"CustomerType"];
-    NSLog(@"self.customerType = %d", self.customerType);
+    [dic setObject:[NSString stringWithFormat:@"%ld", self.customerType]forKey:@"CustomerType"];
+    NSLog(@"self.customerType = %ld", self.customerType);
 
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
         NSLog(@"------管客户json is %@-------",json);
