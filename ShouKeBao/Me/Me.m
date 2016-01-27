@@ -114,12 +114,13 @@
 
     NSString *NeedGuide = [def objectForKey:@"ThreeDTouch"];
 
-//    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
+    if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
        if (![NeedGuide isEqualToString:@"UITouchText.TodaySignIn"]) {
-            [self Guide];
             [def setObject:@"1" forKey:@"NewMeGuideRP"];
+            [self Guide];
+           
         }
-//    }
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
 
     //获取版本信息
@@ -1210,7 +1211,17 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4-30, kScreenSize.width-10, 180)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190)];
+        if (foureSize) {
+            
+        }else if(fiveSize){
+        
+        }else if(sixSize){
+        
+        }else{
+        
+        }
+        
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
         UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-50, 40, 120, 25)];

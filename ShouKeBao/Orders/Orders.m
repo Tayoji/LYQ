@@ -164,10 +164,10 @@ typedef void (^ChangeFrameBlock)();
     NSUserDefaults *orderGuideDefault = orderGuideDefault = [NSUserDefaults standardUserDefaults];
     NSString *orderGuide = [orderGuideDefault objectForKey:@"orderGuide"];
     NSLog(@"orderGuide = %@", orderGuide);
-    if ([orderGuide integerValue] != 1) {// 是否第一次打开app
-        [self Guide];
-        self.FirstOpenNav = 6;
-    }
+//    if ([orderGuide integerValue] != 1) {// 是否第一次打开app
+//        [self Guide];
+//        self.FirstOpenNav = 6;
+//    }
     // 导航按钮
     [self customRightBarItem];
 

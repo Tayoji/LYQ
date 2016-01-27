@@ -622,9 +622,9 @@
         if (fourSize) {
             _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
         }else if(fiveSize){
-            _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
         }else{
-            _guideView.frame = CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, 180);
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
 
         }
         _guideView.userInteractionEnabled = YES;
@@ -645,7 +645,7 @@
 //            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
 //
 //        }else{
-            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 115, 110, 30);
 
 //        }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];

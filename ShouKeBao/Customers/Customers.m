@@ -1185,7 +1185,7 @@
 }
 -(UIImageView *)guideView{
     if (!_guideView) {
-        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170)];
+        _guideView =[[UIImageView alloc] initWithFrame:CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170)];
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
        UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
