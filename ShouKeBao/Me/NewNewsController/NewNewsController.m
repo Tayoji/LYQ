@@ -25,9 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadData];
-    if ([self.signStr isEqualToString:@"fromServiceVC"]) {
-        self.setSeviceNotiView.hidden = NO;
-    }
+    
+////    if ([self.signStr isEqualToString:@"fromServiceVC"]) {
+//        self.setSeviceNotiView.hidden = NO;
+////    }
     
     _switch1 = (UISwitch *)[self.view viewWithTag:31];
     _switch2 = (UISwitch *)[self.view viewWithTag:32];

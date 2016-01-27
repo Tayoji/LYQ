@@ -79,7 +79,10 @@ static NSString * cellid = @"reuseaa";
 }
 - (void)setLayout{
     NSString *IMProductMsgValue = [NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]];
-    if (IMProductMsgValue.length) {
+    
+    NSLog(@"..%@. %@ %d/// %@", self.shareInfo, IMProductMsgValue, IMProductMsgValue.length, self.shareInfo[@"IMProductMsgValue"]);
+
+    if (/*IMProductMsgValue.length && ![IMProductMsgValue isEqualToString:@""]![IMProductMsgValue isKindOfClass:[NSNull class]] ||*/ IMProductMsgValue.length &&![IMProductMsgValue isEqualToString:@"(null)"]) {
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
                            @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
                            @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
@@ -98,6 +101,9 @@ static NSString * cellid = @"reuseaa";
                            @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
                            ];
     }
+    
+    
+    
     //阴影
     UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
@@ -184,7 +190,10 @@ static NSString * cellid = @"reuseaa";
         }
             break;
         case 2:{
-            if ([NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]].length) {
+            
+            NSString *IMProductMsgValueStr = [NSString stringWithFormat:@"%@", self.shareInfo[@"IMProductMsgValue"]];
+            
+            if (IMProductMsgValueStr.length && ![IMProductMsgValueStr isEqualToString:@"(null)"]) {
                  shareType = ShareTypeOther;
                 
                 if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"LVGWIsOpenVIP"] isEqualToString:@"0"]) {
@@ -379,5 +388,10 @@ static NSString * cellid = @"reuseaa";
     }
     return _photosArr;
 }
-
+-(NSDictionary *)shareInfo{
+    if (!_shareInfo) {
+        _shareInfo = [NSDictionary dictionary];
+    }
+    return _shareInfo;
+}
 @end

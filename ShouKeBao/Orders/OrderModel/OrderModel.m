@@ -81,13 +81,12 @@
         NSMutableArray *arr = dic[@"ButtonList"];
         for (int i = 0; i < arr.count; i++) {
             ButtonList *btn = [ButtonList buttonListWithDict:arr[i]];
-            if (i > 2) {
+            if (i > 1) {
                 [self.btnList addObject:btn];
             }else{
                 [self.buttonList addObject:btn];
             }
         }
-        
         if (self.btnList.count) {
              [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
         }

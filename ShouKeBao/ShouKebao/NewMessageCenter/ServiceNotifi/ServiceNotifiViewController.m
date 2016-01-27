@@ -111,14 +111,14 @@
 
 #pragma mark - 导航设置
 -(void)serviceNotifiRightBarItem{
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered target:self action:@selector(pushEditView)];
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(pushEditView)];
     self.navigationItem.rightBarButtonItem= barItem;
 }
 
 - (void)pushEditView{
     NewNewsController *settingVC = [[NewNewsController alloc]init];
     settingVC.title = @"设置";
-    settingVC.signStr = @"fromServiceVC";
+//    settingVC.signStr = @"fromServiceVC";
     [self.navigationController pushViewController:settingVC animated:YES];
     
     
