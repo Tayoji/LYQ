@@ -623,9 +623,11 @@
             _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
         }else if(fiveSize){
             _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
-        }else{
+        }else if(sixSize){
             _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
 
+        }else{
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4, kScreenSize.width-50, 190);
         }
         _guideView.userInteractionEnabled = YES;
         [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
@@ -641,19 +643,26 @@
         _GuideIKnowBtn =[[UIButton alloc] init];
         if (fourSize) {
             _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
         }else if(fiveSize){
             _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
 
         }else if(sixSize){
             _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
 
         }else{
-            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 30);
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 40);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+
 
         }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
         [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
-        _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         _GuideIKnowBtn.tag = 101;
         [_GuideIKnowBtn addTarget:self action:@selector(guideClick:) forControlEvents:UIControlEventTouchUpInside];
         [_GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -663,11 +672,23 @@
 
 -(UILabel *)GuideconLabel{
     if (!_GuideconLabel) {
+        if (fourSize) {
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if (fiveSize){
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if(sixSize){
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else{
+            _GuideconLabel.font = [UIFont systemFontOfSize:17];
+
+        }
         _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, _guideView.frame.size.width-20, 40)];
         _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
-        _GuideconLabel.font = [UIFont systemFontOfSize:16];
         _GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
     }
     return _GuideconLabel;
