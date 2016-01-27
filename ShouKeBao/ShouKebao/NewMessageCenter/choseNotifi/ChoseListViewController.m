@@ -81,10 +81,11 @@
 
 #pragma mark - 数据加载
 - (void)loadChoseListNotifiViewData{
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:[NSString stringWithFormat:@"%ld", self.pageIndex] forKey:@"PageIndex"];
+    [dic setObject:[NSString stringWithFormat:@"%d", self.pageIndex] forKey:@"PageIndex"];
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
-    NSLog(@"... %ld", self.pageIndex);
+
     [IWHttpTool postWithURL:@"Customer/GetEveryRecommendProduct" params:dic success:^(id json) {
         NSLog(@",,,,, %@", json);
         if (self.isRefresh) {
