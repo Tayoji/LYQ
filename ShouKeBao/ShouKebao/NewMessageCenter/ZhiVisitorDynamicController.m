@@ -174,6 +174,7 @@
     return [self heightWithDynamicType:model];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section < self.customDyamicArray.count) {
     CustomDynamicModel * model = self.customDyamicArray[indexPath.section];
     static NSString * str = @"NewCustomerCell";
     NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
@@ -185,6 +186,10 @@
         cell.MessageButton.hidden = NO;
     }
     return cell;
+        
+    }
+    return nil;
+
 }
 -(UITableView *)tableView{
     if (!_tableView) {

@@ -28,7 +28,13 @@
 #import "UMessage.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "OrderDetailViewController.h"
+#import "ProductRecommendViewController.h"
+#import "ProduceDetailViewController.h"
+#import "messageDetailViewController.h"
+#import "BaseWebViewController.h"
+#import "ProductList.h"
+#import "ZhiVisitorDynamicController.h"
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 static NSString *kMessageType = @"MessageType";
@@ -355,23 +361,10 @@ static NSString *kConversationChatter = @"ConversationChatter";
     [APNSHelper defaultAPNSHelper].isReceiveRemoteNotification = NO;
     [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
-    //判断提醒震动
-    NSString *NewsShakeDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsShakeRemind"];
-    NSLog(@"%@", NewsShakeDefine);
-    if ([NewsShakeDefine integerValue] != 1) {//震动
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"NewsVoiceRemind"] integerValue] != 1) {
-        [self prepAudio];//声音
-    }
     
 
     for (NSString *key in userInfo.allKeys) {
         if ([key myContainsString:@"f"]) {
-            
-            [[[UIAlertView alloc]initWithTitle:@"消息" message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
-
-            
             NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
             [self.shoukebaoVC.navigationController pushViewController:messgeCenter animated:NO];
             self.selectedViewController = ((ShouKeBao *)self.viewControllers[0]);
@@ -382,78 +375,90 @@ static NSString *kConversationChatter = @"ConversationChatter";
         }
     }
 
-    [[[UIAlertView alloc]initWithTitle:@"shoudao " message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
 
-    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isReceveNoti"];
     NSString *noticeType = [userInfo valueForKey:@"noticeType"];
     NSString * objID = [userInfo valueForKey:@"objectId"];
     NSString * objUri = [userInfo valueForKey:@"objectUri"];
     NSString * objTitle = [userInfo valueForKey:@"noticeTitle"];
-    
-    if ([noticeType isEqualToString:@"SingleOrder"]) {
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"orderId"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+
+    if([UIApplication sharedApplication].applicationState ==UIApplicationStateInactive){
+        self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
+        if ([noticeType isEqualToString:@"SingleOrder"]) {
+            //已经处理的订单在发生变化时发送消息给用户，点击消息直接进入该订单消息的订单详情
+            //objUri是订单url
+            OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            detail.url = objUri;
+            [self.shoukebaoVC.navigationController pushViewController:detail animated:YES];
+        }
+        else if ([noticeType isEqualToString:@"PerfectProduct"]){//精品推荐
+            //精品推荐界面
+            //无需参数，直接跳转到精品推荐
+            UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
+            ProductRecommendViewController * PRVC = (ProductRecommendViewController *)[SB instantiateViewControllerWithIdentifier:@"eeee"];
+            [self.shoukebaoVC.navigationController pushViewController:PRVC animated:YES];
+        }
         
-    }else if([noticeType isEqualToString:@"PerfectProduct"]) {
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"recommond"];
-        [arr addObject:noticeType];
-        [arr addObject:@"123"];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        else if ([noticeType isEqualToString:@"SingleProduct"]){
+            //产品详情h5
+            ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
+            detail.produceUrl = objUri;
+            detail.noShareInfo = YES;
+//            [[[UIAlertView alloc]initWithTitle:@"产品跳转" message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
+
+            [self.shoukebaoVC.navigationController pushViewController:detail animated:YES];
+        }
+        else if ([noticeType isEqualToString:@"SingleArticle"]){//公告
+            //进入h5
+            NSString *messageURL = objUri;
+            messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
+            messageDetail.messageURL = messageURL;
+            [self.shoukebaoVC.navigationController pushViewController:messageDetail animated:YES];
+        }
         
-    }else if ([noticeType isEqualToString:@"SingleProduct"]) {
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"productId"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
+        else if ([noticeType isEqualToString:@"Other"]){
+            NSString * otherUrl = objUri;
+            NSString * otherTitle = objTitle;
+            BaseWebViewController * webView = [[BaseWebViewController alloc]init];
+            webView.linkUrl = otherUrl;
+            webView.webTitle = otherTitle;
+            [self.shoukebaoVC.navigationController pushViewController:webView animated:YES];
+        }else if([noticeType isEqualToString:@"SearchProduct"]){
+            ProductList *list = [[ProductList alloc] init];
+            list.productListFrom = FromKeyWord;
+            list.pushedSearchK = objTitle;
+            list.title =  objTitle;
+            [self.shoukebaoVC.navigationController pushViewController:list animated:YES];
+            
+        }else if ([noticeType isEqualToString:@"CustomerDynamic"]){//直客动态
+            ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
+            [self.shoukebaoVC.navigationController pushViewController:zhiVisit animated:YES];
+        }else{
+            
+        }
         
-    }else if ([noticeType isEqualToString:@"SingleArticle"]) {
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"messageId"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
-        
-    }else if([noticeType isEqualToString:@"Other"]){
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"OtherId"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [arr addObject:objTitle];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
-        
-    }else if([noticeType isEqualToString:@"SearchProduct"]){
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"SearchProduct"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [arr addObject:objTitle];
-        [defaultCenter postNotificationName:@"pushWithBackGroundFindProduct" object:arr];
-        // 直客动态
-    }else if([noticeType isEqualToString:@"CustomerDynamic"]){
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSMutableArray *arr = [NSMutableArray array];
-        [arr addObject:@"CustomerDynamic"];
-        [arr addObject:objID];
-        [arr addObject:objUri];
-        [arr addObject:objTitle];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:arr];
-        
-    }else {
-        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
-        NSArray * array = @[@"elseType", @"", @""];
-        [defaultCenter postNotificationName:@"pushWithBackGround" object:array];
+    }else{
+        NSString *type = noticeType;
+        if (type.length>0) {
+            if ([self.tabBarItem.badgeValue intValue]+1 > 99) {
+                
+                self.tabBarItem.badgeValue = @"99+";
+                
+            }else{
+                self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",[self.tabBarItem.badgeValue intValue]+1];
+            }
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [self.tabBarItem.badgeValue integerValue];
+            
+            //        [self getVoice];
+        }
+        if ([noticeType isEqualToString:@"messageId"]){//新公告
+            self.shoukebaoVC.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
+            int valueCount = [self.shoukebaoVC.barButton.badgeValue intValue];
+            self.shoukebaoVC.barButton.badgeValue = [NSString stringWithFormat:@"%d",valueCount+1];
+            
+        }
     }
+
+    
 
 }
 
