@@ -358,9 +358,9 @@
 - (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
     //创建正则表达式；pattern规则；
     NSLog(@"%@", urlStr);
-    if ([urlStr myContainsString:@"?"]) {
-        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
-    }
+//    if ([urlStr myContainsString:@"?"]) {
+//        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+//    }
     NSString * pattern = @"ShareGeneral(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；

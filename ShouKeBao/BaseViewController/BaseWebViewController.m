@@ -107,7 +107,7 @@
         //        [self doIfInWebWithUrl:rightUrl];
         [_indicator startAnimation];
     }
-    
+    NSLog(@"rightStr is %@--------",rightUrl);
     if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
         [self LYQSKBAPP_OpenShareGeneral:rightUrl];
     }
@@ -141,10 +141,10 @@
 - (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
     //创建正则表达式；pattern规则；
     NSLog(@"%@", urlStr);
-    if ([urlStr myContainsString:@"?"]) {
-        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
-        NSLog(@"...%@ ", urlStr);
-    }
+//    if ([urlStr myContainsString:@"?"]) {
+//        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+//        NSLog(@"...%@ ", urlStr);
+//    }
     NSString * pattern = @"ShareGeneral(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     

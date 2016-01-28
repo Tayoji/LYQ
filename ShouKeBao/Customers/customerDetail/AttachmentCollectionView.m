@@ -243,6 +243,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 
     @synchronized(self) {
         [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
+        [MBProgressHUD showSuccess:@"保存成功"];
         [self.navigationController popViewControllerAnimated:YES];
     }
 

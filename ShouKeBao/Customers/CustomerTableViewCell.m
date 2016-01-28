@@ -45,10 +45,10 @@
    
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
-    NSLog(@".. %@", model.HeadUrl);
+    NSLog(@"..model.HeadUrl = %@", model.HeadUrl);
     
     if (model.HeadUrl.length != 0) {
-          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]];
+        [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]placeholderImage:[UIImage imageNamed:@"aa"]];
     }else{
         self.customerIcon.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];

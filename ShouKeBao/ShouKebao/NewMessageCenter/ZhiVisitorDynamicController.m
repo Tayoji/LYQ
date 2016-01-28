@@ -26,7 +26,7 @@
 #define pageSize @"10"
 //
 #define kScreenSize [UIScreen mainScreen].bounds.size
-@interface ZhiVisitorDynamicController ()<UITableViewDelegate,UITableViewDataSource, NullViewDelegate>
+@interface ZhiVisitorDynamicController ()<UITableViewDelegate,UITableViewDataSource, NullViewDelegate, MFMessageComposeViewControllerDelegate>
 @property (nonatomic, strong)NSMutableArray * customDyamicArray;
 @property (nonatomic, assign)int pageNum;
 @property (nonatomic, assign)BOOL isDone;
@@ -79,7 +79,10 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary * params = @{};
     if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
-        NSLog(@"%@", self.AppSkbUserId);
+        NSLog(@"%@", self.AppSkbUserId.class);
+        if ([self.AppSkbUserId isEqualToString:@""]) {
+            self.AppSkbUserId = @"NOID";
+        }
         params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize, @"AppSkbUserId":self.AppSkbUserId};
     }else if(self.visitorDynamicFromType == VisitorDynamicTypeFromMessageCenter){
         params = @{@"PageIndex":[NSString stringWithFormat:@"%d", self.pageNum],@"PageSize":pageSize};
@@ -258,16 +261,42 @@
 //空界面邀请按钮点击
 - (void)ClickInviteVisitor{
     NSLog(@"邀请");
+    
+//    MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
+//    MFMessageVC.body = self.InvitationInfo;
+//    if (![NSString stringIsEmpty:self.model.Mobile]) {
+//        MFMessageVC.recipients = @[self.model.Mobile];
+//    }
+//    MFMessageVC.messageComposeDelegate = self;
+//    [self.NaV presentViewController:MFMessageVC animated:YES completion:nil];
+
+    
         if([MFMessageComposeViewController canSendText]){// 判断设备能不能发送短信
+//            [[[UIAlertView alloc]initWithTitle:@"aa" message:self.model.Mobile delegate:nil cancelButtonTitle:nil otherButtonTitles:@"enSUre", nil]show];
             MFMessageComposeViewController *MFMessageVC = [[MFMessageComposeViewController alloc] init];
             MFMessageVC.body = self.InvitationInfo;
-            MFMessageVC.recipients = @[self.model.Mobile];
-            [self.navigationController presentViewController:MFMessageVC animated:YES completion:nil];
+            if (![NSString stringIsEmpty:self.model.Mobile]) {
+                MFMessageVC.recipients = @[self.model.Mobile];
+            }
+            MFMessageVC.messageComposeDelegate = self;
+            [self.NaV presentViewController:MFMessageVC animated:YES completion:nil];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息" message:@"该设备不支持短信功能" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
         }
+}
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    if (result == MessageComposeResultCancelled) {
+        NSLog(@"取消发送");
+    } else if (result == MessageComposeResultSent) {
+        NSLog(@"已经发出");
+    } else {
+        NSLog(@"发送失败");
     }
+}
+
+
 
 //空界面发红包点击
 - (void)ClickSendRedPacket{
