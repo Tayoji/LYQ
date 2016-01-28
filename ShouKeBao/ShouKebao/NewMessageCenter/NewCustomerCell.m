@@ -84,7 +84,12 @@
     self.MessageLab.text = model.DynamicTitleV2;
     self.UserName.text = model.NickName;
     
+//    NSString *WXstr = model.WeixinNickName;
+//    unichar c = [WXstr characterAtIndex:0];
     
+//    for (; <#condition#>; <#increment#>) {
+//        <#statements#>
+//    }
     self.WXName.text = [NSString stringWithFormat:@"(%@)", model.WeixinNickName];
     
     [self.ProductView.ProductImage sd_setImageWithURL:[NSURL URLWithString:model.ProductdetailModel.PicUrl] placeholderImage:[UIImage imageNamed:@"CommandplaceholderImage"]];//产品图片
