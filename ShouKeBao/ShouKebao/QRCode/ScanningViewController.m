@@ -207,7 +207,7 @@
 - (void)buttonClick:(UIButton *)sender{
     if (sender.selected) {
         sender.selected = NO;
-        [self openFlashlight];
+        [self closeFlashlight];
     }else{
         sender.selected = YES;
         [self openFlashlight];
@@ -981,30 +981,34 @@
 {
     AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if (device.torchMode == AVCaptureTorchModeOff) {
-        //Create an AV session
-        AVCaptureSession * session = [[AVCaptureSession alloc]init];
-        // Create device input and add to current session
-        AVCaptureDeviceInput * input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
-        [session addInput:input];
-        // Create video output and add to current session
-        AVCaptureVideoDataOutput * output = [[AVCaptureVideoDataOutput alloc]init];
-        [session addOutput:output];
+//        //Create an AV session
+//        AVCaptureSession * session = [[AVCaptureSession alloc]init];
+//        // Create device input and add to current session
+//        AVCaptureDeviceInput * input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+//        [session addInput:input];
+//        // Create video output and add to current session
+//        AVCaptureVideoDataOutput * output = [[AVCaptureVideoDataOutput alloc]init];
+//        [session addOutput:output];
         // Start session configuration
-        [session beginConfiguration];
         [device lockForConfiguration:nil];
-        // Set torch to on
         [device setTorchMode:AVCaptureTorchModeOn];
-//        [device unlockForConfiguration];
-        [session commitConfiguration];
-        // Start the session
-        [session startRunning];
+        [device unlockForConfiguration];
+        
+//        // Start the session
+//        [session startRunning];
         // Keep the session around
-        [self setAVSession:self.AVSession];
+//        [self setAVSession:self.AVSession];
+    
     }
 }
 -(void)closeFlashlight
 {
-    [self.AVSession stopRunning];
+    AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (device.torchMode == AVCaptureTorchModeOn) {
+    [device lockForConfiguration:nil];
+    [device setTorchMode: AVCaptureTorchModeOff];
+    [device unlockForConfiguration];
+    }
 }
 
 
