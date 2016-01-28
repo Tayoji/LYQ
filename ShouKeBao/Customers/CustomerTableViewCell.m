@@ -13,7 +13,7 @@
 #import "BaseClickAttribute.h"
 #import "IChatManagerConversation.h"
 #import "EaseMob.h"
-
+#import "NSString+FKTools.h"
 @interface CustomerTableViewCell ()
 @property (nonatomic, strong)UIView * redDot;
 
@@ -45,10 +45,11 @@
    
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
+    
     NSLog(@".. %@", model.HeadUrl);
     
-    if (model.HeadUrl.length != 0) {
-          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]];
+    if (![NSString stringIsEmpty:model.HeadUrl]) {
+          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]placeholderImage:nil];
     }else{
         self.customerIcon.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
