@@ -32,8 +32,13 @@
     return [self myObjectForKey:@"customMessageDateStr"];
 }
 
+-(void)setSOSPhoneNum:(NSString *)SOSPhoneNum{
+    [self mySetObject:SOSPhoneNum forKey:@"SOSPhoneNum"];
+}
+-(NSString *)SOSPhoneNum{
+    return [self myObjectForKey:@"SOSPhoneNum"];
 
-
+}
 - (void)setCarouselPageNumber:(NSString *)carouselPageNumber{
     [self mySetObject:carouselPageNumber forKey:@"carouselPageNumber"];
 }

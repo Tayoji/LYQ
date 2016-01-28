@@ -642,6 +642,7 @@ void UncaughtExceptionHandler(NSException *exception) {
             [def setObject:passWord forKey:UserInfoKeyPassword];
             
             // 保存用户模型
+            NSLog(@".. %@", json);
             [UserInfo userInfoWithDict:json];
             
             // 保存分站

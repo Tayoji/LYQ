@@ -19,6 +19,9 @@
 @property (nonatomic, assign)BOOL isJumpChat;
 
 
+@property (nonatomic, assign)BOOL isJumpOpenExclusiveAppIntroduce;//跳到已经开通的专属APP界面
+@property (nonatomic, assign)BOOL isJumpExclusiveApp;//跳到未开通的专属APP界面
+
 @property (nonatomic, assign)BOOL isReceiveRemoteNotification;
 @property (nonatomic, strong)NSDictionary * userInfoDic;
 

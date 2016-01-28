@@ -8,7 +8,7 @@
 
 #import "UserInfo.h"
 #import "NSMutableDictionary+QD.h"
-
+#import "LocationSeting.h"
 static UserInfo *user;
 
 @implementation UserInfo
@@ -51,6 +51,8 @@ static UserInfo *user;
         self.LoginAvatar = muta[@"LoginAvatar"];
         self.pushMode = muta[@"DisturbSwitch"];
         self.sosMobile = muta[@"Reinforcements"][@"Mobile"];
+        [LocationSeting defaultLocationSeting].SOSPhoneNum = self.sosMobile;
+        
     }
     return self;
 }

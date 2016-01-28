@@ -264,8 +264,7 @@
 }
 
 
--(void)back
-{
+-(void)back{
     //下边是未改动返回
 //    self.isBack = YES;
 //    if ([_webView canGoBack]) {
@@ -281,9 +280,7 @@
     }else{
         if ([self.webView canGoBack]){
             [self.webView goBack];
-        }
-        else
-        {
+        }else{
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
@@ -291,15 +288,12 @@
     //下边是正在增加退出分享的借口
     self.isBack = YES;
     if ([_webView canGoBack]) {
-        
         [self.webView goBack];
-    }else  {
-        //NSLog(@"%@", [self.webView stringByEvaluatingJavaScriptFromString:@"AppIsShowShareWhenBack()"]);
+    }else {
         if ([[self.webView stringByEvaluatingJavaScriptFromString:@"AppIsShowShareWhenBack()"]isEqualToString:@"1"]) {//判断能否弹框
             [NSString showbackgroundgray];
             [NSString showLeaveShareNav:self.navigationController InVC:self];
             [self.webView stringByEvaluatingJavaScriptFromString:@"AppHadShowShareWhenBack()"];//提示弹框
-
         }else {//不能提示
             [self.webView stringByEvaluatingJavaScriptFromString:@"AppRecordBackNumber()"];
             [self.navigationController popViewControllerAnimated:YES];
@@ -531,9 +525,7 @@
     }else if (self.fromType == FromZhiVisitorDynamic){
          shareFromTpye = @"FromZhiVisitorDynamic1";
     }
-    
-    NSLog(@"..shareInfo = %@   %@", self.shareInfo, self.webView.request.URL.absoluteString);
-    
+
     if (!self.shareInfo.count) {
         return;
     }

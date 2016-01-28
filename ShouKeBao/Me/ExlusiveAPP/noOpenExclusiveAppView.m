@@ -128,8 +128,10 @@ static id _shareView;
     
     NSString *mobile = [UserInfo shareUser].sosMobile;
     NSString *phone = [NSString stringWithFormat:@"tel://%@",mobile];
-    NSLog(@"----------------手机号码%@------------------",phone);
-    if (![phone isEqualToString:@""]) {
+    NSString *d = @"tel://";
+    NSLog(@"%ld", d.length);
+    NSLog(@"----------------手机号码 %@ ------------------",phone);
+    if (phone.length > 6) {
          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phone]];
     }else{
          [[[UIAlertView alloc]initWithTitle:@"提示" message:@"电话号码为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil]show];
