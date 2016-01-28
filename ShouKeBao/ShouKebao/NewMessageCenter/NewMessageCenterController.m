@@ -69,19 +69,19 @@
     [self registerNotifications];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-//    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
-//        
-//        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
-//                NSLog(@"此处要显示引导页");
+    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
+        
+        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+                NSLog(@"此处要显示引导页");
         [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
         [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
         [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
         //引导页下边的小图标
         [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
-//             }
-//    }else{
-//        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
-//    }
+             }
+    }else{
+        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
+    }
 
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
@@ -686,7 +686,7 @@
 
         }
         _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, _guideView.frame.size.width-20, 40)];
-        _GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+        _GuideconLabel.text = @"分享这里的产品下单率更高哦！";
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
         _GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];

@@ -14,5 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *CodeNum;//产品编号
 @property (strong, nonatomic) IBOutlet UILabel *MenshiPrice;//门市价
 @property (strong, nonatomic) IBOutlet UILabel *TonghangPrice;//同行价
+@property (weak, nonatomic) IBOutlet UILabel *tonghangRect;
 
+@property (weak, nonatomic) IBOutlet UILabel *menshiRect;
+@property (weak, nonatomic) IBOutlet UILabel *RMBChina;
 @end
