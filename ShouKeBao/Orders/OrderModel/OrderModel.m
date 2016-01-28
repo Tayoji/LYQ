@@ -76,17 +76,46 @@
              if (arr.count<3) {//1 2的时候
                 [self.buttonList addObject:btn];
             }else{//多于等于3个的时候
+              
                 if ((int)btn.color == 3) {
                      [self.buttonList addObject:btn];
                 }else{
                     [self.btnList addObject:btn];
                 }
-                [self.buttonList insertObject:self.btnList[0] atIndex:1];
-                [self.btnList removeObjectAtIndex:0];
             }
         }
-            if (self.btnList.count) {
-               [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
+        NSLog(@"%@ %@", self.buttonList, self.btnList);
+        
+        if (arr.count >= 3 && self.buttonList.count == 1) {
+            
+            [self.buttonList insertObject:self.btnList[0] atIndex:1];
+            [self.btnList removeObjectAtIndex:0];
+            
+        }else if (arr.count >= 3 && self.buttonList.count == 0){
+            [self.buttonList insertObject:self.btnList[0] atIndex:0];
+            [self.buttonList insertObject:self.btnList[1] atIndex:1];
+
+            [self.btnList removeObjectAtIndex:0];
+            [self.btnList removeObjectAtIndex:1];
+            
+        }else if (arr.count >= 3 && self.buttonList.count > 2){
+            for (int j = 0; j < self.buttonList.count; j++) {
+                if (j > 1) {
+                    [self.btnList addObject:self.buttonList[j]];
+                }
+            }
+            for (int j = 0; j < self.buttonList.count; j++) {
+                if (j> 1) {
+                    [self.buttonList removeObjectAtIndex:j];
+                }
+            }
+            
+        }
+        NSLog(@"%@ %@", self.buttonList, self.btnList);
+
+        
+        if (self.btnList.count) {
+            [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
         }
     }
     return self;

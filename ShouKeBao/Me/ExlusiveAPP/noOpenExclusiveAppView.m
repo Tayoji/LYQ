@@ -10,6 +10,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "UserInfo.h"
+#import "LocationSeting.h"
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define SYSTEM_VERSION   [[UIDevice currentDevice].systemVersion floatValue]
@@ -126,7 +127,7 @@ static id _shareView;
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_contactManagerImmediatelyClick" attributes:dict];
     
-    NSString *mobile = [UserInfo shareUser].sosMobile;
+    NSString *mobile = [LocationSeting defaultLocationSeting].SOSPhoneNum;
     NSString *phone = [NSString stringWithFormat:@"tel://%@",mobile];
     NSString *d = @"tel://";
     NSLog(@"%ld", d.length);
