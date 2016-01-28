@@ -86,13 +86,13 @@
     
     self.MessageLab.text = model.DynamicTitleV2;
     
-    self.UserName.text = model.NickName;
+//    self.UserName.text = model.NickName;
 //     self.UserName.text = @"我住在你女朋友的隔壁";
     //动态适配
     if (self.UserName.text != nil || ![self.UserName.text  isEqual: @""] ||![self.UserName.text  isEqual: @"(null)"] ||self.UserName.text != [NSNull class]) {
-        self.UserName.text = @"";
+        self.UserName.text = model.NickName;;
     }else{
-        self.WXName.text = @"";
+        self.UserName.text = @"";
         
     }
    CGFloat width = [self.UserName.text widthWithsysFont:13];
