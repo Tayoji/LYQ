@@ -204,8 +204,6 @@
         NSLog(@"左侧栏请求错误！～～～error is ~~~~~~~~~%@",error);
     }];
 }
-
-
 - (void)loadDataSourceRight
 {
     int selectRow = [self.row intValue];
@@ -488,8 +486,6 @@ for (NSDictionary *dict in dic[@"ProductList"]) {
 
     }];
 }
-
-
 #pragma mark - tableviewdatasource&& tableviewdelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
