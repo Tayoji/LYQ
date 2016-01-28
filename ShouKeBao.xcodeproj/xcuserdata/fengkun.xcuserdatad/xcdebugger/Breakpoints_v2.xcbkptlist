@@ -990,11 +990,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Main/ViewController.m"
-            timestampString = "475589058.324361"
+            timestampString = "475640331.612682"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
             landmarkName = "-didReceiveRemoteNotification:"
             landmarkType = "5">
          </BreakpointContent>

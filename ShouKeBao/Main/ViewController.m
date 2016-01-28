@@ -352,6 +352,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
 }
 -(void)didReceiveRemoteNotification:(NSDictionary *)userInfo{
     NSLog(@"%@", userInfo);
+    [APNSHelper defaultAPNSHelper].isReceiveRemoteNotification = NO;
     [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
     //判断提醒震动
@@ -366,7 +367,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
     
 
     for (NSString *key in userInfo.allKeys) {
-        if ([key isEqualToString:@"f"]) {
+        if ([key myContainsString:@"f"]) {
             
             [[[UIAlertView alloc]initWithTitle:@"消息" message:@"asd" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"asd" , nil]show];
 
