@@ -215,6 +215,7 @@ typedef void (^ChangeFrameBlock)();
         [self.chooseStatus removeAllObjects];
         if (json) {
             NSLog(@"----%@",json);
+            
 
             if ([json[@"IsSuccess"] integerValue] == 1) {
                 
@@ -269,6 +270,7 @@ typedef void (^ChangeFrameBlock)();
             NSLog(@"..%@", json);
                 for (NSDictionary *dic in json[@"OrderList"]) {
                     OrderModel *order = [OrderModel orderModelWithDict:dic];
+                  
                     [self.dataArr addObject:order];
                 }
                     self.isSearch = self.searchKeyWord.length;
@@ -883,20 +885,20 @@ typedef void (^ChangeFrameBlock)();
  *  点击选择向下
  
  */
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell{
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn moreButtonList:(NSMutableArray *)moreButtonList andCurrentCell:(OrderCell *)cell{
     CGFloat Y = cell.frame.origin.y+cell.frame.size.height - self.tableView.contentOffset.y;
     CGRect frame;
     UIImage *imageV;
     if (Y+20 > self.tableView.frame.size.height) {
-        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*btnList.count), 80, 40*btnList.count);
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*moreButtonList.count), 80, 40*moreButtonList.count);
         imageV = [UIImage imageNamed:@"downT"];
        
     }else{
-        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*btnList.count);
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*moreButtonList.count);
         imageV = [UIImage imageNamed:@"upT"];
        
     }
-    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100" image:imageV];
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:moreButtonList direct:0 tip:@"100" image:imageV];
 }
 
 - (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip image:(UIImage *)image{

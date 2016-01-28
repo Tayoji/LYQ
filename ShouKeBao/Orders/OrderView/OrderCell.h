@@ -18,7 +18,7 @@
 @end
 
 @protocol upAndDownBtnDelegate <NSObject>
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell;
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn moreButtonList:(NSMutableArray *)moreButtonList andCurrentCell:(OrderCell *)cell;
 - (void)cancleQdMenumView:(QDMenu *)qdMenuView;
 @end
 

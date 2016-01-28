@@ -54,7 +54,7 @@
 @property (nonatomic,strong) UIButton *GuideIKnowBtn;
 @property (nonatomic,strong) UIImageView *samllGuideImageV;
 @property (nonatomic) NSInteger AddTapToGuide;//判断新手引导第几个界面
-
+@property (nonatomic,copy)NSString *AppMessageShowStatus;
 @end
 
 @implementation NewMessageCenterController
@@ -63,6 +63,7 @@
     [super viewDidLoad];
     
     self.title = @"消息中心";
+    
     NSLog(@"chatlist%@", self.chatListArray);
     _tableView.tableFooterView = [[UIView alloc] init];
     
@@ -107,6 +108,7 @@
             MessageCenterModel * customDynamic =[[MessageCenterModel alloc]init];
             MessageCenterModel *serviceNotiDynamic =[[MessageCenterModel alloc]init];
             MessageCenterModel *choseNotiDynamic =[[MessageCenterModel alloc]init];
+            
             platformModel.messageTitle = json[@"LastNoticeTitile"];
             platformModel.messageCount = json[@"NewNoticeCount"];
             platformModel.dateStr = json[@"LastNoticeDate"];
@@ -115,17 +117,29 @@
             customDynamic.messageCount = json[@"NewDynamicCount"];
             customDynamic.dateStr = json[@"LastDynamicDate"];
             
-            serviceNotiDynamic.messageTitle = json[@"LastAppMessageTitile"];
-            serviceNotiDynamic.messageCount = json[@"NewAppMessageCount"];
-            serviceNotiDynamic.dateStr = json[@"LastAppMessageDate"];
             
+            self.AppMessageShowStatus = json[@"AppMessageShowStatus"];
+            NSLog(@"%@", self.AppMessageShowStatus);
+//            self.AppMessageShowStatus = @"1";
+            if ([self.AppMessageShowStatus isEqualToString:@"1"]) {
+                serviceNotiDynamic.messageTitle = json[@"LastAppMessageTitile"];
+                serviceNotiDynamic.messageCount = json[@"NewAppMessageCount"];
+                serviceNotiDynamic.dateStr = json[@"LastAppMessageDate"];
+                
+            }else if ([self.AppMessageShowStatus isEqualToString:@"0"]){
+                
+                self.NameArr = [[NSArray alloc] initWithObjects:@"平台消息", @"客人动态",@"每日精选", nil];
+            }
             choseNotiDynamic.messageTitle = json[@"LastEveryRecommendTitile"];
             choseNotiDynamic.messageCount = json[@"NewEveryRecommendCount"];
             choseNotiDynamic.dateStr = json[@"LastEveryRecommendDate"];
             
             [self.dynamicArray removeAllObjects];
             [self.dynamicArray addObject:platformModel];
-            [self.dynamicArray addObject:serviceNotiDynamic];
+            
+            if ([self.AppMessageShowStatus isEqualToString:@"1"]) {
+                [self.dynamicArray addObject:serviceNotiDynamic];
+            }
             [self.dynamicArray addObject:customDynamic];
             [self.dynamicArray addObject:choseNotiDynamic];
             [self.tableView reloadData];
@@ -218,15 +232,28 @@
             cell.detailMsg = model.messageTitle;
             NSLog(@"...%@ %@", model.messageTitle, model.dateStr);
             cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
-            cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来 
-            if (indexPath.row == 0) {
-                cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
-            }else if (indexPath.row == 1){
-                cell.imageView.image = [UIImage imageNamed:@"SNotification"];
-            }else if (indexPath.row == 3){
-                cell.imageView.image = [UIImage imageNamed:@"iconfont-choseToday"];
-            }else{
-                cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
+            cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来
+            if ([self.AppMessageShowStatus isEqualToString:@"1"]) {
+                
+                if (indexPath.row == 0) {
+                    cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
+                }else if (indexPath.row == 1){
+                    cell.imageView.image = [UIImage imageNamed:@"SNotification"];
+                }else if (indexPath.row == 3){
+                    cell.imageView.image = [UIImage imageNamed:@"iconfont-choseToday"];
+                }else{
+                    cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
+                }
+                
+            }else if ([self.AppMessageShowStatus isEqualToString:@"0"]){
+                if (indexPath.row == 0) {
+                    cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
+                }else if (indexPath.row == 1){
+                    cell.imageView.image = [UIImage imageNamed:@"iconzdongtai"];
+                }else{
+                    cell.imageView.image = [UIImage imageNamed:@"iconfont-choseToday"];
+                }
+                
             }
         }else{
             EMConversation *conversation = [self.chatListArray objectAtIndex:indexPath.row];
@@ -280,31 +307,60 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView.tag == 2011) {
         if (indexPath.section == 0) {
-            if (indexPath.row == 0) {
-                
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"ShouKeBao_ZhiKeDynamicClick" attributes:dict];
-
-                TerraceMessageController *Terr = [[TerraceMessageController alloc] init];
-                [self.navigationController pushViewController:Terr animated:YES];
-            }else if (indexPath.row == 1){
-                ServiceNotifiViewController *seviceNotifiVC = [[ServiceNotifiViewController alloc]init];
-                [self.navigationController pushViewController:seviceNotifiVC animated:YES];
-            }else if(indexPath.row == 2){
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
-                
-                ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
-                zhiVisit.visitorDynamicFromType = VisitorDynamicTypeFromMessageCenter;
-                [self.navigationController pushViewController:zhiVisit animated:YES];
-            }else{
-                ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
-                choseListVC.title = @"每日精选";
-                choseListVC.DateStr = [self.dynamicArray[indexPath.row]dateStr];
-                choseListVC.messageTitle = [self.dynamicArray[indexPath.row]messageTitle];
-                [self.navigationController pushViewController:choseListVC animated:YES];
-            }
             
+            if ([self.AppMessageShowStatus isEqualToString:@"1"]) {
+                
+                if (indexPath.row == 0) {
+                    
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"ShouKeBao_ZhiKeDynamicClick" attributes:dict];
+                    
+                    TerraceMessageController *Terr = [[TerraceMessageController alloc] init];
+                    [self.navigationController pushViewController:Terr animated:YES];
+                }else if (indexPath.row == 1){
+                    ServiceNotifiViewController *seviceNotifiVC = [[ServiceNotifiViewController alloc]init];
+                    [self.navigationController pushViewController:seviceNotifiVC animated:YES];
+                }else if(indexPath.row == 2){
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
+                    
+                    ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
+                    zhiVisit.visitorDynamicFromType = VisitorDynamicTypeFromMessageCenter;
+                    [self.navigationController pushViewController:zhiVisit animated:YES];
+                }else{
+                    ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+                    choseListVC.title = @"每日精选";
+                    choseListVC.DateStr = [self.dynamicArray[indexPath.row]dateStr];
+                    choseListVC.messageTitle = [self.dynamicArray[indexPath.row]messageTitle];
+                    [self.navigationController pushViewController:choseListVC animated:YES];
+                }
+                
+            }else if ([self.AppMessageShowStatus isEqualToString:@"0"]){
+                
+                if (indexPath.row == 0) {
+                    
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"ShouKeBao_ZhiKeDynamicClick" attributes:dict];
+                    
+                    TerraceMessageController *Terr = [[TerraceMessageController alloc] init];
+                    [self.navigationController pushViewController:Terr animated:YES];
+                }else if (indexPath.row == 1){
+                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                    [MobClick event:@"ShouKeBao_customerDynamicClick" attributes:dict];
+                    
+                    ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
+                    zhiVisit.visitorDynamicFromType = VisitorDynamicTypeFromMessageCenter;
+                    [self.navigationController pushViewController:zhiVisit animated:YES];
+                    
+                    
+                }else if(indexPath.row == 2){
+                    ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+                    choseListVC.title = @"每日精选";
+                    choseListVC.DateStr = [self.dynamicArray[indexPath.row]dateStr];
+                    choseListVC.messageTitle = [self.dynamicArray[indexPath.row]messageTitle];
+                    [self.navigationController pushViewController:choseListVC animated:YES];
+                }
+            }
             
         }else{
             EMConversation *conversation = [self.chatListArray objectAtIndex:indexPath.row];

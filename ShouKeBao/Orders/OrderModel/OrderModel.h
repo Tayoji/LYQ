@@ -47,12 +47,13 @@
 @property (nonatomic,strong) NSDictionary *SKBOrder;
 
 @property (nonatomic,strong) NSMutableArray *buttonList;// 返回底部按钮组
-@property (nonatomic,strong) NSMutableArray *btnList;//返回底部。。。
+@property (nonatomic,strong) NSMutableArray *moreButtonList;//返回底部。。。
 
 @property (nonatomic,strong) NSDictionary *FollowPerson;
 
 @property (nonatomic, strong) NSString * OrderId;
 @property (nonatomic, copy)NSString *FromOrder;
+
 
 + (instancetype)orderModelWithDict:(NSDictionary *)dict;
 
