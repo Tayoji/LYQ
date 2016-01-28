@@ -69,6 +69,7 @@
         cell = [[OrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     return cell;
+    
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -159,10 +160,13 @@
     self.bottomView = bottomView;
     
     //底部icon
-    UIButton *iconB = [[UIButton alloc]init];
-    [self.bottomView addSubview:iconB];
+    UIButton *iconB = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:iconB];
+    [iconB setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
+    [self.contentView bringSubviewToFront:iconB];
     self.buttonIcon = iconB;
-
+    
+    
    
 }
 
@@ -241,7 +245,7 @@
     self.bottomView.frame = CGRectMake(0, bottomY, screenW, 40);
 //底部icon
 //    CGFloat iconStatusW = [model.ProgressState integerValue] == 0 ? 0 : 24;
-    self.buttonIcon.frame = CGRectMake(statusIconX, 10, 20, 20);
+    self.buttonIcon.frame = CGRectMake(statusIconX,bottomY+10, 20, 20);
 }
 
 - (void)setModel:(OrderModel *)model{
@@ -293,15 +297,20 @@
     
     // 先清空再添加
     [self.buttonArr removeAllObjects];
+    
     for (UIView *view in self.bottomView.subviews) {
         [view removeFromSuperview];
     }
-    NSLog(@"...%@", model.FromOrder);
     
-    if ([model.FromOrder integerValue] == 1) {
-        [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
-        [self.bottomView addSubview:self.buttonIcon];
+    if ([[NSString stringWithFormat:@"%@", model.FromOrder] isEqualToString:@"1"]) {
+//        [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
+//        [self.contentView bringSubviewToFront:self.buttonIcon];
+        self.buttonIcon.hidden = NO;
+    }else{
+        self.buttonIcon.hidden = YES;
     }
+
+    
     
     //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
     //    if (model.buttonList.count) {
@@ -326,7 +335,6 @@
     if (model.buttonList.count) {
         for (int i = (int)model.buttonList.count-1;i > -1; i--) {
             if (model.moreButtonList.count != 0 && model.buttonList.count-1 == i) {
-//                [self setMoreBtnStyle];
             }else{
                 ButtonList * btn = [model.buttonList objectAtIndex:i];
                 LinkButton *b = [[LinkButton alloc] init];
