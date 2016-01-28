@@ -8,7 +8,6 @@
 
 #import "ExclusiveViewController.h"
 #import "ExclusiveTableViewCell.h"
-#import "EstablelishedViewController.h"
 #import <ShareSDK/ShareSDK.h>
 #import "NSString+FKTools.h"
 #import "MBProgressHUD+MJ.h"

@@ -28,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
+@property (weak, nonatomic) IBOutlet UIView *view3;
+
 @property (weak, nonatomic) IBOutlet UIImageView *squarenessView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *questionButton;
@@ -42,13 +44,13 @@
 
     self.ScrollView.delegate = self;
     if (fourSize) {
-     self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+170*KHeight_Scale);
+     self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+280*KHeight_Scale);
     }else if (fiveSize){
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+220*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+330*KHeight_Scale);
     }else if (sixSize){
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+260*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+380*KHeight_Scale);
     }else{
-        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+285*KHeight_Scale);
+        self.ScrollView.contentSize = CGSizeMake(0, self.view.frame.size.height+410*KHeight_Scale);
     }
     [self noOpenAxclusiveApp];
     
@@ -65,6 +67,14 @@
     view2.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
     view2.layer.borderWidth = 1;
 }
+
+- (void)setView3:(UIView *)view3{
+    _view3 = view3;
+    view3.layer.borderColor = [UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1].CGColor;
+    view3.layer.borderWidth = 1;
+}
+
+
 //- (void)setBackButton:(UIButton *)backButton{
 //    _BackButton = backButton;
 //    self.BackButton.backgroundColor = [UIColor blackColor];

@@ -65,6 +65,7 @@
 //    }else {
 //        self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
 //    }
+   
     self.nameLabel.text = [model.NickName substringToIndex:1];
 
     

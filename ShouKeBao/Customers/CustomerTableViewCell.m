@@ -46,6 +46,7 @@
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
     NSLog(@".. %@", model.HeadUrl);
+    
     if (model.HeadUrl.length != 0) {
           [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]];
     }else{

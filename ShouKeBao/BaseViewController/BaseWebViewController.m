@@ -143,9 +143,11 @@
     NSLog(@"%@", urlStr);
     if ([urlStr myContainsString:@"?"]) {
         urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+        NSLog(@"...%@ ", urlStr);
     }
     NSString * pattern = @"ShareGeneral(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    
     //测试字符串；
     NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
     if (result.count) {
