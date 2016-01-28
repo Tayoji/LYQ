@@ -1082,8 +1082,8 @@
         default:
             break;
     }
-    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    
     imagePicker.sourceType = sourceType;
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
