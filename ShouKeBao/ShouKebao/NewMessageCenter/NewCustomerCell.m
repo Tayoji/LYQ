@@ -64,11 +64,13 @@
 //    }else {
 //        self.TitleImage.image = [UIImage imageNamed:@"dongtaichanpin"];
 //    }
-   
-    self.nameLabel.text = [model.NickName substringToIndex:1];
 
-    
-    
+    if ([model.NickName isEqualToString:@""] || model.NickName.length<2) {
+        self.nameLabel.text = model.NickName;
+    }else{
+        self.nameLabel.text = [model.NickName substringToIndex:1];
+    }
+
     if ([NSString stringIsEmpty:model.HeadUrl]) {
         self.nameLabel.hidden = NO;
         [self.TitleImage sd_setImageWithURL:nil placeholderImage:nil];

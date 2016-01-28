@@ -2486,12 +2486,6 @@
     }
 
     if (self.shareFlag == NO) {
-//        NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-//        [postDic setObject:@"0" forKey:@"ShareType"];
-//        if (self.shareInfo[@"Url"]) {
-//            [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
-//        }
-//        [postDic setObject: forKey:@"PageUrl"];
         NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:self.shareInfo];
         ProductModal *model = _dataArr[0];
         NSDictionary *temp = [StrToDic dicCleanSpaceWithDict:model.ShareInfo];
@@ -2512,6 +2506,7 @@
         
         [ShareView shareWithContent:publishContent andUrl:tmp[@"Url"]];
     }else if(self.shareFlag == YES){
+        
         [ShareView  cancleBtnClick];
         [self setBtnStateWith:0];
     }
@@ -2565,8 +2560,8 @@
 }
 
 
-- (void)reNotification:(NSNotification *)noti
-{
+- (void)reNotification:(NSNotification *)noti{
+    self.shareBtn.selected = NO;
     _shareFlag = 0;
 }
     
