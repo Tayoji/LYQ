@@ -78,7 +78,7 @@
         [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
         //引导页下边的小图标
         [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
-             }
+        }
     }else{
         [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
     }
