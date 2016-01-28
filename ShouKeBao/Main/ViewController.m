@@ -426,12 +426,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
             [self.shoukebaoVC.navigationController pushViewController:zhiVisit animated:YES];
         }else if([noticeType isEqualToString:@"ConsultantAppOpen"]){
             [APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce = YES;
-            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
-
         }else if([noticeType isEqualToString:@"ConsultantAppNoOpen"]){
             [APNSHelper defaultAPNSHelper].isJumpExclusiveApp = YES;
-            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
-
         }
     }else{
         NSString *type = noticeType;
@@ -458,8 +454,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
     
 
 }
-
-
 //播放一段无声音乐，让苹果审核时认为后台有音乐而让程序不会被杀死
 - (BOOL) prepAudio
 
