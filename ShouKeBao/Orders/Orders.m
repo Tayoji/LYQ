@@ -987,6 +987,7 @@ typedef void (^ChangeFrameBlock)();
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     OrderCell *cell = [OrderCell cellWithTableView:tableView ];
     cell.delegate = self;
     cell.upAndDownDelegate = self;
@@ -999,9 +1000,13 @@ typedef void (^ChangeFrameBlock)();
     
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
-        order = self.InvoicedataArr[indexPath.section];
+        if (indexPath.section <  self.InvoicedataArr.count) {
+            order = self.InvoicedataArr[indexPath.section];
+        }
     }else{
-        order = self.dataArr[indexPath.section];
+        if (indexPath.section < self.dataArr.count) {
+            order = self.dataArr[indexPath.section];
+        }
     }
     // 取出模型
     //order = self.dataArr[indexPath.section];

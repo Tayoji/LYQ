@@ -893,15 +893,11 @@
             ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
             [self.navigationController pushViewController:zhiVisit animated:YES];
         }else if([noticeType isEqualToString:@"ConsultantAppOpen"]){
+            [APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce = YES;
             self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
-            NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
-            newOpenVC.naVC = self.navigationController.tabBarController.selectedViewController.navigationController;
-            [self.navigationController.tabBarController.selectedViewController.navigationController pushViewController:newOpenVC animated:YES];
         }else if([noticeType isEqualToString:@"ConsultantAppNoOpen"]){
+            [APNSHelper defaultAPNSHelper].isJumpExclusiveApp = YES;
             self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
-            NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
-            newExclusiveVC.naVC = self.navigationController.tabBarController.selectedViewController.navigationController;
-            [self.navigationController.tabBarController.selectedViewController.navigationController pushViewController:newExclusiveVC animated:YES];
         }
 
     }else{

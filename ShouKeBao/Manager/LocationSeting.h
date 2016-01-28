@@ -12,7 +12,7 @@
 @property (nonatomic, copy)NSString *customMessageDateStr;//管客户界面消息推送时间本地化
 @property (nonatomic, copy)NSString *carouselPageNumber;//首页轮播条次本地化
 
-
+@property (nonatomic, copy)NSString *SOSPhoneNum;//搬救兵电话号码；
 +(LocationSeting *)defaultLocationSeting;
 
 
