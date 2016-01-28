@@ -90,8 +90,11 @@
             [self.moreButtonList removeObject:self.moreButtonList[i]];
             i++;
         }
-
-        
+       
+        if (self.buttonList.count == 2) {
+            [self.buttonList exchangeObjectAtIndex:0 withObjectAtIndex:1];
+            
+        }
         if (self.moreButtonList.count) {
             [self.buttonList addObject:self.moreButtonList];//将二级实现放在数组里作为一个元素
         }
