@@ -43,7 +43,6 @@
 #import "MeShareDetailViewController.h"
 #import "InvoiceManageViewController.h"
 #import "ExclusiveViewController.h"
-#import "EstablelishedViewController.h"
 #import "MeShareDetailModel.h"
 #import "NewExclusiveAppIntroduceViewController.h"
 #import "NewOpenExclusiveViewController.h"
