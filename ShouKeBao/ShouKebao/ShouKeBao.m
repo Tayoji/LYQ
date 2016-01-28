@@ -1111,8 +1111,15 @@
         [APNSHelper defaultAPNSHelper].isJumpChatList = NO;
         [self jumpToChatList];
     }
+    
+    if ([APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce||[APNSHelper defaultAPNSHelper].isJumpExclusiveApp) {
+        [self performSelector:@selector(JumpMe) withObject:nil afterDelay:0.5];
+    }
 }
 
+- (void)JumpMe{
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+}
 
 -(void)viewWillDisappear:(BOOL)animated{
     
