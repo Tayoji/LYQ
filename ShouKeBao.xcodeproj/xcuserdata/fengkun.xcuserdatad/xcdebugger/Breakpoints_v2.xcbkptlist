@@ -267,6 +267,38 @@
             endingLineNumber = "246"
             landmarkName = "-sendRedPacket"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SetRedPacketController sendRedPacket]"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+                  timestampString = "475677677.088567"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "659">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SetRedPacketController sendRedPacket]"
+                  moduleName = "ShouKeBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
+                  timestampString = "475677677.088716"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "712">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
