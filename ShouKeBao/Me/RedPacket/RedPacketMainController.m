@@ -118,9 +118,9 @@
         label.text = @"开通专属APP,才能享受此功能!";
         label.textAlignment = NSTextAlignmentCenter;
         if (fourSize) {
-                label.font = [UIFont systemFontOfSize:17];
+                label.font = [UIFont systemFontOfSize:16];
         }else if(fiveSize){
-                label.font = [UIFont systemFontOfSize:18];
+                label.font = [UIFont systemFontOfSize:17];
         }else if(sixSize){
                 label.font = [UIFont systemFontOfSize:20];
         }else{

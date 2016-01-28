@@ -276,7 +276,7 @@
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475677677.088567"
+                  timestampString = "475689905.664775"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
@@ -291,7 +291,7 @@
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/fengkun/LYQ/ShouKeBao/Me/RedPacket/SetRedPacket/SetRedPacketController.m"
-                  timestampString = "475677677.088716"
+                  timestampString = "475689905.66516"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "250"
@@ -420,11 +420,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/FindProduct/ProductDetail/ProduceDetailViewController.m"
-            timestampString = "475663327.858532"
+            timestampString = "475679920.751226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "556"
-            endingLineNumber = "556"
+            startingLineNumber = "555"
+            endingLineNumber = "555"
             landmarkName = "@implementation ProduceDetailViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -628,7 +628,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ShouKeBao/Me/Me.m"
-            timestampString = "475676656.032084"
+            timestampString = "475680113.34485"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1099"
@@ -906,6 +906,22 @@
             startingLineNumber = "83"
             endingLineNumber = "83"
             landmarkName = "-initWithDict:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Me/Me.m"
+            timestampString = "475680054.684584"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1081"
+            endingLineNumber = "1081"
+            landmarkName = "-actionSheet:clickedButtonAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

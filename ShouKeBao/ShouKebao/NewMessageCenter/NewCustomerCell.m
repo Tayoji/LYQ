@@ -86,13 +86,13 @@
     
     self.MessageLab.text = model.DynamicTitleV2;
     
-//    self.UserName.text = model.NickName;
+    self.UserName.text = model.NickName;
 //     self.UserName.text = @"我住在你女朋友的隔壁";
     //动态适配
-    if (self.UserName.text != nil || ![self.UserName.text  isEqual: @""] ||![self.UserName.text  isEqual: @"(null)"] ||self.UserName.text != [NSNull class]) {
+    if (![self.UserName.text  isEqual: @""]) {
         self.UserName.text = model.NickName;;
     }else{
-        self.UserName.text = @"";
+        self.UserName.text = @" ";
         
     }
    CGFloat width = [self.UserName.text widthWithsysFont:13];
@@ -101,6 +101,7 @@
     LastUserName.size.width = width+5;
     self.UserName.frame = LastUserName;
     NSString *WXstr = model.WeixinNickName;
+
     NSString *WXFinStr;
     for (NSInteger i = 0; i < WXstr.length; i++) {
         NSLog(@"%C",[WXstr characterAtIndex:i]);
@@ -111,11 +112,11 @@
             break;
         }
     }
-    NSLog(@"---%@",WXFinStr);
-    if (self.WXName.text || ![self.WXName.text  isEqual: @""] ||![self.WXName.text  isEqual: @"(null)"]  ||self.WXName.text != [NSNull class]) {
+
+    if (![WXstr  isEqual: @""]) {
         self.WXName.text = [NSString stringWithFormat:@"(%@)", WXFinStr];
     }else{
-        self.WXName.text = @"";
+        self.WXName.text = @" ";
 
     }
     CGRect wxnameFrame = self.WXName.frame;
