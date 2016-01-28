@@ -69,19 +69,19 @@
     [self registerNotifications];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
-        
-        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
-                NSLog(@"此处要显示引导页");
+//    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
+//        
+//        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+//                NSLog(@"此处要显示引导页");
         [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
         [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
         [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
         //引导页下边的小图标
         [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
-             }
-    }else{
-        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
-    }
+//             }
+//    }else{
+//        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
+//    }
 
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
@@ -662,8 +662,8 @@
 
         }
         [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
-        [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
-        _GuideIKnowBtn.tag = 101;
+        [_GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        _GuideIKnowBtn.tag = 102;
         [_GuideIKnowBtn addTarget:self action:@selector(guideClick:) forControlEvents:UIControlEventTouchUpInside];
         [_GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
@@ -686,7 +686,7 @@
 
         }
         _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, _guideView.frame.size.width-20, 40)];
-        _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
+        _GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
         _GuideconLabel.numberOfLines = 2;
         _GuideconLabel.textAlignment = NSTextAlignmentCenter;
         _GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
@@ -696,25 +696,26 @@
 -(UIImageView *)GuideTitImageV{
     if (!_GuideTitImageV) {
         _GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
-        _GuideTitImageV.image = [UIImage imageNamed:@"NewBusiness"];
+        _GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
     }
     return _GuideTitImageV;
 }
 -(UIImageView *)samllGuideImageV{
     if (!_samllGuideImageV) {
         _samllGuideImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-30, kScreenSize.height/4+195, 60, 60)];
-        [_samllGuideImageV setImage:[UIImage imageNamed:@"NewBusinesSamll"]];
+        [_samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
     }
     return _samllGuideImageV;
 }
 -(void)guideClick:(UIButton *)button{
-    if (button.tag == 101) {
-        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
-        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
-        self.GuideIKnowBtn.tag = 102;
-        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
-        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
-    }else if(button.tag == 102){
+  //  if (button.tag == 101) {
+//        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
+//        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+//        self.GuideIKnowBtn.tag = 102;
+//        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+//        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
+//    }else
+    if(button.tag == 102){
         [self.backgroundIV removeFromSuperview];
         [self.guideView removeFromSuperview];
         [self.samllGuideImageV removeFromSuperview];

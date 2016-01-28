@@ -38,7 +38,6 @@
     self.nameLabel.layer.cornerRadius = 20;
     self.nameLabel.layer.masksToBounds = YES;
     self.nameLabel.font = [UIFont boldSystemFontOfSize:18];
-
     
 }
 -(void)layoutSubviews{
@@ -83,16 +82,31 @@
     self.TimeLabel.text = model.CreateTimeText;
     
     self.MessageLab.text = model.DynamicTitleV2;
+    
     self.UserName.text = model.NickName;
-    
-//    NSString *WXstr = model.WeixinNickName;
-//    unichar c = [WXstr characterAtIndex:0];
-    
-//    for (; <#condition#>; <#increment#>) {
-//        <#statements#>
-//    }
-    self.WXName.text = [NSString stringWithFormat:@"(%@)", model.WeixinNickName];
-    
+    CGSize titleSize = [self.UserName.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
+    NSLog(@"%f",titleSize.width);
+    CGRect LastUserName = self.UserName.frame;
+    LastUserName.size.width = titleSize.width;
+    self.UserName.frame = LastUserName;
+    NSString *WXstr = model.WeixinNickName;
+    NSString *WXFinStr;
+    for (NSInteger i = 0; i < WXstr.length; i++) {
+        NSLog(@"%C",[WXstr characterAtIndex:i]);
+        if ([[NSString stringWithFormat:@"%C",[WXstr characterAtIndex:i]]  isEqual: @" "]) {
+            WXFinStr = [WXstr substringFromIndex:i+1];
+        }else{
+            WXFinStr =[WXstr substringFromIndex:i];
+            break;
+        }
+    }
+    NSLog(@"%@",WXFinStr);
+
+    self.WXName.text = [NSString stringWithFormat:@"(%@)", WXFinStr];
+    CGRect wxnameFrame = self.WXName.frame;
+    wxnameFrame.origin.x = self.UserName.frame.origin.x+self.UserName.frame.size.width+10;
+    self.WXName.frame = wxnameFrame;
+//    self.WXName.text = WXFinStr;
     [self.ProductView.ProductImage sd_setImageWithURL:[NSURL URLWithString:model.ProductdetailModel.PicUrl] placeholderImage:[UIImage imageNamed:@"CommandplaceholderImage"]];//产品图片
     self.ProductView.ProductDescribtion.text = model.ProductdetailModel.Name;//产品描述
     self.ProductView.CodeNum.text = model.ProductdetailModel.Code;//产品编号

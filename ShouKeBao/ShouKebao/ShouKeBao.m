@@ -331,23 +331,23 @@
             _newsImageV.frame = CGRectMake(kScreenSize.width/2-30, kScreenSize.height/6+200, 60, 60);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
             frame =CGRectMake(kScreenSize.width/2-60, 130,100, 30);
-            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30, 150, 20);
-label.font = [UIFont systemFontOfSize:15];
+            label.font = [UIFont systemFontOfSize:15];
         }else if (fiveSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 160);
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
             frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
             label.font = [UIFont systemFontOfSize:15];
         }else if(sixSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+90, kScreenSize.width-20, 190);
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+5, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
-            frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            frame =CGRectMake(kScreenSize.width/2-60, 125,100, 30);
+            label.frame = CGRectMake(30,60, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-80, 30, 150, 20);
             label.font = [UIFont systemFontOfSize:15];
         }else{
@@ -355,8 +355,9 @@ label.font = [UIFont systemFontOfSize:15];
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
             frame =CGRectMake(kScreenSize.width/2-80, 140,100, 40);;
-            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
-            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 50);
+            label.numberOfLines = 0;
+            vvimage.frame = CGRectMake(kScreenSize.width/2-120, 30, 150, 20);
             label.font = [UIFont systemFontOfSize:17];
         }
         _Guidebtn.frame = frame;
@@ -490,10 +491,14 @@ label.font = [UIFont systemFontOfSize:15];
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
     
-    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] !=1 ) {
-            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
+//    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] !=1 ) {
+//            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
             [self Guide];
-    }
+//    }
+    //判断后来开通的
+//    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] == 1 && [[guiDefault objectForKey:@"SKBExclusiveaAppGUideRPNest"] integerValue] == 0 ) {
+//            [self Guide];
+//    }
 //        NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
 //    [self.navigationController pushViewController:messgeCenter animated:YES];
 
@@ -1383,30 +1388,44 @@ label.font = [UIFont systemFontOfSize:15];
         _guideView.alpha = 0.4;
     
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+    
+    //新改动从此开始
+    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+    self.guideImageView.userInteractionEnabled = YES;
+    _Guidebtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5,self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
+    _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+    _Guidebtn.tag = 1210;
+    [_Guidebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    _cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
+    [_cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+    [_cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
+    [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
+    _cleanBtn.tag = 1209;
+
     if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {//没有开通
-        self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+        [guiDefault setObject:@"0" forKey:@"SKBExclusiveaAppGUideRPNest"];//判断后来才开通的
         self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
-        self.guideImageView.userInteractionEnabled = YES;
-        
         //立即查看按钮（立即申请开通）
-        _Guidebtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5,self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
         [_Guidebtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
-        _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
-        _Guidebtn.tag = 1210;
-        [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-        [_Guidebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_guideImageView addSubview:_Guidebtn];
-        //叉号按钮
-        _cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
-        _cleanBtn.tag = 1209;
-        [_cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-        [_cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
-        [_guideImageView addSubview:_cleanBtn];
         
+        //叉号按钮
+        [_guideImageView addSubview:_cleanBtn];
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
         
     }else{//已经开通
+        [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGUideRPNest"];//判断后来才开通的
+        self.guideImageView.image = [UIImage imageNamed:@"dredged"];
+        //立即查看领取（立即查看领取）
+        [_Guidebtn setTitle:@"立即查看领取" forState:UIControlStateNormal];
+        [_guideImageView addSubview:_Guidebtn];
+        
+        //叉号按钮
+        [_guideImageView addSubview:_cleanBtn];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+/*
         self.guideImageView = [[UIImageView alloc] init];
             _newsImageV = [[UIImageView alloc] init];
         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
@@ -1475,6 +1494,7 @@ label.font = [UIFont systemFontOfSize:15];
         
         [self.guideImageView addSubview:label];
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+*/
 
     }
 
@@ -1504,7 +1524,7 @@ label.font = [UIFont systemFontOfSize:15];
 //    [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
 //    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [_guideImageView addSubview:button];
-//    
+//
 //    
 //    //叉号按钮
 //    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
@@ -1526,18 +1546,22 @@ label.font = [UIFont systemFontOfSize:15];
 }
 -(void)Seeprivilege:(UIButton *)btn{
     if (btn.tag == 1209) {//点击XX 按钮
+        [self.guideImageView removeFromSuperview];
+        
         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
-        self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+        self.guideImageView = [[UIImageView alloc] initWithFrame: CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200)];
+        self.guideImageView.userInteractionEnabled = YES;
         UIImageView *vvimage = [[UIImageView alloc] init];
          _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
         UILabel *label = [[UILabel alloc] init];
+        label.numberOfLines = 0;
         CGRect frame = _Guidebtn.frame;
         if (fourSize) {
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+60, kScreenSize.width-20, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
-            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2 - 10, kScreenSize.height/2-120)];
+            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-40, 100, 60, 60)];
             frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
-            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
             label.font = [UIFont systemFontOfSize:15];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
 
@@ -1556,16 +1580,17 @@ label.font = [UIFont systemFontOfSize:15];
             vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
             frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 50);
             label.font = [UIFont systemFontOfSize:15];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            
 
         }else{
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
             frame =CGRectMake(kScreenSize.width/2-90, 140,120, 40);
-            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 50);
             label.font = [UIFont systemFontOfSize:17];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
 
@@ -1589,22 +1614,31 @@ label.font = [UIFont systemFontOfSize:15];
         
        
         [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
-        
+        [[[UIApplication sharedApplication].delegate window]addSubview:self.guideImageView];
+
         [self.guideImageView addSubview:label];
-        
+    
         [_cleanBtn removeFromSuperview];
         //走1.5引导
         
     }else if (btn.tag == 1210){
-                [self.guideView removeFromSuperview];
-                [self.guideImageView removeFromSuperview];
-                [self.newsImageV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.guideImageView removeFromSuperview];
+        [self.newsImageV removeFromSuperview];
+
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {//没有开通
             NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
             newExc.naVC = self.navigationController;
             [self.navigationController pushViewController:newExc animated:YES];
-        NSUserDefaults *defaults = [NSUserDefaults  standardUserDefaults];
-        [defaults setObject:@"1" forKey:@"GuideRPFifrst"];
+            [[NSUserDefaults  standardUserDefaults] setObject:@"1" forKey:@"GuideRPFifrst"];
+        }else{//已经开通
+            NewOpenExclusiveViewController *exclus = [[NewOpenExclusiveViewController alloc] init];
+            exclus.naVC = self.navigationController;
+            [self.navigationController pushViewController:exclus animated:YES];
+            [[NSUserDefaults  standardUserDefaults] setObject:@"1" forKey:@"GuideRPFifrst"];
 
+        }
+        
     }else if(btn.tag == 1211){
         [self.guideView removeFromSuperview];
         [self.guideImageView removeFromSuperview];
