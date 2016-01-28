@@ -258,7 +258,9 @@ typedef void (^ChangeFrameBlock)();
                             @"CreatedDateStart":self.createDateStart,
                             @"CreatedDateEnd":self.createDateEnd,
                             @"IsRefund":[NSString stringWithFormat:@"%d",self.dressView.IsRefund.on]};
+    
     [OrderTool getOrderListWithParam:param success:^(id json) {
+        NSLog(@"%@", param);
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         self.isReloadMainTabaleView = YES;
@@ -996,10 +998,7 @@ typedef void (^ChangeFrameBlock)();
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
     self.ff = [tableView rectForRowAtIndexPath:indexPath];
-    
-//    self.ff = [tableView rectForFooterInSection:indexPath.row];
-//    self.g = cell.bottomView.frame.origin.y - tableView.contentOffset.y;
-    
+
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         if (indexPath.section <  self.InvoicedataArr.count) {
