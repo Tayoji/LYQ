@@ -175,6 +175,7 @@
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
     NSLog(@"%@",model.HeadUrl);
+    
     if (!model.HeadUrl || [model.HeadUrl isEqual:@""]) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
@@ -182,6 +183,7 @@
         [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl]];
         cell.NameFirstlabel.alpha = 0;
     }
+    
     if ([self.SELCustomerArr containsObject:model.AppSkbUserId]) {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
