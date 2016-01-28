@@ -68,7 +68,7 @@
 //@property(nonatomic,strong)NSMutableArray *writeFilePassportArr;
 
 
-
+@property(nonatomic,retain)AVCaptureSession * AVSession;
 
 @end
 
@@ -81,6 +81,7 @@
     if (self.isFromOrder) {
         self.rightBtnOutlet.hidden = YES;
     }
+    [self setRightBtnNav];
     self.camera = [[LLSimpleCamera alloc] initWithQuality:CameraQualityPhoto];
 //    for (UIGestureRecognizer * gesture in self.view.gestureRecognizers) {
 //        if ([gesture isKindOfClass:[UIScreenEdgePanGestureRecognizer class]]) {
@@ -192,7 +193,27 @@
     }
 }
 
-
+- (void)setRightBtnNav{
+    UIButton * flshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    flshButton.frame = CGRectMake(0, 0, 30, 30);
+    [flshButton setBackgroundImage:[UIImage imageNamed:@"手电—关"] forState:UIControlStateNormal];
+    [flshButton setBackgroundImage:[UIImage imageNamed:@"手电—开"] forState:UIControlStateSelected];
+    [flshButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:flshButton];
+    
+    
+    
+}
+- (void)buttonClick:(UIButton *)sender{
+    if (sender.selected) {
+        sender.selected = NO;
+        [self openFlashlight];
+    }else{
+        sender.selected = YES;
+        [self openFlashlight];
+    }
+    
+}
 -(void)back
 {
     [self.timer invalidate];
@@ -953,5 +974,41 @@
         [self ifPush];
     });
 }
+
+
+#pragma -mark-闪关灯的开关
+-(void)openFlashlight
+{
+    AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (device.torchMode == AVCaptureTorchModeOff) {
+        //Create an AV session
+        AVCaptureSession * session = [[AVCaptureSession alloc]init];
+        // Create device input and add to current session
+        AVCaptureDeviceInput * input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+        [session addInput:input];
+        // Create video output and add to current session
+        AVCaptureVideoDataOutput * output = [[AVCaptureVideoDataOutput alloc]init];
+        [session addOutput:output];
+        // Start session configuration
+        [session beginConfiguration];
+        [device lockForConfiguration:nil];
+        // Set torch to on
+        [device setTorchMode:AVCaptureTorchModeOn];
+//        [device unlockForConfiguration];
+        [session commitConfiguration];
+        // Start the session
+        [session startRunning];
+        // Keep the session around
+        [self setAVSession:self.AVSession];
+    }
+}
+-(void)closeFlashlight
+{
+    [self.AVSession stopRunning];
+}
+
+
+
+
 
 @end
