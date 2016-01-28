@@ -174,8 +174,8 @@
     CustomModel *model = self.dataArr[indexPath.row];
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
-    NSLog(@"%@",model.Mobile);
-    if (!model.HeadUrl) {
+    NSLog(@"%@",model.HeadUrl);
+    if (!model.HeadUrl || [model.HeadUrl isEqual:@""]) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
     }else{
