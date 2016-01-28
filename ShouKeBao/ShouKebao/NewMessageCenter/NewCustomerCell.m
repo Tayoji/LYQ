@@ -15,6 +15,9 @@
 #import "NSString+FKTools.h"
 #import "ProductModal.h"
 #import "CustomerDetailAndOrderViewController.h"
+#import "MobClick.h"
+#import "BaseClickAttribute.h"
+#import "ProduceDetailViewController.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewCustomerCell ()<UIWebViewDelegate>
 - (IBAction)MessageBtnClick:(UIButton *)sender;
@@ -31,6 +34,9 @@
     VisitorDynamicProductView * productView = [[[NSBundle mainBundle] loadNibNamed:@"VisitorDynamicProductView" owner:nil options:nil] lastObject];
     self.ProductView = productView;
     self.ProductView.hidden = YES;
+    UITapGestureRecognizer * tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openProduct)];
+
+    [self.ProductView addGestureRecognizer:tap3];
     [self addSubview:self.ProductView];
     
     self.nameLabel.backgroundColor = [UIColor colorWithRed:61/255.0 green:156/255.0 blue:177/255.0 alpha:1];
@@ -175,7 +181,18 @@
     [self.NAV pushViewController:Customer animated:YES];
 }
 
-
+- (void)openProduct{
+    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+    [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
+    
+    NSString * productUrl = self.model.ProductdetailModel.LinkUrl;
+    ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
+    NSLog(@"%@", productUrl);
+    detail.produceUrl = productUrl;
+    detail.fromType = FromZhiVisitorDynamic;
+    detail.shareInfo = self.model.ProductdetailModel.ShareInfo;
+    [self.NAV pushViewController:detail animated:YES];
+}
 - (IBAction)MessageBtnClick:(UIButton *)sender {
         NSLog(@"%@", self.model.AppSkbUserId);
         ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];

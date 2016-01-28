@@ -220,16 +220,16 @@
     }else if([model.DynamicType intValue] == 3||[model.DynamicType intValue] == 9||[model.DynamicType intValue] == 11){
         
     }else if([model.DynamicType intValue] == 4||[model.DynamicType intValue] == 5||[model.DynamicType intValue] == 6||[model.DynamicType intValue] == 7||[model.DynamicType intValue] == 8||[model.DynamicType intValue] == 10){
-        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
-        
-        NSString * productUrl = model.ProductdetailModel.LinkUrl;
-        ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
-        NSLog(@"%@", productUrl);
-        detail.produceUrl = productUrl;
-        detail.fromType = FromZhiVisitorDynamic;
-        detail.shareInfo = model.ProductdetailModel.ShareInfo;
-        [self.navigationController pushViewController:detail animated:YES];
+//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//        [MobClick event:@"ShouKeBao_customerDynamicMessageListClick" attributes:dict];
+//        
+//        NSString * productUrl = model.ProductdetailModel.LinkUrl;
+//        ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
+//        NSLog(@"%@", productUrl);
+//        detail.produceUrl = productUrl;
+//        detail.fromType = FromZhiVisitorDynamic;
+//        detail.shareInfo = model.ProductdetailModel.ShareInfo;
+//        [self.navigationController pushViewController:detail animated:YES];
     }
 
 }
