@@ -67,28 +67,26 @@
 //            [self.buttonList addObject:btn];
 //        }
   
-#warning 指定写法
-//        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
-//            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
-//            
-//            if ([btn.text isEqualToString:@"申请合同"]|| [btn.text isEqualToString:@"申请退款"] ||[btn.text isEqualToString:@"确认单"] ) {//将二级实现放在数组最里
-//                [self.btnList addObject:btn];
-//            }else{
-//                [self.buttonList addObject:btn];
-//            }
-//        }
-#warning 按给出数据先后顺序
+
+#warning 分类显示
         NSMutableArray *arr = dic[@"ButtonList"];
         for (int i = 0; i < arr.count; i++) {
+            
             ButtonList *btn = [ButtonList buttonListWithDict:arr[i]];
-            if (i > 1) {
-                [self.btnList addObject:btn];
-            }else{
+             if (arr.count<3) {//1 2的时候
                 [self.buttonList addObject:btn];
+            }else{//多于等于3个的时候
+                if ((int)btn.color == 3) {
+                     [self.buttonList addObject:btn];
+                }else{
+                    [self.btnList addObject:btn];
+                }
+                [self.buttonList insertObject:self.btnList[0] atIndex:1];
+                [self.btnList removeObjectAtIndex:0];
             }
         }
-        if (self.btnList.count) {
-             [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
+            if (self.btnList.count) {
+               [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
         }
     }
     return self;
