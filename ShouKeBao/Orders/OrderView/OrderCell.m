@@ -12,8 +12,9 @@
 #import "ButtonList.h"
 #import "LinkButton.h"
 #import "NSString+QD.h"
-
+#import "QDMenu.h"
 #define gap 10
+#import "ButtonDetailViewController.h"
 
 @interface OrderCell()
 
@@ -47,13 +48,14 @@
 // 状态描述
 @property (weak, nonatomic) UILabel *statusDes;
 
-// 底部按钮
-@property (weak, nonatomic) UIView *bottomView;
 
-@property (nonatomic,strong) NSMutableArray *buttonArr;
-
-@property (weak, nonatomic)UIButton *buttonIcon;
 @property (weak, nonatomic)UIButton *moreBtn;
+@property (nonatomic,strong) NSMutableArray *buttonArr;
+@property (weak, nonatomic)UIButton *buttonIcon;
+@property (nonatomic, assign)CGFloat moreY;
+@end
+
+@interface OrderCell()<QDMenuDelegate>
 @end
 
 @implementation OrderCell
@@ -65,38 +67,20 @@
     if (!cell) {
         
         cell = [[OrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        
     }
     return cell;
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//        [self.contentView addSubview:self.orderTmpView];
         [self setup];
     }
     return self;
 }
 
-//- (OrderTmpView *)orderTmpView
-//{
-//    if (!_orderTmpView) {
-//        _orderTmpView = [[[NSBundle mainBundle] loadNibNamed:@"OrderCell" owner:nil options:nil] lastObject];
-//        _orderTmpView.frame = self.bounds;
-//    }
-//    return _orderTmpView;
-//}
-
 #pragma mark - setup
-- (void)setup
-{
-    // 上线条
-//    UIView *sep1 = [[UIView alloc] init];
-//    [self.contentView addSubview:sep1];
-//    self.sep1 = sep1;
-    
+- (void)setup{
     // 中线条
     UIView *sep2 = [[UIView alloc] init];
     sep2.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.1];
@@ -178,27 +162,16 @@
     UIButton *iconB = [[UIButton alloc]init];
     [self.bottomView addSubview:iconB];
     self.buttonIcon = iconB;
-    
-//    UIButton *moreB = [[UIButton alloc]init];
-//    [self.bottomView addSubview:moreB];
-//    self.moreBtn = moreB;
+
    
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
     [super layoutSubviews];
-    
-    
 }
 
-- (void)setFrameWithModel:(OrderModel *)model
-{
+- (void)setFrameWithModel:(OrderModel *)model{
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    
-    // 上线条
-//    self.sep1.frame = CGRectMake(0, 0, screenW, 2);
-    
     // 状态图标
     CGFloat statusIconX = gap * 2;
 //    CGFloat statusIconY = CGRectGetMaxY(self.sep1.frame) + gap;
@@ -266,26 +239,14 @@
     // 底部按钮
     CGFloat bottomY = CGRectGetMaxY(self.sep3.frame);
     self.bottomView.frame = CGRectMake(0, bottomY, screenW, 40);
-    
-    
-    //底部icon
+//底部icon
 //    CGFloat iconStatusW = [model.ProgressState integerValue] == 0 ? 0 : 24;
     self.buttonIcon.frame = CGRectMake(statusIconX, 10, 20, 20);
-    
-    
-   
 }
 
-- (void)setModel:(OrderModel *)model
-{
+- (void)setModel:(OrderModel *)model{
     _model = model;
-    
     [self setFrameWithModel:model];
-    
-//    self.sep3.hidden = !model.buttonList.count;
-    
-    // 上线条
-//    self.sep1.backgroundColor = model.TopBarColor;
     // 订单号
     self.tourCode.text = model.Code;
     
@@ -301,7 +262,7 @@
     self.tourTitle.text = model.ProductName;
     // 价格
     NSString *tmp = [NSString stringWithFormat:@"￥%@(同行)",model.OrderPrice];
-
+    
     //    富文本：NSMutableAttributedString
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:tmp];
     [attrStr addAttributes:@{NSForegroundColorAttributeName:[UIColor orangeColor],
@@ -325,9 +286,8 @@
     if ([model.StateText isEqual:[NSNull null]]) {
         
     }else{
-    self.statusDes.text = model.StateText;
+        self.statusDes.text = model.StateText;
     }
-    NSLog(@"%@33333333%@22222222%@", model.StateText, model.DetailLinkUrl, model.Code);
     self.statusDes.textColor = model.StateTextColor;
     
     // 先清空再添加
@@ -335,40 +295,37 @@
     for (UIView *view in self.bottomView.subviews) {
         [view removeFromSuperview];
     }
+    NSLog(@"...%@", model.FromOrder);
     
     if ([model.FromOrder integerValue] == 1) {
-    [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
-    [self.bottomView addSubview:self.buttonIcon];
+        [self.buttonIcon setImage:[UIImage imageNamed:@"orderTip"] forState:UIControlStateNormal];
+        [self.bottomView addSubview:self.buttonIcon];
     }
-
-//    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
-//    if (model.buttonList.count) {
-//        for (int i = (int)model.buttonList.count-1;i > -1; i--) {
-//            ButtonList * btn = [model.buttonList objectAtIndex:i];
-//            LinkButton *b = [[LinkButton alloc] init];
-//            [b setBackgroundImage:[UIImage imageNamed:@"lightgraybg"] forState:UIControlStateHighlighted];
-//            b.titleLabel.font = [UIFont systemFontOfSize:14];
-//            [b setTitle:btn.text forState:UIControlStateNormal];
-//            [b setTitleColor:btn.color forState:UIControlStateNormal];
-//            b.layer.borderWidth = 1;
-//            b.layer.cornerRadius = 3;
-//            b.layer.borderColor = btn.color.CGColor;
-//            b.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-//            b.linkUrl = btn.linkurl;
-//            b.text = btn.text;
-//            [b addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-//            [self.bottomView addSubview:b];
-//            [self.buttonArr addObject:b];
-//        }
-
-    NSLog(@"model.buttonList  %@", model.buttonList);
+    
+    //    判断是否有数据，有则布局‘查看客户订单信息’和‘立即采购’控件。
+    //    if (model.buttonList.count) {
+    //        for (int i = (int)model.buttonList.count-1;i > -1; i--) {
+    //            ButtonList * btn = [model.buttonList objectAtIndex:i];
+    //            LinkButton *b = [[LinkButton alloc] init];
+    //            [b setBackgroundImage:[UIImage imageNamed:@"lightgraybg"] forState:UIControlStateHighlighted];
+    //            b.titleLabel.font = [UIFont systemFontOfSize:14];
+    //            [b setTitle:btn.text forState:UIControlStateNormal];
+    //            [b setTitleColor:btn.color forState:UIControlStateNormal];
+    //            b.layer.borderWidth = 1;
+    //            b.layer.cornerRadius = 3;
+    //            b.layer.borderColor = btn.color.CGColor;
+    //            b.contentEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    //            b.linkUrl = btn.linkurl;
+    //            b.text = btn.text;
+    //            [b addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+    //            [self.bottomView addSubview:b];
+    //            [self.buttonArr addObject:b];
+    //        }
+    
     if (model.buttonList.count) {
         for (int i = (int)model.buttonList.count-1;i > -1; i--) {
-            
             if (model.btnList.count != 0 && model.buttonList.count-1 == i) {
-        
-                [self setMoreBtnStyle];
-                
+//                [self setMoreBtnStyle];
             }else{
                 ButtonList * btn = [model.buttonList objectAtIndex:i];
                 LinkButton *b = [[LinkButton alloc] init];
@@ -386,64 +343,46 @@
                 [self.bottomView addSubview:b];
                 [self.buttonArr addObject:b];
             }
-            
-//            [self.buttonArr addObject:self.moreBtn];
-            
         }
-              [self layoutButtons];
+        [self layoutButtons];
         
     }else{
-  
-        NSLog(@"2 model.buttonList.count = %d", model.buttonList.count);
-
+        NSLog(@"2 model.buttonList.count = %lu", (unsigned long)model.buttonList.count);
         CGFloat x = [UIScreen mainScreen].bounds.size.width - 90 - gap;
         UILabel *doneLab = [[UILabel alloc] initWithFrame:CGRectMake(x, 5, 90, 25)];
         doneLab.font = [UIFont boldSystemFontOfSize:20];
         doneLab.text = [model.ProgressState integerValue] == 0 ? @"订单取消" : @"交易完成";
         doneLab.textColor = [UIColor grayColor];
         [self.bottomView addSubview:doneLab];
-        
         self.statusDes.text = nil;
     }
-    
-   
-
 }
+#pragma mark - 实现弹出框－更多
 - (void)setMoreBtnStyle{
     UIButton *moreB = [[UIButton alloc]init];
     [self.bottomView addSubview:moreB];
     self.moreBtn = moreB;
-    if (_model.buttonList.count == 1) {
-       self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-50, 0, 40, 40);
-    }else{
-      self.moreBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width/3, 0, 40, 40);
-
-    }
-        [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    NSLog(@"%f %f", self.moreY, self.bottomView.frame.size.width);
+    self.moreBtn.frame = CGRectMake(/*[UIScreen mainScreen].bounds.size.width -(self.moreY-40)*/self.moreY-40-15, 0, 40, 40);
+    [self.moreBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.moreBtn setTitle:@"更多" forState:UIControlStateNormal];
     [self.moreBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0f]];
     [self.bottomView addSubview:self.moreBtn];
+   
     [self.moreBtn addTarget:self action:@selector(meunmView:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
+
 - (void)meunmView:(UIButton *)down{
     NSLog(@"btnList... %@", _model.btnList);
-    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:)]) {
-        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList];
+    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:andCurrentCell:)]) {
+        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList andCurrentCell:self];
         
     }
-//    else if(_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(didMenumSelectUpBtn:)]){
-//            [_upAndDownDelegate didMenumSelectUpBtn:down];
-//        }
-    
-   
-   
-    
 }
-   
 
 #pragma mark - getter
-- (NSMutableArray *)buttonArr
-{
+- (NSMutableArray *)buttonArr{
     if (!_buttonArr) {
         _buttonArr = [NSMutableArray array];
     }
@@ -452,39 +391,32 @@
 
 #pragma mark - private
 - (void)layoutButtons{
-    
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGSize max = CGSizeMake(MAXFLOAT, MAXFLOAT);
     CGFloat btnW = 0;
-    
+    self.moreY = 0;
     for (int i = 0; i < self.buttonArr.count; i++) {
-        
         LinkButton *btn = self.buttonArr[i];
         CGSize btnSize = [NSString textSizeWithText:btn.text font:[UIFont systemFontOfSize:14] maxSize:max];
         btnW += btnSize.width + 12 + gap;
         CGFloat btnX = screenW - btnW;
         btn.frame = CGRectMake(btnX, 5, btnSize.width + 12, btnSize.height + 12);
+        if (i == self.buttonArr.count-1 && self.model.btnList.count != 0) {
+          self.moreY = btnX;
+          [self setMoreBtnStyle];
+        }
+        NSLog(@"btnX... %f", btnX);
     }
-    
-    
 }
 
-- (void)clickButton:(LinkButton *)sender
-{
-//    [sender setBackgroundColor:[UIColor grayColor]];
-//    sender.showsTouchWhenHighlighted = YES;
-    
-//  [sender setBackgroundImage:[UIImage imageNamed:@"lightgraybg"] forState:UIControlStateHighlighted];
-    
+- (void)clickButton:(LinkButton *)sender{
     if (sender.linkUrl.length) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"orderCellDidClickButton" object:nil userInfo:@{@"linkUrl":sender.linkUrl,@"title":sender.text}];
-        NSLog(@"kkkkk  /////");
     }else{
         if (_orderDelegate && [_orderDelegate respondsToSelector:@selector(checkDetailAtIndex:)]) {
             [_orderDelegate checkDetailAtIndex:self.indexPath.section ];
         }
     }
-   
 }
 
 @end

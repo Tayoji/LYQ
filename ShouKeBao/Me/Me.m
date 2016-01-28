@@ -77,12 +77,14 @@
 @property (nonatomic, strong)NSMutableArray *dataShareArr;
 @property (nonatomic, copy)NSString *IsOpenConsultantApp;
 @property (nonatomic, strong)NSMutableDictionary *ConsultanShareInfo;
-@property (nonatomic, strong) UIView *guideView;
-@property (nonatomic, strong) UIImageView *guideImageView;
+
+@property (nonatomic,strong) UIView *backgroundIV;
+@property (nonatomic,strong) UIImageView *guideView;
+@property (nonatomic,strong) UIImageView *guideRadPacketsm;
+
 @property (nonatomic, copy)NSString *clientMagagerTel;
 
-@property (nonatomic,strong) UIView *RedPacketAlertView;
-@property (nonatomic,strong) UIView *backGroundRPView;
+
 @end
 
 @implementation Me
@@ -94,7 +96,7 @@
     self.title = @"我";
     self.tableView.rowHeight = 50;
     //self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树",@"发票管理"],@[@"账号安全设置"],@[@"勿扰模式",@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
-    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"圈付宝",@"摇钱树",@"专属APP", @"红包",@"我的旅行社",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
+    self.desArr = @[@[@"我的分享"],@[/*@"专属App",*/@"我的旅行社",@"圈付宝",@"摇钱树", @"专属APP",@"抵用券红包",@"发票管理"],/*@[@"账号安全设置"],*//*@"勿扰模式"*/@[@"设置"],@[@"意见反馈",@"关于旅游圈",/*@"评价旅游圈",*/@"检查更新"]];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *loginType = [def objectForKey:@"LoginType"];
     self.isPerson = [loginType integerValue] != 1;
@@ -108,15 +110,16 @@
 //    [self.view addSubview:pro];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.progressView];
     
-    NSString *SKBMeGuide = [def objectForKey:@"NewMeGuide"];
+    NSString *SKBMeGuide = [def objectForKey:@"NewMeGuideRP"];
 
     NSString *NeedGuide = [def objectForKey:@"ThreeDTouch"];
 
     if ([SKBMeGuide integerValue] != 1) {// 是否第一次打开app
        if (![NeedGuide isEqualToString:@"UITouchText.TodaySignIn"]) {
+            [def setObject:@"1" forKey:@"NewMeGuideRP"];
             [self Guide];
+           
         }
-        
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushWithBackGroundMe:) name:@"pushWithBackGroundMe" object:nil];//若程序在前台，直接调用，在后台被点击则调用
 
@@ -132,122 +135,127 @@
 //第一次开机引导
 -(void)Guide
 {
-    self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    _guideView.backgroundColor = [UIColor blackColor];
-    _guideView.alpha = 0.5;
-    self.guideImageView = [[UIImageView alloc] init];
-    [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
-    _guideImageView.userInteractionEnabled = YES;
-   
-    UIButton *GetCashBtn = [[UIButton alloc] init];
-
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){//没有开通旅游顾问
-//       [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
-        if (foureSize) {
-            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash4"];//NewMeGuide
-            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
-
-        }else{
-            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash"];//NewMeGuide
-            if (fiveSize) {
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
-
-            }else if(sixSize){
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
-            }else{
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
-            }
-            if (!GetCashBtn.frame.size.width) {
-                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
-            }
-            
-
-        }
-    }else{
-        if (foureSize) {
-            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash4"];//NewMeGuide
-              GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
-        }else{
-            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash"];//NewMeGuide
-            if (fiveSize) {
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
-            }else if(sixSize){
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
-            }else{
-                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
-                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
-            }
-            if (!GetCashBtn.frame.size.width) {
-                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
-            }
-            
-
-        }
-//        GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
-    }
+//    [[[UIApplication sharedApplication].delegate window]addSubview:self.backgroundIV];
+//    [[[UIApplication sharedApplication].delegate window]addSubview:self.guideView];
+//    self.guideView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    _guideView.backgroundColor = [UIColor blackColor];
+//    _guideView.alpha = 0.5;
+//    self.guideImageView = [[UIImageView alloc] init];
+//    [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click)]];
+//    _guideImageView.userInteractionEnabled = YES;
+//   
+//    UIButton *GetCashBtn = [[UIButton alloc] init];
+//
+//    
+//    if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){//没有开通旅游顾问
+////       [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
+//        if (foureSize) {
+//            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+//            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash4"];//NewMeGuide
+//            GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
+//
+//        }else{
+//            self.guideImageView.image = [UIImage imageNamed:@"ApplyforCash"];//NewMeGuide
+//            if (fiveSize) {
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
+//
+//            }else if(sixSize){
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
+//            }else{
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+//                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
+//            }
+//            if (!GetCashBtn.frame.size.width) {
+//                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+//            }
+//            
+//
+//        }
+//    }else{
+//        if (foureSize) {
+//            self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+//            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash4"];//NewMeGuide
+//              GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2, self.guideImageView.frame.size.width/3+40, 40);
+//        }else{
+//            self.guideImageView.image = [UIImage imageNamed:@"NowGetCash"];//NewMeGuide
+//            if (fiveSize) {
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/3+20 , kScreenSize.width-40, kScreenSize.height/2);
+//            }else if(sixSize){
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/4-5 , kScreenSize.width-40, kScreenSize.height/2);
+//            }else{
+//                self.guideImageView.frame =CGRectMake(20,kScreenSize.height/6 , kScreenSize.width-40, kScreenSize.height/2);
+//                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-8, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+16, 40);
+//            }
+//            if (!GetCashBtn.frame.size.width) {
+//                GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+//            }
+//            
+//
+//        }
+////        GetCashBtn.frame = CGRectMake((self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/3)/2-20, self.guideImageView.frame.size.height/2-10, self.guideImageView.frame.size.width/3+40, 40);
+//    }
+//    
+//    
+//    [GetCashBtn addTarget:self action:@selector(GetcashClick:) forControlEvents:UIControlEventTouchUpInside];
+//    if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
+//        GetCashBtn.tag = 010;
+//        [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
+//    }else{
+//        GetCashBtn.tag = 011;
+//        [GetCashBtn setTitle:@"点击查看领取" forState:UIControlStateNormal];
+//    }
+//    
+//    [GetCashBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [GetCashBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+//    [self.guideImageView addSubview:GetCashBtn];
+//    NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
+//    [guideDefault setObject:@"1" forKey:@"NewMeGuide"];
+//    [guideDefault synchronize];
     
-    
-    [GetCashBtn addTarget:self action:@selector(GetcashClick:) forControlEvents:UIControlEventTouchUpInside];
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]){
-        GetCashBtn.tag = 010;
-        [GetCashBtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
-    }else{
-        GetCashBtn.tag = 011;
-        [GetCashBtn setTitle:@"点击查看领取" forState:UIControlStateNormal];
-    }
-    
-    [GetCashBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [GetCashBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
-    [self.guideImageView addSubview:GetCashBtn];
-    NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
-    [guideDefault setObject:@"1" forKey:@"NewMeGuide"];
-    [guideDefault synchronize];
-    
-    [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
-    [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.backgroundIV];
+    [[[UIApplication sharedApplication].delegate window] addSubview:self.guideView];
+    [[[UIApplication sharedApplication].delegate window]addSubview:self.guideRadPacketsm];
+
 }
--(void)GetcashClick:(UIButton *)btn{
-    [self.guideView removeFromSuperview];
-    [self.guideImageView removeFromSuperview];
-    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
-
-    if (btn.tag == 010) {
-        NSLog(@"跳进没有开通的");
-        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        [MobClick event:@"Me_applyForOpening" attributes:dict];
-        
-        NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
-        exc.clientManagerTel = self.clientMagagerTel;
-        exc.naVC = self.navigationController;
-        [self.navigationController pushViewController:exc animated:YES];
-    }else if(btn.tag == 011){
-        NSLog(@"跳进已经开通的");
-        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        [MobClick event:@"Me_getCashCouponClick" attributes:dict];
-        
-        NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
-        excOpen.firstComeInFromGetcashClickBtn = @"zzm";
-        excOpen.ConsultanShareInfo = self.ConsultanShareInfo;
-        NSLog(@"///// %@", excOpen.ConsultanShareInfo);
-        excOpen.naVC = self.navigationController;
-        [self.navigationController pushViewController:excOpen animated:YES];
-    }
-    
-}
--(void)click
-{
-    CATransition *an1 = [CATransition animation];
-    an1.type = @"rippleEffect";
-    an1.subtype = kCATransitionFromRight;//用kcatransition的类别确定cube翻转方向
-    an1.duration = 0.2;
-    [self.guideImageView.layer addAnimation:an1 forKey:nil];
-    [self.guideImageView removeFromSuperview];
-    [self.guideView removeFromSuperview];
-    
-}
+//-(void)GetcashClick:(UIButton *)btn{
+//    [self.guideView removeFromSuperview];
+//    [self.guideImageView removeFromSuperview];
+//    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+//
+//    if (btn.tag == 010) {
+//        NSLog(@"跳进没有开通的");
+//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//        [MobClick event:@"Me_applyForOpening" attributes:dict];
+//        
+//        NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
+//        exc.clientManagerTel = self.clientMagagerTel;
+//        exc.naVC = self.navigationController;
+//        [self.navigationController pushViewController:exc animated:YES];
+//    }else if(btn.tag == 011){
+//        NSLog(@"跳进已经开通的");
+//        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//        [MobClick event:@"Me_getCashCouponClick" attributes:dict];
+//        
+//        NewOpenExclusiveViewController *excOpen = [[NewOpenExclusiveViewController alloc] init];
+//        excOpen.firstComeInFromGetcashClickBtn = @"zzm";
+//        excOpen.ConsultanShareInfo = self.ConsultanShareInfo;
+//        NSLog(@"///// %@", excOpen.ConsultanShareInfo);
+//        excOpen.naVC = self.navigationController;
+//        [self.navigationController pushViewController:excOpen animated:YES];
+//    }
+//    
+//}
+//-(void)click
+//{
+//    CATransition *an1 = [CATransition animation];
+//    an1.type = @"rippleEffect";
+//    an1.subtype = kCATransitionFromRight;//用kcatransition的类别确定cube翻转方向
+//    an1.duration = 0.2;
+//    [self.guideImageView.layer addAnimation:an1 forKey:nil];
+//    [self.guideImageView removeFromSuperview];
+//    [self.guideView removeFromSuperview];
+//    
+//}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -289,25 +297,25 @@
         [self.navigationController pushViewController:moneyTreeVC animated:YES];
     }
     //新手引导
-    if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
-        [def setObject:@"" forKey:@"jumpToZSApp"];
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
-
-        if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
-            //跳往未开通界面
-            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
-            newExc.naVC = self.navigationController;
-            [self.navigationController pushViewController:newExc animated:YES];
-
-        }else{
-            //跳往已开通界面
-            NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
-            newExc.naVC = self.navigationController;
-            newExc.ConsultanShareInfo = self.ConsultanShareInfo;
-            NSLog(@".... %@", newExc.ConsultanShareInfo);
-            [self.navigationController pushViewController:newExc animated:YES];
-        }
-    }
+//    if ([[def objectForKey:@"jumpToZSApp"] isEqualToString:@"1"]) {
+//        [def setObject:@"" forKey:@"jumpToZSApp"];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstOpenExclusiveVC"];
+//
+//        if ([[def objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {
+//            //跳往未开通界面
+//            NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
+//            newExc.naVC = self.navigationController;
+//            [self.navigationController pushViewController:newExc animated:YES];
+//
+//        }else{
+//            //跳往已开通界面
+//            NewOpenExclusiveViewController *newExc = [[NewOpenExclusiveViewController alloc] init];
+//            newExc.naVC = self.navigationController;
+//            newExc.ConsultanShareInfo = self.ConsultanShareInfo;
+//            NSLog(@".... %@", newExc.ConsultanShareInfo);
+//            [self.navigationController pushViewController:newExc animated:YES];
+//        }
+//    }
 }
 -(void)thirdTouchPushYaoQianShu:(NSNotification *)notiP{
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
@@ -608,10 +616,20 @@
                 cell.imageView.image = [UIImage imageNamed:@"lygw"];
             }else */
             if(indexPath.row == 0){
-                cell.imageView.image = [UIImage imageNamed:@"money"];
-            }else if(indexPath.row == 1){
-               
+                
+                if (self.isPerson) {
+                    cell.imageView.image = [UIImage imageNamed:@"wodelvxingshe"];
+                }else{
+                    cell.textLabel.text = nil;
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
 
+            }else if(indexPath.row == 1){
+                cell.imageView.image = [UIImage imageNamed:@"money"];
+
+
+             
+            }else if(indexPath.row == 2){
                 /**
                  * *摇钱树图片设置
                  **/
@@ -622,9 +640,8 @@
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
-            }else if(indexPath.row == 2){
-            
                 
+            }else if(indexPath.row == 3){
                 cell.imageView.image = [UIImage imageNamed:@"vip"];
                 UILabel *shouKeBaoL;
                 if (kScreenSize.width == 320) {
@@ -649,8 +666,9 @@
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
                     [cell.contentView addSubview:imgView];
                 }
-            }else if(indexPath.row == 3){
+
                 
+            }else if (indexPath.row == 4){
                 if (![[NSUserDefaults standardUserDefaults]boolForKey:@"isFirstOpenExclusiveRedP"]) {
                     UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, 12.5, 55, 23)];
                     imgView.image = [UIImage imageNamed:@"yaoqianshu"];
@@ -659,16 +677,8 @@
                 
                 cell.imageView.image = [UIImage imageNamed:@"RedPacketIcon"];
                 
-            }else if (indexPath.row == 4){
-               
+   
 
-
-                if (self.isPerson) {
-                    cell.imageView.image = [UIImage imageNamed:@"wodelvxingshe"];
-                }else{
-                    cell.textLabel.text = nil;
-                    cell.accessoryType = UITableViewCellAccessoryNone;
-                }
 
             }else if (indexPath.row == 5){
                 cell.imageView.image = [UIImage imageNamed:@"Mebill"];
@@ -739,6 +749,13 @@
                TravelConsultantViewControllerNoShare * TCTVC = [sb instantiateViewControllerWithIdentifier:@"TravelConsultantVCNS"];
                [self.navigationController pushViewController:TCTVC animated:YES];
            }else */if(indexPath.row == 0){
+               MyOrgViewController *myOrg = [sb instantiateViewControllerWithIdentifier:@"MyOrg"];
+               BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+               [MobClick event:@"MeOrgViewClick" attributes:dict];
+               
+               [self.navigationController pushViewController:myOrg animated:YES];
+              
+           }else if(indexPath.row == 1){
                // 圈付宝
                QuanViewController *quan = [[QuanViewController alloc] init];
                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
@@ -746,17 +763,18 @@
                
                [self.navigationController pushViewController:quan animated:YES];
 
-           }else if(indexPath.row == 1){
-              
-               MoneyTreeViewController * moneyTreeVC = [[MoneyTreeViewController alloc]init];
-               moneyTreeVC.webTitle = @"摇钱树";
-               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstFindMoneyTree"];
-               BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-               [MobClick event:@"MeMoenyTreeClick" attributes:dict];
-               [self.navigationController pushViewController:moneyTreeVC animated:YES];
+
+               
+             
 
             }else if(indexPath.row == 2){
-                
+                MoneyTreeViewController * moneyTreeVC = [[MoneyTreeViewController alloc]init];
+                moneyTreeVC.webTitle = @"摇钱树";
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstFindMoneyTree"];
+                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+                [MobClick event:@"MeMoenyTreeClick" attributes:dict];
+                [self.navigationController pushViewController:moneyTreeVC animated:YES];
+            }else if(indexPath.row == 3){
                 BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
                 [MobClick event:@"Me_exclusiveAppClick" attributes:dict];
                 
@@ -791,27 +809,14 @@
                 
                 [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"isFirstOpenExclusiveVC"];
                 
-
-            }else if(indexPath.row == 3){
-
+            }else if(indexPath.row == 4){
                 NSLog(@"点击红包");
                 [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstOpenExclusiveRedP"];
-                if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"1"]) {
+               
                     RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
+                    redPacket.TelGuide = self.clientMagagerTel;
                     [self.navigationController pushViewController:redPacket animated:YES];
-                }else{
-                    [self.view.window addSubview:self.backGroundRPView];
-                    [self.view.window  addSubview:self.RedPacketAlertView];
-                    //                    [[[UIAlertView alloc] initWithTitle:@"没有开通" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: nil]show];
-                }
-
-            }else if(indexPath.row == 4){
-                MyOrgViewController *myOrg = [sb instantiateViewControllerWithIdentifier:@"MyOrg"];
-                BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                [MobClick event:@"MeOrgViewClick" attributes:dict];
-                
-                [self.navigationController pushViewController:myOrg animated:YES];
-                
+               
 
                 
             }else if(indexPath.row == 5){
@@ -1188,65 +1193,117 @@
 
 
 }
--(UIView *)RedPacketAlertView{
-    if (!_RedPacketAlertView) {
-        _RedPacketAlertView = [[UIView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/3, kScreenSize.width-60, 200)];
-        _RedPacketAlertView.layer.masksToBounds = YES;
-        _RedPacketAlertView.layer.cornerRadius = 7;
-        _RedPacketAlertView.backgroundColor = [UIColor whiteColor];
-        UIImageView *HeadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width-60, 200)];
-        HeadImageView.userInteractionEnabled = YES;
-        
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(_RedPacketAlertView.frame.size.width-40, 10, 25, 25)];
-        [btn setImage:[UIImage imageNamed:@"WowOfRedPacketCanal"] forState:UIControlStateNormal];
-        btn.tag = 2002;
-        [btn addTarget:self action:@selector(BtnOfCancal:) forControlEvents:UIControlEventTouchUpInside];
-        [HeadImageView addSubview:btn];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, HeadImageView.frame.size.height/2-20, HeadImageView.frame.size.width-20, 30)];
-        label.text = @"开通专属APP,才能享受此功能!";
-        label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:20];
-        [HeadImageView addSubview:label];
-        UIButton *btn2 = [[UIButton alloc]   initWithFrame:CGRectMake(HeadImageView.frame.size.width/2-70, HeadImageView.frame.size.height-HeadImageView.frame.size.height/3, 140, 40)];
-        [btn2 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];
-        [btn2 addTarget:self action:@selector(BtnOfCancal:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [btn2 setTitle:@"立即申请开通" forState:UIControlStateNormal];
-        btn2.tag = 2001;
-        [btn2 setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [HeadImageView addSubview:btn2];
-        [HeadImageView setImage:[UIImage imageNamed:@"WowOfRedPacket1"]];
-        [_RedPacketAlertView addSubview:HeadImageView];
+-(UIView *)backgroundIV{
+    if (!_backgroundIV) {
+        _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        _backgroundIV.userInteractionEnabled = YES;
+        _backgroundIV.backgroundColor = [UIColor blackColor];
+        _backgroundIV.alpha = 0.4;
     }
-    return _RedPacketAlertView;
+    return _backgroundIV;
 }
--(void)BtnOfCancal:(UIButton *)button{
-    [self.RedPacketAlertView removeFromSuperview];
-    [self.backGroundRPView removeFromSuperview];
-    if (button.tag == 2001) {
-        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-        [MobClick event:@"Me_applyForOpening" attributes:dict];
-        
-        NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
-        exc.clientManagerTel = self.clientMagagerTel;
-        exc.naVC = self.navigationController;
-        [self.navigationController pushViewController:exc animated:YES];
-    }
-//    }else if(button.tag == 2002){
-//        [self.RedPacketAlertView removeFromSuperview];
-//        [self.backGroundRPView removeFromSuperview];
-//    }
+-(void)click1{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    [self.guideRadPacketsm removeFromSuperview];
+    
+}
+-(UIImageView *)guideView{
+    if (!_guideView) {
+        _guideView =[[UIImageView alloc] init];
+        UIImageView *GuideTitImageV = [[UIImageView alloc] init];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] init];
+        UILabel * GuideconLabel = [[UILabel alloc] init];
+        if (foureSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-55, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
-}
--(UIView *)backGroundRPView{
-    if (!_backGroundRPView) {
-        _backGroundRPView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
-        _backGroundRPView.backgroundColor = [UIColor blackColor];
-        _backGroundRPView.alpha = 0.5;
-    }
-    return _backGroundRPView;
-}
+        }else if(fiveSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-50, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
 
+        }else if(sixSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4-30, kScreenSize.width-20, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else{
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4-30, kScreenSize.width-50, 190);
+            GuideTitImageV.frame = CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-65, 125, 130, 40);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideconLabel.font = [UIFont systemFontOfSize:17];
+
+        }
+        
+        _guideView.userInteractionEnabled = YES;
+        [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
+        
+        GuideTitImageV.image = [UIImage imageNamed:@"NewAddRedPMe"];
+        
+        GuideconLabel.text = @"发红包，涨订单，不信来试试？";
+        GuideconLabel.textAlignment = NSTextAlignmentCenter;
+        GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
+        
+        
+        [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [GuideIKnowBtn setTitle:@"立即发放红包" forState:UIControlStateNormal];
+        GuideIKnowBtn.tag = 101;
+        [GuideIKnowBtn addTarget:self action:@selector(guideClick) forControlEvents:UIControlEventTouchUpInside];
+        [GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_guideView addSubview:GuideTitImageV];
+        [_guideView addSubview:GuideconLabel];
+        [_guideView addSubview:GuideIKnowBtn];
+        
+        
+        
+    }
+    return _guideView;
+}
+-(UIImageView *)guideRadPacketsm{
+    if (!_guideRadPacketsm) {
+        _guideRadPacketsm = [[UIImageView alloc] init];
+        if(foureSize){
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-35,  kScreenSize.height/4+160, 70, 70);
+            [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
+        
+        }else if(fiveSize){
+            _guideRadPacketsm.frame = CGRectMake(kScreenSize.width/2-35,  kScreenSize.height/4+160, 70, 70);
+            [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRedPacket4s"]];
+        }else{
+            _guideRadPacketsm.frame = CGRectMake(30, kScreenSize.height/4+170, self.guideView.frame.size.width/2+20, 200);
+             [_guideRadPacketsm setImage:[UIImage imageNamed:@"GuideRadPacketSmall"]];
+        }
+        
+        
+
+    }
+    return _guideRadPacketsm;
+}
+-(void)guideClick{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    [self.guideRadPacketsm removeFromSuperview];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"isFirstOpenExclusiveRedP"];
+    RedPacketMainController *redPacket = [[RedPacketMainController alloc] init];
+    redPacket.TelGuide = self.clientMagagerTel;
+    [self.navigationController pushViewController:redPacket animated:YES];
+    
+}
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
     
     

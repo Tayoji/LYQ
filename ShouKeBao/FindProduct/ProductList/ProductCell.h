@@ -42,6 +42,7 @@
 @property (nonatomic,weak) UIView *line;// xixian
 @property (nonatomic,weak) UIView *sep;// 线条
 @property (nonatomic,weak) UIView *cellView;//
+
 @property (strong, nonatomic) ProductModal *modal;
 
 @property (nonatomic,assign) BOOL isHistory;
@@ -49,8 +50,9 @@
 @property (nonatomic, strong)UIButton * RelatedBtn;//相关产品按钮
 @property (nonatomic, strong)UINavigationController * MylistVCNav;
 
-+(instancetype)cellWithTableView:(UITableView *)tableView;
 
+@property (nonatomic, strong)UILabel *lastScheduleDateLab;//最近班期
++(instancetype)cellWithTableView:(UITableView *)tableView;
 
 
 

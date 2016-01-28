@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MGSwipeTableCell.h"
-
+@class QDMenu;
 @class OrderModel;
 @class OrderCell;
 @class OrderTmpView;
@@ -18,14 +18,13 @@
 @end
 
 @protocol upAndDownBtnDelegate <NSObject>
-- (void)didMenumSelectUpBtn:(UIButton *)upBtn;
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList;
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell;
+- (void)cancleQdMenumView:(QDMenu *)qdMenuView;
 @end
 
 @interface OrderCell : MGSwipeTableCell
 
 @property (nonatomic,strong) OrderModel *model;
-
 @property (nonatomic,strong) NSIndexPath *indexPath;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
@@ -34,4 +33,7 @@
 
 @property (nonatomic,weak) id<OrderCellDelegate> orderDelegate;
 @property (nonatomic,weak) id<upAndDownBtnDelegate>upAndDownDelegate;
+
+// 底部按钮
+@property (weak, nonatomic) UIView *bottomView;
 @end

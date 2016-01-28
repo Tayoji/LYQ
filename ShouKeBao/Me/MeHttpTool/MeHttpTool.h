@@ -11,6 +11,10 @@
 @interface MeHttpTool : NSObject
 
 /**
+ *设置接受业务通知
+ **/
++ (void)setAppSettingInfoSwitchWithParam:(NSDictionary *)param success:(void (^)(id json))success failure:(void (^)(NSError *error))failure;
+/**
  *  获取登录的旅行社信息
  */
 + (void)getBusinessWithsuccess:(void (^)(id json))success failure:(void (^)(NSError *error))failure;

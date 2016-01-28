@@ -14,6 +14,8 @@
 //#import "addCustomerViewController.h"
 #import "AddViewController.h"
 
+#define kScreenSize [UIScreen mainScreen].bounds.size
+
 #import "BatchAddViewController.h"
 #import "MBProgressHUD+MJ.h"
 #import "WMAnimations.h"
@@ -40,6 +42,12 @@
 #import "NSString+FKTools.h"
 #import "UserInfo.h"
 #import "NewExclusiveAppIntroduceViewController.h"
+
+#define foureSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
 //协议传值4:在使用协议之前,必须要签订协议 由Customer签订
 @interface Customers ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,notifiCustomersToReferesh,AddCustomerToReferesh, DeleteCustomerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, transformPerformation, notifiSKBToReferesh, MFMessageComposeViewControllerDelegate>
 
@@ -105,7 +113,12 @@
 - (IBAction)inviteCancleBtn:(id)sender;
 - (IBAction)inviteCustomerBtn:(id)sender;
 @property (nonatomic, copy)NSString *telStr;
+@property (nonatomic, strong)UIBarButtonItem *barItem;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
+//下边声明的是新手引导
+@property (nonatomic,strong) UIView *backgroundIV;
+@property (nonatomic,strong) UIImageView *guideView;
 @end
 
 @implementation Customers
@@ -135,7 +148,8 @@
     self.navigationItem.leftBarButtonItem = nil;
     [self.addNew setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
     [self.importUser setBackgroundColor:[UIColor colorWithRed:13/255.f green:122/255.f blue:255/255.f alpha:1]];
-   
+
+    
     [self.timeBtn setSelected:YES];
     [self customerRightBarItem];
     [self setTable];
@@ -149,8 +163,6 @@
     [self tapGestionToMessVC];
     [self tapGestionToMessVC1];
 }
-
-
 //代理实现邀请弹窗
 - (void)tipInviteViewShow:(NSString *)telStr{
     self.Tip_InviteView.layer.masksToBounds = YES;
@@ -255,7 +267,7 @@
     self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
     self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
     if (self.messageCount >0) {
-        [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
+        [self.bellButton setImage:[UIImage imageNamed:@"iconpingtai"] forState:UIControlStateNormal];
         UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
         redDot.backgroundColor = [UIColor redColor];
         redDot.layer.cornerRadius = 4.0;
@@ -313,6 +325,7 @@
 - (void)popCustomersAction:(UIButton *)button{
     if (self.popFlag == NO) {
         self.popTableview.hidden = NO;
+        self.barItem.enabled = NO;
         [self showShadeView];
         [self.view addSubview:self.popTableview];
         
@@ -320,6 +333,7 @@
         [self.shadeView addGestureRecognizer:tap];
 
     }else{
+        self.barItem.enabled = YES;
         self.popTableview.hidden = YES;
         [self.shadeView removeFromSuperview];
     }
@@ -335,6 +349,7 @@
 
 - (void)closePopTableView{
     self.popFlag = NO;
+    self.barItem.enabled = YES;
     [self.shadeView removeFromSuperview];
     self.popTableview.hidden = YES;
 }
@@ -345,6 +360,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.subView.hidden = YES;
+    self.backgroundView.hidden = YES;
+    self.titleBtn.enabled = YES;
     self.navigationController.navigationBarHidden = NO;
     if (self.isMe == 1) {
         [self setNav];
@@ -420,13 +437,21 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+- (void)setBackgroundView:(UIView *)backgroundView{
+    _backgroundView = backgroundView;
+    UITapGestureRecognizer *Tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subBackGroundView:)];
+    [self.backgroundView addGestureRecognizer:Tap];
+}
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self subViewHidden];
 }
 
 -(void)setSubViewUp{
     if (self.subView.hidden == YES) {
+        self.backgroundView.hidden = NO;
+        [self.view addSubview:self.backgroundView];
         [self.view addSubview:self.subView];
+        self.titleBtn.enabled = NO;
         [UIView animateWithDuration:0.8 animations:^{
             self.subView.alpha = 0;
             self.subView.alpha = 1;
@@ -434,20 +459,31 @@
         }];
     }else if (self.subView.hidden == NO){
         [self subViewHidden];
+        
+
+      
+
     }
+}
+- (void)subBackGroundView:(UITapGestureRecognizer *)tap{
+
+    [self subViewHidden];
 }
 - (void)subViewHidden{
     [UIView animateWithDuration:0.8 animations:^{
         self.subView.alpha = 1;
         self.subView.alpha = 0;
         self.subView.hidden = YES;
+        self.titleBtn.enabled = YES;
+        self.backgroundView.hidden = YES;
+
     }];
 }
 
 #pragma mark - 右边导航栏的方法
 -(void)customerRightBarItem{
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(setSubViewUp)];
-    self.navigationItem.rightBarButtonItem= barItem;
+    self.barItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(setSubViewUp)];
+    self.navigationItem.rightBarButtonItem= self.barItem;
 }
 
 - (IBAction)addNewUser:(id)sender {
@@ -491,8 +527,8 @@
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
     [dic setObject:@7 forKey:@"SortType"];
     [dic setObject:self.searchK forKey:@"SearchKey"];
-    [dic setObject:[NSString stringWithFormat:@"%d", self.customerType]forKey:@"CustomerType"];
-    NSLog(@"self.customerType = %d", self.customerType);
+    [dic setObject:[NSString stringWithFormat:@"%ld", self.customerType]forKey:@"CustomerType"];
+    NSLog(@"self.customerType = %ld", self.customerType);
 
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomerList" params:dic success:^(id json){
         NSLog(@"------管客户json is %@-------",json);
@@ -513,6 +549,15 @@
        
         if (arrs.count == 0){
         }else{
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if (![[defaults objectForKey:@"GuideCustormRadP"]  isEqual: @"1"]) {
+                [defaults setObject:@"1" forKey:@"GuideCustormRadP"];
+                [defaults setObject:@"1" forKey:@"GuideCustdongtaiRAD"];
+                [[[UIApplication sharedApplication].delegate window] addSubview:self.backgroundIV];
+                [[[UIApplication sharedApplication] .delegate window] addSubview:self.guideView];
+                
+            }
+        
             [self.Array addObjectsFromArray:arrs];
            
             for (NSDictionary *dic in json[@"CustomerList"]) {
@@ -532,16 +577,6 @@
                 }
             }
         }
-//        if (self.newsBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.newsBindingCustomArr];
-//        }
-//    
-//        if (self.hadBindingCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.hadBindingCustomArr];
-//        }
-//        if (self.otherCustomArr.count && !self.isDownLoad) {
-//            [self.dataArr addObject:self.otherCustomArr];
-//        }
 
         [self.dataArr removeAllObjects];
         if (self.newsBindingCustomArr.count) {
@@ -602,6 +637,7 @@
 
 #pragma mark - tableView－delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
     if (self.table == tableView) {
        
     }else if (self.popTableview == tableView){
@@ -1146,5 +1182,95 @@
     } else {
         NSLog(@"发送失败");
     }
+}
+-(UIView *)backgroundIV{
+    if (!_backgroundIV) {
+        _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+       [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        _backgroundIV.userInteractionEnabled = YES;
+        _backgroundIV.backgroundColor = [UIColor blackColor];
+        _backgroundIV.alpha = 0.4;
+    }
+    return _backgroundIV;
+}
+-(void)click1{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    
+}
+-(UIImageView *)guideView{
+    if (!_guideView) {
+        _guideView =[[UIImageView alloc] init];
+        UILabel * GuideconLabel = [[UILabel alloc] init];
+        UIButton * GuideIKnowBtn =[[UIButton alloc] init];
+        if (foureSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if (fiveSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 115, 120, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if (sixSize) {
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 30);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+            GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else{
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4, kScreenSize.width-50, 190);
+            GuideconLabel.frame = CGRectMake(10, 70, _guideView.frame.size.width-20, 30);
+            GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-60, 130, 120, 40);
+            GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+            GuideconLabel.font = [UIFont systemFontOfSize:17];
+
+        }
+        _guideView.userInteractionEnabled = YES;
+        [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
+       UIImageView *GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
+        GuideTitImageV.image = [UIImage imageNamed:@"NewCoustormRadP"];
+        
+        
+        GuideconLabel.text = @"客户动态一手掌握，知己知彼主动出击。";
+        GuideconLabel.textAlignment = NSTextAlignmentCenter;
+        GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
+        
+        
+        [GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        GuideIKnowBtn.tag = 101;
+        [GuideIKnowBtn addTarget:self action:@selector(guideClick) forControlEvents:UIControlEventTouchUpInside];
+        [GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_guideView addSubview:GuideTitImageV];
+        [_guideView addSubview:GuideconLabel];
+        [_guideView addSubview:GuideIKnowBtn];
+    }
+    return _guideView;
+}
+-(void)guideClick{
+    [self.backgroundIV removeFromSuperview];
+    [self.guideView removeFromSuperview];
+    NSLog(@"---%@",self.dataArr[0][0]);
+    CustomModel *model = self.dataArr[0][0];
+    CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
+    VC.customVC = self;
+    VC.keyWords = self.searchK;
+    VC.customerID = model.ID;
+    VC.appUserID = @"";
+    VC.AppSkbUserId = model.AppSkbUserId;
+    VC.IsOpenIM = model.IsOpenIM;
+    VC.name = model.Name;
+    VC.model = model;
+    VC.InvitationInfo = self.InvitationInfo;
+    //    NSLog(@"appSkbUserId = %@, %@", appSkbUserId, name);
+    [self.navigationController pushViewController:VC animated:YES];
+
 }
 @end

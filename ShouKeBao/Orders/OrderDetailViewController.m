@@ -28,8 +28,20 @@
 #import "ChatViewController.h"
 #import "AttachmentCollectionView.h"
 #import <CoreImage/CoreImage.h>
+
+#import "WXApiObject.h"
+#import "WXApi.h"
+#import <CommonCrypto/CommonCryptor.h>
+#import "GTMBase64.h"
+#import "NSString+FKTools.h"
+#import "ShareHelper.h"
+
+
+#define secret_key @"1LlYyQq2"
+
+
 //#define urlSuffix @"?isfromapp=1&apptype=1"
-@interface OrderDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2>
+@interface OrderDetailViewController()<UIWebViewDelegate, DelegateToOrder, DelegateToOrder2, notiPopUpBox>
 
 @property (nonatomic,strong) BeseWebView *webView;
 @property (nonatomic,strong) YYAnimationIndicator *indicator;
@@ -43,7 +55,6 @@
 @property(nonatomic,copy) NSString *urlSuffix;
 @property(nonatomic,copy) NSString *urlSuffix2;
 @property (nonatomic, strong)UIBarButtonItem * shareBtnItem;
-@property (nonatomic, strong)NSMutableDictionary *shareInfo;
 @property(nonatomic,assign)BOOL isBack;
 @end
 
@@ -53,6 +64,9 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopIndictor) name:@"stopIndictor" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SuccessPayBack) name:@"SuccessPayBack" object:nil];
+
+    
     [self.view addSubview:self.webView];
 //    UIImage * image = [self createImageWithColor:[UIColor colorWithRed:15/255.0 green:155/255.0 blue:155/255.0 alpha:0.1]];
 //    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
@@ -200,7 +214,8 @@
 -(void)back
 {
     self.isBack = YES;
-    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp();"];
+    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp()"];
+    
     if (isFade.length && [isFade integerValue] == 0){
         // 这个地方上面的js方法自动处理
     }else{
@@ -212,6 +227,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
+    
 }
 -(void)turnOff
 {
@@ -245,8 +261,7 @@
     NSRange range3 = [rightUrl rangeOfString:@"?"];
 
         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isQQReloadView"];
-    
-    if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
+if (![rightUrl myContainsString:@"wxpay"]&&![rightUrl myContainsString:@"objectc:LYQSKBAPP_WeixinPay"]&&![rightUrl myContainsString:@"alipay"]&&![rightUrl myContainsString:@"Alipay"]&&![rightUrl myContainsString:@"QFB/SaveBalance"]) {    if (range3.location == NSNotFound && range.location == NSNotFound) {//没有问号，没有问号后缀
         [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[rightUrl stringByAppendingString:_urlSuffix]]]];
          return YES;
     }else if (range3.location != NSNotFound && range2.location == NSNotFound ){//有问号没有后缀
@@ -257,6 +272,9 @@
         [_indicator startAnimation];
         
     }
+    
+}
+    
     NSLog(@"%@", rightUrl);
     if ([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenCardScanning"]) {
 
@@ -271,8 +289,22 @@
         [_indicator stopAnimationWithLoadText:@"加载成功" withType:YES];
 
         [self LYQSKBAPP_UpdateVisitorCertificate:rightUrl];
+    }else if ([rightUrl rangeOfString:@"objectc:LYQSKBAPP_WeixinPay"].location != NSNotFound) {
+        //从url里面取出加密json串
+        NSString * DESString = [rightUrl componentsSeparatedByString:@"?"][1];
+        //将json串解密
+        NSString * jsonString = [self decryptUseDES:DESString key:secret_key];
+        //将解密后的json串转化成字典
+        NSDictionary * jsonDic = [self dictionaryWithJsonString:jsonString];
+        //用字典请求微信支付
+        NSLog(@"jsonDic = %@", jsonDic);
+        [self WXpaySendRequestWithDic:jsonDic];
+        return NO;
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_UpdateTheContractPic"]){
+        [self LYQSKBAPP_UpdateTheContractPic:rightUrl];
+    }else if([rightUrl myContainsString:@"objectc:LYQSKBAPP_OpenShareGeneral"]){
+        [self LYQSKBAPP_OpenShareGeneral:rightUrl];
     }
-
 
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"MeCancelMyStore" attributes:dict];
@@ -281,6 +313,9 @@
     return YES;
     
 }
+
+#pragma -mark-JS调用原生方法
+
 //js调用原生，调用IM入口；
 - (void)LYQSKBAPP_OpenCustomIM:(NSString *)urlStr{
     
@@ -322,6 +357,7 @@
     }
 
 }
+
 
 //js调原生，并且用js传过来的customerIDs 跳转到上传证件附件页面
 -(void)LYQSKBAPP_UpDateUserPhotos:(NSString *)urlStr{
@@ -394,6 +430,70 @@
         }
     }
 }
+
+
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    //创建正则表达式；pattern规则；
+    NSLog(@"%@", urlStr);
+    if ([urlStr myContainsString:@"?"]) {
+        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    }
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@", resultStr);
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+
+
+//回传合同
+- (void)LYQSKBAPP_UpdateTheContractPic:(NSString *)urlStr{
+    NSLog(@"%@", urlStr);
+    if ([urlStr myContainsString:@"?"]) {
+        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    }
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"ContractPic(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ContractPic(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary * resultDic = [NSString parseJSONStringToNSDictionary:resultStr];
+        
+        
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Customer" bundle:nil];
+        AttachmentCollectionView *AVC = [sb instantiateViewControllerWithIdentifier:@"AttachmentCollectionView"];
+        NSDictionary * adddd = @{@"Urls":@[@"asd", @"asd"]};
+        NSLog(@"%@, %@, %@", resultStr, resultDic, adddd);
+        
+        AVC.pictureList = resultDic[@"Urls"];
+        AVC.fromType = fromTypeUpdateContract;
+        AVC.OrderVC = self;
+        [self.navigationController pushViewController:AVC animated:YES];
+    }
+    
+    
+}
+
+#pragma -mark－－－－－－－－
 
 - (void)doIfInWebWithUrl:(NSString *)rightUrl{
     if ([rightUrl myContainsString:@"Product/ProductDetail"]) {
@@ -653,7 +753,7 @@
 
     
 }
-
+//提交选择游客证件照片的
 - (void)postPicToServer:(NSArray *)PicArray{
     NSDictionary * dic = @{@"OrderVisitorPicArray":PicArray};
     NSString * jsonStr = [dic JSONString];
@@ -662,7 +762,112 @@
 }
 
 
+//提交回传合同 LYQSKBAPP_UpdateTheContractPic_CallBack
+- (void)postContractPicToServer:(NSArray *)PicArray{
+    NSDictionary * dic = @{@"Urls":PicArray};
+    NSString * jsonStr = [dic JSONString];
+    NSLog(@"%@, %@", dic, jsonStr);
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"LYQSKBAPP_UpdateTheContractPic_CallBack(%@, '%@')", @1, jsonStr]];
+}
 
+//微信支付
+
+- (void)WXpaySendRequestWithDic:(NSDictionary *)dic{
+    //此处请求接口；
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = dic[@"partnerid"];
+    request.prepayId= dic[@"prepayid"];
+    request.package = dic[@"package"];
+    request.nonceStr= dic[@"noncestr"];
+    request.timeStamp= [dic[@"timestamp"]intValue];
+    request.sign= dic[@"sign"];
+    [WXApi sendReq:request];
+}
+
+/*字符串加密
+ *参数
+ *plainText : 加密明文
+ *key        : 密钥 64位
+ */
+- (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
+{
+    NSString *ciphertext = nil;
+    const char * textBytes = [plainText UTF8String];
+    NSUInteger dataLength = [plainText length];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String], kCCKeySizeDES,
+                                          iv,
+                                          textBytes, dataLength,
+                                          buffer, 1024,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
+        
+        ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+    }
+    return ciphertext;
+}
+
+//解密
+- (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
+{
+    NSData* cipherData = [GTMBase64 decodeString:cipherText];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    size_t numBytesDecrypted = 0;
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                          kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String],
+                                          kCCKeySizeDES,
+                                          iv,
+                                          [cipherData bytes],
+                                          [cipherData length],
+                                          buffer,
+                                          1024,
+                                          &numBytesDecrypted);
+    NSString* plainText = nil;
+    if (cryptStatus == kCCSuccess) {
+        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+        plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    return plainText;
+}
+//根据json串得到dic
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+
+
+- (void)SuccessPayBack{
+    for (int i = 0; i < 5; i++) {
+        if ([self.webView canGoBack]) {
+            [self.webView goBack];
+        }
+    }
+//    [self loadWithUrl:self.linkUrl];
+    //    [self.webView reload];
+}
 
 @end
 

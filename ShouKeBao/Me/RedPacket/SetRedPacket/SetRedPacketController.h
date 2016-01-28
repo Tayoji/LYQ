@@ -7,19 +7,31 @@
 //
 
 #import "SKViewController.h"
-
+@class EMMessage;
 typedef enum{
     sendRedPacketTypeList,
     sendRedPacketTypeChatVC,
     sendRedPacketTypeCustom
 }SendRedPacketType;
+@protocol SendRedPacketDelegate <NSObject>
+
+- (void)didSendRedPacket:(EMMessage *)tempMessage;
+
+@end
 
 @interface SetRedPacketController : SKViewController
+@property id<SendRedPacketDelegate>delegate;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *ScrollView;
 @property (weak, nonatomic) IBOutlet UITextView *RedPDescribeTextView;
-@property (weak, nonatomic) IBOutlet UITextView *ExitCountryTextView;
-@property (weak, nonatomic) IBOutlet UITextView *InlandTextView;
-@property (weak, nonatomic) IBOutlet UITextView *RimtextView;
+@property (weak, nonatomic) IBOutlet UITextField *ExitCountryTextField;
+@property (weak, nonatomic) IBOutlet UITextField *InlandTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *RimTextField;
+//@property (weak, nonatomic) IBOutlet UITextView *ExitCountryTextView;
+//@property (weak, nonatomic) IBOutlet UITextView *InlandTextView;
+//@property (weak, nonatomic) IBOutlet UITextView *RimtextView;
+
 @property (nonatomic,strong) NSMutableArray *NumOfPeopleArr;//人数
 @property (nonatomic) CGFloat InlandN;//国内游
 @property (nonatomic) CGFloat RimN;//周边

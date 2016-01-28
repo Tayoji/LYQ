@@ -17,11 +17,12 @@
 
 - (IBAction)acceptServiceNotiSwitch:(UISwitch *)sender;
 @property (weak, nonatomic) IBOutlet UIView *setSeviceNotiView;
-@property (nonatomic, copy,)NSString *signStr;
+//@property (nonatomic, copy,)NSString *signStr;
 
 @property (nonatomic,strong) NSUserDefaults *NewsRemind;
 @property (nonatomic,strong) NSUserDefaults *NewsVoiceRemind;
 @property (nonatomic,strong) NSUserDefaults *NewsShakeRemind;
+@property (nonatomic, strong)NSUserDefaults *setSeviceNotiRemind;
 /*
  消息提醒：0,不开启
          1,开启

@@ -17,6 +17,10 @@
 @property (nonatomic,strong) BeseWebView *webView;
 @property (nonatomic,strong) YYAnimationIndicator *indicator;
 
+@property (nonatomic, strong)NSMutableDictionary * shareInfo;
+
+
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 

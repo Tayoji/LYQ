@@ -26,6 +26,12 @@
 #import "ServiceNotifiViewController.h"
 #import "ChoseListViewController.h"
 #import "MBProgressHUD+MJ.h"
+
+#define fourSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewMessageCenterController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, ChatViewControllerDelegate,IChatManagerDelegate, EMCallManagerDelegate>
 @property (nonatomic,strong) NSArray *NameArr;
@@ -40,6 +46,15 @@
 @property (nonatomic,strong) NSMutableArray *searchDataArr;//服务器返回的数据
 @property (nonatomic,strong) UITableView *SearTableView;
 @property (nonatomic,strong) UIButton *cancalBtn;//自定义的取消button
+//下边声明的都是新手引导1.5.0.0
+@property (nonatomic,strong) UIView *backgroundIV;
+@property (nonatomic,strong) UIImageView *guideView;
+@property (nonatomic,strong) UIImageView *GuideTitImageV;
+@property (nonatomic) UILabel *GuideconLabel;
+@property (nonatomic,strong) UIButton *GuideIKnowBtn;
+@property (nonatomic,strong) UIImageView *samllGuideImageV;
+@property (nonatomic) NSInteger AddTapToGuide;//判断新手引导第几个界面
+
 @end
 
 @implementation NewMessageCenterController
@@ -52,7 +67,22 @@
     _tableView.tableFooterView = [[UIView alloc] init];
     
     [self registerNotifications];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    if (![[defaults objectForKey:@"SetRedPacketjumpMesGuide"]  isEqual: @"1"]) {
+        
+        if(![[defaults objectForKey:@"NewGuideRadPacket"]  isEqual: @"1"]){
+                NSLog(@"此处要显示引导页");
+        [defaults setObject:@"1" forKey:@"NewGuideRadPacket"];
+        [[[UIApplication sharedApplication].delegate  window]addSubview:self.backgroundIV];
+        [[[UIApplication sharedApplication].delegate  window] addSubview:self.guideView];
+        //引导页下边的小图标
+        [[[UIApplication sharedApplication].delegate window] addSubview:self.samllGuideImageV];
+             }
+    }else{
+        [defaults setObject:@"0" forKey:@"SetRedPacketjumpMesGuide"];
+    }
+
     
     //[_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"ChatListCell"];
 }
@@ -61,7 +91,6 @@
     [super viewWillAppear:animated];
     [self refreshDataSource];
 }
-
 - (void)loadMessageDataSource{
     
     //如果是来自管客户的界面，只显示IM聊天
@@ -187,7 +216,8 @@
             cell.name = self.NameArr[indexPath.row];
             cell.unreadCount = [model.messageCount intValue];
             cell.detailMsg = model.messageTitle;
-            NSLog(@"...%@", model.messageTitle);
+            NSLog(@"...%@ %@", model.messageTitle, model.dateStr);
+            cell.separatorInset = UIEdgeInsetsMake(0, 50, 0, 0);
             cell.time = model.dateStr;//年货采购节”开年率先登场，新春采购就上旅游圈，一年好运、财运滚滚来 
             if (indexPath.row == 0) {
                 cell.imageView.image = [UIImage imageNamed:@"iconpingtai"];
@@ -214,7 +244,7 @@
         return cell;
     }
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 50)];
-    cell.textLabel.text = @"这是一个测试";
+    cell.textLabel.text = @"";
     return cell;
     
 }
@@ -270,6 +300,8 @@
             }else{
                 ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
                 choseListVC.title = @"每日精选";
+                choseListVC.DateStr = [self.dynamicArray[indexPath.row]dateStr];
+                choseListVC.messageTitle = [self.dynamicArray[indexPath.row]messageTitle];
                 [self.navigationController pushViewController:choseListVC animated:YES];
             }
             
@@ -559,5 +591,137 @@
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+-(UIView *)backgroundIV{
+    if (!_backgroundIV) {
+        _backgroundIV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height)];
+        [_backgroundIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
+        _backgroundIV.userInteractionEnabled = YES;
+        _backgroundIV.backgroundColor = [UIColor blackColor];
+        _backgroundIV.alpha = 0.4;
+    }
+    return _backgroundIV;
+}
+-(void)click1{
+    if (self.GuideIKnowBtn.tag == 101) {
+        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
+        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+        self.GuideIKnowBtn.tag = 102;
+        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
+    }else if (self.GuideIKnowBtn.tag == 102){
+        [self.backgroundIV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.samllGuideImageV removeFromSuperview];
+    }
+   
+    
+}
+-(UIImageView *)guideView{
+    if (!_guideView) {
+        _guideView =[[UIImageView alloc] init];
+        if (fourSize) {
+            _guideView.frame = CGRectMake(5, kScreenSize.height/4, kScreenSize.width-10, 170);
+        }else if(fiveSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 170);
+        }else if(sixSize){
+            _guideView.frame = CGRectMake(10, kScreenSize.height/4, kScreenSize.width-20, 190);
 
+        }else{
+            _guideView.frame = CGRectMake(25, kScreenSize.height/4, kScreenSize.width-50, 190);
+        }
+        _guideView.userInteractionEnabled = YES;
+        [_guideView setImage:[UIImage imageNamed:@"RadPGuideBG"]];
+        
+       [_guideView addSubview:self.GuideIKnowBtn];
+        [_guideView addSubview:self.GuideconLabel];
+        [_guideView addSubview:self.GuideTitImageV];
+    }
+    return _guideView;
+}
+-(UIButton *)GuideIKnowBtn{
+    if (!_GuideIKnowBtn) {
+        _GuideIKnowBtn =[[UIButton alloc] init];
+        if (fourSize) {
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if(fiveSize){
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-50, 125, 100, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
+
+        }else if(sixSize){
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 30);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+
+
+        }else{
+            _GuideIKnowBtn.frame = CGRectMake(_guideView.frame.size.width/2-55, 130, 110, 40);
+            _GuideIKnowBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+
+
+        }
+        [_GuideIKnowBtn setBackgroundImage:[UIImage imageNamed:@"AnomalyBg"] forState:UIControlStateNormal];
+        [_GuideIKnowBtn setTitle:@"我知道了" forState:UIControlStateNormal];
+        _GuideIKnowBtn.tag = 101;
+        [_GuideIKnowBtn addTarget:self action:@selector(guideClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_GuideIKnowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    return _GuideIKnowBtn;
+}
+
+-(UILabel *)GuideconLabel{
+    if (!_GuideconLabel) {
+        if (fourSize) {
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if (fiveSize){
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else if(sixSize){
+            _GuideconLabel.font = [UIFont systemFontOfSize:15];
+
+        }else{
+            _GuideconLabel.font = [UIFont systemFontOfSize:17];
+
+        }
+        _GuideconLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, _guideView.frame.size.width-20, 40)];
+        _GuideconLabel.text = @"关于订单，钱，现金券的信息集中营";
+        _GuideconLabel.numberOfLines = 2;
+        _GuideconLabel.textAlignment = NSTextAlignmentCenter;
+        _GuideconLabel.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
+    }
+    return _GuideconLabel;
+}
+-(UIImageView *)GuideTitImageV{
+    if (!_GuideTitImageV) {
+        _GuideTitImageV = [[UIImageView alloc] initWithFrame:CGRectMake(_guideView.frame.size.width/2-60, 30, 120, 25)];
+        _GuideTitImageV.image = [UIImage imageNamed:@"NewBusiness"];
+    }
+    return _GuideTitImageV;
+}
+-(UIImageView *)samllGuideImageV{
+    if (!_samllGuideImageV) {
+        _samllGuideImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-30, kScreenSize.height/4+195, 60, 60)];
+        [_samllGuideImageV setImage:[UIImage imageNamed:@"NewBusinesSamll"]];
+    }
+    return _samllGuideImageV;
+}
+-(void)guideClick:(UIButton *)button{
+    if (button.tag == 101) {
+        self.GuideTitImageV.image = [UIImage imageNamed:@"NewRadPToday"];
+        self.GuideconLabel.text = @"分享这里的产品下单效率更好哦!";
+        self.GuideIKnowBtn.tag = 102;
+        [self.GuideIKnowBtn setTitle:@"立即查看" forState:UIControlStateNormal];
+        [self.samllGuideImageV setImage:[UIImage imageNamed:@"NewRadPTodaySmall"]];
+    }else if(button.tag == 102){
+        [self.backgroundIV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.samllGuideImageV removeFromSuperview];
+        ChoseListViewController *choseListVC = [[ChoseListViewController alloc]init];
+        choseListVC.title = @"每日精选";
+        [self.navigationController pushViewController:choseListVC animated:YES];
+
+    }
+}
 @end

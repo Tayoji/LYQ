@@ -32,9 +32,8 @@ NSString *const kRouterEventChatCellBubbleTapEventName = @"kRouterEventChatCellB
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bubbleViewPressed:)];
         [self addGestureRecognizer:tap];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor clearColor];
     }
-    
     return self;
 }
 
@@ -56,7 +55,12 @@ NSString *const kRouterEventChatCellBubbleTapEventName = @"kRouterEventChatCellB
         if ([model.message.ext[@"MsgType"]isEqualToString:@"4"]) {
             imageName = @"SendRedPacket";
         }
+        if (_model.isSender && [_model.message.ext[@"MsgType"]isEqualToString:@"3"]) {
+            imageName =  BUBBLE_RIGHTPRODUCT_IMAGE_NAME;
+        }
+
     }
+    
     NSInteger leftCapWidth = isReceiver?BUBBLE_LEFT_LEFT_CAP_WIDTH:BUBBLE_RIGHT_LEFT_CAP_WIDTH;
     NSInteger topCapHeight =  isReceiver?BUBBLE_LEFT_TOP_CAP_HEIGHT:BUBBLE_RIGHT_TOP_CAP_HEIGHT;
 //    UIImage * bgimage = [UIImage imageNamed:@"loginbg"];

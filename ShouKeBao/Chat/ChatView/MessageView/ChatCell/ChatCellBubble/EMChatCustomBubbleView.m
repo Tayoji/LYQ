@@ -29,7 +29,8 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.layer.cornerRadius = 3;
+        self.layer.masksToBounds = YES;
         
     }
     return self;
@@ -45,6 +46,7 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
     [super setModel:model];
     
     if (self.model.message.ext) {
+        [self sizeToFit];
         CGRect frame = self.bounds;
         frame.size.width -= BUBBLE_ARROW_WIDTH;
         frame = CGRectInset(frame, BUBBLE_VIEW_PADDING, BUBBLE_VIEW_PADDING);
@@ -54,29 +56,30 @@ NSString *const kRouterEventOpenRedPacketEventName = @"kRouterEventOpenRedPacket
             frame.origin.x = BUBBLE_VIEW_PADDING + BUBBLE_ARROW_WIDTH;
         }
         frame.origin.y = BUBBLE_VIEW_PADDING;
-        [self sizeToFit];
 
         for (UIView * view in self.subviews) {
-            [view removeFromSuperview];
+            if (![view isKindOfClass:[UIImageView class]]) {
+                [view removeFromSuperview];
+            }
         }
 
         // MsgType = 1 推送产品；
         if ([self.model.message.ext[@"MsgType"]isEqualToString:@"1"]) {
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"3"]){//MsgType = 3 发送产品链接
+            NSLog(@"%@", self.model.message.ext[@"MsgValue"]);
             NSDictionary * dic = @{};
             if ([self.model.message.ext[@"MsgValue"]isKindOfClass:[NSString class]]) {
                 dic = [self parseJSONStringToNSDictionary:self.model.message.ext[@"MsgValue"]];
             }else{
                 dic = self.model.message.ext[@"MsgValue"];
             }
-            NSLog(@"aaaa%d",self.backImageView.hidden);
             self.FKProductModel = [ProductModal modalWithDict:dic];
             FKReceiveProductLinkView  * FKV = [FKReceiveProductLinkView FKProductViewWithModel:self.FKProductModel andFrame:frame];
-//            [self addSubview:FKV];
+            [self addSubview:FKV];
 
         }else if([self.model.message.ext[@"MsgType"]isEqualToString:@"4"]){
             CGRect aframe = self.bounds;
-            aframe.size.width -= 9 ;
+            aframe.size.width -= 4 ;
             aframe = CGRectInset(aframe, 0, 0);
             if (self.model.isSender) {
                 aframe.origin.x = 0;

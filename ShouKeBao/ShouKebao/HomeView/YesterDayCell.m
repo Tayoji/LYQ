@@ -21,8 +21,12 @@
 #import "DayDetail.h"
 #import "NSString+FKTools.h"
 #define gap 10
-@implementation YesterDayCell
+#import "ShareHelper.h"
+@interface YesterDayCell()
+@property (nonatomic, weak)UILabel *lastDateL;
+@end
 
+@implementation YesterDayCell
 + (instancetype)cellWithTableView:(UITableView *)tableView
 {    NSString *cellID = [NSString stringWithFormat:@"%ucell", arc4random()];
         YesterDayCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
@@ -45,96 +49,8 @@
     return self;
 }
 
-- (void)setup
-{
-    //    // 与历史浏览无关的
-    //    UILabel *title = [[UILabel alloc] init];
-    //    title.numberOfLines = 0;
-    //    title.font = [UIFont systemFontOfSize:15];
-    //    [self.contentView addSubview:title];
-    //    self.title = title;
-    //    self.title.numberOfLines = 0;
-    //    self.title.tintColor = [UIColor lightGrayColor];
-    //    UIImageView *icon = [[UIImageView alloc] init];
-    //    [self.contentView addSubview:icon];
-    //    self.icon = icon;
-    //
-    //    /**
-    //     四个label
-    //     */
-    //    UILabel *productNum = [[UILabel alloc] init];
-    //    productNum.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:productNum];
-    //    self.productNum = productNum;
-    //
-    //    UILabel *normalPrice = [[UILabel alloc] init];
-    //    normalPrice.font = [UIFont systemFontOfSize:11];
-    //    //    normalPrice.textAlignment = NSTextAlignmentRight;
-    //    [self.contentView addSubview:normalPrice];
-    //    self.normalPrice = normalPrice;
-    //
-    //    UILabel *cheapPrice = [[UILabel alloc] init];
-    //    cheapPrice.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:cheapPrice];
-    //    self.cheapPrice = cheapPrice;
-    //
-    //    UILabel *profits = [[UILabel alloc] init];
-    //    //    profits.textAlignment = NSTextAlignmentRight;
-    //    profits.font = [UIFont systemFontOfSize:11];
-    //    [self.contentView addSubview:profits];
-    //    self.profits = profits;
-    //
-    //    /**
-    //     底下的三个按钮
-    //     */
-    //    UIButton *jiafanBtn = [[UIButton alloc] init];
-    //    [jiafanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [jiafanBtn setBackgroundImage:[UIImage imageNamed:@"dihesong"] forState:UIControlStateNormal];
-    //    jiafanBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    jiafanBtn.userInteractionEnabled = NO;
-    //    [self.contentView addSubview:jiafanBtn];
-    //    self.jiafanBtn = jiafanBtn;
-    //    UILabel * diLab = [[UILabel alloc]initWithFrame:CGRectMake(4, 0, 15, 15)];
-    //    diLab.text = @"抵";
-    //    diLab.font = [UIFont systemFontOfSize:13.0];
-    //    diLab.textColor = [UIColor redColor];
-    //    [jiafanBtn  addSubview:diLab];
-    //
-    //
-    //    UIButton *quanBtn = [[UIButton alloc] init];
-    //    [quanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [quanBtn setBackgroundImage:[UIImage imageNamed:@"songhedi"] forState:UIControlStateNormal];
-    //    quanBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    quanBtn.userInteractionEnabled = NO;
-    //    [self.contentView addSubview:quanBtn];
-    //    self.quanBtn = quanBtn;
-    //    UILabel * songLab = [[UILabel alloc]initWithFrame:CGRectMake(4, 0, 15, 15)];
-    //    songLab.text = @"送";
-    //    songLab.font = [UIFont systemFontOfSize:13.0];
-    //    songLab.textColor = [UIColor colorWithRed:253/255.0 green:134/255.0 blue:39/255.0 alpha:1.0];
-    //    [quanBtn addSubview:songLab];
-    //
-    //
-    //
-    //
-    //    UIButton *ShanDianBtn = [[UIButton alloc] init];
-    //    [ShanDianBtn setTitleColor:[UIColor colorWithRed:0 green:91/255.0 blue:1 alpha:1] forState:UIControlStateNormal];
-    //    ShanDianBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    //    [ShanDianBtn setBackgroundImage:[UIImage resizedImageWithName:@"chufa"] forState:UIControlStateNormal];
-    //    ShanDianBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    //    ShanDianBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    //    ShanDianBtn.userInteractionEnabled = NO;
-    //    [self.contentView addSubview:ShanDianBtn];
-    //    self.ShanDianBtn = ShanDianBtn;
-    //
-    //    // 闪电
-    //    UIImageView *flash = [[UIImageView alloc] init];
-    //    flash.image = [UIImage imageNamed:@"sandian"];
-    //    [self.contentView addSubview:flash];
-    //    self.flash = flash;
-    //    //
-    
-    /*
+- (void)setup{
+     /*
      历史浏览的内容
      */
     UILabel *time = [[UILabel alloc] init];
@@ -199,6 +115,15 @@
     cheapPrice.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:cheapPrice];
     self.cheapPrice = cheapPrice;
+    
+    UILabel *lastDateL = [[UILabel alloc]init];
+    lastDateL.textColor = [UIColor lightGrayColor];
+    lastDateL.font = [UIFont systemFontOfSize:12.0f];
+    lastDateL.textAlignment = NSTextAlignmentLeft;
+    [self.contentView addSubview:lastDateL];
+    self.lastDateL = lastDateL;
+    
+    
     /**
      4个价格label 编号 抵 送 利 闪电
      */
@@ -273,68 +198,8 @@
     self.shareBtn = btn;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
     [super layoutSubviews];
-    
-    //    CGFloat iconWid = 60;
-    //    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    //    /**
-    //     *  历史控件
-    //     */
-    //    CGFloat timeW = screenW - gap * 2;
-    //    CGFloat timeX = screenW - timeW - gap;
-    //    self.time.frame = CGRectMake(timeX, 5, timeW, 20);
-    //
-    //    CGFloat sepY = CGRectGetMaxY(self.time.frame) + 5;
-    //    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
-    //
-    //    // 其他控件
-    //    CGFloat titleY = 8;
-    //    if (self.isHistory) {
-    //        titleY = CGRectGetMaxY(self.sep.frame) + gap;
-    //    }
-    //    CGFloat titleW = screenW - gap * 2;
-    //    self.title.frame = CGRectMake(gap, titleY, titleW, 45);//产品名称
-    //
-    //    CGFloat iconY = CGRectGetMaxY(self.title.frame) + 8;//图片
-    //    self.icon.frame = CGRectMake(gap, iconY, iconWid, 60);
-    //
-    //    /**
-    //     四个label 产品编号和门市价间隔 15，门市价离右边框间隔15;
-    //     */
-    //    CGFloat pX = CGRectGetMaxX(self.icon.frame) + 8;
-    //    CGFloat pW = (screenW - 120)/ 2;
-    //    self.productNum.frame = CGRectMake(pX, iconY, pW*1.2, 15);//产品编号
-    //
-    //    CGFloat nX = CGRectGetMaxX(self.productNum.frame) ;//门市价
-    //    self.normalPrice.frame = CGRectMake(nX, iconY, pW, 15);
-    //
-    //    CGFloat cY = CGRectGetMaxY(self.normalPrice.frame) + 5;//同行价
-    //    self.cheapPrice.frame = CGRectMake(pX, cY, pW, 15);
-    //
-    //    self.profits.frame = CGRectMake(nX, cY, pW, 15);//利润
-    //
-    //    /**
-    //     底下的三个按钮
-    //     */
-    //    CGFloat jY = CGRectGetMaxY(self.cheapPrice.frame) + 10;
-    //    //默认宽为60
-    //    CGFloat jW = self.fanIsZero ? 60 : 0 ;
-    //    CGFloat qW = self.quanIsZero ? 60 : 0 ;
-    //
-    //    self.jiafanBtn.frame = CGRectMake(pX, jY, jW, 15);//加返按钮
-    //
-    //    CGFloat qX = CGRectGetMaxX(self.jiafanBtn.frame)+5;
-    //    self.quanBtn.frame = CGRectMake(qX, jY, qW, 15);//券
-    //
-    //    // 闪电
-    //    CGFloat fX = CGRectGetMaxX(self.quanBtn.frame)+10;
-    //    CGFloat fW = self.isFlash ? 18 : 0;
-    //    self.flash.frame = CGRectMake(fX, jY, fW, 15);
-    //
-    //    CGFloat sX = CGRectGetMaxX(self.flash.frame) + 10;
-    //    self.ShanDianBtn.frame = CGRectMake(sX, jY - 2, 60, 20);
     
     CGFloat height = self.contentView.bounds.size.height;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
@@ -369,7 +234,7 @@
      门市价 同行价 细分界线
      */
     //门市价
-    CGFloat priceYStart = CGRectGetMaxY(self.title.frame);
+    CGFloat priceYStart = CGRectGetMidY(self.title.frame)+gap*2;
     CGFloat normalWidth = screenW/3;
     CGFloat priceHeight = CGRectGetMaxY(self.icon.frame)/3;
     self.normalPrice.frame = CGRectMake(titleStart, priceYStart, normalWidth, priceHeight);
@@ -377,8 +242,11 @@
     CGFloat samePriceWStart = screenW*3/5;
     CGFloat priceWidth = screenW*2/5-gap;
     self.cheapPrice.frame = CGRectMake(samePriceWStart, priceYStart, priceWidth, priceHeight);
+    
+    self.lastDateL.frame = CGRectMake(titleStart, CGRectGetMidY(self.normalPrice.frame)+5, screenW-titleStart-gap, priceHeight);
+    
     //   细分界线
-    CGFloat lineYS = CGRectGetMaxY(self.normalPrice.frame)+5;
+    CGFloat lineYS = CGRectGetMaxY(self.lastDateL.frame);
     self.line.frame = CGRectMake(titleStart, lineYS, titleW, 0.5);
     
     /**
@@ -457,101 +325,105 @@
 }
 
 
--(void)shareIt
-{
+-(void)shareIt{
     
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"ClickShareAll" attributes:dict];
     NSDictionary *tmp = [StrToDic dicCleanSpaceWithDict:_modal.ShareInfo];
     NSLog(@"-------------tmp is %@----------",tmp);
 
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:tmp[@"Desc"]
-                                       defaultContent:tmp[@"Desc"]
-                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
-                                                title:tmp[@"Title"]
-                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
-                                            mediaType:SSPublishContentMediaTypeNews];
+    if (!tmp.count) {
+        return;
+    }
     
-    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@,%@,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
-    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
-
-    //创建弹出菜单容器
-    id<ISSContainer> container = [ShareSDK container];
-    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+    [[ShareHelper shareHelper]shareWithshareInfo:tmp andType:@"RecommendShareSuccess" andPageUrl:nil];
+   
     
-    //弹出分享菜单
-    [ShareSDK showShareActionSheet:container
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions:nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                [self.warningLab removeFromSuperview];
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
-                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
-                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
-
-                                    [self.warningLab removeFromSuperview];
-                                    
-                                    
-                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-                                    [postDic setObject:@"0" forKey:@"ShareType"];
-                                    if (_modal.ShareInfo[@"Url"]) {
-                                        [postDic setObject:_modal.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
-                                    }
-                                    [postDic setObject:_modal.ShareInfo[@"Url"] forKey:@"PageUrl"];
-                                    if (type ==ShareTypeWeixiSession) {
-                                        [postDic setObject:@"1" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQ){
-                                        [postDic setObject:@"2" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeQQSpace){
-                                        [postDic setObject:@"3" forKey:@"ShareWay"];
-                                    }else if(type == ShareTypeWeixiTimeline){
-                                        [postDic setObject:@"4" forKey:@"ShareWay"];
-                                    }
-
-                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
-                                    } failure:^(NSError *error) {
-                                        
-                                    }];
-                                    //昨日推荐
-                                    if (type == ShareTypeCopy) {
-                                        [MBProgressHUD showSuccess:@"复制成功"];
-                                    }else{
-                                        [MBProgressHUD showSuccess:@"分享成功"];
-                                    }
-                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
-                                        [MBProgressHUD hideHUD];
-                                    });
-                                    
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    [self.warningLab removeFromSuperview];
-                                    NSLog(@"TEXT_ShARE_FAI, 分享失败,错误码:%ld,错误描述:%@",(long)[error errorCode], [error errorDescription]) ;
-                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
-                                        [MobClick event:@"ShareFailAll" attributes:dict];
-
-                                }else if (state == SSResponseStateCancel){
-                                    [self.warningLab removeFromSuperview];
-                                }
-                            }];
     
-    [self addAlert];
+//    //构造分享内容
+//    id<ISSContent> publishContent = [ShareSDK content:tmp[@"Desc"]
+//                                       defaultContent:tmp[@"Desc"]
+//                                                image:[ShareSDK imageWithUrl:tmp[@"Pic"]]
+//                                                title:tmp[@"Title"]
+//                                                  url:tmp[@"Url"]                                          description:tmp[@"Desc"]
+//                                            mediaType:SSPublishContentMediaTypeNews];
+//    
+//    [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@,%@,  %@",tmp[@"Tile"],tmp[@"Desc"],tmp[@"Url"]] image:nil];
+//    [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", tmp[@"Url"]]];
+//
+//    //创建弹出菜单容器
+//    id<ISSContainer> container = [ShareSDK container];
+//    //    [container setIPadContainerWithView:sender  arrowDirect:UIPopoverArrowDirectionUp];
+//    
+//    //弹出分享菜单
+//    [ShareSDK showShareActionSheet:container
+//                         shareList:nil
+//                           content:publishContent
+//                     statusBarTips:YES
+//                       authOptions:nil
+//                      shareOptions:nil
+//                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                [self.warningLab removeFromSuperview];
+//                                if (state == SSResponseStateSuccess)
+//                                {
+//                                    BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                    [MobClick event:@"RecommendShareSuccess" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAll" attributes:dict];
+//                                    [MobClick event:@"ShareSuccessAllJS" attributes:dict counter:3];
+//                                    [MobClick event:@"RecommendShareSuccessAll" attributes:dict];
+//
+//                                    [self.warningLab removeFromSuperview];
+//                                    
+//                                    
+//                                    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+//                                    [postDic setObject:@"0" forKey:@"ShareType"];
+//                                    if (_modal.ShareInfo[@"Url"]) {
+//                                        [postDic setObject:_modal.ShareInfo[@"Url"]  forKey:@"ShareUrl"];
+//                                    }
+//                                    [postDic setObject:_modal.ShareInfo[@"Url"] forKey:@"PageUrl"];
+//                                    if (type ==ShareTypeWeixiSession) {
+//                                        [postDic setObject:@"1" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQ){
+//                                        [postDic setObject:@"2" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeQQSpace){
+//                                        [postDic setObject:@"3" forKey:@"ShareWay"];
+//                                    }else if(type == ShareTypeWeixiTimeline){
+//                                        [postDic setObject:@"4" forKey:@"ShareWay"];
+//                                    }
+//
+//                                    [IWHttpTool postWithURL:@"Common/SaveShareRecord" params:postDic success:^(id json) {
+//                                    } failure:^(NSError *error) {
+//                                        
+//                                    }];
+//                                    //昨日推荐
+//                                    if (type == ShareTypeCopy) {
+//                                        [MBProgressHUD showSuccess:@"复制成功"];
+//                                    }else{
+//                                        [MBProgressHUD showSuccess:@"分享成功"];
+//                                    }
+//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 2.0s后执行block里面的代码
+//                                        [MBProgressHUD hideHUD];
+//                                    });
+//                                    
+//                                }
+//                                else if (state == SSResponseStateFail)
+//                                {
+//                                    [self.warningLab removeFromSuperview];
+//                                    NSLog(@"TEXT_ShARE_FAI, 分享失败,错误码:%ld,错误描述:%@",(long)[error errorCode], [error errorDescription]) ;
+//                                        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+//                                        [MobClick event:@"ShareFailAll" attributes:dict];
+//
+//                                }else if (state == SSResponseStateCancel){
+//                                    [self.warningLab removeFromSuperview];
+//                                }
+//                            }];
+//    
+//    [self addAlert];
     
 }
 
-- (void)setModal:(DayDetail *)modal
-{
-    
+- (void)setModal:(DayDetail *)modal{
     _modal = modal;
-    
     if (!self.isHistory) {
         self.time.hidden = YES;
         self.sep.hidden = YES;
@@ -565,49 +437,12 @@
     //    self.goDateLab.text = [createDate formattedTime];
     self.goDateLab.text = modal.PushDate;
     
-    
     self.fanIsZero = [modal.PersonAlternateCash integerValue];
     self.quanIsZero = [modal.SendCashCoupon integerValue];
-    
-    // self.icon.image = [UIImage imageNamed:modal.PicUrl];
-    NSLog(@"=========%@",modal.PicUrl);
     [self.icon sd_setImageWithURL:[[NSURL alloc] initWithString:modal.PicUrl] placeholderImage:[UIImage imageNamed:@"lvyouquanIcon"]];
     
     
     self.title.text = modal.Name;
-    
-    /**
-     *  四个label
-     */
-    //self.productNum.text = [NSString stringWithFormat:@"产品编号: %@",modal.Code];
-    //    self.normalPrice.text = [NSString stringWithFormat:@"门市价: ￥%@",modal.PersonPrice];
-    //
-    //    NSString *codeStr = [NSString stringWithFormat:@"产品编号: %@",modal.Code];
-    //    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:codeStr];
-    //    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, modal.Code.length + 1)];
-    //    self.productNum.attributedText = str;
-    //    [textStyle textStyleLabel:self.productNum text:codeStr FontNumber:12 AndRange:NSMakeRange(5, modal.Code.length) AndColor:[UIColor blackColor]];
-    //
-    //    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"同行价: ￥%@",modal.PersonPeerPrice]];
-    //    [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(5, modal.PersonPeerPrice.length + 1)];
-    //    [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:201/255.0 green:36/255.0 blue:46/255.0 alpha:1] range:NSMakeRange(5, modal.PersonPeerPrice.length + 1)];
-    //
-    //    self.cheapPrice.attributedText = str1;
-    //    //    [textStyle textStyleLabel:self.cheapPrice text:modal.PersonPeerPrice FontNumber:15 AndRange:NSMakeRange(0, modal.PersonPeerPrice.length+1) AndColor:[UIColor redColor]];
-    //
-    //    NSMutableAttributedString *str2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"利润: ￥%@",modal.PersonProfit]];
-    //    [str2 addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:201/255.0 green:36/255.0 blue:46/255.0 alpha:1] range:NSMakeRange(4, modal.PersonProfit.length + 1)];
-    //    self.profits.attributedText = str2;
-    //
-    //    /**
-    //     *  底部按钮
-    //     */
-    //    [self.jiafanBtn setTitle:[NSString stringWithFormat:@"     ￥%@",modal.PersonAlternateCash] forState:UIControlStateNormal];
-    //    [self.quanBtn setTitle:[NSString stringWithFormat:  @"     ￥%@",modal.SendCashCoupon] forState:UIControlStateNormal];
-    //    [self.ShanDianBtn setTitle:[NSString stringWithFormat:@"%@出发",modal.StartCityName] forState:UIControlStateNormal];
-    //    if ([modal.StartCityName isEqualToString:@"不限"]) {
-    //        [self.ShanDianBtn setTitle:[NSString stringWithFormat:@"%@",modal.StartCityName] forState:UIControlStateNormal];
-    //    }
     
     NSMutableAttributedString *normalStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥%@门市",modal.PersonPrice]];
     [normalStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(0, modal.PersonPrice.length + 1)];
@@ -619,7 +454,7 @@
     [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:23] range:NSMakeRange(1, modal.PersonPeerPrice.length)];
     [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(0, modal.PersonPeerPrice.length+1)];
     self.cheapPrice.attributedText = str1;
-    
+    self.lastDateL.text = [NSString stringWithFormat:@"最近班期：%@", modal.LastScheduleDate];
     
     NSString *codeStr = [NSString stringWithFormat:@"编号: %@",modal.Code];
     self.productNum.text = codeStr;

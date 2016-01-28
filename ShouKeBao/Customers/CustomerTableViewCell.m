@@ -41,12 +41,13 @@
     }else{
         self.redDot.hidden = YES;
     }
-
+    NSLog(@"..%@ %@. %@", model, model.HeadUrl, model.Name);
+   
     self.customerIcon.layer.masksToBounds = YES;
     self.customerIcon.layer.cornerRadius = 20;
-    
-    if (model.HearUrl.length != 0) {
-          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HearUrl]]];
+    NSLog(@".. %@", model.HeadUrl);
+    if (model.HeadUrl.length != 0) {
+          [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", model.HeadUrl]]];
     }else{
         self.customerIcon.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
         NSString *a = [[NSString stringWithFormat:@"%@", model.Name] substringToIndex:1];
@@ -56,7 +57,23 @@
         [self.customerIcon1 setAttributedTitle:aa forState:UIControlStateNormal];
             
     }
-    self.nameL.text = model.Name;
+    
+    if (model.NickName.length != 0) {
+        
+        NSString *nameS = model.Name;
+        NSString *nickNameS = [[@" (" stringByAppendingString:[NSString stringWithFormat:@"%@", model.NickName]]stringByAppendingString:@")"];
+        
+        NSString *ss = [nameS stringByAppendingString:[NSString stringWithFormat:@"%@", nickNameS]];
+        NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",ss]];
+        
+        [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSMakeRange(nameS.length, nickNameS.length)];
+        [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:86.0/225.0f green:86.0/225.0f blue:86.0/225.0f alpha:1] range:NSMakeRange(nameS.length, nickNameS.length)];
+        self.nameL.attributedText = str1;
+    }else{
+        self.nameL.text = model.Name;
+        
+    }
+    
 
     NSString *pattern = @"\\d";//@"[0-9]"
     NSRegularExpression *regular = [[NSRegularExpression alloc]initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];

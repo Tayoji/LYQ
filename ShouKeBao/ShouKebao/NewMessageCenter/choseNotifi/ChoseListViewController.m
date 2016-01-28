@@ -7,20 +7,27 @@
 //
 
 #import "ChoseListViewController.h"
-#import "ProductCell.h"
+#import "TimeTipTableViewCell.h"
+#import "choseSecondTableViewCell.h"
 #import "MGSwipeButton.h"
 #import "SwipeView.h"
 #import "ProduceDetailViewController.h"
 #import "IWHttpTool.h"
 #import "MJRefresh.h"
+#import "MBProgressHUD+MJ.h"
+#import "ChoseModel.h"
+
 #define pageSize 10
 
-@interface ChoseListViewController ()<UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
+@interface ChoseListViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)NSMutableArray *dataArr;
-@property (strong, nonatomic) IBOutlet UIView *choseView;
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
-@property (weak, nonatomic) IBOutlet UILabel *choseL;
-@property (weak, nonatomic) IBOutlet UILabel *choseTextL;
+@property (nonatomic, strong)NSMutableArray *array2;
+
+//当前的分区数组
+@property (nonatomic, strong)NSMutableArray *currentLittleArray;
+@property (nonatomic, strong)NSMutableArray *beforeLittleArray;
+
+@property (nonatomic, strong)NSDictionary *beforeDic;
 
 @property (nonatomic, assign)NSInteger pageIndex;
 @property (nonatomic, assign) NSInteger totalNumber;
@@ -28,6 +35,7 @@
 @property (nonatomic, copy)NSString *Copies;
 @property (nonatomic, copy)NSString *PushDate;
 @property (nonatomic, strong)ProductModal *model;
+@property (weak, nonatomic) IBOutlet UIView *nullImage;
 
 @end
 
@@ -38,66 +46,100 @@
     // Do any additional setup after loading the view from its nib.
     
     [self choseTableView];
-//     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width, /*self.choseTableView.frame.size.height*/1200 + 50);
-//    _choseTableView.frame = CGRectMake(10, 50, self.view.frame.size.width-20, _scrollView.contentSize.height-50);
-//    _choseTableView.scrollEnabled = NO;
-    
-    _choseTableView.tableHeaderView = _choseView;
+    self.choseTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.choseTableView.delegate = self;
+    self.choseTableView.dataSource = self;
     [self initPull];
+ 
+   
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.array2.count*2;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableArray *array = self.array2[indexPath.row/2];
+    if (indexPath.row%2 == 0) {
+        return 50;
+    }
+    return 120*array.count+80;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ProductCell *cell = [ProductCell cellWithTableView:tableView];
-   // self.model = _dataArr[indexPath.row];
-   // cell.modal = model;
-    cell.delegate = self;
-    cell.rightSwipeSettings.transition = MGSwipeTransitionStatic;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //cell.rightButtons = [self createRightButtons:model];
-    
+    NSArray *choseArray = self.array2[indexPath.row/2];
+    if (indexPath.row%2 == 0) {
+       TimeTipTableViewCell *timeTipCell =[TimeTipTableViewCell cellWithTableView:tableView];
+        timeTipCell.modelC = choseArray[0];
+        return timeTipCell;
+    }
+    choseSecondTableViewCell *cell = [choseSecondTableViewCell cellWithTableView:tableView naV:self.navigationController];
+    cell.arrData =self.array2[indexPath.row/2];
+    NSLog(@"%@", self.array2);
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ProduceDetailViewController *produceDetailVC = [[ProduceDetailViewController alloc]init];
-//    produceDetailVC.productId = self.model.productId;
-    [self.navigationController pushViewController:produceDetailVC animated:YES];
-     [self.choseTableView deselectRowAtIndexPath:[self.choseTableView indexPathForSelectedRow] animated:YES];
-}
-
-
 #pragma mark - 数据加载
 - (void)loadChoseListNotifiViewData{
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSString stringWithFormat:@"%d", self.pageIndex] forKey:@"PageIndex"];
     [dic setObject:[NSString stringWithFormat:@"%d", pageSize] forKey:@"PageSize"];
-    
+
     [IWHttpTool postWithURL:@"Customer/GetEveryRecommendProduct" params:dic success:^(id json) {
         NSLog(@",,,,, %@", json);
-        if (self.isRefresh == 1) {
-            [self.dataArr removeAllObjects];
+        if (self.isRefresh) {
+            [self.array2 removeAllObjects];
+            [self.currentLittleArray removeAllObjects];
         }
-        
-//        self.Copies = json[@"AppEveryRecommendProductList"][@"Copies"];
-//        self.PushDate = json[@"AppEveryRecommendProductList"][@"PushDate"];
-//        self.timeTip.text = self.PushDate;
-//        self.choseTextL.text = self.Copies;
-        
-        NSArray *arr = json[@"AppEveryRecommendProductList"]/*[@"Productdetail"]*/;
+        NSArray *arr = json[@"AppEveryRecommendProductList"];
         self.totalNumber = [json[@"TotalCount"] integerValue];
         
-        for (NSDictionary *dic in arr) {
-            ProductModal *model = [ProductModal modalWithDict:dic];
-            [self.dataArr addObject:model];
+        if (self.totalNumber == 0 || arr.count == 0) {
+            self.nullImage.hidden = NO;
+            [self.choseTableView headerEndRefreshing];
+            [self.choseTableView footerEndRefreshing];
+            return;
         }
-        NSLog(@",,,,, %@", self.dataArr);
+
+        
+        for (int i = 0; i<arr.count; i++) {
+            NSDictionary * currentDic = arr[i];
+            NSDictionary * beforeDic = @{};
+            if (i == 0) {
+                if (!self.isRefresh) {
+                    beforeDic = self.beforeDic;
+                }else{
+                    beforeDic = arr[i];
+                }
+            }else{
+                beforeDic = arr[i-1];
+                self.beforeDic = currentDic;
+            }
+            NSLog(@"%@---%@", currentDic, beforeDic);
+            ChoseModel *currentModel = [ChoseModel modalWithDict:currentDic];
+            ChoseModel *beforeModel = [ChoseModel modalWithDict:beforeDic];
+
+            if (![currentModel.PushDate isEqualToString:beforeModel.PushDate]) {
+                if (!self.isRefresh) {
+                    [self.array2 removeObject:self.array2.lastObject];
+                }
+                [self.array2 addObject:[self.currentLittleArray mutableCopy]];
+                [self.currentLittleArray removeAllObjects];
+            }
+            [self.currentLittleArray addObject:currentModel];
+            if (i == arr.count-1) {
+                ChoseModel* currentArrModel = self.currentLittleArray[0];
+                ChoseModel* beforeArrModel = self.array2.lastObject[0];
+                if ([currentArrModel.PushDate isEqualToString:beforeArrModel.PushDate]) {
+                    [self.array2 removeObject:self.array2.lastObject];
+                }
+                [self.array2 addObject:[self.currentLittleArray mutableCopy]];
+            }
+        }
+          NSLog(@"array2===%@ %@...  %@", self.array2, self.currentLittleArray, self.beforeLittleArray);
+
+        
         [self.choseTableView reloadData];
         [self.choseTableView headerEndRefreshing];
         [self.choseTableView footerEndRefreshing];
@@ -110,36 +152,8 @@
 
 
 
-- (NSArray *)createRightButtons:(ProductModal *)model{
-    NSMutableArray * result = [NSMutableArray array];
-    UIColor * colors[2] = {[UIColor clearColor], [UIColor colorWithRed:232/255.0 green:234/255.0 blue:235/255.0 alpha:1]};
-    for (int i = 0; i < 2; i ++){
-        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:nil backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
-            NSLog(@"Convenience callback received (right). %d",i);
-            return YES;
-        }];
-        if (i == 0){
-            NSString *img = [model.IsFavorites isEqualToString:@"1"] ? @"uncollection_icon" : @"collection_icon";
-            [button setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
-        }else{
-            button.enabled = NO;
-        }
-        button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-        [button setTitleColor:[UIColor colorWithRed:3/255.0 green:3/255.0 blue:3/255.0 alpha:1] forState:UIControlStateNormal];
-        CGRect frame = button.frame;
-        frame.size.height = 120;
-        frame.size.width = i == 1 ? 140 : 42;
-        button.frame = frame;
-        if (i == 1) {
-            SwipeView *swipe = [SwipeView addSubViewLable:button Model:model];
-            [button addSubview:swipe];
-        }
-        [result addObject:button];
-    }
-    return result;
-}
+#pragma mark - 刷新
 -(void)initPull{
-    self.pageIndex = 1;
     [self.choseTableView addHeaderWithTarget:self action:@selector(headPull)dateKey:nil];
     [self.choseTableView headerBeginRefreshing];
     [self.choseTableView addFooterWithTarget:self action:@selector(foodPull)];
@@ -150,13 +164,13 @@
     self.choseTableView.footerRefreshingText = @"正在刷新";
 }
 -(void)headPull{
-    
+    self.isRefresh = YES;
+    self.pageIndex = 1;
     [self loadChoseListNotifiViewData];
-    self.isRefresh = 1;
     
 }
 - (void)foodPull{
-    self.isRefresh = 0;
+    self.isRefresh = NO;
     self.pageIndex++;
     if (self.pageIndex  > [self getTotalPage]) {
         [self.choseTableView footerEndRefreshing];
@@ -177,33 +191,37 @@
 
 
 
-
+#pragma mark 初始化
 - (NSMutableArray *)dataArr{
     if (!_dataArr) {
         _dataArr = [NSMutableArray array];
     }
     return _dataArr;
 }
-
-
-- (void)setTimeTip:(UILabel *)timeTip{
-    _timeTip = timeTip;
-    _timeTip.layer.masksToBounds = YES;
-    _timeTip.layer.cornerRadius = 5;
-    
+- (NSMutableArray *)array2{
+    if (!_array2) {
+        _array2 = [NSMutableArray array];
+    }
+    return _array2;
 }
-- (void)setIcon:(UIImageView *)icon{
-    _icon = icon;
-    _icon.layer.masksToBounds = YES;
-    _icon.layer.cornerRadius = 15;
+
+-(NSMutableArray *)currentLittleArray{
+    if (!_currentLittleArray) {
+        _currentLittleArray = [NSMutableArray array];
+    }
+    return _currentLittleArray;
 }
+-(NSMutableArray *)beforeLittleArray{
+    if (!_beforeLittleArray) {
+        _beforeLittleArray = [NSMutableArray array];
+    }
+    return _beforeLittleArray;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setBackGroundView:(UIView *)backGroundView{
-    _backGroundView = backGroundView;
-//    _backGroundView.backgroundColor = [UIColor colorWithRed:235.0/225.0f green:235.0/225.0f blue:235.0/225.0f alpha:1];
-}
+
 @end

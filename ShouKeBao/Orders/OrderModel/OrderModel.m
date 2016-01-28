@@ -60,41 +60,41 @@
         
         //获取OrderId用于再次请求后台数据；
         self.OrderId = dic[@"OrderId"];
-        
+#warning 1.4版本用法
         // 返回底部按钮组
 //        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
 //            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
 //            [self.buttonList addObject:btn];
 //        }
-        
-        
-        
-        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
-            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
-            
-            if (![btn.color isEqual:[UIColor configureColorWithNum:1]] || [btn.text isEqualToString:@"订单催办"]) {//将一级现实放在数组外里
-                [self.buttonList addObject:btn];
+  
+#warning 指定写法
+//        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
+//            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
+//            
+//            if ([btn.text isEqualToString:@"申请合同"]|| [btn.text isEqualToString:@"申请退款"] ||[btn.text isEqualToString:@"确认单"] ) {//将二级实现放在数组最里
+//                [self.btnList addObject:btn];
+//            }else{
+//                [self.buttonList addObject:btn];
+//            }
+//        }
+#warning 按给出数据先后顺序
+        NSMutableArray *arr = dic[@"ButtonList"];
+        for (int i = 0; i < arr.count; i++) {
+            ButtonList *btn = [ButtonList buttonListWithDict:arr[i]];
+            if (i > 1) {
+                [self.btnList addObject:btn];
             }else{
-                 [self.btnList addObject:btn];
+                [self.buttonList addObject:btn];
             }
         }
-        
         if (self.btnList.count) {
-             [self.buttonList addObject:self.btnList];//将二级现实放在数组里作为一个元素
+             [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
         }
-        
-        NSLog(@"... %@ ...%@", self.buttonList, self.btnList);
-        
-        
-        
-        
-        
     }
     return self;
 }
 
-- (NSString *)Code
-{
+- (NSString *)Code{
     return [NSString stringWithFormat:@"订单号:%@",_Code];
 }
 

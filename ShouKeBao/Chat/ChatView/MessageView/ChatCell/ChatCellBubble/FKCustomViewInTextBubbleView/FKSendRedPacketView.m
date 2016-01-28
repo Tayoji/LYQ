@@ -21,8 +21,8 @@
 }
 - (void)setUpSubViewsWithFrame:(CGRect)frame{//237 253 73
     
-    UIView * backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 90)];
-    backgroundView.backgroundColor = [UIColor colorWithRed:237/255.0 green:153/255.0 blue:73/255.0 alpha:1.0];
+    UIView * backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width - 3, 90)];
+    backgroundView.backgroundColor = [UIColor colorWithRed:255/255.0 green:153/255.0 blue:0/255.0 alpha:1.0];
     [self addSubview:backgroundView];
     
     UIImageView * iconView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 54, 60)];

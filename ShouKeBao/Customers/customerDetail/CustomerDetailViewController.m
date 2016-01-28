@@ -35,11 +35,15 @@
     }
     return _dataArr;
 }
+- (void)setCustomerNameLa:(UITextField *)customerNameLa{
+    _customerNameLa = customerNameLa;
+//     [[UITextField appearance] setTintColor:[UIColor lightGrayColor]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"客户详情";
     self.tableView.delegate = self;
-   // [self.SetRemindBtnOutlet setHighlighted:NO];
     
     [self loadCustomerDetailData];
     if (self.note.text == nil) {
@@ -71,7 +75,7 @@
 }
 
 #pragma -mark 编辑用户资料后通知更新
-- (void)refreshCustomerInfoWithName:(NSString *)name andQQ:(NSString *)qq andWeChat:(NSString *)weChat andPhone:(NSString *)phone andCardID:(NSString *)cardID andBirthDate:(NSString *)birthdate andNationablity:(NSString *)nationablity andNation:(NSString *)nation andPassportStart:(NSString *)passPortStart andPassPortAddress:(NSString *)passPortAddress andPassPortEnd:(NSString *)passPortEnd andAddress:(NSString *)address andPassport:(NSString *)passPort andNote:(NSString *)note{
+- (void)refreshCustomerInfoWithName:(NSString *)name andQQ:(NSString *)qq andWeChat:(NSString *)weChat andPhone:(NSString *)phone andCardID:(NSString *)cardID andBirthDate:(NSString *)birthdate andNationablity:(NSString *)nationablity andNation:(NSString *)nation andPassportStart:(NSString *)passPortStart andPassPortAddress:(NSString *)passPortAddress andPassPortEnd:(NSString *)passPortEnd andAddress:(NSString *)address andPassport:(NSString *)passPort andNote:(NSString *)note nickName:(NSString *)nickName{
     self.QQ.text = qq;
     self.weChat.text = weChat;
     self.tele.text = phone;
@@ -87,6 +91,7 @@
     self.pasportInUseDay.text = passPortEnd;
     self.passPortId.text = passPort;
     self.livingAddress.text = address;
+    self.nickNameF.text = nickName;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -261,18 +266,18 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     NSString *appSkbUserID = self.AppSkbUserID;
-    NSLog(@"%@", self.AppSkbUserID);
-
     [dic setObject:self.customerId forKey:@"CustomerID"];
     [dic setObject:appSkbUserID forKey:@"AppSkbUserID"];
+     NSLog(@"%@",dic);
     [IWHttpTool WMpostWithURL:@"/Customer/GetCustomer" params:dic success:^(id json){
         NSLog(@"------管客户详情json is %@",json);
-        
-         NSDictionary *dic = json[@"Customer"];
-        self.customerId = dic[@"ID"];
-        CustomModel *customerDetail = [CustomModel modalWithDict:dic];
-        [self.dataArr addObject:customerDetail];
-        [self setSubViews];        
+        if ([json[@"IsSuccess"]isEqualToString:@"1"]) {
+            NSDictionary *dic = json[@"Customer"];
+            self.customerId = dic[@"ID"];
+            CustomModel *customerDetail = [CustomModel modalWithDict:dic];
+            [self.dataArr addObject:customerDetail];
+            [self setSubViews];
+        }
         hudView.labelText = @"加载成功...";
         [hudView hide:YES afterDelay:0.4];
     } failure:^(NSError *error) {
@@ -281,28 +286,33 @@
 }
 
 - (void)setCustomerIconActin{
-    UIImageView *customerIm = [[UIImageView alloc]initWithFrame:CGRectMake(230*Width, 30*Height, 60, 60)];
-    [self.tableView addSubview:customerIm];
-    self.customerIcon = customerIm;
     
-    self.customerIcon.layer.masksToBounds = YES;
-    self.customerIcon.layer.cornerRadius = 30;
-    if ([[self.dataArr[0]HearUrl] isEqualToString:@""]|| [self.dataArr[0]HearUrl].length == 0) {
-        self.customerIcon.image = [UIImage imageNamed:@"userB"];        
-        UIGraphicsBeginImageContextWithOptions(self.customerIcon.image.size, NO, 0.0);
-        [self.customerIcon.image drawAtPoint:CGPointZero];
+    UIButton *customerIm = [UIButton buttonWithType:UIButtonTypeCustom];
+    customerIm.frame = CGRectMake(230*Width, 30*Height, 60, 60);
+    [self.tableView addSubview:customerIm];
+    self.customerIconB = customerIm;
+    UILabel *nameLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    UIImageView *nameima = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    
+    
+    self.customerIconB.layer.masksToBounds = YES;
+    self.customerIconB.layer.cornerRadius = 30;
+    [self.customerIconB.layer setBorderWidth:2.0];
+    [self.customerIconB.layer setBorderColor:[[UIColor whiteColor]CGColor]];
+    
+    if ([[self.dataArr[0]HeadUrl] isEqualToString:@""]|| [self.dataArr[0]HeadUrl].length == 0) {
+        [self.customerIconB addSubview:nameLable];
+        
+        self.customerIconB.backgroundColor = [UIColor colorWithRed:0/225.0f green:173.0/225.0f blue:239.0/225.0f alpha:1];
          NSString *text = [[NSString stringWithFormat:@"%@", [self.dataArr[0]Name]] substringToIndex:1];
-        NSDictionary *dict = @{
-                               NSFontAttributeName:[UIFont systemFontOfSize:70.0f],
-                               NSForegroundColorAttributeName:[UIColor whiteColor]
-                               };
-        NSLog(@"text =  %@", text);
-        [text drawAtPoint:CGPointMake(35, 30) withAttributes:dict];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        self.customerIcon.image = newImage;
+        NSMutableAttributedString *aa = [[NSMutableAttributedString alloc] initWithString:text];
+        [aa addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:25] range:NSMakeRange(0, 1)];
+        [aa addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 1)];
+        [self.customerIconB setAttributedTitle:aa forState:UIControlStateNormal];
+
     }else{
-       [self.customerIcon sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HearUrl]]];
+        [self.customerIconB addSubview:nameima];
+        [nameima sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HeadUrl]]];
     }
     
     
@@ -315,7 +325,7 @@
     self.tele.text = [self.dataArr[0]Mobile];/*self.teleStr;*/
     self.note.text = [self.dataArr[0]Remark];/*self.noteStr;*/
     self.customerNameLa.text = [self.dataArr[0]Name];/*self.userNameStr;*/
-    
+    self.nickNameF.text = [self.dataArr[0]NickName];
     self.passPortId.text = [self.dataArr[0]PassportNum];
     self.userMessageID.text = [self.dataArr[0]CardNum];
     self.bornDay.text = [self.dataArr[0]BirthDay];

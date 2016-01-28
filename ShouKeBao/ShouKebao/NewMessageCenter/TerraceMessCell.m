@@ -12,6 +12,10 @@
 @implementation TerraceMessCell
 
 - (void)awakeFromNib {
+    self.layer.cornerRadius = 5;
+    self.layer.masksToBounds = YES;
+    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.layer.borderWidth = 1;
     // Initialization code
 }
 

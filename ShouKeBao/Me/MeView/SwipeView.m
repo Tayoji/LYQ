@@ -22,20 +22,20 @@
 {self = [super initWithFrame:frame];
     if (self) {
         self.lastScheduleDate = [[UILabel alloc]init];
-        self.lastScheduleDate.font = [UIFont systemFontOfSize:13];
+        self.lastScheduleDate.font = [UIFont systemFontOfSize:12];
         self.lastScheduleDate.textColor = [UIColor colorWithRed:3/255.0 green:3/255.0 blue:3/255.0 alpha:1];
         
         self.lastScheduleDateStr = [[UILabel alloc]init];
-        self.lastScheduleDateStr.font = [UIFont systemFontOfSize:12];
+        self.lastScheduleDateStr.font = [UIFont systemFontOfSize:10];
         self.lastScheduleDateStr.textColor = [UIColor grayColor];
         self.lastScheduleDateStr.numberOfLines = 0;
         
         self.SupplierName = [[UILabel alloc]init];
-        self.SupplierName.font = [UIFont systemFontOfSize:13];
+        self.SupplierName.font = [UIFont systemFontOfSize:12];
         self.SupplierName.textColor = [UIColor colorWithRed:3/255.0 green:3/255.0 blue:3/255.0 alpha:1];
         
         self.SupplierNameStr = [[UILabel alloc]init];
-        self.SupplierNameStr.font = [UIFont systemFontOfSize:12];
+        self.SupplierNameStr.font = [UIFont systemFontOfSize:10];
         self.SupplierNameStr.textColor = [UIColor grayColor];
         self.SupplierNameStr.numberOfLines = 0;
         

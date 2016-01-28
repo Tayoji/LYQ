@@ -9,6 +9,5 @@
 #import "BaseWebViewController.h"
 
 @interface MoneyTreeViewController : BaseWebViewController
-@property (nonatomic, strong)NSMutableDictionary * shareInfo;
 
 @end

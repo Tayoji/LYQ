@@ -33,9 +33,16 @@
     CGFloat insets = (self.frame.size.width - 4 * CHAT_BUTTON_SIZE) / 5;
     
     _photoButton =[UIButton buttonWithType:UIButtonTypeCustom];
-    [_photoButton setFrame:CGRectMake(insets, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+    [_photoButton setFrame:CGRectMake(insets, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE + 15)];
     [_photoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_photo"] forState:UIControlStateNormal];
-    [_photoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_photoSelected"] forState:UIControlStateHighlighted];
+    [_photoButton setTitle:@"照片" forState:UIControlStateNormal];
+    //设置图片等的文字偏移量
+    _photoButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,15,0);
+    _photoButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    _photoButton.titleEdgeInsets = UIEdgeInsetsMake(55, -45, 0, 0);
+    [_photoButton setTitleColor:[UIColor colorWithRed:0x66/255.0 green:0x66/255.0 blue:0x66/255.0 alpha:1.0] forState:UIControlStateNormal];
+    _photoButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    [_photoButton setImage:[UIImage imageNamed:@"chatBar_colorMore_photoSelected"] forState:UIControlStateHighlighted];
     [_photoButton addTarget:self action:@selector(photoAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_photoButton];
     
@@ -47,18 +54,37 @@
 //    [self addSubview:_locationButton];
     
     _takePicButton =[UIButton buttonWithType:UIButtonTypeCustom];
-    [_takePicButton setFrame:CGRectMake(insets * 2 + CHAT_BUTTON_SIZE, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+    [_takePicButton setFrame:CGRectMake(insets * 2 + CHAT_BUTTON_SIZE, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE + 15)];
     [_takePicButton setImage:[UIImage imageNamed:@"chatBar_colorMore_camera"] forState:UIControlStateNormal];
-    [_takePicButton setImage:[UIImage imageNamed:@"chatBar_colorMore_cameraSelected"] forState:UIControlStateHighlighted];
+    [_takePicButton setTitle:@"拍摄" forState:UIControlStateNormal];
+    
+    _takePicButton.imageEdgeInsets = UIEdgeInsetsMake(5,5,15,0);
+    _takePicButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    _takePicButton.titleEdgeInsets = UIEdgeInsetsMake(55, -45, 0, 0);
+    [_takePicButton setTitleColor:[UIColor colorWithRed:0x66/255.0 green:0x66/255.0 blue:0x66/255.0 alpha:1.0] forState:UIControlStateNormal];
+    _takePicButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //    [_takePicButton setImage:[UIImage imageNamed:@"chatBar_colorMore_cameraSelected"] forState:UIControlStateHighlighted];
     [_takePicButton addTarget:self action:@selector(takePicAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_takePicButton];
     
 //fkfk
     _SendRedPacket =[UIButton buttonWithType:UIButtonTypeCustom];
-    [_SendRedPacket setFrame:CGRectMake(insets * 3 + CHAT_BUTTON_SIZE*2, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE)];
+    [_SendRedPacket setFrame:CGRectMake(insets * 3 + CHAT_BUTTON_SIZE*2, 10, CHAT_BUTTON_SIZE , CHAT_BUTTON_SIZE +15)];
     [_SendRedPacket setImage:[UIImage imageNamed:@"SendRedPacket2"] forState:UIControlStateNormal];
     [_SendRedPacket setImage:[UIImage imageNamed:@"SendRedPacket2"] forState:UIControlStateHighlighted];
+    [_SendRedPacket setTitle:@"红包" forState:UIControlStateNormal];
+
+    
     [_SendRedPacket addTarget:self action:@selector(takeRedPacketAction) forControlEvents:UIControlEventTouchUpInside];
+    //设置图片等的文字偏移量
+    _SendRedPacket.imageEdgeInsets = UIEdgeInsetsMake(5,5,15,0);
+    _SendRedPacket.titleLabel.font = [UIFont systemFontOfSize:14];
+    _SendRedPacket.titleEdgeInsets = UIEdgeInsetsMake(55, -45, 0, 0);
+    [_SendRedPacket setTitleColor:[UIColor colorWithRed:0x66/255.0 green:0x66/255.0 blue:0x66/255.0 alpha:1.0] forState:UIControlStateNormal];
+    _SendRedPacket.titleLabel.textAlignment = NSTextAlignmentCenter;
+
+    
     [self addSubview:_SendRedPacket];
 
     

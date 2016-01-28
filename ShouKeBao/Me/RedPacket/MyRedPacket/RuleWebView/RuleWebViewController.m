@@ -18,16 +18,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.s
     self.navigationController.navigationBarHidden = NO;
-//    [self.view addSubview:self.WebView];
-//    [self.WebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"www.baidu.com"]]];
     
 }
-//-(UIWebView *)WebView{
-//    if (!_WebView) {
-//        _WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0,kScreenSize.width, kScreenSize.height-64)];
-//    }
-//    return _WebView;
-//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

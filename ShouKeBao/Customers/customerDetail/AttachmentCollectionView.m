@@ -34,7 +34,11 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"证件附件";
+    if (self.fromType == fromTypeUpdateContract) {
+        self.title = @"上传合同";
+    }else{
+        self.title = @"证件附件";
+    }
     [self loadData];
     [self baseSetUp];
     [self setUpRightButton];
@@ -79,6 +83,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     }
 }
 
+
+#pragma - mark - 加载数据
 -(void)loadData
 {
     MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
@@ -94,6 +100,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self loadDateFromCustom];
     }else if (self.fromType == fromTypeOrderDetail){
         [self loadDateFromOrderDetail];
+    }else if (self.fromType == fromTypeUpdateContract){
+        [self loadDateFromUpdateContract];
     }
 }
 -(void)loadDateFromCustom{
@@ -130,6 +138,16 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         
     }];
 }
+
+- (void)loadDateFromUpdateContract{
+    NSLog(@"%@", self.pictureList.class);
+    self.dataSource = [NSMutableArray arrayWithArray:self.pictureList];
+    self.bigPicUrlArray = [NSMutableArray arrayWithArray:self.pictureList];
+    [self.collectionView reloadData];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
+}
+#pragma - mark - －－－－－－－－－
+
 -(NSMutableArray *)dataSource
 {
     if (_dataSource == nil) {
@@ -186,6 +204,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
             [self upDateFromCustom];
         }else if (self.fromType == fromTypeOrderDetail){
             [self upDateFromOrderDetail];
+        }else if (self.fromType == fromTypeUpdateContract){
+            [self upDateContractPic];
         }
     }
 }
@@ -197,6 +217,9 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     } failure:^(NSError *error) {
     }];
 }
+
+
+//上传游客证件
 - (void)upDateFromOrderDetail{
     [IWHttpTool postWithURL:@"/Order/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
         [MBProgressHUD showSuccess:@"保存成功"];
@@ -207,6 +230,18 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     } failure:^(NSError *error) {
     }];
 }
+
+//上传合同
+- (void)upDateContractPic{
+
+    @synchronized(self) {
+        [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

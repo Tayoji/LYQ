@@ -12,6 +12,8 @@
 #import "NoRedPacketDetailCell.h"
 #import "UIScrollView+MJRefresh.h"
 #import "UIImageView+WebCache.h"
+#import "OrderDetailViewController.h"
+
 #define kScreenSize [UIScreen mainScreen].bounds.size
 @interface MyRedPDetailController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic)UILabel *TitleLabel;
@@ -50,12 +52,12 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"NavTest"] forBarMetrics:UIBarMetricsDefault];
         self.title = @"我的红包";
     //填充头区域数据
-    NSLog(@"--%@",self.lastData);
-    self.TitleLabel.text = self.lastData[@"Title"];
-    self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",self.lastData[@"PriceTotal"]];
-    self.LuckContentLabel.text = self.lastData[@"LuckContent"];
-    self.DateTimeLabel.text = self.lastData[@"DateTime"];
-    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"GetCount"],self.lastData[@"UnGetCount"]];
+//    NSLog(@"--%@",self.lastData);
+//    self.TitleLabel.text = self.lastData[@"Title"];
+//    self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",self.lastData[@"PriceTotal"]];
+//    self.LuckContentLabel.text = self.lastData[@"LuckContent"];
+//    self.DateTimeLabel.text = self.lastData[@"DateTime"];
+//    self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",self.lastData[@"GetCount"],self.lastData[@"UnGetCount"]];
     [self loadDataSource];
     [self.view addSubview:self.tableView];
     [self iniHeader];
@@ -89,10 +91,10 @@
 }
 
 -(void)loadDataSource{
-    NSString *IDsStr = self.lastData[@"AppLuckMoneyMainId"];
-    NSLog(@"---%@",IDsStr);
+//    NSString *IDsStr = self.lastData[@"AppLuckMoneyMainId"];
+    NSLog(@"---%@",self.MainIDsStr);
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setValue:IDsStr forKey:@"AppLuckMoneyMainIds"];
+    [dic setValue:self.MainIDsStr forKey:@"AppLuckMoneyMainIds"];
     [dic setValue:[NSString stringWithFormat:@"%d",self.pageIndex] forKey:@"PageIndex"];
     [dic setValue:@"10" forKey:@"PageSize"];
     NSLog(@"---%@",dic);
@@ -104,17 +106,29 @@
             [self.cellDataArr removeAllObjects];
 
         }
+        NSLog(@"---%@",json[@"AppLuckMoneyDetail"]);
+        NSDictionary *HeadDic = json[@"AppLuckMoneyDetail"];
+        NSLog(@"%@",HeadDic);
+        //头部数据
+        self.TitleLabel.text = json[@"Title"];
+        self.PriceTotalLabel.text = [NSString stringWithFormat:@"%@元",HeadDic[@"PriceTotal"]];
+        self.LuckContentLabel.text = HeadDic[@"LuckContent"];
+        self.DateTimeLabel.text = HeadDic[@"DateTime"];
+        self.MixLabel.text = [NSString stringWithFormat:@"%@/%@个",HeadDic[@"GetCount"],HeadDic[@"UnGetCount"]];
+        //数据区域
         self.DescribeLabel.text = json[@"Title"];//红包描述
         self.OutLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutLuckMoneyCount"] ];//出境游
         self.OutTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"OutTotalPrice"]];
-        
+            
         self.InsideuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideuckMoneyCount"]];//国内游
         self.InsideTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"InsideTotalPrice"]];
         
         self.NearbyLuckMixLabel.text = [NSString stringWithFormat:@"%@/%@个",[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyGetLuckMoneyCount"],[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyLuckMoneyCount"]];//周边游
         self.NearbyTotalPriceLabel.text = [NSString stringWithFormat:@"%@元",[json[@"AppLuckMoneyThreeList"] objectForKey:@"NearbyTotalPrice"]];
-
+            
         self.LuckMoneyGetCountLabael.text = [NSString stringWithFormat:@"%@人已领取",[json[@"AppLuckMoneyThreeList"] objectForKey:@"LuckMoneyGetCount"]];
+
+    
         
         for (NSDictionary *dic in json[@"AppLuckMoneyDetailModelList"]) {
             [self.cellDataArr addObject:dic];
@@ -130,6 +144,10 @@
     }];
 }
 #pragma mark -UITableViewDataSource && UITableViewDelegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"正在点击");
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -138,155 +156,174 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dataDic = self.cellDataArr[indexPath.row];
-    NSLog(@"--%@",dataDic[@"LuckMoneyType"]);
-    if ([dataDic[@"LuckMoneyType"]  isEqual: @"0"]) {//待领取
-        tableView.rowHeight = 80;
+    NSLog(@"%@--%@",dataDic[@"GetDate"],dataDic[@"LuckMoneyType"]);
+    if ([dataDic[@"GetDate"] isEqual:@""] && [dataDic[@"LuckMoneyType"]  isEqual: @"1"]) {//未领取并且已过期
         NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
         cell.selectionStyle =UITableViewCellSelectionStyleNone;
         NSLog(@"%@",cell.HeadtitLabel.text);
+        if (![dataDic[@"HearUrl"]  isEqual: @""]) {
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
+            cell.HeadtitLabel.alpha = 0;
+        }else{
+            
+            if (![dataDic[@"FirstName"]   isEqual: @""]) {
+                cell.HeadtitLabel.text = dataDic[@"FirstName"];
+            }else{
+                cell.HeadtitLabel.text = @"空";
+                
+            }
+        }
+        cell.NumLabel.text  = dataDic[@"Name"];
+        cell.StateLabel.text = @"已过期";
+        if ([dataDic[@"Area"]  isEqual: @"1"]) {
+            cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
+        }else if([dataDic[@"Area"]  isEqual: @"2"]){
+            cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+            
+        }else if([dataDic[@"Area"]  isEqual: @"3"]){
+            cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
+            
+        }else{
+            cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+        }
+        return cell;
+
+    }else{
+        if ([dataDic[@"LuckMoneyType"]  isEqual: @"0"]) {//待领取
+            tableView.rowHeight = 80;
+            NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
+            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+            NSLog(@"%@",cell.HeadtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.HeadtitLabel.alpha = 0;
             }else{
                 
-                if ([dataDic[@"Name"]   isEqual: @""]) {
-                    if ([dataDic[@"FirstName"] isEqual:@""]) {
-                        cell.HeadtitLabel.text = @"空";
-                    }else{
-                        cell.HeadtitLabel.text = dataDic[@"FirstName"];
-                    }
+                if (![dataDic[@"FirstName"]   isEqual: @""]) {
+                    cell.HeadtitLabel.text = dataDic[@"FirstName"];
                 }else{
-                    cell.HeadtitLabel.text = dataDic[@"Name"];
-
+                    cell.HeadtitLabel.text = @"空";
+                    
                 }
             }
-        cell.NumLabel.text  = dataDic[@"Mobile"];
-        cell.StateLabel.text = @"待领取";
-        if ([dataDic[@"Area"]  isEqual: @"1"]) {
-            cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
-        }else if([dataDic[@"Area"]  isEqual: @"2"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
-
-        }else if([dataDic[@"Area"]  isEqual: @"3"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
-
-        }else{
-            cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
-        }
-        return cell;
-    }else if([dataDic[@"LuckMoneyType"]  isEqual: @"1"]){//未使用
-        tableView.rowHeight = 100;
-        MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MyRedPcketDetailCell" owner:nil options:nil]firstObject];
-        cell.selectionStyle =UITableViewCellSelectionStyleNone;
-        NSLog(@"%@",cell.headtitLabel.text);
+            cell.NumLabel.text  = dataDic[@"Name"];
+            cell.StateLabel.text = @"待领取";
+            if ([dataDic[@"Area"]  isEqual: @"1"]) {
+                cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
+            }else if([dataDic[@"Area"]  isEqual: @"2"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else if([dataDic[@"Area"]  isEqual: @"3"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else{
+                cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+            }
+            return cell;
+        }else if([dataDic[@"LuckMoneyType"]  isEqual: @"1"]){//未使用
+            tableView.rowHeight = 100;
+            MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MyRedPcketDetailCell" owner:nil options:nil]firstObject];
+            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+            NSLog(@"%@",cell.headtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"Name"]   isEqual: @""]) {
-                    if ([dataDic[@"FirstName"] isEqual:@""]) {
-                        cell.headtitLabel.text = @"空";
-                    }else{
-                        cell.headtitLabel.text = dataDic[@"FirstName"];
-                    }
+                if (![dataDic[@"FirstName"]   isEqual: @""]) {
+                    cell.headtitLabel.text = dataDic[@"FirstName"];
                 }else{
-                    cell.headtitLabel.text = dataDic[@"Name"];
+                    cell.headtitLabel.text = @"空";
                     
                 }
             }
-        cell.StateLabel.text = @"未使用";
-        cell.NumberLabel.text = dataDic[@"Mobile"];
-        cell.DataLabel.text = dataDic[@"GetDate"];
-        if ([dataDic[@"Area"]  isEqual: @"1"]) {
-            cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
-        }else if([dataDic[@"Area"]  isEqual: @"2"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
-            
-        }else if([dataDic[@"Area"]  isEqual: @"3"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
-
-        }else{
-            cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
-        }
-        cell.CardIdLabel.alpha = 0;
-        return cell;
-    }else if([dataDic[@"LuckMoneyType"]  isEqual: @"2"]){//已使用
-        tableView.rowHeight = 100;
-        MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"" owner:nil options:nil]firstObject];
-        cell.selectionStyle =UITableViewCellSelectionStyleNone;
-        NSLog(@"%@",cell.headtitLabel.text);
+            cell.StateLabel.text = @"未使用";
+            cell.NumberLabel.text = dataDic[@"Name"];
+            cell.DataLabel.text = dataDic[@"GetDate"];
+            if ([dataDic[@"Area"]  isEqual: @"1"]) {
+                cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
+            }else if([dataDic[@"Area"]  isEqual: @"2"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else if([dataDic[@"Area"]  isEqual: @"3"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else{
+                cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+            }
+            cell.CardIdButton.alpha = 0;
+            return cell;
+        }else if([dataDic[@"LuckMoneyType"]  isEqual: @"2"]){//已使用
+            tableView.rowHeight = 100;
+            MyRedPcketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"MyRedPcketDetailCell" owner:nil options:nil]firstObject];
+            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+            NSLog(@"%@",cell.headtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.headtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"Name"]   isEqual: @""]) {
-                    if ([dataDic[@"FirstName"] isEqual:@""]) {
-                        cell.headtitLabel.text = @"空";
-                    }else{
-                        cell.headtitLabel.text = dataDic[@"FirstName"];
-                    }
+                if (![dataDic[@"FirstName"]   isEqual: @""]) {
+                    cell.headtitLabel.text = dataDic[@"FirstName"];
                 }else{
-                    cell.headtitLabel.text = dataDic[@"Name"];
+                    cell.headtitLabel.text = @"空";
                     
                 }
             }
-        cell.StateLabel.text = [NSString stringWithFormat:@"%@使用",dataDic[@"LuckMoneyUesTime"]];
-        cell.NumberLabel.text = dataDic[@"Mobile"];
-        cell.DataLabel.text = dataDic[@"GetDate"];
-        cell.CardIdLabel.text = [NSString stringWithFormat:@"%@",dataDic[@"OrderCode"]];
-        if ([dataDic[@"Area"]  isEqual: @"1"]) {
-            cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
-        }else if([dataDic[@"Area"]  isEqual: @"2"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
-            
-        }else if([dataDic[@"Area"]  isEqual: @"3"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
-            
-        }else{
-            cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
-        }
-        return cell;
-    }else if([dataDic[@"LuckMoneyType"]  isEqual: @"3"]){//已过期
-        tableView.rowHeight = 800;
-        NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
-        cell.selectionStyle =UITableViewCellSelectionStyleNone;
-        NSLog(@"%@",cell.HeadtitLabel.text);
+            cell.StateLabel.text = [NSString stringWithFormat:@"%@使用",dataDic[@"LuckMoneyUesTime"]];
+            cell.NumberLabel.text = dataDic[@"Name"];
+            cell.DataLabel.text = dataDic[@"GetDate"];
+            cell.UrlStr = dataDic[@"OrderLinkUrl"];
+            cell.nav = self.navigationController;
+            [cell.CardIdButton setTitle:[NSString stringWithFormat:@"订单:%@",dataDic[@"OrderCode"]]  forState:UIControlStateNormal];
+            if ([dataDic[@"Area"]  isEqual: @"1"]) {
+                cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
+            }else if([dataDic[@"Area"]  isEqual: @"2"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else if([dataDic[@"Area"]  isEqual: @"3"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else{
+                cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+            }
+            return cell;
+        }else if([dataDic[@"LuckMoneyType"]  isEqual: @"3"]){//已过期
+            tableView.rowHeight = 800;
+            NoRedPacketDetailCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"NoRedPacketDetailCell" owner:nil options:nil]firstObject];
+            cell.selectionStyle =UITableViewCellSelectionStyleNone;
+            NSLog(@"%@",cell.HeadtitLabel.text);
             if (![dataDic[@"HearUrl"]  isEqual: @""]) {
                 [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:dataDic[@"HearUrl"]]];
                 cell.HeadtitLabel.alpha = 0;
             }else{
-                if ([dataDic[@"Name"]   isEqual: @""]) {
-                    if ([dataDic[@"FirstName"] isEqual:@""]) {
-                        cell.HeadtitLabel.text = @"空";
-                    }else{
-                        cell.HeadtitLabel.text = dataDic[@"FirstName"];
-                    }
-                    
+                if (![dataDic[@"FirstName"]   isEqual: @""]) {
+                    cell.HeadtitLabel.text = dataDic[@"FirstName"];
                 }else{
-                    cell.HeadtitLabel.text = dataDic[@"Name"];
-                    
+                    cell.HeadtitLabel.text = @"空";
                 }
             }
-        cell.StateLabel.text = @"已过期";
-        cell.NumLabel.text = dataDic[@"Mobile"];
-        
-        if ([dataDic[@"Area"]  isEqual: @"1"]) {
-            cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
-        }else if([dataDic[@"Area"]  isEqual: @"2"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+            cell.StateLabel.text = @"已过期";
+            cell.NumLabel.text = dataDic[@"Name"];
             
-        }else if([dataDic[@"Area"]  isEqual: @"3"]){
-            cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
-            
-        }else{
-            cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+            if ([dataDic[@"Area"]  isEqual: @"1"]) {
+                cell.PriceLabel.text = [NSString stringWithFormat:@"国内券%@元",dataDic[@"LuckMoneyPrice"]];
+            }else if([dataDic[@"Area"]  isEqual: @"2"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"出境券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else if([dataDic[@"Area"]  isEqual: @"3"]){
+                cell.PriceLabel.text = [NSString stringWithFormat:@"周边券%@元",dataDic[@"LuckMoneyPrice"]];
+                
+            }else{
+                cell.PriceLabel.text = [NSString stringWithFormat:@"邮轮卷%@元",dataDic[@"LuckMoneyPrice"]];
+            }
+            return cell;
         }
-        return cell;
+
     }
     
     
     return nil;
 }
+
 -(UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height-64)];
@@ -347,7 +384,7 @@
 }
 -(UILabel *)TitleLabel{
     if (!_TitleLabel) {
-        _TitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, 100, 30)];
+        _TitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, 200, 30)];
     }
     return _TitleLabel;
 }
@@ -385,7 +422,7 @@
 }
 -(UILabel *)DescribeLabel{
     if (!_DescribeLabel) {
-        _DescribeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 78, kScreenSize.width/3, 30)];
+        _DescribeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 78, kScreenSize.width-20, 30)];
         _DescribeLabel.textColor = [UIColor lightGrayColor];
     }
     return _DescribeLabel;
@@ -454,6 +491,9 @@
         _cellDataArr = [[NSMutableArray alloc] init];
     }
     return _cellDataArr;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"jianbian"] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

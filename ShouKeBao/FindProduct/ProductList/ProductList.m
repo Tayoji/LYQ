@@ -1040,7 +1040,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 1) {
-        return 120;
+        return 130;
     }else if (tableView.tag == 7){
         CGFloat listViewH = self.listTableView.frame.size.height;
         return listViewH/self.listArray.count;
@@ -1549,7 +1549,6 @@
         ProductCell *cell = [ProductCell cellWithTableView:tableView];
         
         ProductModal *model = _dataArr[indexPath.row];
-        
         cell.modal = model;
         
         cell.delegate = self;
@@ -1687,8 +1686,7 @@
 
 
 #pragma mark - MGSwipeTableCellDelegate
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction
-{
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction{
     return YES;
 }
 

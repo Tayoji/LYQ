@@ -21,8 +21,10 @@
 #import "yesterDayModel.h"
 #import "JSONKit.h"
 #import "NSString+FKTools.h"
-#import "ProductDetailShareByMyself.h"
 #import "SelectCustomerController.h"
+#import "ShareHelper.h"
+#import "QRCodeViewController.h"
+#import "ZhiVisitorDynamicController.h"
 
 @interface ProduceDetailViewController ()<UIWebViewDelegate, UIAlertViewDelegate, notiPopUpBox>
 @property (weak, nonatomic) IBOutlet UIView *coverView;
@@ -42,15 +44,7 @@
 @property (nonatomic,strong) UIButton * rightButton;
 @property (nonatomic,assign) BOOL isSave;
 @property (nonatomic, strong) UIView *blackView;
-//FromQRcode,
-//FromRecommend,
-//FromStore,
-//FromProductSearch,
-//FromFindProduct,
-//FromHotProduct
-@property (nonatomic, strong)NSArray *photosArr;
 @property (nonatomic, strong)UISwipeGestureRecognizer * recognizer;
-@property (nonatomic, strong) ProductDetailShareByMyself *defineV;
 
 @end
 
@@ -59,32 +53,6 @@
     [super viewDidLoad];
     [self blackView];
     
-    if (self.shareInfo[@"IMProductMsgValue"]) {
-        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-                           @{@"pic":@"exclusiveUser", @"title":@"专属客人"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
-                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-                           ];
-    }else{
-        self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},
-                           @{@"pic":@"iconfont-pengyouquan", @"title":@"微信朋友圈"},
-                           @{@"pic":@"iconfont-kongjian", @"title":@"QQ空间"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"微信收藏"},
-                           @{@"pic":@"iconfont-qq", @"title":@"QQ"},
-                           @{@"pic":@"iconfont-duanxin", @"title":@"短信"},
-                           @{@"pic":@"iconfont-fuzhi", @"title":@"复制链接"}
-                           ];
-        
-        
-    }
-    
-    
-    if ([self.formTypeExclusive isEqualToString:@"QRCodeAddress"]) {
-        self.title = @"我的店铺二维码";
-    }
     
     self.coverView.hidden = YES;
     if (self.fromType == FromFindProduct || self.fromType == FromHotProduct || self.fromType == FromProductSearch || self.fromType == FromZhiVisitorDynamic) {
@@ -122,6 +90,10 @@
     [self.view addSubview:_indicator];
     if (!self.titleName) {
         self.title = @"产品详情";
+    }else if ([self.titleName isEqualToString:@"圈热点"]){
+        self.title = @"圈热点";
+    }else if ([self.titleName isEqualToString:@"QRCodeAddress"]){
+        self.title = @"我的店铺二维码";
     }else{
         self.title = self.titleName;
     }
@@ -425,8 +397,7 @@
     //    [self.webView goBack];
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView
-{
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
     
     NSLog(@"%@",webView.request.URL.absoluteString);
     //判断是否显示关闭按钮
@@ -460,30 +431,11 @@
     }
     self.isSave = NO;
     // [MBProgressHUD showSuccess:@"加载完成"];
+    
+    NSLog(@"%@99999", self.shareInfo);
 
-
-
-//    NSLog(@"right Str is %@",rightUrl);
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    
-//    [dic setObject:rightUrl forKey:@"PageUrl"];
-//     [self.shareInfo removeAllObjects];
-//
-//    [IWHttpTool WMpostWithURL:@"/Common/GetPageType" params:dic success:^(id json) {
-//        
-//        NSLog(@"-----分享返回数据json is %@------",json);
-//      NSString *str =  json[@"ShareInfo"][@"Desc"];
-//        if(str.length>1){
-//          // [self.shareInfo removeAllObjects];
-//            self.shareInfo = json[@"ShareInfo"];
-//            NSLog(@"%@99999", self.shareInfo);
-//        }
-//    } failure:^(NSError *error) {
-//        
-//        NSLog(@"分享请求数据失败，原因：%@",error);
-//    }];
     //如果没有shareInfo，请求接口
-    if (self.noShareInfo) {
+    if (/*self.noShareInfo*/!self.shareInfo) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:webView.request.URL.absoluteString forKey:@"PageUrl"];
         [IWHttpTool WMpostWithURL:@"/Common/GetPageType" params:dic success:^(id json) {
@@ -524,48 +476,6 @@
     }
 //        [_indicator stopAnimationWithLoadText:@"加载失败" withType:YES];
 }
--(void)addAlert
-{
-    
-    
-    // 获取到现在应用中存在几个window，ios是可以多窗口的
-    
-    NSArray *windowArray = [UIApplication sharedApplication].windows;
-    
-    // 取出最后一个，因为你点击分享时这个actionsheet（其实是一个window）才会添加
-    
-    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
-    
-    // 以下就是不停的寻找子视图，修改要修改的
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
-    CGFloat labY = 180;
-    if (screenH == 667) {
-        labY = 260;
-    }else if (screenH == 568){
-        labY = 160;
-    }else if (screenH == 480){
-        labY = 180;
-    }else if (screenH == 736){
-        labY = 440;
-    }
-    
-    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
-    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
-    lab.text = @"您分享出去的内容对外只显示门市价";
-    lab.textColor = [UIColor blackColor];
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.font = [UIFont systemFontOfSize:12];
-    [actionWindow addSubview:lab];
-    [UIView animateWithDuration:0.38 animations:^{
-        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.17 animations:^{
-            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
-        }];
-    }];
-    self.warningLab = lab;
-
-}
 
 
 #pragma 筛选navitem
@@ -579,29 +489,47 @@
     if (self.fromType == FromQRcode) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"ppkLYQAPP_ShareSuccess()"];
     }
-    NSLog(@"%@", self.shareInfo);
+        NSLog(@"%@", self.shareInfo);
+        NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+        [postDic setObject:@"0" forKey:@"ShareType"];
+        if (self.shareInfo[@"Url"]) {
+            [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+        }
+        [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+        NSLog(@"%@", postDic);
+ 
+//     ShareFrom shareFromTpye;
+    NSString *shareFromTpye;
     
-    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
-    [postDic setObject:@"0" forKey:@"ShareType"];
-    if (self.shareInfo[@"Url"]) {
-        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+    if (/*[self isKindOfClass:[QRCodeViewController class]]*/self.fromType == FromQRcode) {
+        shareFromTpye = @"FromQRcode";
+    }else if (self.fromType == FromRecommend){
+        shareFromTpye = @"FromRecommend";
+    }else if (self.fromType == FromStore){
+        shareFromTpye = @"FromStore";
+    }else if (self.fromType == FromFindProduct){
+        shareFromTpye = @"FromFindProduct";
+    }else if (self.fromType == FromProductSearch){
+        shareFromTpye = @"FromProductSearch";
+    }else if (self.fromType == FromHotProduct){
+        shareFromTpye = @"FromHotProduct";
+    }else if (self.fromType == FromScanHistory){
+        shareFromTpye = @"FromScanHistory";
+    }else if (self.fromType == FromZhiVisitorDynamic){
+         shareFromTpye = @"FromZhiVisitorDynamic1";
     }
-    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
-    NSLog(@"%@", postDic);
     
-        //构造分享内容
-        id<ISSContent>publishContent = [ShareSDK content:self.shareInfo[@"Desc"]
-                                          defaultContent:self.shareInfo[@"Desc"]
-                                                   image:[ShareSDK imageWithUrl:self.shareInfo[@"Pic"]]
-                                                   title:self.shareInfo[@"Title"]
-                                                     url:self.shareInfo[@"Url"]                                             description:self.shareInfo[@"Desc"]
-                                               mediaType:SSPublishContentMediaTypeNews];
-        
-        [publishContent addCopyUnitWithContent:[NSString stringWithFormat:@"%@",self.shareInfo[@"Url"]] image:nil];
-        NSLog(@"%@444", self.shareInfo);
-        [publishContent addSMSUnitWithContent:[NSString stringWithFormat:@"%@", self.shareInfo[@"Url"]]];
+    NSLog(@"..shareInfo = %@   %@", self.shareInfo, self.webView.request.URL.absoluteString);
     
-    [self showDefineView:publishContent];
+    if (!self.shareInfo.count) {
+        return;
+    }
+    
+    [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:shareFromTpye andPageUrl:self.webView.request.URL.absoluteString];
+    [ShareHelper shareHelper].delegate = self;
+    
+
+}
 
 #pragma mark - 系统自带分享先不管
 //    //每次分享的时候调用此方法，让后台知道当前页面分享的产品
@@ -734,67 +662,65 @@
 //    NSLog(@"%@",self.shareInfo[@"Url"]);
 //    [self addAlert];
     
-}
+//}
 
-- (void)showDefineView:(id)publishContent{
-    self.blackView.hidden = NO;
-    self.defineV.hidden = NO;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
-   
-    self.defineV.delegate = self;
-    self.defineV.eventArray = self.eventArray;
-    self.defineV.photosArr = self.photosArr;
-    self.defineV.URL = self.webView.request.URL.absoluteString;
-    self.defineV.publishContent = publishContent;
-    self.defineV.shareInfo = self.shareInfo;
-    _defineV.fromType = [NSString stringWithFormat:@"%d", self.fromType];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBlackView)];
-    [self.blackView addGestureRecognizer:tap];
-    
-   
-}
+//-(void)addAlert{
+//    // 获取到现在应用中存在几个window，ios是可以多窗口的
+//    
+//    NSArray *windowArray = [UIApplication sharedApplication].windows;
+//    
+//    // 取出最后一个，因为你点击分享时这个actionsheet（其实是一个window）才会添加
+//    
+//    UIWindow *actionWindow = (UIWindow *)[windowArray lastObject];
+//    
+//    // 以下就是不停的寻找子视图，修改要修改的
+//    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+//    CGFloat labY = 180;
+//    if (screenH == 667) {
+//        labY = 260;
+//    }else if (screenH == 568){
+//        labY = 160;
+//    }else if (screenH == 480){
+//        labY = 180;
+//    }else if (screenH == 736){
+//        labY = 440;
+//    }
+//    
+//    CGFloat labW = [[UIScreen mainScreen] bounds].size.width;
+//    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, screenH, labW, 30)];
+//    lab.text = @"您分享出去的内容对外只显示门市价";
+//    lab.textColor = [UIColor blackColor];
+//    lab.textAlignment = NSTextAlignmentCenter;
+//    lab.font = [UIFont systemFontOfSize:12];
+//    [actionWindow addSubview:lab];
+//    [UIView animateWithDuration:0.38 animations:^{
+//        lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH - 8);
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:0.17 animations:^{
+//            lab.transform = CGAffineTransformMakeTranslation(0, labY-screenH);
+//        }];
+//    }];
+//    self.warningLab = lab;
+//    
+//}
 
-- (void)closeBlackView{
-    self.blackView.hidden = YES;
-    self.defineV.hidden = YES;
-
-}
-
+#pragma mark - 分享代理方法
 - (void)notiPopUpBoxView{
-    [self.blackView removeFromSuperview];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
-    self.defineBox.hidden = NO;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineBox];
-
-}
-- (IBAction)cancleDefineBox:(id)sender {
-    self.defineBox.hidden = YES;
-    [self.blackView removeFromSuperview];
-    [self.defineV removeFromSuperview];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.blackView];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.defineV];
-}
-
-- (IBAction)applyForOpenVip:(id)sender {
-    self.defineBox.hidden = YES;
-    [self.blackView removeFromSuperview];
-    [self.defineV removeFromSuperview];
     NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
     newExclusiveVC.naVC = self.navigationController;
     newExclusiveVC.pushFrom = FromProductDetail;
     [self.navigationController pushViewController:newExclusiveVC animated:YES];
-  
 }
 
+
+//选择客人
 - (void)pushChoseCustomerView:(NSString *)productJsonStr{
-    [self closeBlackView];
     SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
     selectVC.productJsonString = productJsonStr;
     selectVC.FromWhere = FromeProDetail;
-    
     [self.navigationController pushViewController:selectVC animated:YES];
 }
+
 -(void)reloadStateWithType:(ShareType)type
 {
     //现实授权信息，包括授权ID、授权有效期等。
@@ -803,39 +729,17 @@
     NSLog(@"uid :%@ , token :%@ , secret:%@ , expirend:%@ , exInfo:%@",[credential uid],[credential token],[credential secret],[credential expired],[credential extInfo]);
 }
 
-- (void)setApplyOpenVip:(UIButton *)applyOpenVip{
-    _applyOpenVip = applyOpenVip;
-    _applyOpenVip.layer.borderColor = [UIColor orangeColor].CGColor;
-    _applyOpenVip.layer.borderWidth = 1.0f;
-    _applyOpenVip.layer.masksToBounds = YES;
-    _applyOpenVip.layer.cornerRadius = 20.0f;
-}
-- (void)setDefineBox:(UIView *)defineBox{
-    _defineBox = defineBox;
-    _defineBox.layer.masksToBounds = YES;
-    _defineBox.layer.cornerRadius = 10;
-}
-- (UIView *)blackView{
-    if (!_blackView) {
-        self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-        self.blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
-        self.blackView.hidden = NO;
-    }
-    return _blackView;
-}
-- (ProductDetailShareByMyself *)defineV{
-    if (!_defineV) {
-        self.defineV = [[ProductDetailShareByMyself alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height/3, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height*2/3)];
-        self.defineV.hidden = NO;
-    }
-    return _defineV;
-}
-- (NSArray *)photosArr{
-    if (!_photosArr) {
-        self.photosArr = [NSArray array];
-    }
-    return _photosArr;
-}
+//- (UIView *)blackView{
+//    if (!_blackView) {
+//        self.blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+//        self.blackView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+//        self.blackView.hidden = NO;
+//    }
+//    return _blackView;
+//}
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

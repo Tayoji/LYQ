@@ -37,6 +37,8 @@
     [_tableView registerNib:[UINib nibWithNibName:@"TerraceMessCell" bundle:nil] forCellReuseIdentifier:@"TerraceMessCell"];
     [_tableView registerNib:[UINib nibWithNibName:@"TimerCell" bundle:nil] forCellReuseIdentifier:@"TimerCell"];
     _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.showsVerticalScrollIndicator = NO;
+    
 }
 
 - (void)loadDataSource{
@@ -73,7 +75,7 @@
     if (indexPath.row%2 == 0) {
         return 50;
     }
-    return 250;
+    return 300;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TimerCell *cell;

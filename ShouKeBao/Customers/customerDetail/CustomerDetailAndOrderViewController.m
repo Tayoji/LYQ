@@ -39,7 +39,14 @@
     [self setNavBack];
     self.button.hidden = NO;
     [self addGest];
-    [self.view addSubview:self.detailVC.view];
+    //消息中心跳过来的，做个判断
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"] || [[[NSUserDefaults standardUserDefaults] objectForKey:@"GuideCustdongtaiRAD"]isEqual: @"1"]){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"CustormJumpToCustormDet"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GuideCustdongtaiRAD"];
+    }else{
+        [self.view addSubview:self.detailVC.view];
+
+    }
     
 }
 - (void)addGest{
@@ -65,7 +72,20 @@
     [segment setTintColor:[UIColor whiteColor]];
     segment.frame = CGRectMake(0, 0, 200, 28);
     [segment setSelected:YES];
-    [segment setSelectedSegmentIndex:0];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[defaults objectForKey:@"GuideCustdongtaiRAD"]  isEqual: @"1"]) {//新手引导跳转修改
+        [segment setSelectedSegmentIndex: 2];
+        self.segmentControl.selectedSegmentIndex = 2;
+        [self sex:segment];
+
+    }else if([[defaults objectForKey:@"CustormJumpToCustormDet"]  isEqual: @"1"]){//消息中心跳过来的，需要修改r
+        [segment setSelectedSegmentIndex: 2];
+        self.segmentControl.selectedSegmentIndex = 2;
+        [self sex:segment];
+    }else{
+        [segment setSelectedSegmentIndex:0];
+
+    }
     [titleView addSubview:segment];
     self.segmentControl = segment;
     self.navigationItem.titleView = titleView;
@@ -88,7 +108,9 @@
 -(void)sex:(UISegmentedControl *)sender
 {
     UISegmentedControl *control = (UISegmentedControl *)sender;
+    NSLog(@"--%ld",control.selectedSegmentIndex);
     self.segmentControl.selectedSegmentIndex = control.selectedSegmentIndex;
+    
     NSLog(@"..%ld", self.segmentControl.selectedSegmentIndex);
     if (control.selectedSegmentIndex == 0) {
         self.button.hidden = NO;
@@ -114,7 +136,7 @@
     }else if (control.selectedSegmentIndex == 2){
         self.button.hidden = NO;
         [self.view addSubview:self.customerDynamicVC.view];
-        [self.button setImage:[UIImage imageNamed:@"grayxiaoxi"] forState:UIControlStateNormal];
+        [self.button setImage:[UIImage imageNamed:@"whitexiaoxi"] forState:UIControlStateNormal];
         [self.button setTitle:@"" forState:UIControlStateNormal];
         if (self.detailVC || self.orderVC) {
             [self.detailVC.view removeFromSuperview];
@@ -163,6 +185,8 @@
     
     self.button = [UIButton buttonWithType:UIButtonTypeCustom];
     self.button.frame = CGRectMake(0,0,40,30);
+    self.button.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, -5);
+    self.button.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, -5);
     [self.button setTitle:@"保存" forState:UIControlStateNormal];
     self.button.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.button addTarget:self action:@selector(saveCustomerDetail:)forControlEvents:UIControlEventTouchUpInside];
@@ -202,8 +226,7 @@
 - (void)saveCustomerDetail:(NSString *)seg{
     
     if ( self.segmentControl.selectedSegmentIndex==0) {
-  
-    MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
+      MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
     hudView.labelText = @"保存中...";
     [hudView show:YES];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -224,6 +247,7 @@
         [dic setObject:self.detailVC.pasportInUseDay.text forKey:@"ValidEndDate"];
         [dic setObject:self.detailVC.livingAddress.text forKey:@"Address"];
         [dic setObject:self.detailVC.passPortId.text forKey:@"PassportNum"];
+        [dic setObject:self.detailVC.nickNameF.text forKey:@"NickName"];
     
         NSMutableDictionary *secondDic = [NSMutableDictionary dictionary];
         [secondDic setObject:dic forKey:@"Customer"];

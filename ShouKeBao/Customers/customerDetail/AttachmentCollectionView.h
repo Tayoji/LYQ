@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 typedef enum {
     fromTypeCustom,
-    fromTypeOrderDetail
+    fromTypeOrderDetail,
+    fromTypeUpdateContract
 }TheFromType;
 @interface AttachmentCollectionView : UICollectionViewController
 @property (nonatomic, strong)UIViewController * OrderVC;
@@ -17,5 +18,5 @@ typedef enum {
 @property (nonatomic, assign)TheFromType fromType;
 
 //@property (nonatomic,copy) NSString *picUrl;
-//@property (nonatomic, strong)NSArray * pictureList;
+@property (nonatomic, strong)NSArray * pictureList;
 @end

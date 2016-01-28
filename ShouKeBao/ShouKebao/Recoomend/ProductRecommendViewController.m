@@ -22,11 +22,13 @@
 #import "DayDetailCell.h"
 #import "YesterDayCell.h"
 #import "RecentlyCell.h"
+#import "ShareHelper.h"
+#import "SelectCustomerController.h"
 #define pageSize @"11"
 #define  K_TableWidth [UIScreen mainScreen].bounds.size.width
 //整个屏幕的高度减去导航栏和按钮的高度
 #define K_TableHeight [UIScreen mainScreen].bounds.size.height - 107
-@interface ProductRecommendViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,notifi>
+@interface ProductRecommendViewController ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,notifi, notiPopUpBox>
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *LineWeith;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *scrollHeight;
 @property (strong, nonatomic) IBOutlet UIView *topLine;
@@ -75,9 +77,11 @@
     self.LineWeith.constant = K_TableWidth / 3;
     self.scrollHeight.constant = K_TableHeight;
     [self loadNewData];
+    NSLog(@" mar= %@", self.markProductId);
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"ShouKeBaoRecomView"];
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     self.stationName = [def objectForKey:@"SubstationName"];
@@ -177,6 +181,7 @@
                                 @"DateRangeType":@"1",
                   @"ProductId":[NSString stringWithFormat:@"%@", self.markProductId]
                   };
+        NSLog(@"markProductId %@", self.markProductId);
         currentTagDic = self.todayTagDic;
     }else if([tableView isEqual:self.yestdayTableView]){
         param = @{@"PageSize":pageSize,
@@ -212,12 +217,13 @@
                 NSLog(@"%@%@", dataArray, detail.PersonAlternateCash);
             }
             //根据id判断在前一页面点击进入的时候的产品 对应 这个界面数组里面的具体哪一个。来置顶
-            for (NSInteger i = 0; i < dataArray.count; i++) {
-                if ([((DayDetail *)dataArray[i]).PushId isEqualToString: self.pushId]) {
-                    [currentTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)i]];
-                    self.pushIdNum = i;
-                }
-            }
+#warning 改版后不需要再去确定
+//            for (NSInteger i = 0; i < dataArray.count; i++) {
+//                if ([((DayDetail *)dataArray[i]).PushId isEqualToString: self.pushId]) {
+//                    [currentTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)i]];
+//                    self.pushIdNum = i;
+//                }
+//            }
             [tableView reloadData];
         }
     } failure:^(NSError *error) {
@@ -515,23 +521,23 @@
         tag = [self.todayTagDic objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         DayDetail * model = self.todayDataArray[indexPath.row];
         if ([model.AdvertText isEqualToString:@""]) {
-            return 160;
+            return 170;
         }
         height = [self heihtofContensStr:model.AdvertText sysFont:13];
     }else if(tableView.tag == 2014){
         tag = [self.yestdayTagDic objectForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         DayDetail * model = self.yestdayDataArray[indexPath.row];
         if ([model.AdvertText isEqualToString:@""]) {
-            return 160;
+            return 170;
         }
         height = [self heihtofContensStr:model.AdvertText sysFont:13];
     }else{
-        return 160;
+        return 170;
     }
     if ([tag isEqualToString:@"1"]) {
-        return 200 + height;
+        return 210 + height;
     }else{
-        return 220;
+        return 230;
     }
 }
 
@@ -543,6 +549,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+     [ShareHelper shareHelper].delegate = self;
+    
     if (tableView.tag == 2013 || tableView.tag == 2014) {
         DayDetailCell *cell = [DayDetailCell cellWithTableView:tableView withTag:indexPath.row];
         DayDetail * detail;
@@ -560,16 +569,18 @@
         [cell.descripBtn addTarget:self action:@selector(changeHeight:) forControlEvents:UIControlEventTouchUpInside];
         cell.descripBtn.tag = indexPath.row;
         cell.detail = detail;
-        if ([self.pushId isEqualToString:detail.PushId]) {
+        NSLog(@".... %@   %@", self.pushId, detail.PushId);
+        if (/*[self.pushId isEqualToString:detail.PushId]*/ indexPath.row == 0 && [self.title isEqualToString:@"今日推荐"]) {
             cell.isPlain = YES;
             [cell.descripBtn setTitle:@"收起" forState:UIControlStateNormal];
             [self.todayTagDic setObject:@"1" forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
             [WMAnimations WMAnimationMakeBoarderNoCornerRadiosWithLayer:cell.contentView.layer andBorderColor:[UIColor colorWithRed:41/255.f green:147/255.f blue:250/255.f alpha:1] andBorderWidth:1 andNeedShadow:YES];
         }
-        if (self.justDoOnce) {
-            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.pushIdNum inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-            self.justDoOnce = NO;
-        }
+#warning 因为默认是第一个 所以不需要滚动置顶
+//        if (self.justDoOnce) {
+//            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.pushIdNum inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+//            self.justDoOnce = NO;
+//        }
         return cell;
     }else{
         YesterDayCell *cell = [YesterDayCell cellWithTableView:tableView];
@@ -608,5 +619,26 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.moreBtnShowView.alpha = 0;
     self.moreBtnShowView.hidden = YES;
+}
+
+#pragma mark - 跳转到选择客人界面的delegate
+- (void)pushChoseCustomerView:(NSString *)productJsonStr{
+    SelectCustomerController *selectVC = [[SelectCustomerController alloc]init];
+    selectVC.productJsonString = productJsonStr;
+    selectVC.FromWhere = FromRecomment;
+    [self.navigationController pushViewController:selectVC animated:YES];
+}
+
+
+- (void)notiPopUpBoxView{
+    NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+    newExclusiveVC.naVC = self.navigationController;
+    newExclusiveVC.pushFrom = FromProductDetail;
+    [self.navigationController pushViewController:newExclusiveVC animated:YES];
+    
+}
+
+- (void)shareSuccessWithType:(ShareType)type andShareInfo:(NSDictionary *)shareInfo{
+    NSLog(@".....分享");
 }
 @end

@@ -17,6 +17,7 @@
 
 @interface ProductCell()
 @property (nonatomic, copy)NSString * productId;
+@property (nonatomic)UILabel *lastDateL;
 
 @end
 
@@ -34,8 +35,7 @@
     return cell;
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.isHistory = NO;
@@ -44,8 +44,7 @@
     return self;
 }
 
-- (void)setup
-{
+- (void)setup{
     // 历史浏览的内容
     UILabel *time = [[UILabel alloc] init];
     time.textAlignment = NSTextAlignmentRight;
@@ -62,10 +61,6 @@
      图片 标题 出发
      */
     UILabel *title = [[UILabel alloc] init];
-    //    title.textAlignment = UIControlContentVerticalAlignmentTop;
-    //    title.textAlignment = UIControlContentVerticalAlignmentFill;
-    //    [title setVerticalAlignment:VerticalAlignmentTop];
-   
     title.numberOfLines = 0;
     title.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:title];
@@ -105,6 +100,14 @@
     [self.contentView addSubview:cheapPrice];
     self.cheapPrice = cheapPrice;
     
+    UILabel *lastDateL = [[UILabel alloc]init];
+    lastDateL.textColor = [UIColor lightGrayColor];
+    lastDateL.font = [UIFont systemFontOfSize:12.0f];
+    lastDateL.textAlignment = NSTextAlignmentLeft;
+    [self.contentView addSubview:lastDateL];
+    self.lastDateL = lastDateL;
+    
+    
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
     line.backgroundColor = [UIColor blackColor];
@@ -128,7 +131,6 @@
     [di setBackgroundImage:[UIImage imageNamed:@"red-2"] forState:(UIControlStateNormal)];
     di.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     [di setTitle:@"抵" forState:UIControlStateNormal];
-    //    di.contentHorizontalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.diLab addSubview:di];
     self.di = di;
     
@@ -203,33 +205,19 @@
     
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews{
     [super layoutSubviews];
     
     CGFloat height = self.contentView.bounds.size.height;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-//    CGFloat iconWidth = screenW/5;
-    
-    /**
-     *  历史控件
-     */
-//    CGFloat timeW = screenW - gap * 2;
-//    CGFloat timeX = screenW - timeW - gap;
-//    self.time.frame = CGRectMake(timeX, 5, timeW, 20);
-    
-//    CGFloat sepY = CGRectGetMaxY(self.time.frame) + 5;
-//    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
-    
     CGFloat titleY = 8;
     CGFloat iconWidth;
     
-    if (self.isHistory) {
-//        titleY = CGRectGetMaxY(self.sep.frame)+gap;
+//    if (self.isHistory) {
+//        iconWidth = 72;
+//    }else{
         iconWidth = 72;
-    }else{
-        iconWidth = self.contentView.bounds.size.height*3/5;
-    }
+//    }
 
     /*
      图片 标题 出发地
@@ -252,8 +240,11 @@
     CGFloat samePriceWStart = screenW*3/5;
     CGFloat priceWidth = screenW*2/5-gap;
     self.cheapPrice.frame = CGRectMake(samePriceWStart, priceYStart, priceWidth, iconWidth/3);
+    //最近班期
+    self.lastDateL.frame = CGRectMake(titleStart, CGRectGetMaxY(self.normalPrice.frame), screenW-titleStart-gap, iconWidth/3);
+    
     //   细分界线
-    CGFloat lineYS = CGRectGetMaxY(self.normalPrice.frame)+5;
+    CGFloat lineYS = CGRectGetMaxY(self.lastDateL.frame);
     self.line.frame = CGRectMake(titleStart, lineYS, titleW, 0.5);
     
     /**
@@ -261,7 +252,7 @@
      */
     //产品编号
     CGFloat productNumWidth = screenW/3;
-    CGFloat productNumHS = CGRectGetMaxY(self.line.frame);
+    CGFloat productNumHS = CGRectGetMidY(self.line.frame);
     CGFloat productNumHeight;
     if (self.isHistory) {
         productNumHeight = height- productNumHS-40+4;
@@ -289,28 +280,7 @@
         qW = self.quanIsZero ? 60 : 0;
         liW = 60;
     }
-    ////  抵
-    //    CGFloat diLabWS = CGRectGetMaxX(self.productNum.frame)+gapScreen;
-    //    self.diLab.frame = CGRectMake(diLabWS, productNumHS, jW, productNumHeight);
-    ////  送
-    //    CGFloat songLabWS = CGRectGetMaxX(self.diLab.frame)+gaps;
-    //    self.songLab.frame = CGRectMake(songLabWS, productNumHS, jW, productNumHeight);
-    ////利
-    //    CGFloat profitWS = CGRectGetMaxX(self.songLab.frame)+gaps;
-    //    self.profits.frame = CGRectMake(profitWS, productNumHS, jW, productNumHeight);
-    //    NSString *li = @"利";
-    //    CGFloat w = [li widthWithsysFont:13];
-    //    CGFloat h = [li heigthWithsysFont:13 withWidth:w];
-    //    CGFloat hStart = (productNumHeight - h)/2;
-    //    self.li.frame = CGRectMake(0, hStart, w, h);
-    //
-    //// 闪电
-    //    CGFloat fX = CGRectGetMaxX(self.profits.frame)+gaps;
-    //    CGFloat fW = self.isFlash ? 15 : 0;
-    //    CGFloat fh = (height - productNumHS -h)/2+productNumHS;
-    //    self.flash.frame = CGRectMake(fX, fh, fW, h);
-    
-    // ****** 为了使所有的闪电都能右对齐 所以坐标从右算起
+
     NSString *li = @"利";
     CGFloat w = [li widthWithsysFont:14];
     CGFloat h = [li heigthWithsysFont:13 withWidth:w];
@@ -354,9 +324,6 @@
     /*
      下架产品
      */
-    //    根据文字和尺寸算宽度可是不好使
-    //    NSString *ss = @"查看相关产品";
-    //    CGFloat undercarriageView = [ss widthWithsysFont:15];
     self.undercarriageView.frame = CGRectMake(titleStart, priceYStart, priceWidth, priceHeight);
     CGFloat reS = CGRectGetMaxY(self.undercarriageView.frame)+(productNumHeight-45)/2;
     NSLog(@".. %f", screenW);
@@ -368,9 +335,15 @@
         self.RelatedBtn.frame = CGRectMake(screenW*2/3-2*gap, reS, screenW/3+gap, 30);
     }
     
+    if (self.isHistory) {
+        CGFloat sepY = CGRectGetMaxY(self.productNum.frame);
+        self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
+    }else{
+        CGFloat sepY = CGRectGetMaxY(self.RelatedBtn.frame) + gap;
+        self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
+    }
+
     
-    CGFloat sepY = CGRectGetMaxY(self.RelatedBtn.frame) + gap;
-    self.sep.frame = CGRectMake(gap, sepY, screenW - gap * 2, 1);
     CGFloat timeW = screenW - gap * 2;
     CGFloat timeX = screenW - timeW - gap;
     self.time.frame = CGRectMake(timeX, CGRectGetMaxY(self.sep.frame), timeW, 25);
@@ -383,10 +356,7 @@
     
 }
 
-- (void)setModal:(ProductModal *)modal
-{
-    NSLog(@"%@, %@",modal.PersonAlternateCash
-          ,modal.SendCashCoupon);
+- (void)setModal:(ProductModal *)modal{
     _modal = modal;
     self.productId = modal.ID;
     if (!self.isHistory) {
@@ -396,24 +366,10 @@
     
     // 历史时间
     self.time.text = [NSString stringWithFormat:@"浏览时间: %@",modal.HistoryViewTime];
-    
     self.fanIsZero = [modal.PersonAlternateCash integerValue];
     self.quanIsZero = [modal.SendCashCoupon integerValue];
-    
-    // self.icon.image = [UIImage imageNamed:modal.PicUrl];
-    NSLog(@"=========%@",modal.PicUrl);
     [self.icon sd_setImageWithURL:[[NSURL alloc] initWithString:modal.PicUrl] placeholderImage:[UIImage imageNamed:@"lvyouquanIcon"]];
         self.title.text = modal.Name;
- 
-    
-//    NSMutableAttributedString *attrit = [[NSMutableAttributedString alloc]initWithString:modal.Name];
-//    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
-//    style.lineSpacing = 5; //设置文字行间距
-//    //    [style setFirstLineHeadIndent:-20];
-//    [attrit addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, [modal.Name length])];
-//    self.title.attributedText = attrit;
-    
-    
     /**
      *  四个label
      */
@@ -429,6 +385,7 @@
     [str1 addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(0, modal.PersonPeerPrice.length+1)];
     self.cheapPrice.attributedText = str1;
     
+    self.lastDateL.text = [NSString stringWithFormat:@"最近班期：%@", modal.LastScheduleDate];
     
     NSString *codeStr = [NSString stringWithFormat:@"编号: %@",modal.Code];
     self.productNum.text = codeStr;
@@ -436,21 +393,15 @@
     
     NSString *diStr = [NSString stringWithFormat:@"抵 ￥%@",modal.PersonAlternateCash];
     self.diLab.text = diStr;
-    
-    //lable/字符串/文字大小/文字整个范围/有背景范围/有背景文字颜色/背景颜色/无背景范围/无背景文字颜色
     [textStyle textStyleLabel:self.diLab text:diStr FontNumber:12 Range:NSMakeRange(0, diStr.length) AndHaveRange:NSMakeRange(0, 1) AndHaveColor:[UIColor clearColor] BackGroundColor:[UIColor clearColor] AndNoHaveRange:NSMakeRange(2, diStr.length-2) AndnoHaveBackGroundColor:[UIColor redColor]];
-    //      self.diLab.font = [UIFont fontWithName:@"HelveticalNeue" size:13];
     
     NSString *songStr = [[NSString alloc] initWithString:[NSString stringWithFormat:@"送 ￥%@",modal.SendCashCoupon]];
     self.songLab.text = songStr;
     [textStyle textStyleLabel:self.songLab text:songStr FontNumber:12 Range:NSMakeRange(0, songStr.length) AndHaveRange:NSMakeRange(0, 1) AndHaveColor:[UIColor clearColor] BackGroundColor:[UIColor clearColor] AndNoHaveRange:NSMakeRange(2, songStr.length-2) AndnoHaveBackGroundColor:[UIColor orangeColor]];
     
-    
     NSString *str2 = [[NSString alloc] initWithString:[NSString stringWithFormat:@"利 ￥%@",modal.PersonProfit]];
     self.profits.text = str2;
     [textStyle textStyleLabel:self.profits text:str2 FontNumber:12 Range:NSMakeRange(0, str2.length) AndHaveRange:NSMakeRange(0, 1) AndHaveColor:[UIColor clearColor] BackGroundColor:[UIColor clearColor] AndNoHaveRange:NSMakeRange(2, str2.length - 2) AndnoHaveBackGroundColor:[UIColor redColor]];
-    //    self.li.layer.borderColor = [[UIColor orangeColor] CGColor];
-    //    self.li.layer.borderWidth = 0.5;
     
     [self.ShanDianBtn setTitle:[NSString stringWithFormat:@"%@出发",modal.StartCityName] forState:UIControlStateNormal];
     if ([modal.StartCityName isEqualToString:@"不限"]) {
@@ -467,54 +418,28 @@
         self.profits.hidden = YES;
         self.flash.hidden = YES;
         self.ShanDianBtn.hidden = YES;
-        //        self.jiafanBtn.hidden = YES;
-        //        self.quanBtn.hidden = YES;
         self.diLab.hidden = YES;
         self.li.hidden = YES;
         self.line.hidden = YES;
         self.songLab.hidden = YES;
         self.undercarriageView.hidden = NO;
         self.RelatedBtn.hidden = NO;
+        self.lastDateL.hidden = YES;
     }else{
+        self.lastDateL.hidden = NO;
         self.normalPrice.hidden = NO;
         self.cheapPrice.hidden = NO;
         self.profits.hidden = NO;
         self.flash.hidden = NO;
         self.ShanDianBtn.hidden = NO;
         self.diLab.hidden = NO;
-        //        self.jiafanBtn.hidden = NO;
-        //        self.quanBtn.hidden = NO;
         self.li.hidden = NO;
         self.line.hidden = NO;
         self.songLab.hidden = NO;
         self.undercarriageView.hidden = YES;
         self.RelatedBtn.hidden = YES;
     }
-    
-    
-    
     [self setNeedsLayout];
-    
-    
-    
-    
-    //    @property (nonatomic, copy) NSString *ID;//产品ID(用于收藏)
-    //    @property (nonatomic, copy) NSString *PicUrl;//
-    //    @property (nonatomic, copy) NSString *Name;//产品介绍
-    //    @property (nonatomic, copy) NSString *Code;//产品编号
-    //    @property (nonatomic, copy) NSString *PersonPrice;//门市价
-    //    @property (nonatomic, copy) NSString *PersonPeerPrice;//同行价
-    //    @property (nonatomic, copy) NSString *PersonProfit;//利润
-    //    @property (nonatomic, copy) NSString *PersonBackPrice;//加返
-    //    @property (nonatomic, copy) NSString *PersonCashCoupon;//券
-    //    @property (nonatomic, copy) NSString *StartCityName;//出发城市名称
-    //    @property (assign , nonatomic) BOOL *IsComfirmStockNow;//是否闪电发班
-    //    @property (assign , nonatomic) NSNumber *StartCity;//出发城市编号
-    //    @property (copy,nonatomic) NSString *LastScheduleDate;//最近班期
-    //    @property (copy,nonatomic) NSString *SupplierName;//供应商
-    //    @property (assign , nonatomic) BOOL *IsFavorites;//是否收藏
-    //    @property (copy,nonatomic) NSString *ContactName;//联系人名称
-    //    @property (copy,nonatomic) NSString *ContactMobile;//联系人电话
     
 }
 - (void)RelatedProductClick{

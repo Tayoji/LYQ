@@ -11,19 +11,24 @@
 #import "MobClick.h"
 #import "MeHttpTool.h"
 #import "MBProgressHUD+MJ.h"
+#import "IWHttpTool.h"
 @interface NewNewsController ()
 @property (nonatomic,strong) UISwitch *switch2;//32
 @property (nonatomic,strong) UISwitch *switch3;//33
 @property (nonatomic,strong) UISwitch *switch1;//31
+@property (weak, nonatomic) IBOutlet UISwitch *switch4;
+
 @end
 
 @implementation NewNewsController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([self.signStr isEqualToString:@"fromServiceVC"]) {
-        self.setSeviceNotiView.hidden = NO;
-    }
+    [self loadData];
+    
+////    if ([self.signStr isEqualToString:@"fromServiceVC"]) {
+//        self.setSeviceNotiView.hidden = NO;
+////    }
     
     _switch1 = (UISwitch *)[self.view viewWithTag:31];
     _switch2 = (UISwitch *)[self.view viewWithTag:32];
@@ -45,16 +50,9 @@
         }
     }
     
-    //判断开关状态
-    NSString *NewsDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsRemind"];
-    NSLog(@"%@", NewsDefine);
-    if ([NewsDefine integerValue] == 1) {//勿扰模式
-        _switch1.on = NO;
-    }else{
-        _switch1.on = YES;
-    }
+   
     NSString *NewsVoiceDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsVoiceRemind"];
-    NSLog(@"%@", NewsDefine);
+//    NSLog(@"%@", NewsDefine);
     if ([NewsVoiceDefine integerValue] == 1) {//声音
         _switch2.on = NO;
     }else{
@@ -62,12 +60,16 @@
     }
     
     NSString *NewsShakeDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsShakeRemind"];
-    NSLog(@"%@", NewsDefine);
+//    NSLog(@"%@", NewsDefine);
     if ([NewsShakeDefine integerValue] == 1) {//震动
         _switch3.on = NO;
     }else{
         _switch3.on = YES;
     }
+    
+ 
+    
+    
 }
 -(NSUserDefaults *)NewsRemind{
     if (!_NewsRemind) {
@@ -87,10 +89,20 @@
     }
     return _NewsShakeRemind;
 }
+
+- (NSUserDefaults *)setSeviceNotiRemind{
+    if (!_setSeviceNotiRemind) {
+        _setSeviceNotiRemind = [[NSUserDefaults alloc]init];
+    }
+    return _setSeviceNotiRemind;
+}
+
+
 /*
  [application enabledRemoteNotificationTypes] == UIRemoteNotificationTypeSound
  UIRemoteNotificationTypeAlert、 UIRemoteNotificationTypeBadge、UIRemoteNotificationTypeSound
  */
+
 - (IBAction)NotDisturbSwitch:(UISwitch *)sender {
     NSLog(@"请勿打扰%d",sender.isOn);
     
@@ -144,14 +156,85 @@
     }
     
 }
-
+//设置业务通知
 - (IBAction)acceptServiceNotiSwitch:(UISwitch *)sender{
+    NSLog(@"接受业务");
     if (sender.on) {
         sender.on = YES;
+        [self.setSeviceNotiRemind setObject:@"2" forKey:@"setSeviceNotiRemind"];
     }else{
-        sender.on = NO; 
+        sender.on = NO;
+        [self.setSeviceNotiRemind setObject:@"1" forKey:@"setSeviceNotiRemind"];
     }
+
+    NSDictionary *param = @{@"SettingType":@"2", @"SettingValue":[NSString stringWithFormat:@"%d",sender.on]};
+    [MeHttpTool setAppSettingInfoSwitchWithParam:param success:^(id json) {
+        NSLog(@"json   %@",json);
+        if ([json[@"IsSuccess"] integerValue] == 0) {
+            
+            [sender setOn:!sender.on animated:YES];
+            [MBProgressHUD showError:@"设置失败"];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+
+
+    
+    
     
 }
 
+#pragma mark - 数据请求
+- (void)loadData{
+     NSMutableDictionary *param ;
+    [IWHttpTool WMpostWithURL:@"/Business/GetAppSettingInfo" params:param success:^(id json) {
+        NSLog(@",json = %@", json);
+        NSString *PushNoticeSwitch = json[@"PushNoticeSwitch"];
+        NSString *BusiNoticeSwitch = json[@"BusiNoticeSwitch"];
+        [self serciceShow:BusiNoticeSwitch];
+        [self pushNoticeShow:PushNoticeSwitch];
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+}
+
+- (void)serciceShow:(NSString *)busiNoticeSwitch{
+    NSString *setSeviceNotiRemind = [[NSUserDefaults standardUserDefaults] objectForKey:@"setSeviceNotiRemind"];
+    if (setSeviceNotiRemind.length) {
+        if ([setSeviceNotiRemind integerValue] == 1) {//业务通知
+            self.switch4.on = NO;
+        }else{
+            self.switch4.on  = YES;
+        }
+    }else{
+        if ([busiNoticeSwitch integerValue] == 1) {
+            self.switch4.on = NO;
+        }else{
+            self.switch4.on  = YES;
+        }
+    }
+
+}
+- (void)pushNoticeShow:(NSString *)pushNoticeSwitch{
+    //判断开关状态
+    NSString *NewsDefine = [[NSUserDefaults standardUserDefaults] objectForKey:@"NewsRemind"];
+    if (NewsDefine.length) {
+        if ([NewsDefine integerValue] == 1) {//勿扰模式
+            _switch1.on = NO;
+        }else{
+            _switch1.on = YES;
+        }
+    }else{
+        if ([pushNoticeSwitch integerValue] == 1) {
+            _switch1.on = NO;
+        }else{
+            _switch1.on = YES;
+        }
+    }
+   
+}
 @end

@@ -50,7 +50,7 @@ UIImage *new = [normal resizableImageWithCapInsets:UIEdgeInsetsMake(heith, wid, 
     [filter setValue:input forKey:kCIInputImageKey];
     //[filter setValue:@(bright) forKey:@"inputBrightness"];
     //[filter setValue:@(contrast) forKey:@"inputContrast"];
-    [filter setValue:@(saturation) forKey:@"inputSaturation"];
+//    [filter setValue:@(saturation) forKey:@"inputSaturation"];
     
     
     CIImage *newCIImage = [filter outputImage];

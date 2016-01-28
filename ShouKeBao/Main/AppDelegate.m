@@ -36,6 +36,12 @@
 #import "CommendToNo.h"
 #import "LocationSeting.h"
 #import "APNSHelper.h"
+#import "JPEngine.h"
+#import "GTMBase64.h"
+#import <CommonCrypto/CommonCryptor.h>
+#import "JSONKit.h"
+#import "WXApi.h"
+#define secret_key @"1JPEngine2"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 //#import "UncaughtExceptionHandler.h"
 ////aaaaa
@@ -52,7 +58,26 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [LocationSeting defaultLocationSeting].carouselPageNumber = @"";
+    //下面几行是热更新入口
+//    [JPEngine startEngine];
+//    //网络获取js脚本入口
+//    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://脚本链接网址.js"]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+//        NSString *script = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        [JPEngine evaluateScript:script];
+//    }];
+    //本地获取js入口
+//    NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"ceshi" ofType:@"js"];
+//    NSString *script = [NSString stringWithContentsOfFile:sourcePath encoding:NSUTF8StringEncoding error:nil];
+//    [JPEngine evaluateScript:script];
+    //加密
+//    NSString *encryptionStr = [self encryptUseDES:@"" key:@""];
+//    NSDictionary * postDic = @{@"postKey":encryptionStr};
+
+    //解密
+//    NSString *decodeStr = [self decryptUseDES:@"" key:@""]
+    ;
+    //以上是热更新入口
+    
     [[LocationSeting defaultLocationSeting] setCarouselPageNumber:@""];
     application.statusBarStyle = UIStatusBarStyleLightContent;
     
@@ -77,7 +102,7 @@
 //performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 //  completionHandler:(void(^)(BOOL succeeded))completionHandler{
 //    
-//    
+//    r
 //    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 //    //    NSString *account = [def objectForKey:UserInfoKeyAccount];
 //    //    NSString *password = [def objectForKey:UserInfoKeyAccountPassword];
@@ -233,6 +258,15 @@ void UncaughtExceptionHandler(NSException *exception) {
 
     // 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中
     [self easemobApplication:application didFinishLaunchingWithOptions:launchOptions];
+#pragma --mark--进程杀死之后收到远程通知
+    if (launchOptions) {
+        NSDictionary*userInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+        if(userInfo)
+        {
+            [self didReceiveRemoteNotification:userInfo];
+        }
+    }
+#pragma --mark--进程杀死之后收到远程通知 －－end
 
     [UMessage startWithAppkey:@"55895cfa67e58eb615000ad8" launchOptions:launchOptions];
     [MobClick startWithAppkey:@"55895cfa67e58eb615000ad8" reportPolicy:BATCH   channelId:@"Web"];
@@ -273,6 +307,11 @@ void UncaughtExceptionHandler(NSException *exception) {
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *isFirst = [def objectForKey:@"isFirst"];
+    
+    
+    
+    
+    
     
     // 是否第一次打开app
     if ([isFirst integerValue] != 1) {
@@ -374,6 +413,9 @@ void UncaughtExceptionHandler(NSException *exception) {
     NSLog(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
                   stringByReplacingOccurrencesOfString: @">" withString: @""]
                  stringByReplacingOccurrencesOfString: @" " withString: @""]);
+//    [[[UIAlertView alloc]initWithTitle:@"友盟" message:@"友盟" delegate:nil cancelButtonTitle:@"enSure" otherButtonTitles:nil, nil]show];
+    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+
     [UMessage registerDeviceToken:deviceToken];
 }
 
@@ -478,11 +520,40 @@ void UncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url
 {
+
     [ShareSDK handleOpenURL:url
                  wxDelegate:self];
+
     return YES;
 }
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary*)options{
+    NSString * urlString = url.absoluteString;
 
+    self.urlstring = urlString;
+    if ([urlString myContainsString:@"pipikou://url="]) {
+        [self performSelector:@selector(StartGoWebView) withObject:nil afterDelay:0.5];
+        //        [[[UIAlertView alloc]initWithTitle:@"aaaa" message:urlString delegate:nil cancelButtonTitle:@"bbbbb" otherButtonTitles:nil, nil]show];
+        
+        //        BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
+        //        [MobClick event:@"OpenAppFromShortMessage" attributes:dict];
+    }else if([urlString myContainsString:@"pipikou://type="]){
+        NSLog(@"%@", self.urlstring);
+        [self performSelector:@selector(StartGoAppView) withObject:nil afterDelay:0.5];
+        
+        
+    }
+    
+    //    if ([urlString containsString:@"QQ41D9B706"]) {
+    //        NSString * webStr = [urlString componentsSeparatedByString:@"url="][1];
+    //        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    //        [defaultCenter postNotificationName:@"FromiMesseage" object:webStr];
+    //    }
+    
+    //    [[[UIAlertView alloc]initWithTitle:@"zhifu" message:url.absoluteString delegate:nil cancelButtonTitle:@"a" otherButtonTitles:nil, nil]show];
+    //    [WXApi handleOpenURL:url delegate:self];
+    [ShareSDK handleOpenURL:url wxDelegate:self];
+    return YES;
+}
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -511,8 +582,8 @@ void UncaughtExceptionHandler(NSException *exception) {
 //    }
     
 //    [[[UIAlertView alloc]initWithTitle:@"zhifu" message:url.absoluteString delegate:nil cancelButtonTitle:@"a" otherButtonTitles:nil, nil]show];
-//    [WXApi handleOpenURL:url delegate:self];
 
+//    [WXApi handleOpenURL:url delegate:self];
     [ShareSDK handleOpenURL:url
                  sourceApplication:sourceApplication
                         annotation:annotation
@@ -678,18 +749,9 @@ void UncaughtExceptionHandler(NSException *exception) {
 }
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler NS_AVAILABLE_IOS(8_0){
 //    [[[UIAlertView alloc] initWithTitle:@"Opened!" message:@"This action only open the app... 😀" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-
-
-
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {//进入后台
-    
-//    UILocalNotification *notification = [[UILocalNotification alloc]init];
-//    notification.alertBody = @"本地推送测试";
-//    notification.fireDate  = [NSDate dateWithTimeIntervalSinceNow:5];
-//    notification.applicationIconBadgeNumber = 10;
-//    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     
     if ([[NSUserDefaults standardUserDefaults]boolForKey:@"isQQReloadView"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"stopIndictor" object:nil];
@@ -700,21 +762,10 @@ void UncaughtExceptionHandler(NSException *exception) {
      
      [appIsBack synchronize];
         
-//            UILocalNotification *localNotification = UILocalNotification.new;
-//            
-//            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-//            localNotification.alertBody = @"You've closed me?!? 😡";
-//            localNotification.alertAction = @"Open 😉";
-//            localNotification.category = @"default_category";
-//            
-//            [application scheduleLocalNotification:localNotification];
-
-        
 __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithExpirationHandler:^{
         [application endBackgroundTask:task];
     }];
     
-//    [self prepAudio];
    }
 }
 -(void)changeDef
@@ -776,6 +827,61 @@ __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithE
     if ([[NSUserDefaults standardUserDefaults]objectForKey:UserInfoKeyPassword]) {
         [self checkProductOrder];
     }
+}
+/*字符串加密
+ *参数
+ *plainText : 加密明文
+ *key        : 密钥 64位
+ */
+- (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
+{
+    NSString *ciphertext = nil;
+    const char * textBytes = [plainText UTF8String];
+    NSUInteger dataLength = [plainText length];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String], kCCKeySizeDES,
+                                          iv,
+                                          textBytes, dataLength,
+                                          buffer, 1024,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
+        
+        ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];
+    }
+    return ciphertext;
+}
+
+//解密
+- (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
+{
+    NSData* cipherData = [GTMBase64 decodeString:cipherText];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    size_t numBytesDecrypted = 0;
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                          kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String],
+                                          kCCKeySizeDES,
+                                          iv,
+                                          [cipherData bytes],
+                                          [cipherData length],
+                                          buffer,
+                                          1024,
+                                          &numBytesDecrypted);
+    NSString* plainText = nil;
+    if (cryptStatus == kCCSuccess) {
+        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+        plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    return plainText;
 }
 - (void)checkProductOrder{
     NSString * commandWords = [self getWordOfCommand];
@@ -891,12 +997,29 @@ __block  UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithE
     }
 }
 
+
+#pragma - mark- 收到消息远程和本地
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     if (_mainViewController) {
         [_mainViewController didReceiveLocalNotification:notification];
     }
 }
+
+-(void)didReceiveRemoteNotification:(NSDictionary *)userInfo
+{   //userInfo包含如下；
+    //aps f t m
+    //aps = {} f = fromID, t = toID, m = MessageID
+    //由于此处刚收到信息的时候，环信还没有将message写入到数据库，不能直接跳到聊天界面，在homePage页面viewdidload中会做判断，跳到相应的环信聊天界面
+    [APNSHelper defaultAPNSHelper].isNeedOpenChat = YES;
+    [APNSHelper defaultAPNSHelper].hasNewMessage = YES;
+    
+    [APNSHelper defaultAPNSHelper].isReceiveRemoteNotification = YES;
+    [APNSHelper defaultAPNSHelper].userInfoDic = [NSDictionary dictionaryWithDictionary:userInfo];
+    
+}
+
 
 
 @end

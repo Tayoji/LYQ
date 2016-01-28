@@ -40,6 +40,7 @@
 #define searchDefaultPlaceholder @"订单号/产品名称/供应商名称"
 #define kScreenSize [UIScreen mainScreen].bounds.size
 #define historyCount 6
+#import "NSString+QD.h"
 typedef void (^ChangeFrameBlock)();
 
 @interface Orders () <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,DressViewDelegate,AreaViewControllerDelegate,UISearchBarDelegate,UISearchDisplayDelegate,OrderCellDelegate,MGSwipeTableCellDelegate,MenuButtonDelegate,QDMenuDelegate,ChooseDayViewControllerDelegate, upAndDownBtnDelegate>
@@ -108,9 +109,8 @@ typedef void (^ChangeFrameBlock)();
 @property (nonatomic) NSInteger FirstOpenNav;
 
 @property (nonatomic,strong) NSArray *stateArr;
-@property (nonatomic, assign)CGFloat currentY;
 @property (nonatomic, assign) CGRect ff;
-@property (nonatomic, assign)CGFloat cellFrom;
+@property (nonatomic, assign)CGFloat g;
 @end
 
 @implementation Orders
@@ -164,10 +164,10 @@ typedef void (^ChangeFrameBlock)();
     NSUserDefaults *orderGuideDefault = orderGuideDefault = [NSUserDefaults standardUserDefaults];
     NSString *orderGuide = [orderGuideDefault objectForKey:@"orderGuide"];
     NSLog(@"orderGuide = %@", orderGuide);
-    if ([orderGuide integerValue] != 1) {// 是否第一次打开app
-        [self Guide];
-        self.FirstOpenNav = 6;
-    }
+//    if ([orderGuide integerValue] != 1) {// 是否第一次打开app
+//        [self Guide];
+//        self.FirstOpenNav = 6;
+//    }
     // 导航按钮
     [self customRightBarItem];
 
@@ -472,7 +472,7 @@ typedef void (^ChangeFrameBlock)();
                 [self notgoAlert];
             }else{
                 if (self.invoiceBtn.selected == NO) {
-                    UIAlertView *alertvie = [[UIAlertView alloc] initWithTitle:nil message:@"可对已经付全款（台湾产品除外）的非单团订单提交开发票申请，并可多张订单合并开票。" delegate:self cancelButtonTitle:@"不再提醒" otherButtonTitles: @"好的", nil];
+                    UIAlertView *alertvie = [[UIAlertView alloc] initWithTitle:nil message:@"可对已经付全款（台湾产品除外）的非单团订单提交开发票申请，并可多张订单合并开票。" delegate:self cancelButtonTitle:nil otherButtonTitles: @"不再提醒",@"好的", nil];
                     alertvie.tag = 1001;
                     [alertvie show];
                 }else{
@@ -487,16 +487,17 @@ typedef void (^ChangeFrameBlock)();
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"调用了");
     if (alertView.tag == 1001) {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 1) {
+            NSLog(@"直接取消");
+            [self notgoAlert];
+            
+        }else{
             NSUserDefaults *guideDefault = [NSUserDefaults standardUserDefaults];
             [guideDefault setObject:@"1" forKey:@"goAlertView"];
             [guideDefault synchronize];
             
             [self notgoAlert];
-            
-        }else{
-            NSLog(@"直接取消");
-            [self notgoAlert];
+
         }
 
     }
@@ -670,8 +671,7 @@ typedef void (^ChangeFrameBlock)();
 /**
  *  创建菜单
  */
-- (void)createMenuWithSelectedIndex:(NSInteger)SelectedIndex frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct
-{
+- (void)createMenuWithSelectedIndex:(NSInteger)SelectedIndex frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct{
     
     NSLog(@"fffff %@", dataSource);
     self.qdmenu = [[QDMenu alloc] init];
@@ -714,6 +714,7 @@ typedef void (^ChangeFrameBlock)();
         [_coverView removeFromSuperview];
     });
 }
+
 
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -872,42 +873,43 @@ typedef void (^ChangeFrameBlock)();
     return _stateArr;
 }
 
+
+
+
+
+
 #pragma mark - upAndDownBtnDelegate
 /**
  *  点击选择向下
  
  */
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList{
-    NSLog(@"down = %f %f", self.currentY, CGRectGetMaxY(downBtn.frame));
-    
-//    cell.frame.origin.y - self.tableView.contentOffset.y;
-    
-//    CGRect frame = CGRectMake(/*downBtn.frame.size.width*/ CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202,90, 40*btnList.count);
-    
-    CGRect frame = CGRectMake(CGRectGetMinX(downBtn.frame), self.ff.origin.y-self.tableView.contentOffset.y-89+202+20,90, 40*btnList.count);
-    
-    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100"];
-    
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell{
+    CGFloat Y = cell.frame.origin.y+cell.frame.size.height - self.tableView.contentOffset.y;
+    CGRect frame;
+    UIImage *imageV;
+    if (Y+20 > self.tableView.frame.size.height) {
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*btnList.count), 80, 40*btnList.count);
+        imageV = [UIImage imageNamed:@"downT"];
+       
+    }else{
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*btnList.count);
+        imageV = [UIImage imageNamed:@"upT"];
+       
+    }
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100" image:imageV];
 }
 
-- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip{
+- (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip image:(UIImage *)image{
     self.qdmenu = [[QDMenu alloc] init];
-    self.qdmenu.direct = direct;
-    self.qdmenu.currentIndex = index;
+    self.qdmenu.image = image;
     self.qdmenu.delegate = self;
     self.qdmenu.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
     self.qdmenu.tip = tip;
     self.qdmenu.frame = frame;
     self.qdmenu.dataSource = dataSource;
-    if (direct == 1) {
-        self.qdmenu.layer.anchorPoint = CGPointMake(1, 0);
-        UIImage *image = [UIImage imageNamed:@"bubble"];
-        CGFloat w = image.size.width;
-        CGFloat h = image.size.height;
-        self.qdmenu.image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(h * 0.5, w * 0.2, h * 0.5, w * 0.8)];
-    }
     [self.coverView addSubview:self.qdmenu];
     [self.view.window addSubview:self.coverView];
+  
 }
 
 
@@ -985,16 +987,16 @@ typedef void (^ChangeFrameBlock)();
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OrderCell *cell = [OrderCell cellWithTableView:tableView];
+    OrderCell *cell = [OrderCell cellWithTableView:tableView ];
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
-    NSLog(@"cell%f",cell.frame.size.height);
     self.ff = [tableView rectForRowAtIndexPath:indexPath];
-    self.cellFrom = cell.frame.size.height;
-    self.currentY = cell.frame.origin.y - self.tableView.contentOffset.y;
-   
+    
+//    self.ff = [tableView rectForFooterInSection:indexPath.row];
+//    self.g = cell.bottomView.frame.origin.y - tableView.contentOffset.y;
+    
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
         order = self.InvoicedataArr[indexPath.section];
@@ -1011,8 +1013,7 @@ typedef void (^ChangeFrameBlock)();
     
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    UIButton *invoicebu = (UIButton *)[self.view viewWithTag:1200];
 //    [invoicebu setImage:[UIImage imageNamed:@"hongdian"] forState:UIControlStateNormal];
 //    invoicebu.imageEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
@@ -1039,8 +1040,7 @@ typedef void (^ChangeFrameBlock)();
 
     }
 }
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete | UITableViewCellEditingStyleInsert;
 }
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1050,16 +1050,10 @@ typedef void (^ChangeFrameBlock)();
      [self.InoicelowView reloadLowView:nil];
     NSLog(@"==%ld",self.invoiceArr.count);
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderModel *order;
-    
-    //if (self.tableView.editing) {
-      //  order = self.invoiceArr[indexPath.section];
-    //}else{
         order = self.dataArr[indexPath.section];
-    //}
-#warning 错误
+  #warning 错误
     if (order.buttonList.count) {
         return 202;
     }else{
@@ -1078,8 +1072,7 @@ typedef void (^ChangeFrameBlock)();
 }
 
 #pragma mark - OrderCellDelegate
-- (void)checkDetailAtIndex:(NSInteger)index
-{
+- (void)checkDetailAtIndex:(NSInteger)index{
     UIWindow *window = [UIApplication sharedApplication].delegate.window;
     UIView *cover = [[UIView alloc] initWithFrame:window.bounds];
     cover.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];

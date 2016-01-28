@@ -84,7 +84,7 @@
 //    
 ////    [self loadDataSource];
 //    // 第一次加载的时候显示这个hud
-//    //  [self showHudInView:self.view hint:@"正在加载中"];
+//      [self showHudInView:self.view hint:@"正在加载中"];
 //    CGFloat x = ([UIScreen mainScreen].bounds.size.width/2) - 60;
 //    CGFloat y = ([UIScreen mainScreen].bounds.size.height/2) - 130;
 //    

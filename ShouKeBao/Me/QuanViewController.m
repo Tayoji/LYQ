@@ -17,8 +17,12 @@
 #import <CommonCrypto/CommonCryptor.h>
 #import "GTMBase64.h"
 #import "NSString+FKTools.h"
+#import "ShareHelper.h"
+
+
+
 #define secret_key @"1LlYyQq2"
-@interface QuanViewController () <UIWebViewDelegate>
+@interface QuanViewController () <UIWebViewDelegate, notiPopUpBox>
 
 @property (nonatomic,strong) BeseWebView *webView;
 @property (nonatomic,assign) int webLoadCount;
@@ -26,6 +30,11 @@
 @property (nonatomic,copy) NSString *linkUrl;
 @property(nonatomic,copy) NSString *urlSuffix;
 @property(nonatomic,copy) NSString *urlSuffix2;
+
+
+@property (nonatomic, strong)NSMutableDictionary * shareInfo;
+
+
 @end
 
 @implementation QuanViewController
@@ -192,6 +201,26 @@
     return YES;
 }
 
+//调用分享
+- (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
+    urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    //创建正则表达式；pattern规则；
+    NSString * pattern = @"ShareGeneral(.+)";
+    NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
+    //测试字符串；
+    NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+    if (result.count) {
+        //获取筛选出来的字符串
+        NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
+        resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
+        NSLog(@"%@", self.shareInfo);
+        [ShareHelper shareHelper].delegate = self;
+    }
+}
+
 
 #pragma mark - loadWebView
 - (void)loadWithUrl:(NSString *)url
@@ -230,6 +259,9 @@
             [self.webView goBack];
         }
     }
+    [[[UIAlertView alloc]initWithTitle:@"233" message:@"sda" delegate:nil cancelButtonTitle:@"wa" otherButtonTitles:nil, nil]show];
+
+    
     [self loadWithUrl:self.linkUrl];
 //    [self.webView reload];
 }
@@ -300,6 +332,32 @@
     }
     return plainText;
 }
+
+
+//JS调用分享方法
+-(void)shareIt:(id)sender{
+    
+    NSLog(@"%@", self.shareInfo);
+    NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
+    [postDic setObject:@"0" forKey:@"ShareType"];
+    if (self.shareInfo[@"Url"]) {
+        [postDic setObject:self.shareInfo[@"Url"]  forKey:@"ShareUrl"];
+    }
+    [postDic setObject:self.webView.request.URL.absoluteString forKey:@"PageUrl"];
+    
+    NSLog(@"..shareInfo = %@   %@", self.shareInfo, self.webView.request.URL.absoluteString);
+    
+    if (!self.shareInfo.count) {
+        return;
+    }
+    
+    [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"ShareFromQuanFuBao" andPageUrl:self.webView.request.URL.absoluteString];
+    [ShareHelper shareHelper].delegate = self;
+}
+
+
+
+
 //根据json串得到dic
 - (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
     if (jsonString == nil) {

@@ -50,7 +50,8 @@
 #import "ProduceDetailViewController.h"
 #import "ProductModal.h"
 #import "MyRedPDetailController.h"
-@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate>
+#import "StrToDic.h"
+@interface ChatViewController ()<UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, SRRefreshDelegate, IChatManagerDelegate, DXChatBarMoreViewDelegate, DXMessageToolBarDelegate, LocationViewDelegate, EMCDDeviceManagerDelegate,EMCallManagerDelegate, SendRedPacketDelegate>
 {
     UIMenuController *_menuController;
     UIMenuItem *_copyMenuItem;
@@ -259,20 +260,6 @@
     
     
 }
-- (void)AAAAA{
-    for (int i = 0; i < 1; i++) {
-        NSString * AppRedEnvelopeId = @"";
-        NSDictionary *ext = @{@"MsgType":@"4",@"MsgValue":AppRedEnvelopeId};
-        EMMessage *tempMessage = [ChatSendHelper sendTextMessageWithString:@"红包"
-                                                                toUsername:_conversation.chatter
-                                                               messageType:[self messageType]
-                                                         requireEncryption:NO
-                                                                       ext:ext];
-        [self addMessage:tempMessage];
-        
-    }
-    
-}
 - (void)setRightBarButton{
     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0,0,20,20);
@@ -320,11 +307,26 @@
 
 - (void)setupBarButtonItem
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    [self.navigationItem setLeftBarButtonItem:backItem];
+    
+    
+    UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,55,15)];
+    [backButton setImage:[UIImage imageNamed:@"fanhuian"] forState:UIControlStateNormal];
+    backButton.imageEdgeInsets = UIEdgeInsetsMake(-1, -10, 0, 50);
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    backButton.titleEdgeInsets = UIEdgeInsetsMake(0,-40, 0, 0);
+    backButton.titleLabel.font = [UIFont systemFontOfSize:15];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backItem];
+
+
     
     if (self.isChatGroup) {
 //        UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
@@ -667,7 +669,7 @@
         MessageModel * model = (MessageModel *)obj;
         if (model.message.ext) {//红包状态显示
             if ([model.message.ext[@"MsgType"]isEqualToString:@"5"]) {
-                return 25;
+                return 40;
             }
         }
         return [EMChatViewCell tableView:tableView heightForRowAtIndexPath:indexPath withObject:(MessageModel *)obj];
@@ -806,15 +808,20 @@
 - (void)SendProductClickWithUrlStr:(ProductModal *)model{
     ProduceDetailViewController * ProductView = [[ProduceDetailViewController alloc]init];
     ProductView.produceUrl = model.LinkUrlLyq;
+    NSLog(@"---%@", model.ShareInfo);
     ProductView.shareInfo = model.ShareInfo;
     [self.navigationController pushViewController:ProductView animated:YES];
     NSLog(@"点击产品");
 }
+
+#pragma - mark - 查看界面红包事件
 //红包点击事件
 - (void)OpenRedpacketClickWURL:(MessageModel *)model{
-    NSString * redPacketID = model.message.ext[@"MsgValue"];
+    NSString * redPacketStr = model.message.ext[@"MsgValue"];
+    NSDictionary * extDic = [StrToDic dictionaryWithJsonString:redPacketStr];
     MyRedPDetailController * MyRedDetaile = [[MyRedPDetailController alloc]init];
-//    MyRedDetaile.alloc = redPacketID;
+    NSLog(@"%@", redPacketStr);
+    MyRedDetaile.MainIDsStr = extDic[@"AppRedEnvelopeNoId"];
     [self.navigationController pushViewController:MyRedDetaile animated:YES];
     NSLog(@"点击查看红包");
 }
@@ -831,7 +838,7 @@
 - (void)jumpCustomDetail{
     CustomerDetailAndOrderViewController * VC = [[CustomerDetailAndOrderViewController  alloc]init];
     VC.customerID = @"";
-    VC.appUserID = self.chatter;
+    VC.AppSkbUserId = self.chatter;
     [self.navigationController pushViewController:VC animated:YES];
 
 }
@@ -1296,14 +1303,21 @@
     [self keyBoardHidden];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"callOutWithChatter" object:@{@"chatter":self.chatter, @"type":[NSNumber numberWithInt:eCallSessionTypeVideo]}];
 }
+
+#pragma - mark - 发红包点击事件
 //发红包
 -(void)moreViewRedPacketAction:(DXChatBarMoreView *)moreView{
     // 隐藏键盘
     [self keyBoardHidden];
     SetRedPacketController *setRPacket = [[SetRedPacketController alloc] init];
+    setRPacket.delegate = self;
     setRPacket.sendRedPacketType = sendRedPacketTypeChatVC;
     setRPacket.NumOfPeopleArr = [NSMutableArray arrayWithObjects:self.chatter, nil];
     [self.navigationController pushViewController:setRPacket animated:YES];
+}
+
+-(void)didSendRedPacket:(EMMessage *)tempMessage{
+    [self addMessage:tempMessage];
 }
 
 #pragma mark - LocationViewDelegate
