@@ -83,8 +83,7 @@
 //        [self removeWowView];
 //    }else if(button.tag == 108){//确定
 //        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        [defaults setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
-//        
+//
 ////        [self removeWowView];
 //        [self computeMoney];
 //        [self loadRedPacketRequest];
@@ -270,6 +269,8 @@
 }
 - (void)pushInMainTheard{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"SetRedPacketjumpMesGuide"];
+
     self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
     [self.navigationController popToRootViewControllerAnimated:NO];
 

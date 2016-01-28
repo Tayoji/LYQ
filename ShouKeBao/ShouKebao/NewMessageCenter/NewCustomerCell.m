@@ -15,6 +15,7 @@
 #import "NSString+FKTools.h"
 #import "ProductModal.h"
 #import "CustomerDetailAndOrderViewController.h"
+#define kScreenSize [UIScreen mainScreen].bounds.size
 @interface NewCustomerCell ()<UIWebViewDelegate>
 - (IBAction)MessageBtnClick:(UIButton *)sender;
 
@@ -86,10 +87,12 @@
     self.MessageLab.text = model.DynamicTitleV2;
     
     self.UserName.text = model.NickName;
-    CGSize titleSize = [self.UserName.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(MAXFLOAT, 30)];
-    NSLog(@"%f",titleSize.width);
+//     self.UserName.text = @"我住在你女朋友的隔壁";
+    //动态适配
+   CGFloat width = [self.UserName.text widthWithsysFont:13];
+    NSLog(@"%f---%f",self.UserName.frame.size.width,width);
     CGRect LastUserName = self.UserName.frame;
-    LastUserName.size.width = titleSize.width;
+    LastUserName.size.width = width+5;
     self.UserName.frame = LastUserName;
     NSString *WXstr = model.WeixinNickName;
     NSString *WXFinStr;
@@ -103,19 +106,42 @@
         }
     }
     NSLog(@"%@",WXFinStr);
+    if (self.WXName.text) {
+        self.WXName.text = [NSString stringWithFormat:@"(%@)", WXFinStr];
+    }else{
+        self.WXName.text = [NSString stringWithFormat:@"%@", WXFinStr];
 
-    self.WXName.text = [NSString stringWithFormat:@"(%@)", WXFinStr];
+    }
     CGRect wxnameFrame = self.WXName.frame;
-    wxnameFrame.origin.x = self.UserName.frame.origin.x+self.UserName.frame.size.width+10;
+    wxnameFrame.origin.x = self.UserName.frame.origin.x+self.UserName.frame.size.width+5;
     self.WXName.frame = wxnameFrame;
-//    self.WXName.text = WXFinStr;
+
     [self.ProductView.ProductImage sd_setImageWithURL:[NSURL URLWithString:model.ProductdetailModel.PicUrl] placeholderImage:[UIImage imageNamed:@"CommandplaceholderImage"]];//产品图片
     self.ProductView.ProductDescribtion.text = model.ProductdetailModel.Name;//产品描述
     self.ProductView.CodeNum.text = model.ProductdetailModel.Code;//产品编号
-    self.ProductView.MenshiPrice.text = model.ProductdetailModel.PersonPrice;//门市价
-    self.ProductView.TonghangPrice.text  = model.ProductdetailModel.PersonPeerPrice;//同行价
     
+    self.ProductView.TonghangPrice.text  =[NSString stringWithFormat:@"%@",model.ProductdetailModel.PersonPeerPrice];//同行价   动态行宽
+    CGFloat ProTonghWidth = [self.ProductView.TonghangPrice.text widthWithsysFont:20];
+    CGRect TongHangRect = self.ProductView.TonghangPrice.frame;
+    TongHangRect.size.width = ProTonghWidth+3;
+    TongHangRect.origin.x = self.ProductView.tonghangRect.frame.origin.x-ProTonghWidth-5;
+    self.ProductView.TonghangPrice.frame = TongHangRect;
+    //人民币符号
+    CGRect RMBCh = self.ProductView.RMBChina.frame;
+    RMBCh.origin.x = self.ProductView.TonghangPrice.frame.origin.x - 8;
+    self.ProductView.RMBChina.frame = RMBCh;
+   
+    //同行符号
+    CGRect menshiRect = self.ProductView.menshiRect.frame;
+    menshiRect.origin.x = self.ProductView.RMBChina.frame.origin.x-40;
+    self.ProductView.menshiRect.frame = menshiRect;
     
+    self.ProductView.MenshiPrice.text = [NSString stringWithFormat:@"¥%@",model.ProductdetailModel.PersonPrice] ;//门市价    动态行宽
+    CGFloat PromenshiWidth = [self.ProductView.MenshiPrice.text widthWithsysFont:13];
+    CGRect PromenshiRect = self.ProductView.MenshiPrice.frame;
+    PromenshiRect.origin.x = self.ProductView.menshiRect.frame.origin.x-PromenshiWidth-5;
+    PromenshiRect.size.width = PromenshiWidth+3;
+    self.ProductView.MenshiPrice.frame = PromenshiRect;
 }
 
 //跳转客户资料界面
