@@ -246,6 +246,7 @@
 
 - (void)setModel:(OrderModel *)model{
     _model = model;
+    
     [self setFrameWithModel:model];
     // 订单号
     self.tourCode.text = model.Code;
@@ -324,7 +325,7 @@
     
     if (model.buttonList.count) {
         for (int i = (int)model.buttonList.count-1;i > -1; i--) {
-            if (model.btnList.count != 0 && model.buttonList.count-1 == i) {
+            if (model.moreButtonList.count != 0 && model.buttonList.count-1 == i) {
 //                [self setMoreBtnStyle];
             }else{
                 ButtonList * btn = [model.buttonList objectAtIndex:i];
@@ -374,9 +375,9 @@
 }
 
 - (void)meunmView:(UIButton *)down{
-    NSLog(@"btnList... %@", _model.btnList);
-    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:btnList:andCurrentCell:)]) {
-        [_upAndDownDelegate DidMenumSelectDownBtn:down btnList:_model.btnList andCurrentCell:self];
+    NSLog(@"moreButtonList... %@", _model.moreButtonList);
+    if (_upAndDownDelegate && [_upAndDownDelegate respondsToSelector:@selector(DidMenumSelectDownBtn:moreButtonList:andCurrentCell:)]) {
+        [_upAndDownDelegate DidMenumSelectDownBtn:down moreButtonList:_model.moreButtonList andCurrentCell:self];
         
     }
 }
@@ -401,7 +402,7 @@
         btnW += btnSize.width + 12 + gap;
         CGFloat btnX = screenW - btnW;
         btn.frame = CGRectMake(btnX, 5, btnSize.width + 12, btnSize.height + 12);
-        if (i == self.buttonArr.count-1 && self.model.btnList.count != 0) {
+        if (i == self.buttonArr.count-1 && self.model.moreButtonList.count != 0) {
           self.moreY = btnX;
           [self setMoreBtnStyle];
         }
