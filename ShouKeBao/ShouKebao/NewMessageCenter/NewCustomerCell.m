@@ -89,6 +89,12 @@
     self.UserName.text = model.NickName;
 //     self.UserName.text = @"我住在你女朋友的隔壁";
     //动态适配
+    if (self.UserName.text != nil || ![self.UserName.text  isEqual: @""] ||![self.UserName.text  isEqual: @"(null)"] ||self.UserName.text != [NSNull class]) {
+        self.UserName.text = @"";
+    }else{
+        self.WXName.text = @"";
+        
+    }
    CGFloat width = [self.UserName.text widthWithsysFont:13];
     NSLog(@"%f---%f",self.UserName.frame.size.width,width);
     CGRect LastUserName = self.UserName.frame;
@@ -105,11 +111,11 @@
             break;
         }
     }
-    NSLog(@"%@",WXFinStr);
-    if (self.WXName.text) {
+    NSLog(@"---%@",WXFinStr);
+    if (self.WXName.text || ![self.WXName.text  isEqual: @""] ||![self.WXName.text  isEqual: @"(null)"]  ||self.WXName.text != [NSNull class]) {
         self.WXName.text = [NSString stringWithFormat:@"(%@)", WXFinStr];
     }else{
-        self.WXName.text = [NSString stringWithFormat:@"%@", WXFinStr];
+        self.WXName.text = @"";
 
     }
     CGRect wxnameFrame = self.WXName.frame;
