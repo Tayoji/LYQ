@@ -274,7 +274,20 @@
 //   }else  {
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }
+    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp()"];
     
+    if (isFade.length && [isFade integerValue] == 0){
+        // 这个地方上面的js方法自动处理
+    }else{
+        if ([self.webView canGoBack]){
+            [self.webView goBack];
+        }
+        else
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+
     //下边是正在增加退出分享的借口
     self.isBack = YES;
     if ([_webView canGoBack]) {

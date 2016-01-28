@@ -77,7 +77,6 @@
     if (button.tag == 2001) {
         
         NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
-        exc.clientManagerTel = self.TelGuide;
         exc.naVC = self.navigationController;
         [self.navigationController pushViewController:exc animated:YES];
     }

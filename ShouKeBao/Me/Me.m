@@ -800,7 +800,6 @@
                         
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
-                        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
                         [self.navigationController pushViewController:newExclusiveVC animated:YES];
                         
                     }
@@ -981,7 +980,6 @@
         [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
         self.IsOpenConsultantApp = json[@"IsOpenConsultantApp"];
         NSLog(@"///// %@", self.IsOpenConsultantApp);
-//        self.clientMagagerTel = json[@""];
     
     } failure:^(NSError *error) {
         NSLog(@"接口请求失败 error is %@------",error);
@@ -1184,7 +1182,6 @@
     }else if([type isEqualToString:@"openAppUnVip"]){
         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
         newExclusiveVC.naVC = self.navigationController;
-        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
         [self.navigationController pushViewController:newExclusiveVC animated:YES];
     }
     //pipikou://type=openAppUnVip

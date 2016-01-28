@@ -86,6 +86,7 @@
 #import "EaseMob.h"
 #import "ChatViewController.h"
 #import "CartoonView.h"
+#import "NewOpenExclusiveViewController.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
@@ -803,47 +804,38 @@ label.font = [UIFont systemFontOfSize:15];
 
 #pragma  - mark程序未死亡时远程推送处理函数
 -(void)dealPushBackGround:(NSNotification *)noti
-{ //arr[0]是value arr[1]是key
-    //orderId ,userId ,recommond ,productId ,messageId
-   
-    // [self getVoice];
+{
+    
+// [self getVoice];
     
     
 //    self.tabBarItem.badgeValue = nil;
+    NSDictionary *userInfo = noti.object;
+    NSString *noticeType = [userInfo valueForKey:@"noticeType"];
+//    NSString * objID = [userInfo valueForKey:@"objectId"];
+    NSString * objUri = [userInfo valueForKey:@"objectUri"];
+    NSString * objTitle = [userInfo valueForKey:@"noticeTitle"];
     [self headerPull];
     [self getUserInformation];
     
-
-//    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"isReceveNoti"];
-//    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"isReceveNoti"]) {
-//    }
-    
-    
-    NSMutableArray *message = noti.object;
-    NSLog(@"viewController 里取得值是 is %@",message);
-    
-    
     NSUserDefaults *appIsBack = [NSUserDefaults standardUserDefaults];
     
-//     NSString *result = [appIsBack objectForKey:@"appIsBack"];
     if([UIApplication sharedApplication].applicationState ==UIApplicationStateInactive){
-//    if ([result isEqualToString:@"yes"]) {
         self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
         [appIsBack setObject:@"no" forKey:@"appIsBack"];
         [appIsBack synchronize];
-
-        if ([message[0] isEqualToString:@"orderId"]) {
+        if ([noticeType isEqualToString:@"SingleOrder"]) {
             //已经处理的订单在发生变化时发送消息给用户，点击消息直接进入该订单消息的订单详情
-            //message[2]是订单url
+            //objUri是订单url
             OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            detail.url = message[2];
+            detail.url = objUri;
             [self.navigationController pushViewController:detail animated:YES];
         }
         /*
-        else if ([message[0] isEqualToString:@"remind"]){//客户提醒
+        else if ([noticeType isEqualToString:@"remind"]){//客户提醒
             //跳remindDetail
             NSString *remindTime = message[1];
-            NSString *remindContent = message[2];
+            NSString *remindContent = objUri;
             //time,note
             RemindDetailViewController *remindDetail = [[RemindDetailViewController alloc] init];
             remindDetail.time = remindTime;
@@ -851,7 +843,7 @@ label.font = [UIFont systemFontOfSize:15];
             [self.navigationController pushViewController:remindDetail animated:YES];
         }
         */
-        else if ([message[0] isEqualToString:@"recommond"]){//精品推荐
+        else if ([noticeType isEqualToString:@"PerfectProduct"]){//精品推荐
             //精品推荐界面
             //无需参数，直接跳转到精品推荐
             UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
@@ -859,54 +851,60 @@ label.font = [UIFont systemFontOfSize:15];
             [self.navigationController pushViewController:PRVC animated:YES];
         }
         
-        else if ([message[0] isEqualToString:@"productId"]){
+        else if ([noticeType isEqualToString:@"SingleProduct"]){
             
             //产品详情h5
             ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
-            detail.produceUrl = message[2];
+            detail.produceUrl = objUri;
             detail.noShareInfo = YES;
             [self.navigationController pushViewController:detail animated:YES];
         }
-        else if ([message[0] isEqualToString:@"messageId"]){//公告
+        else if ([noticeType isEqualToString:@"SingleArticle"]){//公告
             //进入h5
-            NSString *messageURL = message[2];
+            NSString *messageURL = objUri;
             messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
             messageDetail.messageURL = messageURL;
             [self.navigationController pushViewController:messageDetail animated:YES];
         }
         
-        else if ([message[0] isEqualToString:@"OtherId"]){
-            NSString * otherUrl = message[2];
-            NSString * otherTitle = message[3];
+        else if ([noticeType isEqualToString:@"Other"]){
+            NSString * otherUrl = objUri;
+            NSString * otherTitle = objTitle;
             BaseWebViewController * webView = [[BaseWebViewController alloc]init];
             webView.linkUrl = otherUrl;
             webView.webTitle = otherTitle;
             [self.navigationController pushViewController:webView animated:YES];
-        }else if([message[0] isEqualToString:@"SearchProduct"]){
+        }else if([noticeType isEqualToString:@"SearchProduct"]){
             ProductList *list = [[ProductList alloc] init];
             list.productListFrom = FromKeyWord;
-            list.pushedSearchK = message[3];
-            list.title =  message[3];
-//            NSDictionary * dic = @{@"TwoSubName": message[3]};
+            list.pushedSearchK = objTitle;
+            list.title =  objTitle;
+//            NSDictionary * dic = @{@"TwoSubName": objTitle};
 //            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:dic];
 //            [MobClick event:@"FindProductList" attributes:dict];
             [self.navigationController pushViewController:list animated:YES];
             
-        }else if ([message[0] isEqualToString:@"CustomerDynamic"]){//直客动态
+        }else if ([noticeType isEqualToString:@"CustomerDynamic"]){//直客动态
             ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
             [self.navigationController pushViewController:zhiVisit animated:YES];
-        }else{
-        
+        }else if([noticeType isEqualToString:@"ConsultantAppOpen"]){
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+            NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+            newOpenVC.naVC = self.navigationController.tabBarController.selectedViewController.navigationController;
+            [self.navigationController.tabBarController.selectedViewController.navigationController pushViewController:newOpenVC animated:YES];
+        }else if([noticeType isEqualToString:@"ConsultantAppNoOpen"]){
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+            NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+            newExclusiveVC.naVC = self.navigationController.tabBarController.selectedViewController.navigationController;
+            [self.navigationController.tabBarController.selectedViewController.navigationController pushViewController:newExclusiveVC animated:YES];
         }
 
     }else{
        
-        NSString *type = message[0];
+        NSString *type = noticeType;
         if (type.length>0) {
             if ([self.tabBarItem.badgeValue intValue]+1 > 99) {
-              
-                self.tabBarItem.badgeValue = @"99+";
-                
+            self.tabBarItem.badgeValue = @"99+";
             }else{
             self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",[self.tabBarItem.badgeValue intValue]+1];
             }
@@ -914,7 +912,7 @@ label.font = [UIFont systemFontOfSize:15];
             
 //        [self getVoice];
         }
-        if ([message[0] isEqualToString:@"messageId"]){//新公告
+        if ([noticeType isEqualToString:@"messageId"]){//新公告
             self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
             int valueCount = [self.barButton.badgeValue intValue];
             self.barButton.badgeValue = [NSString stringWithFormat:@"%d",valueCount+1];
@@ -934,72 +932,6 @@ label.font = [UIFont systemFontOfSize:15];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&messageSound);
     
     AudioServicesPlaySystemSound (messageSound);
-}
-
-
-#pragma  - mark程序死亡时远程推送处理函数
--(void)dealPushForeground:(NSNotification *)noti
-{ //arr[0]是value arr[1]是key
-    //orderId ,userId ,recommond ,productId ,messageId
-   
-    NSMutableArray *message = noti.object;
-    NSLog(@"viewController 里取得值是 is %@",message);
-    
-    [self headerPull];
-    
-    [self  getUserInformation];
-  
-    //[self getVoice];
-    
-    if ([message[0] isEqualToString:@"orderId"]) {
-        //已经处理的订单在发生变化时发送消息给用户，点击消息直接进入该订单消息的订单详情
-        //message[2]是订单url
-        OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        detail.url = message[2];
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"remind"]){//客户提醒
-        //跳remindDetail
-        NSString *remindTime = message[1];
-        NSString *remindContent = message[2];
-        //time,note
-        RemindDetailViewController *remindDetail = [[RemindDetailViewController alloc] init];
-        remindDetail.time = remindTime;
-        remindDetail.note = remindContent;
-        [self.navigationController pushViewController:remindDetail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"recommond"]){//精品推荐
-        //精品推荐界面
-        //无需参数，直接跳转到精品推荐
-        UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
-        ProductRecommendViewController * PRVC = (ProductRecommendViewController *)[SB instantiateViewControllerWithIdentifier:@"eeee"];
-        [self.navigationController pushViewController:PRVC animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"productId"]){
-        
-        //产品详情h5
-        ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
-        detail.produceUrl = message[2];
-        detail.noShareInfo = YES;
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"messageId"]){//公告
-        //进入h5
-        NSString *messageURL = message[2];
-        messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
-        messageDetail.messageURL = messageURL;
-        [self.navigationController pushViewController:messageDetail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"noticeType"]){
-        // [self ringAction];
-    }
-    
-
 }
 
 

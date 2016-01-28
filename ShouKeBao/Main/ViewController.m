@@ -35,6 +35,7 @@
 #import "BaseWebViewController.h"
 #import "ProductList.h"
 #import "ZhiVisitorDynamicController.h"
+#import "NewOpenExclusiveViewController.h"
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
 static NSString *kMessageType = @"MessageType";
@@ -47,13 +48,9 @@ static NSString *kConversationChatter = @"ConversationChatter";
 @property (nonatomic,strong) AVAudioPlayer *player;
 
 
-@property (copy ,nonatomic) NSMutableString *skbValue;
-@property (copy ,nonatomic) NSMutableString *fdpValue;
-@property (copy ,nonatomic) NSMutableString *odsValue;
-@property (copy ,nonatomic) NSMutableString *cstmValue;
-@property (copy ,nonatomic) NSMutableString *meValue;
 @property (nonatomic, strong)ShouKeBao * shoukebaoVC;
 @property (nonatomic, strong)Customers * customers;
+@property (nonatomic, strong)Me * meVC;
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 
@@ -66,11 +63,6 @@ static NSString *kConversationChatter = @"ConversationChatter";
     self.tabBar.translucent = NO;
     [self setupUnreadMessageCount];
     [self registerNotifications];
-   self.skbValue = [NSMutableString stringWithFormat:@"%d",0];
-    self.fdpValue = [NSMutableString stringWithFormat:@"%d",0];
-    self.odsValue = [NSMutableString stringWithFormat:@"%d",0];
-    self.cstmValue = [NSMutableString stringWithFormat:@"%d",0];
-    self.meValue = [NSMutableString stringWithFormat:@"%d",0];
 
     
     self.shoukebaoVC = [[ShouKeBao alloc] init];
@@ -101,8 +93,8 @@ static NSString *kConversationChatter = @"ConversationChatter";
 //    }
 
     
-    Me *me = [[Me alloc] initWithStyle:UITableViewStyleGrouped];
-    [self addChildVc:me title:@"我" image:@"wo2" selectedImage:@"wo"];
+    self.meVC = [[Me alloc] initWithStyle:UITableViewStyleGrouped];
+    [self addChildVc:self.meVC title:@"我" image:@"wo2" selectedImage:@"wo"];
     
     
     NSUserDefaults *appIsBack = [NSUserDefaults standardUserDefaults];
@@ -377,7 +369,7 @@ static NSString *kConversationChatter = @"ConversationChatter";
 
 
     NSString *noticeType = [userInfo valueForKey:@"noticeType"];
-    NSString * objID = [userInfo valueForKey:@"objectId"];
+//    NSString * objID = [userInfo valueForKey:@"objectId"];
     NSString * objUri = [userInfo valueForKey:@"objectUri"];
     NSString * objTitle = [userInfo valueForKey:@"noticeTitle"];
 
@@ -432,10 +424,17 @@ static NSString *kConversationChatter = @"ConversationChatter";
         }else if ([noticeType isEqualToString:@"CustomerDynamic"]){//直客动态
             ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
             [self.shoukebaoVC.navigationController pushViewController:zhiVisit animated:YES];
-        }else{
-            
+        }else if([noticeType isEqualToString:@"ConsultantAppOpen"]){
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+            NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+            newOpenVC.naVC = self.meVC.navigationController;
+            [self.meVC.navigationController pushViewController:newOpenVC animated:YES];
+        }else if([noticeType isEqualToString:@"ConsultantAppNoOpen"]){
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+            NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+            newExclusiveVC.naVC = self.meVC.navigationController;
+            [self.meVC.navigationController pushViewController:newExclusiveVC animated:YES];
         }
-        
     }else{
         NSString *type = noticeType;
         if (type.length>0) {

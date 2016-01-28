@@ -75,7 +75,14 @@
     if (indexPath.row%2 == 0) {
         return 50;
     }
-    return 300;
+    if (kScreenSize.width == 320) {
+        return 269;
+    }else if (kScreenSize.width == 375) {
+        return 286;
+    }else if(kScreenSize.width == 414){
+        return 299;
+    }
+    return 299;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TimerCell *cell;

@@ -36,6 +36,7 @@
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"NewOpenExclusiveViewController"];
     self.navigationController.navigationBarHidden = YES;
+    [self loadIsOpenAppData];
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"OpenAppGuide"] isEqualToString:@"1"]) {
         
     }else{
@@ -47,7 +48,18 @@
             
         } failure:nil];
     }
+    
+    
 }
+
+- (void)loadIsOpenAppData{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [IWHttpTool WMpostWithURL:@"/Business/GetMeIndex" params:dic success:^(id json) {
+        [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"NewOpenExclusiveViewController"];
@@ -55,7 +67,9 @@
         BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
         [MobClick event:@"Me_getCashSuccess" attributes:dict];
     }
+    
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
