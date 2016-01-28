@@ -490,10 +490,10 @@
     NSUserDefaults *guiDefault = [NSUserDefaults standardUserDefaults];
     [guiDefault setObject:@"1" forKey:@"isLogoutYet"];//3Dtouch的类型
     
-//    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] !=1 ) {
-//            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
+    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] !=1 ) {
+            [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
             [self Guide];
-//    }
+    }
     //判断后来开通的
 //    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] == 1 && [[guiDefault objectForKey:@"SKBExclusiveaAppGUideRPNest"] integerValue] == 0 ) {
 //            [self Guide];
