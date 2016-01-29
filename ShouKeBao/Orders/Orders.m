@@ -1058,13 +1058,36 @@ typedef void (^ChangeFrameBlock)();
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderModel *order;
-        order = self.dataArr[indexPath.section];
-  #warning 错误
-    if (order.buttonList.count) {
+    if (self.dataArr.count == 0) {
+        if (tableView.editing) {
+            if (order.buttonList.count) {
+                self.nullContentView.hidden = NO;
+            }else{
+                self.nullContentView.hidden = YES;
+            }
+        }else{
+            self.nullContentView.hidden = YES;
+        }
+        
         return 202;
     }else{
-        return 172;
+        order = self.dataArr[indexPath.section];
+        if (order.buttonList.count) {
+            if (tableView.editing) {
+                self.nullContentView.alpha = NO;
+            }
+            return 202;
+        }else{
+            return 172;
+        }
     }
+    
+  #warning 错误
+//    if (order.buttonList.count) {
+//        return 202;
+//    }else{
+//        return 172;
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
