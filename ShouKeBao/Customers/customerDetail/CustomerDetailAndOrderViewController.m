@@ -33,9 +33,9 @@
     [super viewDidLoad];
 //    detailC
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"userNS"]forBarMetrics:UIBarMetricsDefault];
-    
-    [self setNavSegementView];
     [self customerRightBarItem];
+
+    [self setNavSegementView];
     [self setNavBack];
     self.button.hidden = NO;
     [self addGest];
