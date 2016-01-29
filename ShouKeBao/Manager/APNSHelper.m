@@ -21,6 +21,8 @@
         apnsHelpers.dataStr = @"";
         apnsHelpers.isJumpChat = NO;
         apnsHelpers.isJumpChatList = NO;
+        apnsHelpers.isJumpExclusiveApp = NO;
+        apnsHelpers.isJumpOpenExclusiveAppIntroduce = NO;
         apnsHelpers.chatName = @"";
         apnsHelpers.isReceiveRemoteNotification = NO;
         apnsHelpers.userInfoDic = @{};

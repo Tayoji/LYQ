@@ -80,7 +80,7 @@ static NSString * cellid = @"reuseaa";
 - (void)setLayout{
     NSString *IMProductMsgValue = [NSString stringWithFormat:@"%@",  self.shareInfo[@"IMProductMsgValue"]];
     
-    NSLog(@"..%@. %@ %d/// %@", self.shareInfo, IMProductMsgValue, IMProductMsgValue.length, self.shareInfo[@"IMProductMsgValue"]);
+    NSLog(@"..%@. %@ %ld/// %@", self.shareInfo, IMProductMsgValue, IMProductMsgValue.length, self.shareInfo[@"IMProductMsgValue"]);
 
     if (/*IMProductMsgValue.length && ![IMProductMsgValue isEqualToString:@""]![IMProductMsgValue isKindOfClass:[NSNull class]] ||*/ IMProductMsgValue.length &&![IMProductMsgValue isEqualToString:@"(null)"]) {
         self.photosArr = @[@{@"pic":@"iconfont-weixin", @"title":@"微信好友"},

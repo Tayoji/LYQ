@@ -67,28 +67,36 @@
 //            [self.buttonList addObject:btn];
 //        }
   
-#warning 指定写法
-//        for (NSDictionary *dic2 in dic[@"ButtonList"]) {
-//            ButtonList *btn = [ButtonList buttonListWithDict:dic2];
-//            
-//            if ([btn.text isEqualToString:@"申请合同"]|| [btn.text isEqualToString:@"申请退款"] ||[btn.text isEqualToString:@"确认单"] ) {//将二级实现放在数组最里
-//                [self.btnList addObject:btn];
-//            }else{
-//                [self.buttonList addObject:btn];
-//            }
-//        }
-#warning 按给出数据先后顺序
+
+#warning 分类显示
         NSMutableArray *arr = dic[@"ButtonList"];
         for (int i = 0; i < arr.count; i++) {
+            
             ButtonList *btn = [ButtonList buttonListWithDict:arr[i]];
-            if (i > 1) {
-                [self.btnList addObject:btn];
-            }else{
+          
+            if (arr.count<3) {//1 2的时候
                 [self.buttonList addObject:btn];
+            }else{//多于等于3个的时候
+                if ([btn.color isEqual:[UIColor configureColorWithNum:3]]) {//有3的加在大数组里
+                     [self.buttonList addObject:btn];
+                }else{  //无3的加在小数组里
+                    [self.moreButtonList addObject:btn];
+                }
             }
         }
-        if (self.btnList.count) {
-             [self.buttonList addObject:self.btnList];//将二级实现放在数组里作为一个元素
+        int i = 0;
+        while (self.buttonList.count < 2&&self.moreButtonList.count!=0) {
+            [self.buttonList addObject:self.moreButtonList[i]];
+            [self.moreButtonList removeObject:self.moreButtonList[i]];
+            i++;
+        }
+       
+        if (self.buttonList.count == 2) {
+            [self.buttonList exchangeObjectAtIndex:0 withObjectAtIndex:1];
+            
+        }
+        if (self.moreButtonList.count) {
+            [self.buttonList addObject:self.moreButtonList];//将二级实现放在数组里作为一个元素
         }
     }
     return self;
@@ -110,11 +118,11 @@
     }
     return _buttonList;
 }
-- (NSMutableArray *)btnList
+- (NSMutableArray *)moreButtonList
 {
-    if (!_btnList) {
-        _btnList = [NSMutableArray array];
+    if (!_moreButtonList) {
+        _moreButtonList = [NSMutableArray array];
     }
-    return _btnList;
+    return _moreButtonList;
 }
 @end

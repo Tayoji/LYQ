@@ -38,6 +38,8 @@
 @property (nonatomic,strong) UITableView *searchTableView;
 @property (nonatomic,strong) UIView *historyView;
 @property (nonatomic,strong) UIView *nullView;
+@property (nonatomic) UILabel *nullLabel1;
+@property (nonatomic) UILabel *nullLabel2;
 
 @property (nonatomic,strong) NSMutableArray *guideHistoryArr;
 
@@ -66,6 +68,8 @@
     
     [self.view addSubview:self.searchBar];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.nullLabel1];
+    [self.view addSubview:self.nullLabel2];
     //浮动图
 //    [self.lowView addSubview:self.AllSelectedBtn];
     [self.lowView addSubview:self.determineBtn];
@@ -122,11 +126,12 @@
             self.isRefresh = YES;
 //            [self.SELCustomerArr removeAllObjects];
         }
-//        [self.SELCustomerArr removeAllObjects];
         [_determineBtn setTitle:[NSString stringWithFormat:@"确定(%ld/8)",self.SELCustomerArr.count] forState:UIControlStateNormal];
         
         if (arrs.count == 0 && self.dataArr.count == 0){
             self.nullView.alpha = 1;
+            self.nullLabel1.alpha = 1;
+            self.nullLabel2.alpha = 1;
         }else{
             self.nullView.alpha = 0;
             for (NSDictionary *dic in arrs) {
@@ -169,14 +174,16 @@
     CustomModel *model = self.dataArr[indexPath.row];
     cell.nameLabel.text = model.Name;
     cell.NumberLabel.text = model.Mobile;
-    NSLog(@"%@",model.Mobile);
-    if (!model.HeadUrl) {
+    NSLog(@"%@",model.HeadUrl);
+    
+    if (!model.HeadUrl || [model.HeadUrl isEqual:@""]) {
         cell.NameFirstlabel.text = [model.Name substringToIndex:1];
         cell.NameFirstlabel.alpha = 1;
     }else{
         [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:model.HeadUrl]];
         cell.NameFirstlabel.alpha = 0;
     }
+    
     if ([self.SELCustomerArr containsObject:model.AppSkbUserId]) {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
@@ -449,6 +456,28 @@
     }
    
     return _nullView;
+}
+-(UILabel *)nullLabel1{
+    if (!_nullLabel1) {
+        _nullLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-80, 350, 160, 20)];
+        _nullLabel1.text = @"暂无专属APP客户";
+        _nullLabel1.textAlignment = NSTextAlignmentCenter;
+        _nullLabel1.textColor = [UIColor blackColor];
+        _nullLabel1.font = [UIFont systemFontOfSize:16];
+        _nullLabel1.alpha = 0;
+    }
+    return _nullLabel1;
+}
+-(UILabel *)nullLabel2{
+    if (!_nullLabel2) {
+        _nullLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(kScreenSize.width/2-140, 375, 280, 20)];
+        _nullLabel2.text = @"马上分享你的专属APP获取更多客人吧";
+        _nullLabel2.textAlignment = NSTextAlignmentCenter;
+        _nullLabel2.textColor = [UIColor lightGrayColor];
+        _nullLabel2.font = [UIFont systemFontOfSize:16];
+        _nullLabel2.alpha = 0;
+    }
+    return _nullLabel2;
 }
 -(UITableView *)searchTableView{
     if (!_searchTableView) {

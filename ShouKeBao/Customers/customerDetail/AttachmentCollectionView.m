@@ -105,6 +105,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     }
 }
 -(void)loadDateFromCustom{
+    
     NSDictionary * params = @{@"CustomerIds":@[self.customerId]};
     [IWHttpTool postWithURL:@"/Customer/GetCustomerPicList" params:params success:^(id json) {
         NSLog(@"%@", json);
@@ -199,7 +200,10 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
         [self EditCustomerDetail];
     }else{
         NSLog(@"%@", self.customerId);
-        
+        MBProgressHUD *hudView = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].delegate window] animated:YES];
+        hudView.labelText = @"保存中...";
+        [hudView show:YES];
+
         if (self.fromType == fromTypeCustom) {
             [self upDateFromCustom];
         }else if (self.fromType == fromTypeOrderDetail){
@@ -211,7 +215,9 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 }
 
 - (void)upDateFromCustom{
+    
     [IWHttpTool postWithURL:@"/Customer/SavePicToCustomer" params:@{@"PicUrls":self.bigPicUrlArray,@"CustomerId":self.customerId} success:^(id json) {
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
         [MBProgressHUD showSuccess:@"保存成功"];
         NSLog(@"%@", json);
     } failure:^(NSError *error) {
@@ -222,6 +228,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 //上传游客证件
 - (void)upDateFromOrderDetail{
     [IWHttpTool postWithURL:@"/Order/OperationOrderCustomerAttachment" params:@{@"OrderCustomerImageUrl":self.bigPicUrlArray,@"OrderCustomerId":self.customerId} success:^(id json) {
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
         [MBProgressHUD showSuccess:@"保存成功"];
         NSLog(@"%@", json);
         
@@ -236,6 +243,8 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
 
     @synchronized(self) {
         [(OrderDetailViewController *)self.OrderVC postContractPicToServer:self.bigPicUrlArray];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].delegate window] animated:YES];
+        [MBProgressHUD showSuccess:@"保存成功"];
         [self.navigationController popViewControllerAnimated:YES];
     }
 

@@ -10,6 +10,7 @@
 #import "BaseClickAttribute.h"
 #import "MobClick.h"
 #import "UserInfo.h"
+#import "LocationSeting.h"
 #define kScreenWidth   [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight  [UIScreen mainScreen].bounds.size.height
 #define SYSTEM_VERSION   [[UIDevice currentDevice].systemVersion floatValue]
@@ -126,12 +127,16 @@ static id _shareView;
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"Me_contactManagerImmediatelyClick" attributes:dict];
     
-    NSString *mobile = [UserInfo shareUser].sosMobile;
+    NSString *mobile = [LocationSeting defaultLocationSeting].SOSPhoneNum;
     NSString *phone = [NSString stringWithFormat:@"tel://%@",mobile];
-    NSLog(@"----------------手机号码%@------------------",phone);
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phone]];
-
+    NSString *d = @"tel://";
+    NSLog(@"%ld", d.length);
+    NSLog(@"----------------手机号码 %@ ------------------",phone);
+    if (phone.length > 6) {
+         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phone]];
+    }else{
+         [[[UIAlertView alloc]initWithTitle:@"提示" message:@"电话号码为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil]show];
+    }
 }
 
 

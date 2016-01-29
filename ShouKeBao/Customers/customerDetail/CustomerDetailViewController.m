@@ -312,7 +312,7 @@
 
     }else{
         [self.customerIconB addSubview:nameima];
-        [nameima sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HeadUrl]]];
+        [nameima sd_setImageWithURL:[NSURL URLWithString:[self.dataArr[0]HeadUrl]] placeholderImage:nil];
     }
     
     

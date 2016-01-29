@@ -300,6 +300,7 @@
             [def setObject:@"1" forKey:@"isLogoutYet"];
 
             // 保存用户模型
+             NSLog(@"json = %@", json);
             [UserInfo userInfoWithDict:json];
             
             // 保存分站

@@ -230,6 +230,7 @@
             [self.isReadArr addObjectsFromArray:[WriteFileManager WMreadData:@"messageRead"]];
             count += [self getUnreadMessageCount];
             self.messageCount = count;
+            NSLog(@"%ld", self.messageCount);
             UIApplication *application = [UIApplication sharedApplication];
             application.applicationIconBadgeNumber = count;
             [self messagePromptAction];
@@ -265,9 +266,10 @@
     self.conditionLine.hidden = NO;
     self.tableSuper.frame = CGRectMake(0, 90, self.view.frame.size.width, self.view.frame.size.height-90);
     self.messagePrompt.text = [NSString stringWithFormat:@"您有%ld条未读信息", (long)self.messageCount];
+        NSLog(@"%ld", self.messageCount);
     self.timePrompt.text = [[NSUserDefaults standardUserDefaults]objectForKey:@"customMessageDateStr"];
     if (self.messageCount >0) {
-        [self.bellButton setImage:[UIImage imageNamed:@"iconpingtai"] forState:UIControlStateNormal];
+        [self.bellButton setImage:[UIImage imageNamed:@"blueMessage"] forState:UIControlStateNormal];
         UIView*redDot = [[UIView alloc]initWithFrame:CGRectMake(30, 10, 8, 8)];
         redDot.backgroundColor = [UIColor redColor];
         redDot.layer.cornerRadius = 4.0;
@@ -318,7 +320,7 @@
     _pointDownImage.image = [UIImage imageNamed:@"whidexiala"];
     [button addSubview:_pointDownImage];
 }
-
+//blueMessage
 
 
 

@@ -14,6 +14,12 @@
 #define UserInfoKeyLYGWIsOpenVIP @"LVGWIsOpenVIP"//是否开通银牌以上顾问
 #define kScreenSize [UIScreen mainScreen].bounds.size
 
+#define fourSize ([UIScreen mainScreen].bounds.size.height == 480)
+#define fiveSize ([UIScreen mainScreen].bounds.size.height == 568)
+#define sixSize ([UIScreen mainScreen].bounds.size.height == 667)
+#define sixPSize ([UIScreen mainScreen].bounds.size.height > 668)
+
+
 @interface RedPacketMainController ()
 @property (nonatomic,strong) UIView *RedPacketAlertView;
 @property (nonatomic,strong) UIView *backGroundRPView;
@@ -77,7 +83,6 @@
     if (button.tag == 2001) {
         
         NewExclusiveAppIntroduceViewController *exc = [[NewExclusiveAppIntroduceViewController alloc] init];
-        exc.clientManagerTel = self.TelGuide;
         exc.naVC = self.navigationController;
         [self.navigationController pushViewController:exc animated:YES];
     }
@@ -112,7 +117,16 @@
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, HeadImageView.frame.size.height/2-20, HeadImageView.frame.size.width-20, 30)];
         label.text = @"开通专属APP,才能享受此功能!";
         label.textAlignment = NSTextAlignmentCenter;
-        label.font = [UIFont systemFontOfSize:20];
+        if (fourSize) {
+                label.font = [UIFont systemFontOfSize:16];
+        }else if(fiveSize){
+                label.font = [UIFont systemFontOfSize:17];
+        }else if(sixSize){
+                label.font = [UIFont systemFontOfSize:20];
+        }else{
+                label.font = [UIFont systemFontOfSize:20];
+        }
+    
         [HeadImageView addSubview:label];
         UIButton *btn2 = [[UIButton alloc]   initWithFrame:CGRectMake(HeadImageView.frame.size.width/2-70, HeadImageView.frame.size.height-HeadImageView.frame.size.height/3, 140, 40)];
         [btn2 setBackgroundImage:[UIImage imageNamed:@"WowOfRedPacketBtn"] forState:UIControlStateNormal];

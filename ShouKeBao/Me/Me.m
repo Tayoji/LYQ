@@ -23,7 +23,7 @@
 #import "MeHttpTool.h"
 #import "MBProgressHUD+MJ.h"
 #import "WelcomeView.h"
-
+#import "APNSHelper.h"
 #import "FeedBcakViewController.h"
 #import "ResizeImage.h"
 #import "IWHttpTool.h"
@@ -43,7 +43,6 @@
 #import "MeShareDetailViewController.h"
 #import "InvoiceManageViewController.h"
 #import "ExclusiveViewController.h"
-#import "EstablelishedViewController.h"
 #import "MeShareDetailModel.h"
 #import "NewExclusiveAppIntroduceViewController.h"
 #import "NewOpenExclusiveViewController.h"
@@ -277,9 +276,25 @@
     }
 
     [self refrashHeader];
-
+    [self jumpWathView];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+}
+
+-(void)jumpWathView{
+    if ([APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce) {//已开通
+        [APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce = NO;
+        NewOpenExclusiveViewController *newOpenVC = [[NewOpenExclusiveViewController alloc]init];
+        newOpenVC.ConsultanShareInfo = [NSMutableDictionary dictionary];
+        newOpenVC.naVC = self.navigationController;
+        [self.navigationController pushViewController:newOpenVC animated:YES];
+    }else if([APNSHelper defaultAPNSHelper].isJumpExclusiveApp){//未开通
+        [APNSHelper defaultAPNSHelper].isJumpExclusiveApp = NO;
+        NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
+        newExclusiveVC.naVC = self.navigationController;
+        [self.navigationController pushViewController:newExclusiveVC animated:YES];
+
+    }
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -801,7 +816,6 @@
                         
                         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
                         newExclusiveVC.naVC = self.navigationController;
-                        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
                         [self.navigationController pushViewController:newExclusiveVC animated:YES];
                         
                     }
@@ -982,7 +996,6 @@
         [self.ConsultanShareInfo addEntriesFromDictionary:json[@"ConsultanShareInfo"]];
         self.IsOpenConsultantApp = json[@"IsOpenConsultantApp"];
         NSLog(@"///// %@", self.IsOpenConsultantApp);
-//        self.clientMagagerTel = json[@""];
     
     } failure:^(NSError *error) {
         NSLog(@"接口请求失败 error is %@------",error);
@@ -1185,7 +1198,6 @@
     }else if([type isEqualToString:@"openAppUnVip"]){
         NewExclusiveAppIntroduceViewController *newExclusiveVC = [[NewExclusiveAppIntroduceViewController alloc]init];
         newExclusiveVC.naVC = self.navigationController;
-        newExclusiveVC.clientManagerTel = self.clientMagagerTel;
         [self.navigationController pushViewController:newExclusiveVC animated:YES];
     }
     //pipikou://type=openAppUnVip
@@ -1304,12 +1316,12 @@
     [self.navigationController pushViewController:redPacket animated:YES];
     
 }
+// 相册是否可用
+- (BOOL) isPhotoLibraryAvailable{
+    return [UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypePhotoLibrary];
+}
 - (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
-    
-    
     [viewController dismissViewControllerAnimated:YES
                                        completion:nil];
-    
-    
 }
 @end

@@ -47,7 +47,10 @@
             
         } failure:nil];
     }
+    
+    
 }
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"NewOpenExclusiveViewController"];
@@ -56,6 +59,7 @@
         [MobClick event:@"Me_getCashSuccess" attributes:dict];
     }
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

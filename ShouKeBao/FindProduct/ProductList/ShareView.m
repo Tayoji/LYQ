@@ -51,7 +51,7 @@ static bool _flag;
     _blackView = blackView;
     
 //    多余
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector( cancleBtnClickAction)]; /*cancleBtnClick*/
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancleBtnClickAction)]; /*cancleBtnClick*/
     [blackView addGestureRecognizer:tap];
     
     
@@ -86,8 +86,8 @@ static bool _flag;
     contentLabel.font = [UIFont systemFontOfSize:12];
     [shareView addSubview:contentLabel];
     
-    NSArray *btnImages = @[@"iconfont-kongjian", @"iconfont-qq", @"iconfont-weixin", @"iconfont-pengyouquan", @"iconfont-fuzhi", @"iconfont-duanxin"];
-    NSArray *btnTitles = @[@"QQ空间", @"QQ", @"微信好友", @"微信朋友圈", @"复制链接", @"短信"];
+    NSArray *btnImages = @[ @"iconfont-weixin", @"iconfont-pengyouquan", @"iconfont-qq", @"iconfont-kongjian", @"iconfont-fuzhi", @"iconfont-duanxin"];
+    NSArray *btnTitles = @[@"微信好友", @"微信朋友圈", @"QQ", @"QQ空间", @"复制链接", @"短信"];
     for (NSInteger i=0; i<6; i++) {
         CGFloat top = 0.0f;
         if (i<3) {
@@ -155,25 +155,25 @@ static bool _flag;
     switch (btn.tag) {
         case 331:
         {
-            shareType = ShareTypeQQSpace;
+            shareType = ShareTypeWeixiSession;
         }
             break;
             
         case 332:
         {
-            shareType = ShareTypeQQ ;
+            shareType = ShareTypeWeixiTimeline;
         }
             break;
             
         case 333:
         {
-            shareType =  ShareTypeWeixiSession;
+            shareType =  ShareTypeQQ;
         }
             break;
             
         case 334:
         {
-            shareType = ShareTypeWeixiTimeline;
+            shareType = ShareTypeQQSpace;
         }
             break;
             

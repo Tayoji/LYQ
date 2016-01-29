@@ -766,8 +766,6 @@
 		B3CFF61E1BFAEE0E002065AA /* ExclusiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CFF61C1BFAEE0E002065AA /* ExclusiveViewController.xib */; };
 		B3CFF6261BFB05D7002065AA /* ExclusiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CFF6241BFB05D7002065AA /* ExclusiveTableViewCell.m */; };
 		B3CFF6271BFB05D7002065AA /* ExclusiveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CFF6251BFB05D7002065AA /* ExclusiveTableViewCell.xib */; };
-		B3CFF62B1BFB1E69002065AA /* EstablelishedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CFF6291BFB1E69002065AA /* EstablelishedViewController.m */; };
-		B3CFF62C1BFB1E69002065AA /* EstablelishedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3CFF62A1BFB1E69002065AA /* EstablelishedViewController.xib */; };
 		B3CFF62F1BFB49C5002065AA /* ExclusiveShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CFF62E1BFB49C5002065AA /* ExclusiveShareView.m */; };
 		B3D0548A1BF9700100A4E193 /* CustomerSection.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D054891BF9700100A4E193 /* CustomerSection.m */; };
 		B3D141CC1C06DDA800455D63 /* CircleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D141CB1C06DDA800455D63 /* CircleModel.m */; };
@@ -2111,9 +2109,6 @@
 		B3CFF6231BFB05D7002065AA /* ExclusiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExclusiveTableViewCell.h; sourceTree = "<group>"; };
 		B3CFF6241BFB05D7002065AA /* ExclusiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExclusiveTableViewCell.m; sourceTree = "<group>"; };
 		B3CFF6251BFB05D7002065AA /* ExclusiveTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExclusiveTableViewCell.xib; sourceTree = "<group>"; };
-		B3CFF6281BFB1E69002065AA /* EstablelishedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EstablelishedViewController.h; sourceTree = "<group>"; };
-		B3CFF6291BFB1E69002065AA /* EstablelishedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EstablelishedViewController.m; sourceTree = "<group>"; };
-		B3CFF62A1BFB1E69002065AA /* EstablelishedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EstablelishedViewController.xib; sourceTree = "<group>"; };
 		B3CFF62D1BFB49C5002065AA /* ExclusiveShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExclusiveShareView.h; sourceTree = "<group>"; };
 		B3CFF62E1BFB49C5002065AA /* ExclusiveShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExclusiveShareView.m; sourceTree = "<group>"; };
 		B3D054881BF9700100A4E193 /* CustomerSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerSection.h; sourceTree = "<group>"; };
@@ -5082,9 +5077,6 @@
 				B3CFF61A1BFAEE0E002065AA /* ExclusiveViewController.h */,
 				B3CFF61B1BFAEE0E002065AA /* ExclusiveViewController.m */,
 				B3CFF61C1BFAEE0E002065AA /* ExclusiveViewController.xib */,
-				B3CFF6281BFB1E69002065AA /* EstablelishedViewController.h */,
-				B3CFF6291BFB1E69002065AA /* EstablelishedViewController.m */,
-				B3CFF62A1BFB1E69002065AA /* EstablelishedViewController.xib */,
 				B3CFF6231BFB05D7002065AA /* ExclusiveTableViewCell.h */,
 				B3CFF6241BFB05D7002065AA /* ExclusiveTableViewCell.m */,
 				B3CFF6251BFB05D7002065AA /* ExclusiveTableViewCell.xib */,
@@ -5303,7 +5295,6 @@
 				632AF23D1AD3E536004916C0 /* SearchFootView.xib in Resources */,
 				799BBA991C464AD60040E8AB /* SendRedPacket@2x.png in Resources */,
 				796EFD0D1BF5C67D00799120 /* chat_location_detail_disclosure@2x.png in Resources */,
-				B3CFF62C1BFB1E69002065AA /* EstablelishedViewController.xib in Resources */,
 				52F59D891BCF4B1F00DE24FB /* invoiceCell.xib in Resources */,
 				796EFCD11BF5C67D00799120 /* VoiceSearchFeedback002@2x.png in Resources */,
 				796EFD1F1BF5C67D00799120 /* chatBar_more@2x.png in Resources */,
@@ -5737,7 +5728,6 @@
 				63128FA21B842EBF00FCDF19 /* UIImageView+LBBlurredImage.m in Sources */,
 				796EFB171BF5BCF100799120 /* EMAudioPlayerUtil.m in Sources */,
 				796EFC051BF5C5DE00799120 /* DXRecordView.m in Sources */,
-				B3CFF62B1BFB1E69002065AA /* EstablelishedViewController.m in Sources */,
 				5A6996191AF8CD82002EDD91 /* InputhCell.m in Sources */,
 				845514EC1ABFFAFB00D588A7 /* SKViewController.m in Sources */,
 				632BFFF91AB92A3A003B15AD /* SDWebImageDownloaderOperation.m in Sources */,
@@ -6126,7 +6116,7 @@
 		63D31E621AB143D00043B3CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -6173,7 +6163,7 @@
 		63D31E631AB143D00043B3CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -215,6 +215,7 @@ typedef void (^ChangeFrameBlock)();
         [self.chooseStatus removeAllObjects];
         if (json) {
             NSLog(@"----%@",json);
+            
 
             if ([json[@"IsSuccess"] integerValue] == 1) {
                 
@@ -257,7 +258,9 @@ typedef void (^ChangeFrameBlock)();
                             @"CreatedDateStart":self.createDateStart,
                             @"CreatedDateEnd":self.createDateEnd,
                             @"IsRefund":[NSString stringWithFormat:@"%d",self.dressView.IsRefund.on]};
+    
     [OrderTool getOrderListWithParam:param success:^(id json) {
+        NSLog(@"%@", param);
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         self.isReloadMainTabaleView = YES;
@@ -269,6 +272,7 @@ typedef void (^ChangeFrameBlock)();
             NSLog(@"..%@", json);
                 for (NSDictionary *dic in json[@"OrderList"]) {
                     OrderModel *order = [OrderModel orderModelWithDict:dic];
+                  
                     [self.dataArr addObject:order];
                 }
                     self.isSearch = self.searchKeyWord.length;
@@ -883,20 +887,20 @@ typedef void (^ChangeFrameBlock)();
  *  点击选择向下
  
  */
-- (void)DidMenumSelectDownBtn:(UIButton *)downBtn btnList:(NSMutableArray *)btnList andCurrentCell:(OrderCell *)cell{
+- (void)DidMenumSelectDownBtn:(UIButton *)downBtn moreButtonList:(NSMutableArray *)moreButtonList andCurrentCell:(OrderCell *)cell{
     CGFloat Y = cell.frame.origin.y+cell.frame.size.height - self.tableView.contentOffset.y;
     CGRect frame;
     UIImage *imageV;
     if (Y+20 > self.tableView.frame.size.height) {
-        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*btnList.count), 80, 40*btnList.count);
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64-downBtn.frame.size.height-(40*moreButtonList.count), 80, 40*moreButtonList.count);
         imageV = [UIImage imageNamed:@"downT"];
        
     }else{
-        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*btnList.count);
+        frame = CGRectMake(CGRectGetMinX(downBtn.frame)-10, Y+89+64, 80, 40*moreButtonList.count);
         imageV = [UIImage imageNamed:@"upT"];
        
     }
-    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:btnList direct:0 tip:@"100" image:imageV];
+    [self createMenuAndSelectedIndex:self.LselectedIndex frame:frame dataSource:moreButtonList direct:0 tip:@"100" image:imageV];
 }
 
 - (void)createMenuAndSelectedIndex:(NSInteger)index frame:(CGRect)frame dataSource:(NSMutableArray *)dataSource direct:(NSInteger)direct tip:(NSString *)tip image:(UIImage *)image{
@@ -987,21 +991,23 @@ typedef void (^ChangeFrameBlock)();
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     OrderCell *cell = [OrderCell cellWithTableView:tableView ];
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;
     cell.indexPath = indexPath;
     self.ff = [tableView rectForRowAtIndexPath:indexPath];
-    
-//    self.ff = [tableView rectForFooterInSection:indexPath.row];
-//    self.g = cell.bottomView.frame.origin.y - tableView.contentOffset.y;
-    
+
     OrderModel *order;//这只是一个bug ,后期还需要改进
     if (tableView.editing == YES) {
-        order = self.InvoicedataArr[indexPath.section];
+        if (indexPath.section <  self.InvoicedataArr.count) {
+            order = self.InvoicedataArr[indexPath.section];
+        }
     }else{
-        order = self.dataArr[indexPath.section];
+        if (indexPath.section < self.dataArr.count) {
+            order = self.dataArr[indexPath.section];
+        }
     }
     // 取出模型
     //order = self.dataArr[indexPath.section];
@@ -1052,13 +1058,36 @@ typedef void (^ChangeFrameBlock)();
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderModel *order;
-        order = self.dataArr[indexPath.section];
-  #warning 错误
-    if (order.buttonList.count) {
+    if (self.dataArr.count == 0) {
+        if (tableView.editing) {
+            if (order.buttonList.count) {
+                self.nullContentView.hidden = NO;
+            }else{
+                self.nullContentView.hidden = YES;
+            }
+        }else{
+            self.nullContentView.hidden = YES;
+        }
+        
         return 202;
     }else{
-        return 172;
+        order = self.dataArr[indexPath.section];
+        if (order.buttonList.count) {
+            if (tableView.editing) {
+                self.nullContentView.alpha = NO;
+            }
+            return 202;
+        }else{
+            return 172;
+        }
     }
+    
+  #warning 错误
+//    if (order.buttonList.count) {
+//        return 202;
+//    }else{
+//        return 172;
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

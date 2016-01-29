@@ -86,6 +86,7 @@
 #import "EaseMob.h"
 #import "ChatViewController.h"
 #import "CartoonView.h"
+#import "NewOpenExclusiveViewController.h"
 //#import "NewExclusiveAppIntroduceViewController"
 #define View_Width self.view.frame.size.width
 #define View_Height self.view.frame.size.height
@@ -278,10 +279,9 @@
     
 }
 - (void)ClickCarouselSCAction:(NSInteger)pageNum{
-//    CircleHotNewsViewController *circleHotVC = [[CircleHotNewsViewController alloc]init];
+
     ProduceDetailViewController *circleHotVC = [[ProduceDetailViewController alloc]init];
     circleHotVC.titleName = @"圈热点";
-//    circleHotVC.title = @"圈热点";
     circleHotVC.produceUrl = self.CircleUrl;
     circleHotVC.m = 1;
     if (self.CircleUrl) {
@@ -330,23 +330,23 @@
             _newsImageV.frame = CGRectMake(kScreenSize.width/2-30, kScreenSize.height/6+200, 60, 60);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
             frame =CGRectMake(kScreenSize.width/2-60, 130,100, 30);
-            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30, 150, 20);
-label.font = [UIFont systemFontOfSize:15];
+            label.font = [UIFont systemFontOfSize:15];
         }else if (fiveSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+80, kScreenSize.width-20, 160);
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2, kScreenSize.height/2-120);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
             frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-90, 30   , 150, 20);
             label.font = [UIFont systemFontOfSize:15];
         }else if(sixSize){
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+90, kScreenSize.width-20, 190);
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+5, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
-            frame =CGRectMake(kScreenSize.width/2-60, 110,100, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            frame =CGRectMake(kScreenSize.width/2-60, 125,100, 30);
+            label.frame = CGRectMake(30,60, self.guideImageView.frame.size.width-60, 40);
             vvimage.frame = CGRectMake(kScreenSize.width/2-80, 30, 150, 20);
             label.font = [UIFont systemFontOfSize:15];
         }else{
@@ -354,8 +354,9 @@ label.font = [UIFont systemFontOfSize:15];
             _newsImageV.frame =CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150);
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
             frame =CGRectMake(kScreenSize.width/2-80, 140,100, 40);;
-            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
-            vvimage.frame = CGRectMake(kScreenSize.width/2-110, 30, 150, 20);
+            label.frame = CGRectMake(30,65, self.guideImageView.frame.size.width-60, 50);
+            label.numberOfLines = 0;
+            vvimage.frame = CGRectMake(kScreenSize.width/2-120, 30, 150, 20);
             label.font = [UIFont systemFontOfSize:17];
         }
         _Guidebtn.frame = frame;
@@ -493,6 +494,10 @@ label.font = [UIFont systemFontOfSize:15];
             [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGuideRP"];
             [self Guide];
     }
+    //判断后来开通的
+//    if ([[guiDefault objectForKey:@"SKBExclusiveaAppGuideRP"] integerValue] == 1 && [[guiDefault objectForKey:@"SKBExclusiveaAppGUideRPNest"] integerValue] == 0 ) {
+//            [self Guide];
+//    }
 //        NewMessageCenterController *messgeCenter = [[NewMessageCenterController alloc] init];
 //    [self.navigationController pushViewController:messgeCenter animated:YES];
 
@@ -803,47 +808,38 @@ label.font = [UIFont systemFontOfSize:15];
 
 #pragma  - mark程序未死亡时远程推送处理函数
 -(void)dealPushBackGround:(NSNotification *)noti
-{ //arr[0]是value arr[1]是key
-    //orderId ,userId ,recommond ,productId ,messageId
-   
-    // [self getVoice];
+{
+    
+// [self getVoice];
     
     
 //    self.tabBarItem.badgeValue = nil;
+    NSDictionary *userInfo = noti.object;
+    NSString *noticeType = [userInfo valueForKey:@"noticeType"];
+//    NSString * objID = [userInfo valueForKey:@"objectId"];
+    NSString * objUri = [userInfo valueForKey:@"objectUri"];
+    NSString * objTitle = [userInfo valueForKey:@"noticeTitle"];
     [self headerPull];
     [self getUserInformation];
     
-
-//    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"isReceveNoti"];
-//    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"isReceveNoti"]) {
-//    }
-    
-    
-    NSMutableArray *message = noti.object;
-    NSLog(@"viewController 里取得值是 is %@",message);
-    
-    
     NSUserDefaults *appIsBack = [NSUserDefaults standardUserDefaults];
     
-//     NSString *result = [appIsBack objectForKey:@"appIsBack"];
     if([UIApplication sharedApplication].applicationState ==UIApplicationStateInactive){
-//    if ([result isEqualToString:@"yes"]) {
         self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:0];
         [appIsBack setObject:@"no" forKey:@"appIsBack"];
         [appIsBack synchronize];
-
-        if ([message[0] isEqualToString:@"orderId"]) {
+        if ([noticeType isEqualToString:@"SingleOrder"]) {
             //已经处理的订单在发生变化时发送消息给用户，点击消息直接进入该订单消息的订单详情
-            //message[2]是订单url
+            //objUri是订单url
             OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            detail.url = message[2];
+            detail.url = objUri;
             [self.navigationController pushViewController:detail animated:YES];
         }
         /*
-        else if ([message[0] isEqualToString:@"remind"]){//客户提醒
+        else if ([noticeType isEqualToString:@"remind"]){//客户提醒
             //跳remindDetail
             NSString *remindTime = message[1];
-            NSString *remindContent = message[2];
+            NSString *remindContent = objUri;
             //time,note
             RemindDetailViewController *remindDetail = [[RemindDetailViewController alloc] init];
             remindDetail.time = remindTime;
@@ -851,7 +847,7 @@ label.font = [UIFont systemFontOfSize:15];
             [self.navigationController pushViewController:remindDetail animated:YES];
         }
         */
-        else if ([message[0] isEqualToString:@"recommond"]){//精品推荐
+        else if ([noticeType isEqualToString:@"PerfectProduct"]){//精品推荐
             //精品推荐界面
             //无需参数，直接跳转到精品推荐
             UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
@@ -859,54 +855,56 @@ label.font = [UIFont systemFontOfSize:15];
             [self.navigationController pushViewController:PRVC animated:YES];
         }
         
-        else if ([message[0] isEqualToString:@"productId"]){
+        else if ([noticeType isEqualToString:@"SingleProduct"]){
             
             //产品详情h5
             ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
-            detail.produceUrl = message[2];
+            detail.produceUrl = objUri;
             detail.noShareInfo = YES;
             [self.navigationController pushViewController:detail animated:YES];
         }
-        else if ([message[0] isEqualToString:@"messageId"]){//公告
+        else if ([noticeType isEqualToString:@"SingleArticle"]){//公告
             //进入h5
-            NSString *messageURL = message[2];
+            NSString *messageURL = objUri;
             messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
             messageDetail.messageURL = messageURL;
             [self.navigationController pushViewController:messageDetail animated:YES];
         }
         
-        else if ([message[0] isEqualToString:@"OtherId"]){
-            NSString * otherUrl = message[2];
-            NSString * otherTitle = message[3];
+        else if ([noticeType isEqualToString:@"Other"]){
+            NSString * otherUrl = objUri;
+            NSString * otherTitle = objTitle;
             BaseWebViewController * webView = [[BaseWebViewController alloc]init];
             webView.linkUrl = otherUrl;
             webView.webTitle = otherTitle;
             [self.navigationController pushViewController:webView animated:YES];
-        }else if([message[0] isEqualToString:@"SearchProduct"]){
+        }else if([noticeType isEqualToString:@"SearchProduct"]){
             ProductList *list = [[ProductList alloc] init];
             list.productListFrom = FromKeyWord;
-            list.pushedSearchK = message[3];
-            list.title =  message[3];
-//            NSDictionary * dic = @{@"TwoSubName": message[3]};
+            list.pushedSearchK = objTitle;
+            list.title =  objTitle;
+//            NSDictionary * dic = @{@"TwoSubName": objTitle};
 //            BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:dic];
 //            [MobClick event:@"FindProductList" attributes:dict];
             [self.navigationController pushViewController:list animated:YES];
             
-        }else if ([message[0] isEqualToString:@"CustomerDynamic"]){//直客动态
+        }else if ([noticeType isEqualToString:@"CustomerDynamic"]){//直客动态
             ZhiVisitorDynamicController *zhiVisit = [[ZhiVisitorDynamicController alloc] init];
             [self.navigationController pushViewController:zhiVisit animated:YES];
-        }else{
-        
+        }else if([noticeType isEqualToString:@"ConsultantAppOpen"]){
+            [APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce = YES;
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+        }else if([noticeType isEqualToString:@"ConsultantAppNoOpen"]){
+            [APNSHelper defaultAPNSHelper].isJumpExclusiveApp = YES;
+            self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
         }
 
     }else{
        
-        NSString *type = message[0];
+        NSString *type = noticeType;
         if (type.length>0) {
             if ([self.tabBarItem.badgeValue intValue]+1 > 99) {
-              
-                self.tabBarItem.badgeValue = @"99+";
-                
+            self.tabBarItem.badgeValue = @"99+";
             }else{
             self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d",[self.tabBarItem.badgeValue intValue]+1];
             }
@@ -914,7 +912,7 @@ label.font = [UIFont systemFontOfSize:15];
             
 //        [self getVoice];
         }
-        if ([message[0] isEqualToString:@"messageId"]){//新公告
+        if ([noticeType isEqualToString:@"messageId"]){//新公告
             self.barButton = (BBBadgeBarButtonItem *)self.navigationItem.leftBarButtonItem;
             int valueCount = [self.barButton.badgeValue intValue];
             self.barButton.badgeValue = [NSString stringWithFormat:@"%d",valueCount+1];
@@ -934,72 +932,6 @@ label.font = [UIFont systemFontOfSize:15];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&messageSound);
     
     AudioServicesPlaySystemSound (messageSound);
-}
-
-
-#pragma  - mark程序死亡时远程推送处理函数
--(void)dealPushForeground:(NSNotification *)noti
-{ //arr[0]是value arr[1]是key
-    //orderId ,userId ,recommond ,productId ,messageId
-   
-    NSMutableArray *message = noti.object;
-    NSLog(@"viewController 里取得值是 is %@",message);
-    
-    [self headerPull];
-    
-    [self  getUserInformation];
-  
-    //[self getVoice];
-    
-    if ([message[0] isEqualToString:@"orderId"]) {
-        //已经处理的订单在发生变化时发送消息给用户，点击消息直接进入该订单消息的订单详情
-        //message[2]是订单url
-        OrderDetailViewController *detail = [[OrderDetailViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        detail.url = message[2];
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"remind"]){//客户提醒
-        //跳remindDetail
-        NSString *remindTime = message[1];
-        NSString *remindContent = message[2];
-        //time,note
-        RemindDetailViewController *remindDetail = [[RemindDetailViewController alloc] init];
-        remindDetail.time = remindTime;
-        remindDetail.note = remindContent;
-        [self.navigationController pushViewController:remindDetail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"recommond"]){//精品推荐
-        //精品推荐界面
-        //无需参数，直接跳转到精品推荐
-        UIStoryboard * SB = [UIStoryboard storyboardWithName:@"ProductRecommend" bundle:[NSBundle mainBundle]];
-        ProductRecommendViewController * PRVC = (ProductRecommendViewController *)[SB instantiateViewControllerWithIdentifier:@"eeee"];
-        [self.navigationController pushViewController:PRVC animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"productId"]){
-        
-        //产品详情h5
-        ProduceDetailViewController *detail = [[ProduceDetailViewController alloc] init];
-        detail.produceUrl = message[2];
-        detail.noShareInfo = YES;
-        [self.navigationController pushViewController:detail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"messageId"]){//公告
-        //进入h5
-        NSString *messageURL = message[2];
-        messageDetailViewController *messageDetail = [[messageDetailViewController alloc] init];
-        messageDetail.messageURL = messageURL;
-        [self.navigationController pushViewController:messageDetail animated:YES];
-    }
-    
-    else if ([message[0] isEqualToString:@"noticeType"]){
-        // [self ringAction];
-    }
-    
-
 }
 
 
@@ -1179,8 +1111,15 @@ label.font = [UIFont systemFontOfSize:15];
         [APNSHelper defaultAPNSHelper].isJumpChatList = NO;
         [self jumpToChatList];
     }
+    
+    if ([APNSHelper defaultAPNSHelper].isJumpOpenExclusiveAppIntroduce||[APNSHelper defaultAPNSHelper].isJumpExclusiveApp) {
+        [self performSelector:@selector(JumpMe) withObject:nil afterDelay:0.5];
+    }
 }
 
+- (void)JumpMe{
+    self.navigationController.tabBarController.selectedViewController = [self.navigationController.tabBarController.viewControllers objectAtIndex:4];
+}
 
 -(void)viewWillDisappear:(BOOL)animated{
     
@@ -1451,30 +1390,44 @@ label.font = [UIFont systemFontOfSize:15];
         _guideView.alpha = 0.4;
     
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideView];
+    
+    //新改动从此开始
+    self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+    self.guideImageView.userInteractionEnabled = YES;
+    _Guidebtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5,self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
+    _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+    _Guidebtn.tag = 1210;
+    [_Guidebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    _cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
+    [_cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
+    [_cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
+    [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
+    _cleanBtn.tag = 1209;
+
     if ([[guiDefault objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {//没有开通
-        self.guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, kScreenSize.height/4, kScreenSize.width-60, kScreenSize.height/2)];
+        [guiDefault setObject:@"0" forKey:@"SKBExclusiveaAppGUideRPNest"];//判断后来才开通的
         self.guideImageView.image = [UIImage imageNamed:@"NoDredged"];
-        self.guideImageView.userInteractionEnabled = YES;
-        
         //立即查看按钮（立即申请开通）
-        _Guidebtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width/5+10, self.guideImageView.frame.size.height-self.guideImageView.frame.size.height/5,self.guideImageView.frame.size.width-self.guideImageView.frame.size.width/5-self.guideImageView.frame.size.width/5-20, self.guideImageView.frame.size.height/8)];
         [_Guidebtn setTitle:@"立即申请开通" forState:UIControlStateNormal];
-        _Guidebtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [_Guidebtn setBackgroundImage:[UIImage imageNamed:@"SeePrivilege"] forState:UIControlStateNormal];
-        _Guidebtn.tag = 1210;
-        [_Guidebtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-        [_Guidebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_guideImageView addSubview:_Guidebtn];
-        //叉号按钮
-        _cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
-        _cleanBtn.tag = 1209;
-        [_cleanBtn addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
-        [_cleanBtn setBackgroundImage:[UIImage imageNamed:@"CleanBtn"] forState:UIControlStateNormal];
-        [_guideImageView addSubview:_cleanBtn];
         
+        //叉号按钮
+        [_guideImageView addSubview:_cleanBtn];
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
         
     }else{//已经开通
+        [guiDefault setObject:@"1" forKey:@"SKBExclusiveaAppGUideRPNest"];//判断后来才开通的
+        self.guideImageView.image = [UIImage imageNamed:@"dredged"];
+        //立即查看领取（立即查看领取）
+        [_Guidebtn setTitle:@"立即查看领取" forState:UIControlStateNormal];
+        [_guideImageView addSubview:_Guidebtn];
+        
+        //叉号按钮
+        [_guideImageView addSubview:_cleanBtn];
+        [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+/*
         self.guideImageView = [[UIImageView alloc] init];
             _newsImageV = [[UIImageView alloc] init];
         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
@@ -1543,6 +1496,7 @@ label.font = [UIFont systemFontOfSize:15];
         
         [self.guideImageView addSubview:label];
         [[[UIApplication sharedApplication].delegate window] addSubview:_guideImageView];
+*/
 
     }
 
@@ -1572,7 +1526,7 @@ label.font = [UIFont systemFontOfSize:15];
 //    [button addTarget:self action:@selector(Seeprivilege:) forControlEvents:UIControlEventTouchUpInside];
 //    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [_guideImageView addSubview:button];
-//    
+//
 //    
 //    //叉号按钮
 //    UIButton *cleanBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.guideImageView.frame.size.width-30, 10, 20, 20)];
@@ -1594,18 +1548,22 @@ label.font = [UIFont systemFontOfSize:15];
 }
 -(void)Seeprivilege:(UIButton *)btn{
     if (btn.tag == 1209) {//点击XX 按钮
+        [self.guideImageView removeFromSuperview];
+        
         [_guideView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(click1)]];
-        self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
+        self.guideImageView = [[UIImageView alloc] initWithFrame: CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200)];
+        self.guideImageView.userInteractionEnabled = YES;
         UIImageView *vvimage = [[UIImageView alloc] init];
          _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+20, kScreenSize.height/2-150)];
         UILabel *label = [[UILabel alloc] init];
+        label.numberOfLines = 0;
         CGRect frame = _Guidebtn.frame;
         if (fourSize) {
             self.guideImageView.frame = CGRectMake(10, kScreenSize.height/4+60, kScreenSize.width-20, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-85, 40, 150, 20);
-            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2 - 10, kScreenSize.height/2-120)];
+            _newsImageV = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenSize.width/2-40, 100, 60, 60)];
             frame =CGRectMake(kScreenSize.width/2-70, 140,120, 30);
-            label.frame = CGRectMake(30,90, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
             label.font = [UIFont systemFontOfSize:15];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideMessage4ss"]];
 
@@ -1624,16 +1582,17 @@ label.font = [UIFont systemFontOfSize:15];
             vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
             frame =CGRectMake(kScreenSize.width/2-90, 140,120, 30);
-            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,75, self.guideImageView.frame.size.width-60, 50);
             label.font = [UIFont systemFontOfSize:15];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
+            
 
         }else{
             self.guideImageView.frame = CGRectMake(30, kScreenSize.height/4+100, kScreenSize.width-60, 200);
             vvimage.frame = CGRectMake(kScreenSize.width/2-105, 40, 150, 20);
             _newsImageV =[[UIImageView alloc] initWithFrame:CGRectMake(30, 50, kScreenSize.width/2+10, kScreenSize.height/2-150)];
             frame =CGRectMake(kScreenSize.width/2-90, 140,120, 40);
-            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 40);
+            label.frame = CGRectMake(30,70, self.guideImageView.frame.size.width-60, 50);
             label.font = [UIFont systemFontOfSize:17];
             [_newsImageV setImage:[UIImage imageNamed:@"GuideRPMessFirst"]];
 
@@ -1657,22 +1616,31 @@ label.font = [UIFont systemFontOfSize:15];
         
        
         [[[UIApplication sharedApplication].delegate window]addSubview:_newsImageV];
-        
+        [[[UIApplication sharedApplication].delegate window]addSubview:self.guideImageView];
+
         [self.guideImageView addSubview:label];
-        
+    
         [_cleanBtn removeFromSuperview];
         //走1.5引导
         
     }else if (btn.tag == 1210){
-                [self.guideView removeFromSuperview];
-                [self.guideImageView removeFromSuperview];
-                [self.newsImageV removeFromSuperview];
+        [self.guideView removeFromSuperview];
+        [self.guideImageView removeFromSuperview];
+        [self.newsImageV removeFromSuperview];
+
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:UserInfoKeyLYGWIsOpenVIP] isEqualToString:@"0"]) {//没有开通
             NewExclusiveAppIntroduceViewController *newExc = [[NewExclusiveAppIntroduceViewController alloc] init];
             newExc.naVC = self.navigationController;
             [self.navigationController pushViewController:newExc animated:YES];
-        NSUserDefaults *defaults = [NSUserDefaults  standardUserDefaults];
-        [defaults setObject:@"1" forKey:@"GuideRPFifrst"];
+            [[NSUserDefaults  standardUserDefaults] setObject:@"1" forKey:@"GuideRPFifrst"];
+        }else{//已经开通
+            NewOpenExclusiveViewController *exclus = [[NewOpenExclusiveViewController alloc] init];
+            exclus.naVC = self.navigationController;
+            [self.navigationController pushViewController:exclus animated:YES];
+            [[NSUserDefaults  standardUserDefaults] setObject:@"1" forKey:@"GuideRPFifrst"];
 
+        }
+        
     }else if(btn.tag == 1211){
         [self.guideView removeFromSuperview];
         [self.guideImageView removeFromSuperview];

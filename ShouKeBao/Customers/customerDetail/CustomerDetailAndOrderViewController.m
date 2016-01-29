@@ -33,9 +33,9 @@
     [super viewDidLoad];
 //    detailC
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"userNS"]forBarMetrics:UIBarMetricsDefault];
-    
-    [self setNavSegementView];
     [self customerRightBarItem];
+
+    [self setNavSegementView];
     [self setNavBack];
     self.button.hidden = NO;
     [self addGest];
@@ -175,6 +175,7 @@
         customerDynamicVC.AppSkbUserId =self.AppSkbUserId;
         customerDynamicVC.NaV = self.navigationController;
         customerDynamicVC.model = self.model;
+        customerDynamicVC.InvitationInfo = self.InvitationInfo;
         customerDynamicVC.visitorDynamicFromType = VisitorDynamicTypeFromCustom;
         _customerDynamicVC.view.backgroundColor = [UIColor yellowColor];
         _customerDynamicVC = customerDynamicVC;
