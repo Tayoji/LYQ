@@ -43,7 +43,8 @@
 #else
     apnsCertName = @"chatdemoui";
 #endif
-
+//企业版   apsenterprise
+//公司版   quanAPPStore
         [[EaseMob sharedInstance] registerSDKWithAppKey:@"pipikou#ppkskb"
                                            apnsCertName:@"apsenterprise"
                                             otherConfig:@{kSDKConfigEnableConsoleLogger:@YES}];
