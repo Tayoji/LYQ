@@ -1,4 +1,4 @@
-//
+    //
 //  ShouKeBao.m
 //  ShouKeBao
 //
@@ -429,9 +429,9 @@
 //    UITouch* touch = [[event touchesForView:btn] anyObject];
 //    
 //    CGPoint rootViewLocation = [touch locationInView:[UIApplication sharedApplication]];
-    if (![APNSHelper defaultAPNSHelper].isHideCheckNewVertion) {
-        [self performSelector:@selector(checkNewVerSion) withObject:nil afterDelay:1.5];
-    }
+//    if (![APNSHelper defaultAPNSHelper].isHideCheckNewVertion) {
+//        [self performSelector:@selector(checkNewVerSion) withObject:nil afterDelay:1.5];
+//    }
     [self initPull];
     [self performSelector:@selector(checkProductOrder2) withObject:nil afterDelay:1.5];
 
@@ -1045,6 +1045,7 @@
 {
     NSMutableDictionary * params = nil;
     [IWHttpTool postWithURL:@"Notice/GetNoticeIndexContent" params:params success:^(id json) {
+        NSLog(@"%@",json);
         if ([json[@"IsSuccess"]integerValue]) {
             NSInteger noticeCount = [json[@"NewNoticeCount"]integerValue];
             NSInteger DynamicCount = [json[@"NewDynamicCount"]integerValue];

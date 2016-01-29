@@ -992,7 +992,7 @@ typedef void (^ChangeFrameBlock)();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    OrderCell *cell = [OrderCell cellWithTableView:tableView ];
+    OrderCell *cell = [OrderCell cellWithTableView:tableView];
     cell.delegate = self;
     cell.upAndDownDelegate = self;
     cell.orderDelegate = self;

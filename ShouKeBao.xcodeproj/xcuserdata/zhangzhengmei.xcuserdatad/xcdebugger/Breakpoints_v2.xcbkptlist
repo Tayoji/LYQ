@@ -32,22 +32,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/ShouKebao/NewMessageCenter/NewMessageCenterController.m"
-            timestampString = "475690759.689024"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-loadMessageDataSource"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -67,12 +51,28 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Orders/Orders.m"
-            timestampString = "475714604.595623"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerDetailAndOrderViewController.m"
+            timestampString = "475721069.291519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-sex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerOrderViewController.m"
+            timestampString = "475723489.219304"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
             landmarkName = "-loadDataSuorceByCondition"
             landmarkType = "5">
          </BreakpointContent>
@@ -83,12 +83,28 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Orders/Orders.m"
-            timestampString = "475714604.595623"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerOrderViewController.m"
+            timestampString = "475723493.675509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
+            landmarkName = "-loadDataByCondition"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ShouKeBao/Customers/customerDetail/CustomerOrderViewController.m"
+            timestampString = "475723728.076848"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "-loadDataSuorceByCondition"
             landmarkType = "5">
             <Locations>
@@ -96,31 +112,31 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[Orders loadDataSuorceByCondition]"
+                  symbolName = "-[CustomerOrderViewController loadDataSuorceByCondition]"
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhangzhengmei/LYQ/ShouKeBao/Orders/Orders.m"
-                  timestampString = "475716571.608206"
+                  urlString = "file:///Users/zhangzhengmei/LYQ/ShouKeBao/Customers/customerDetail/CustomerOrderViewController.m"
+                  timestampString = "475739242.725421"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "262"
-                  endingLineNumber = "262"
-                  offsetFromSymbolStart = "2200">
+                  startingLineNumber = "479"
+                  endingLineNumber = "479"
+                  offsetFromSymbolStart = "272">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__35-[Orders loadDataSuorceByCondition]_block_invoke"
+                  symbolName = "__56-[CustomerOrderViewController loadDataSuorceByCondition]_block_invoke"
                   moduleName = "ShouKeBao"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhangzhengmei/LYQ/ShouKeBao/Orders/Orders.m"
-                  timestampString = "475716571.609039"
+                  urlString = "file:///Users/zhangzhengmei/LYQ/ShouKeBao/Customers/customerDetail/CustomerOrderViewController.m"
+                  timestampString = "475739242.725953"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "262"
-                  endingLineNumber = "262"
-                  offsetFromSymbolStart = "72">
+                  startingLineNumber = "479"
+                  endingLineNumber = "479"
+                  offsetFromSymbolStart = "65">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -128,16 +144,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ShouKeBao/Orders/Orders.m"
-            timestampString = "475714581.245374"
+            filePath = "ShouKeBao/ShouKebao/ShouKeBao.m"
+            timestampString = "475731854.354528"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "-loadDataSuorceByCondition"
+            startingLineNumber = "1049"
+            endingLineNumber = "1049"
+            landmarkName = "-getNotifiList"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
