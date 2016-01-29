@@ -59,7 +59,7 @@
     NSLog(@"-------%@",self.model.FollowPerson[@"Tel"]);
     BaseClickAttribute *dict = [BaseClickAttribute attributeWithDic:nil];
     [MobClick event:@"OrderListCallPhone" attributes:dict];
-    [[[UIAlertView alloc]initWithTitle:@"aaa" message:self.model.FollowPerson[@"Tel"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"aaaa", nil]show];
+//    [[[UIAlertView alloc]initWithTitle:@"aaa" message:self.model.FollowPerson[@"Tel"] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"aaaa", nil]show];
     NSString *phone = [NSString stringWithFormat:@"tel://%@",self.model.FollowPerson[@"Tel"]];
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:phone]];
 }
