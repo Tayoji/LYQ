@@ -4,7 +4,11 @@
 //
 //  Created by David on 15/3/12.
 //  Copyright (c) 2015年 shouKeBao. All rights reserved.
-//
+//企业版：com.pipikou.lvyouquan
+//公司版：com.lvyouquanCompany.cn
+
+
+
 
 #import <UIKit/UIKit.h>
 #import <TencentOpenAPI/QQApi.h>
