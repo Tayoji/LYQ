@@ -273,16 +273,6 @@
 //   }else  {
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }
-    NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp()"];
-    NSLog(@"%@", isFade);
-    if (isFade.length && [isFade integerValue] == 0){
-        // 这个地方上面的js方法自动处理
-    }else{
-        if ([self.webView canGoBack]){
-            [self.webView goBack];
-        }else{
-        }
-    }
 
     //下边是正在增加退出分享的借口
     self.isBack = YES;
@@ -295,7 +285,18 @@
             [self.webView stringByEvaluatingJavaScriptFromString:@"AppHadShowShareWhenBack()"];//提示弹框
         }else {//不能提示
             [self.webView stringByEvaluatingJavaScriptFromString:@"AppRecordBackNumber()"];
-            [self.navigationController popViewControllerAnimated:YES];
+            NSString *isFade = [self.webView stringByEvaluatingJavaScriptFromString:@"goBackForApp()"];
+            NSLog(@"%@", isFade);
+            if (isFade.length && [isFade integerValue] == 0){
+                // 这个地方上面的js方法自动处理
+            }else{
+                if ([self.webView canGoBack]){
+                    [self.webView goBack];
+                }else{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+
         }
         
     }
