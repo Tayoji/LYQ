@@ -182,14 +182,19 @@
     static NSString * str = @"NewCustomerCell";
     NewCustomerCell * cell =[tableView dequeueReusableCellWithIdentifier:str forIndexPath:indexPath];
     cell.model = model;
-    cell.NAV = self.navigationController;
+        if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
+            cell.NAV = self.NaV;
+            cell.cellvisitorDynamicFromType = CellVisitorDynamicTypeFromCustom;
+        }else{
+            cell.NAV = self.navigationController;
+            cell.cellvisitorDynamicFromType = CellVisitorDynamicTypeFromMessageCenter;
+        }
     if (self.visitorDynamicFromType == VisitorDynamicTypeFromCustom) {
         cell.MessageButton.hidden = YES;
     }else if(self.visitorDynamicFromType == VisitorDynamicTypeFromMessageCenter){
         cell.MessageButton.hidden = NO;
     }
     return cell;
-        
     }
     return nil;
 

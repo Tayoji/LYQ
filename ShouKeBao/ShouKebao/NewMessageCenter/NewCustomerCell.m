@@ -167,7 +167,9 @@
     Customer.customerID = @"";
     Customer.AppSkbUserId = _model.AppSkbUserId;
     Customer.name = _model.ProductdetailModel.Name;
-    [self.NAV pushViewController:Customer animated:YES];
+    if (self.cellvisitorDynamicFromType == CellVisitorDynamicTypeFromMessageCenter) {
+        [self.NAV pushViewController:Customer animated:YES];
+    }
    
 }
 -(void)openCustormDet{
@@ -178,7 +180,10 @@
     Customer.AppSkbUserId = _model.AppSkbUserId;
     Customer.appUserID = @"";
     Customer.name = _model.ProductdetailModel.Name;
-    [self.NAV pushViewController:Customer animated:YES];
+    NSLog(@"%@", self.NAV);
+    if (self.cellvisitorDynamicFromType == CellVisitorDynamicTypeFromMessageCenter) {
+        [self.NAV pushViewController:Customer animated:YES];
+    }
 }
 
 - (void)openProduct{
@@ -192,10 +197,13 @@
     detail.fromType = FromZhiVisitorDynamic;
     detail.shareInfo = self.model.ProductdetailModel.ShareInfo;
     [self.NAV pushViewController:detail animated:YES];
+    
 }
 - (IBAction)MessageBtnClick:(UIButton *)sender {
         NSLog(@"%@", self.model.AppSkbUserId);
         ChatViewController * charV = [[ChatViewController alloc]initWithChatter:self.model.AppSkbUserId conversationType:eConversationTypeChat];
+    if (self.cellvisitorDynamicFromType == CellVisitorDynamicTypeFromMessageCenter) {
         [self.NAV pushViewController:charV animated:YES];
+    }
 }
 @end

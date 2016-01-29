@@ -9,8 +9,17 @@
 #import <UIKit/UIKit.h>
 @class CustomDynamicModel;
 @class VisitorDynamicProductView;
+
+typedef enum{
+    CellVisitorDynamicTypeFromMessageCenter,
+    CellVisitorDynamicTypeFromCustom,
+}TheCellFromType;
+
+
+
 @interface NewCustomerCell : UITableViewCell
 @property (nonatomic, strong)UINavigationController * NAV;
+@property (assign, nonatomic) TheCellFromType cellvisitorDynamicFromType;
 
 @property (strong, nonatomic) IBOutlet UIImageView *TitleImage;//动态类型图片
 @property (strong, nonatomic) IBOutlet UILabel *UserName;//客户的名称
