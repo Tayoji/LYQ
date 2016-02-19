@@ -54,7 +54,6 @@
     [super viewDidLoad];
     
     [self.view addSubview:self.webView];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SuccessPayBack) name:@"SuccessPayBack" object:nil];
 
     
@@ -357,14 +356,15 @@
 //调用分享
 - (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
     //创建正则表达式；pattern规则；
-    NSLog(@"%@", urlStr);
-    if ([urlStr myContainsString:@"?"]) {
-        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
-    }
+//    if ([urlStr myContainsString:@"?"]) {
+//        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+//    }
+    
     NSString * pattern = @"ShareGeneral(.+)";
     NSRegularExpression * regex = [[NSRegularExpression alloc]initWithPattern:pattern options:0 error:nil];
     //测试字符串；
     NSArray * result = [regex matchesInString:urlStr options:0 range:NSMakeRange(0,urlStr.length)];
+
     if (result.count) {
         //获取筛选出来的字符串
         NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
@@ -372,8 +372,7 @@
         resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
         resultStr = [resultStr stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@", resultStr);
-        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
-        
+        self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString    parseJSONStringToNSDictionary:resultStr]];
         [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
         NSLog(@"%@", self.shareInfo);
         [ShareHelper shareHelper].delegate = self;
