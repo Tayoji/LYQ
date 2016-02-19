@@ -214,7 +214,9 @@
         NSString * resultStr = [urlStr substringWithRange:((NSTextCheckingResult *)result[0]).range];
         resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ShareGeneral(" withString:@""];
         resultStr = [resultStr stringByReplacingOccurrencesOfString:@")" withString:@""];
+        NSLog(@"%@", resultStr);
         self.shareInfo = [NSMutableDictionary dictionaryWithDictionary:[NSString parseJSONStringToNSDictionary:resultStr]];
+        
         [[ShareHelper shareHelper]shareWithshareInfo:self.shareInfo andType:@"FromTypeMoneyTree" andPageUrl:self.webView.request.URL.absoluteString];
         NSLog(@"%@", self.shareInfo);
         [ShareHelper shareHelper].delegate = self;

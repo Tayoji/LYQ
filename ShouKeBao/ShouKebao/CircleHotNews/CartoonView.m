@@ -19,7 +19,7 @@ static CGFloat _width;
 
 +(void)cartoonView:(UIButton *)cartoonView cgsize:(CGSize)cgsize{
     _cartoonView = cartoonView;
-    _height = cgsize.height;
+    _height = cgsize.height-64-49;
     _width = cgsize.width;
     UIPanGestureRecognizer *PanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(buttonLongPressed:)];
     [_cartoonView addGestureRecognizer:PanGesture];
@@ -40,16 +40,18 @@ static CGFloat _width;
         CGPoint newPoint = [panGesture locationInView:panGesture.view];
         CGFloat deltaX = newPoint.x-startPoint.x;
         CGFloat deltaY = newPoint.y-startPoint.y;
-        NSLog(@"height =  %f,", _height);
         btn.center = CGPointMake(btn.center.x+deltaX,btn.center.y+deltaY);
-        
+        NSLog(@"height =  %f", _height);
+       
         if (CGRectGetMinY(btn.frame) < 0) {
-            originPoint = CGPointMake(btn.center.x, 35);
+            originPoint = CGPointMake(btn.center.x, 35);//70
+        
         }else if (CGRectGetMaxY(btn.frame)>= _height){
-            originPoint = CGPointMake(btn.center.x, _height-40);
+            originPoint = CGPointMake(btn.center.x, _height-35);
             
         }else if (CGRectGetMinX(btn.frame)<=0){
             originPoint = CGPointMake(25, btn.center.y);
+            
         }else if (CGRectGetMaxX(btn.frame)>= _width){
             originPoint = CGPointMake(_width-25, btn.center.y);
         }else{
@@ -58,6 +60,7 @@ static CGFloat _width;
                 btn.alpha = 1;
             }];
         }
+        
     }else if (panGesture.state == UIGestureRecognizerStateEnded){
         [UIView animateWithDuration:Duration animations:^{
             btn.transform = CGAffineTransformIdentity;

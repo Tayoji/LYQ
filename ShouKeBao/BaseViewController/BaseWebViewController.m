@@ -140,7 +140,7 @@
 //调用分享
 - (void)LYQSKBAPP_OpenShareGeneral:(NSString *)urlStr{
     //创建正则表达式；pattern规则；
-    NSLog(@"%@", urlStr);
+    NSLog(@"urlStr = %@", urlStr);
 //    if ([urlStr myContainsString:@"?"]) {
 //        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
 //        NSLog(@"...%@ ", urlStr);
