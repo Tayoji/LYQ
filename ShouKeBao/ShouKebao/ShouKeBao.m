@@ -179,9 +179,9 @@
 @implementation ShouKeBao
 
 #pragma mark - 摇钱树签到抢红包
-
 - (void)circleCartoon{
-    [CartoonView cartoonView:self.cartoonBtn cgsize:self.view.frame.size];
+    [CartoonView cartoonView:self.cartoonBtn cgsize:[UIScreen mainScreen].bounds.size];
+    NSLog(@"%f", [UIScreen mainScreen].bounds.size.height);
 }
 
 
@@ -421,8 +421,7 @@
     [super viewDidLoad];
 //    [self prepAudio];
    
-//    [self circleCartoon];
-
+    [self circleCartoon];
     [self loadCarouselNewsData];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.cartoonBtn];
