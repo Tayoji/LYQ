@@ -1096,6 +1096,7 @@
     {
         //        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     }
+    //UIImagePickerControllerOriginalImage
     NSLog(@"----%@",info);
     UIImage *image = info[@"UIImagePickerControllerEditedImage"];
     UIImage * newImage = [ResizeImage reSizeImage:image toSize:CGSizeMake(120, 120)];

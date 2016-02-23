@@ -413,7 +413,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = sourceType;
     imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
+//    imagePicker.allowsEditing = YES;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 #pragma mark - UIImagePickerControllerDelegate
@@ -427,7 +427,7 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     hud.labelText = @"正在添加";
 
     NSLog(@"----%@",info);
-    UIImage *image = info[@"UIImagePickerControllerEditedImage"];
+    UIImage *image = info[@"UIImagePickerControllerOriginalImage"];
     UIImage *imageNew = [self getImage:image];
     NSData *data = UIImageJPEGRepresentation(imageNew, 1.0);
     NSString *imageStr = [data base64EncodedStringWithOptions:0];
@@ -451,14 +451,14 @@ static NSString * const reuseIdentifier = @"AttachmentCell";
     UIImage *normal = [ResizeImage colorControlWithImage:normalImage brightness:0.3 contrast:0.3 saturation:0.0];//将图片变黑白
     
     double wideRadious = 500/normal.size.width;//只定500宽，不定高
-    UIImage *resizeImage = [ResizeImage reSizeImage:normal toSize:CGSizeMake(500, normal.size.height*wideRadious)];//裁减尺寸
+    UIImage *resizeImage = [ResizeImage reSizeImage:normal toSize:CGSizeMake(800, normal.size.height*wideRadious)];//裁减尺寸
     
     NSData *imageData = UIImageJPEGRepresentation(resizeImage,1);
     long kb = [imageData length]/1024;//计算大小
-    if (kb<280) {
+    if (kb<500) {
         return resizeImage;
     }else{
-        double radious = kb/280;
+        double radious = kb/500;
         NSData *imageDataNew = UIImageJPEGRepresentation(resizeImage, radious);//改变大小
         UIImage *imageNew = [UIImage imageWithData:imageDataNew];
         return imageNew;

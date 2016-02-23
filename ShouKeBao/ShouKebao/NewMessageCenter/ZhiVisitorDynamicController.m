@@ -50,7 +50,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"客人动态";
-    self.view.backgroundColor = [UIColor colorWithRed:(247.0/255.0) green:(247.0/255.0) blue:(247.0/255.0) alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:(244.0/255.0) green:(245.0/255.0) blue:(246.0/255.0) alpha:1];
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.nullView];
     [self.view addSubview:self.backToTopBtn];
@@ -66,9 +66,13 @@
 
 -(UIButton *)backToTopBtn{
     if (!_backToTopBtn) {
-        _backToTopBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _backToTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _backToTopBtn.frame = CGRectMake(kScreenSize.width - 50, kScreenSize.height - 164, 30, 30);
-        [_backToTopBtn setBackgroundImage:[UIImage imageNamed:@"shangjiana"] forState:UIControlStateNormal];
+        _backToTopBtn.backgroundColor = [UIColor grayColor];
+        _backToTopBtn.alpha = 0.5;
+        _backToTopBtn.layer.cornerRadius = 15;
+        _backToTopBtn.layer.masksToBounds=YES;
+        [_backToTopBtn setImage:[UIImage imageNamed:@"shangjiana"] forState:UIControlStateNormal];
         [_backToTopBtn addTarget:self action:@selector(backTOTop) forControlEvents:UIControlEventTouchUpInside];
         _backToTopBtn.hidden = YES;
     }
@@ -212,7 +216,7 @@
         UILabel * topLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 35)];
         topLable.font = [UIFont systemFontOfSize:14];
         topLable.textColor = [UIColor grayColor];
-        topLable.backgroundColor = [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255 alpha:1.0];
+        topLable.backgroundColor = [UIColor colorWithRed:244.0/255.0 green:244.0/255.0 blue:244.0/255 alpha:1.0];
         _tableView.tableHeaderView = topLable;
         
     }

@@ -359,8 +359,8 @@
     //创建正则表达式；pattern规则；
     NSLog(@"%@", urlStr);
     
-    if ([urlStr myContainsString:@"?"]) {
-        urlStr = [urlStr componentsSeparatedByString:@"?"][0];
+    if ([urlStr myContainsString:@"?isfromapp"]) {
+        urlStr = [urlStr componentsSeparatedByString:@"?isfromapp"][0];
     }
 
     NSString * pattern = @"ShareGeneral(.+)";
